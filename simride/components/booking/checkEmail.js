@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import firebase from '../../../base';
 import viewAllBookings from './viewAllBookings'
 
 // checks email and signs user out if no such email found

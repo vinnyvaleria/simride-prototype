@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import firebase from '../../../base';
 import 'firebase/firestore';
 
 // checks email and signs user out if no such email found

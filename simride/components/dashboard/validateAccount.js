@@ -1,6 +1,5 @@
-import firebase from '../../base';
+import firebase from '../../../base';
 import 'firebase/firestore';
-import { NativeModules } from 'react-native';
 
 validateAccount(() => {
     document.getElementById("signinemail").focus();

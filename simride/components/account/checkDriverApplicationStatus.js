@@ -1,6 +1,4 @@
-import 'firebase/firestore';
-import "firebase/storage";
-import firebase from '../../base';
+import firebase from '../../../base';
 
 checkDriverApplicationStatus(() => {
     firebase.database().ref('driverDetails')

@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import firebase from '../../../base';
 
 // submits driver details into realtime db
 submitDriverDetails(() => {

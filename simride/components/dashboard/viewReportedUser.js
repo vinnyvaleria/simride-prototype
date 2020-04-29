@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import firebase from '../../../base';
 import 'firebase/firestore';
 
 // view the reported user

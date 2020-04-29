@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import firebase from '../../../base';
 
 // submits the edited profile and updates the realtime db
 submitEditProfile((e) => {

@@ -1,4 +1,3 @@
-import 'firebase/firestore';
 
 searchUsername((e) => {
     let i = 0;

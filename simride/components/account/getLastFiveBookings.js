@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import firebase from '../../../base';
 
 getLastFiveBookings(() => {
     document.getElementById('tb_LastFiveTransactions').innerHTML = '';

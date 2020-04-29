@@ -1,6 +1,4 @@
-import 'firebase/firestore';
-import "firebase/storage";
-import firebase from '../../base';
+import firebase from '../../../base';
 
 // checks email and signs user out if no such email found
 checkEmailAccount((e) => {

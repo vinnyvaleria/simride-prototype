@@ -1,4 +1,4 @@
-import bindUserData from '../../functions/bindUserData'
+import bindUserData from '../../../functions/bindUserData'
 
 checkEmailLogin(() => {
     user = [];

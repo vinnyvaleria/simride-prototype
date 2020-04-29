@@ -1,5 +1,5 @@
-import firebase from '../../base';
 import 'firebase/firestore';
+import firebase from '../../../base';
 
 loadCashout(() => {
     const self = this;
