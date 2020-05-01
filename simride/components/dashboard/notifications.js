@@ -1,7 +1,9 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 
-notifications((tb) => {
+var userDetails = [];
+
+export const notifications = (tb) => {
     const self = this;
     document.getElementById(tb).innerHTML = '';
 
@@ -50,6 +52,4 @@ notifications((tb) => {
             }
         }
     });
-})
-
-module.exports.notifications = notifications;
+}

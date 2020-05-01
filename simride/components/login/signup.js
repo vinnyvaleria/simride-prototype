@@ -1,7 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 
-signup((e) => {
+export const signup = (e) => {
     e.preventDefault();
 
     // checks for duplicate username
@@ -78,9 +78,7 @@ signup((e) => {
                 })
                 .catch((error) => {
                     alert(error.message);
-                })
+            })
         }
     }
-})
-
-module.exports.signup = signup;
+}

@@ -1,7 +1,14 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import {viewApplication} from './viewApplication';
+import {viewReportedList} from './viewReportedList';
+import {notifications} from './notifications';
+import {walletBalanceCheck} from './walletBalanceCheck';
+import {viewCreatedBooking} from './viewCreatedBooking';
+import {viewMyBookings} from './viewMyBookings';
 
-checkEmailDashboard((e) => {
+let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+export const checkEmailDashboard = () => {
     const email = firebase.auth().currentUser.email;
     user[3] = email;
 
@@ -28,24 +35,24 @@ checkEmailDashboard((e) => {
                 if (user[6] !== "") {
                     if (user[6] === "yes") { // admin
                         document.getElementById("adminDB").style.display = "block";
-                        this.viewApplication();
-                        this.viewReportedUsers();
-                        this.Notifications('tb_AdminNotifications');
+                        viewApplication();
+                        viewReportedList();
+                        notifications('tb_AdminNotifications');
                     } else if (user[6] === "no" && user[5] === "yes") { // driver
-                        this.walletBalanceCheck();
+                        walletBalanceCheck();
                         document.getElementById("driverDB").style.display = "block";
-                        this.viewCreatedBooking();
-                        this.viewMyBookings('tb_DriverUpcomingRides');
-                        this.Notifications('tb_DriverNotifications');
+                        viewCreatedBooking();
+                        viewMyBookings('tb_DriverUpcomingRides');
+                        notifications('tb_DriverNotifications');
                     } else if (user[6] === "no" && user[5] === "no") { // normal users
-                        this.walletBalanceCheck();
+                        walletBalanceCheck();
                         document.getElementById("riderDB").style.display = "block";
-                        this.viewMyBookings('tb_RiderUpcomingRides');
-                        this.Notifications('tb_RiderNotifications');
+                        viewMyBookings('tb_RiderUpcomingRides');
+                        notifications('tb_RiderNotifications');
                     }
                 }
             }
         });
-})
+}
 
-module.exports.checkEmailDashboard = checkEmailDashboard;
+export {user}

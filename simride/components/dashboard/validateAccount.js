@@ -1,7 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 
-validateAccount(() => {
+export const validateAccount = () => {
     document.getElementById("signinemail").focus();
 
     // counts current total account registered
@@ -31,6 +31,4 @@ validateAccount(() => {
     if (user[6] === "no") {
         document.getElementById('checkOutTab').style.display = 'none';
     }
-})
-
-module.exports.validateAccount = validateAccount;
+}

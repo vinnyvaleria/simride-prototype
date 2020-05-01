@@ -1,7 +1,9 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import {user} from './checkEmailDashboard';
 
-viewMyBookings((tb) => {
+var userDetails = [];
+export const viewMyBookings = (tb) => {
     document.getElementById(tb).innerHTML = '';
 
     // get all accounts
@@ -55,7 +57,5 @@ viewMyBookings((tb) => {
             document.getElementById(tb).innerHTML += content;
         }
     });
-})
-
-module.exports.viewMyBookings = viewCreatedBooking;
+}
 

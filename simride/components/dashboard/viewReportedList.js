@@ -2,7 +2,7 @@ import firebase from '../../../base';
 import 'firebase/firestore';
 
 // view reported users
-viewReportedList(() => {
+export const viewReportedList = () => {
     const self = this;
     document.getElementById('tb_ReportedUsers').innerHTML = '';
 
@@ -38,6 +38,4 @@ viewReportedList(() => {
             }
         }
     });
-})
-
-module.export.viewReportedList = viewReportedList;
+}

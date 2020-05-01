@@ -2,7 +2,7 @@ import firebase from '../../../base';
 import 'firebase/firestore';
 
 // view applicant that applied to be driver
-viewApplicant((e) => {
+export const viewApplicant = () => {
     var driverID = e.target.parentElement.parentElement.id;
     document.getElementById('div_ViewApplicant').style.display = "block";
     document.getElementById('div_ViewReportedUser').style.display = "none";
@@ -49,6 +49,4 @@ viewApplicant((e) => {
                 backURL
             });
         });
-})
-
-module.exports.viewApplicant = viewApplicant;
+}

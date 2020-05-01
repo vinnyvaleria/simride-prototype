@@ -1,7 +1,8 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import {user} from './checkEmailDashboard';
 
-walletBalanceCheck(() => {
+export const walletBalanceCheck = () => {
     if (user[8] < 5.00) {
         const notificationRef = firebase.database().ref('notification');
         const notification = {
@@ -13,6 +14,4 @@ walletBalanceCheck(() => {
 
         notificationRef.push(notification);
     }
-})
-
-module.export.walletBalanceCheck = walletBalanceCheck;
+}

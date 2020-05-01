@@ -2,7 +2,7 @@ import firebase from '../../../base';
 import 'firebase/firestore';
 
 // view list of applicants
-viewApplication(() => {
+export const viewApplication = () => {
     const self = this;
     document.getElementById('tb_driverApplication').innerHTML = '';
 
@@ -38,6 +38,4 @@ viewApplication(() => {
             }
         }
     });
-})
-
-module.export.viewApplication = viewApplication;
+}

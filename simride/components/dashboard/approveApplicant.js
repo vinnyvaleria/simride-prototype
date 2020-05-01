@@ -1,8 +1,9 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import {viewApplication} from './viewApplication';
 
 // approve applicants
-approveApplicant(() => {
+export const approveApplicant = () => {
     const driverID = document.getElementById('td_ViewApplicant_driverID').innerHTML;
     const accountsRef = firebase.database().ref('accounts/' + driverID);
     accountsRef.orderByChild('email')
@@ -22,10 +23,8 @@ approveApplicant(() => {
             })
         });
 
-    this.viewApplication();
+    viewApplication();
 
     document.getElementById('div_ViewApplicant').style.display = "none";
     document.getElementById('div_driverApplication').style.display = "block";
-})
-
-module.export.approveApplicant = approveApplicant;
+}

@@ -1,8 +1,11 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import {user} from './checkEmailDashboard';
+import * as moment from 'moment';
+var userDetails = [];
 
 // view created bookings by driver
-viewCreatedBooking(() => {
+export const viewCreatedBooking = () => {
     document.getElementById('tb_DriverUpcomingDrives').innerHTML = '';
 
     // get all accounts
@@ -57,6 +60,4 @@ viewCreatedBooking(() => {
             document.getElementById('tb_DriverUpcomingDrives').innerHTML += content;
         }
     });
-})
-
-module.exports.viewCreatedBooking = viewCreatedBooking;
+}

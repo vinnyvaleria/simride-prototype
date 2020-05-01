@@ -1,25 +1,57 @@
-import 'react-native-gesture-handler';
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-//import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import fire from './base';
+import Login from './simride/components/login/index';
+import Dashboard from './simride/components/dashboard/index';
 
-export default function App() {
-  return (
-    <NavigationContainer>
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = ({
+      user: null,
+    });
+    this.authListener = this.authListener.bind(this);
+  }
 
-    </NavigationContainer>
-    
-    /*<View style={styles.container}>
-      <Text>Abang</Text>
-    </View>*/
-  );
+  componentDidMount() {
+    this.authListener();
+  }
+
+  authListener() {
+    fire.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if (user) {
+        this.setState({
+          user
+        });
+        localStorage.setItem('user', user.uid);
+      } else {
+        this.setState({
+          user: null
+        });
+        localStorage.removeItem('user');
+      }
+    });
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.fixToText}>
+        </View>
+        <View>{this.state.user ? (<Dashboard />) : (<Login />)}</View>
+      </View>
+    );
+  }
 }
 
-/*const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
+    backgroundColor: '#4b9ea1',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
   },
-});*/
+});
+
+export default App;

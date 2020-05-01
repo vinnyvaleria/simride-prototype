@@ -1,7 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 
-unBanUser(() => {
+export const unBanUser = () => {
     const userID = document.getElementById('td_ViewReportedUser_userID').innerHTML;
     const accountsRef = firebase.database().ref('accounts/' + userID);
     accountsRef.once('value')
@@ -25,6 +25,4 @@ unBanUser(() => {
     document.getElementById('div_ViewReportedUser').style.display = "none";
     document.getElementById('div_driverApplication').style.display = "block";
     document.getElementById('div_ReportedUsers').style.display = "block";
-})
-
-module.export.unBanUser = unBanUser;
+}

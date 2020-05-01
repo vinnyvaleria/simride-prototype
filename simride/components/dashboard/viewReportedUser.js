@@ -2,7 +2,7 @@ import firebase from '../../../base';
 import 'firebase/firestore';
 
 // view the reported user
-viewReportedUser((e) => {
+export const viewReportedUser = () => {
     var userID = e.target.parentElement.parentElement.id;
     document.getElementById('div_ViewApplicant').style.display = "none";
     document.getElementById('div_ViewReportedUser').style.display = "block";
@@ -43,6 +43,4 @@ viewReportedUser((e) => {
             });
         }
     });
-})
-
-module.export.viewReportedUser = viewReportedUser;
+}

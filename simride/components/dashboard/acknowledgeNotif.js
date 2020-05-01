@@ -1,7 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 
-acknowledgeNotif((e) => {
+export const acknowledgeNotif = () => {
     const notifID = e.target.parentElement.parentElement.id;
     console.log(notifID);
     const notifRef = firebase.database().ref('notification/' + notifID);
@@ -16,6 +16,4 @@ acknowledgeNotif((e) => {
             this.Notifications('tb_DriverNotifications');
         }
     }
-})
-
-module.export.acknowledgeNotif = acknowledgeNotif;
+}
