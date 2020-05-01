@@ -1,6 +1,7 @@
 import firebase from '../../../base';
+import { bindUser as user } from '../../functions/bindUserData';
 
-checkDriverApplicationStatus(() => {
+export const checkDriverApplicationStatus = () => {
     firebase.database().ref('driverDetails')
         .once('value')
         .then((snapshot) => {
@@ -22,6 +23,4 @@ checkDriverApplicationStatus(() => {
                 }
             })
         });
-})
-
-module.exports.checkDriverApplicationStatus = checkDriverApplicationStatus;
+}

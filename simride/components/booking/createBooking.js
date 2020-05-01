@@ -1,9 +1,10 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
- 
+import {user} from './checkEmail';
+
  // display create booking information, binds area from db
- createBooking(() => {
+ export const createBooking = () => {
      document.getElementById('div_availBookings').style.display = "none";
      document.getElementById('div_createBooking').style.display = "block";
      document.getElementById('div_myBookings').style.display = "none";
@@ -29,6 +30,4 @@ import firebase from '../../../base';
              document.getElementById('ddArea').innerHTML += content;
          }
      });
- })
-
- module.exports.createBooking = createBooking;
+ }

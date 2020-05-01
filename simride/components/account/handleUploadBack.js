@@ -3,7 +3,7 @@ import "firebase/storage";
 import firebase from '../../../base';
 
 // uploads back license pic
-handleBackUpload(() => {
+export const handleUploadBack = () => {
     var date = new Date;
     var m = date.getMonth() + 1;
     var d = date.getDate();
@@ -51,5 +51,4 @@ handleBackUpload(() => {
     } else {
         alert('Error: No file selected');
     }
-})
-module.exports.handleBackUpload = handleBackUpload;
+}

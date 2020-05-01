@@ -1,10 +1,10 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
-import viewMyBookings from './viewMyBookings';
+import {viewMyBookings} from './viewMyBookings';
 
 // cancel booking
-cancelBooking(() => {
+export const cancelBooking = () => {
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
     let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
     let passengers = [];
@@ -72,6 +72,4 @@ cancelBooking(() => {
 
     currPassengers = '';
     viewMyBookings();
-})
-
-module.exports.cancelBooking = cancelBooking;
+}

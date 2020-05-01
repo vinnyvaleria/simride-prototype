@@ -1,7 +1,11 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import { bindUser as user } from '../../functions/bindUserData';
+import {loadCashout} from './loadCashout';
+import {loadCashoutHistory} from './loadCashoutHistory';
+import { bindUser as user } from '../../functions/bindUserData';
 
-changeCheckoutStatus((e) => {
+export const changeCheckoutStatus = (e) => {
     var checkoutID = e.target.parentElement.parentElement.id;
 
     const accountsRef = firebase.database().ref('cashcheckout/' + checkoutID);
@@ -14,8 +18,6 @@ changeCheckoutStatus((e) => {
             })
         });
 
-    this.loadCashOut();
-    this.loadCashoutHistory();
-})
-
-module.exports.changeCheckoutStatus = changeCheckoutStatus;
+    loadCashout();
+    loadCashoutHistory();
+}

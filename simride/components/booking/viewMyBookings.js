@@ -1,9 +1,12 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
+import {user} from './checkEmail';
+import * as moment from 'moment';
 
 // view my bookings
-viewMyBookings(() => {
+export const viewMyBookings = () => {
+    let userDetails = [];
     const self = this;
     document.getElementById('tb_myBookings').innerHTML = '';
 
@@ -79,6 +82,4 @@ viewMyBookings(() => {
             }
         }
     });
-})
-
-module.exports.viewMyBookings = viewMyBookings;
+}

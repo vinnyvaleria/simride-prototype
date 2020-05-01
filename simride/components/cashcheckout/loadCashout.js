@@ -1,7 +1,8 @@
 import 'firebase/firestore';
 import firebase from '../../../base';
+import * as moment from 'moment';
 
-loadCashout(() => {
+export const loadCashout = () => {
     const self = this;
     document.getElementById('tb_NotDisbursedCashout').innerHTML = '';
 
@@ -41,6 +42,4 @@ loadCashout(() => {
             }
         }
     });
-})
-
-module.exports.loadCashout = loadCashout;
+}

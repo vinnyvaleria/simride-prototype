@@ -1,10 +1,12 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
-import viewMyBookings from './viewMyBookings';
+import {viewMyBookings} from './viewMyBookings';
+import {user} from './checkEmail';
+import * as moment from 'moment';
 
 // join booking
-joinBooking(() => {
+export const joinBooking = () => {
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
     let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
     let bookingDate = document.getElementById('td_viewSelectedBooking_date').innerHTML;
@@ -85,6 +87,4 @@ joinBooking(() => {
     });
 
     PostalCode = '';
-})
-
-module.exports = joinBooking = joinBooking;
+}

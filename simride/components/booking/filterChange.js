@@ -1,10 +1,12 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
+import * as moment from 'moment';
 
-filterChange(() => {
+export const filterChange = () => {
     const self = this;
     let areaNames = [];
+    let userDetails = [];
     document.getElementById('tb_AllBookings').innerHTML = '';
 
     document.getElementById('div_availBookings').style.display = "block";
@@ -96,6 +98,4 @@ filterChange(() => {
             }
         }
     });
-})
-
-module.exports.filterChange = filterChange;
+}

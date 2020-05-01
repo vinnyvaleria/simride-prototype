@@ -1,6 +1,6 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
-
+import * as moment from 'moment';
 var userDetails = [];
 
 export const notifications = (tb) => {

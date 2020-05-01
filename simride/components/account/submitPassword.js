@@ -3,7 +3,7 @@ import "firebase/storage";
 import firebase from '../../../base';
     
 // submits password change and stores into realtime db
-submitPassword((e) => {
+export const submitPassword = (e) => {
     e.preventDefault();
 
     if (this.state.newPassword === this.state.confirmPassword) {
@@ -24,6 +24,4 @@ submitPassword((e) => {
     } else {
         alert("Passwords do not match!");
     }
-})
-
-module.exports.submitPassword = submitPassword;
+}

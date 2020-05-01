@@ -1,4 +1,8 @@
-loadCashoutHistory(() => {
+import 'firebase/firestore';
+import firebase from '../../../base';
+import * as moment from 'moment';
+
+export const loadCashoutHistory = () => {
     document.getElementById('tb_AllCashout').innerHTML = '';
     const database = firebase.database().ref('cashcheckout').orderByChild('date');
     database.once('value', (snapshot) => {
@@ -23,6 +27,4 @@ loadCashoutHistory(() => {
             document.getElementById('tb_AllCashout').innerHTML += content;
         }
     });
-})
-
-module.exports.loadCashoutHistory = loadCashoutHistory;
+}

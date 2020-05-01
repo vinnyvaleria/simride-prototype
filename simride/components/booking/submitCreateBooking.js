@@ -1,9 +1,10 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
+import * as moment from 'moment';
 
 // submits created booking into realtime db
-submitCreateBooking((e) => {
+export const submitCreateBooking = (e) => {
     // checks for duplicate booking
     let dates = [];
     let check = false;
@@ -71,6 +72,4 @@ submitCreateBooking((e) => {
     document.getElementById('div_myBookings').style.display = "none";
     document.getElementById('div_viewSelectedBooking').style.display = "none";
     document.getElementById('div_viewCreatedBooking').style.display = "none";
-})
-
-module.exports.submitCreateBooking = submitCreateBooking;
+}

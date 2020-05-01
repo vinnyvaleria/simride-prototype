@@ -1,6 +1,7 @@
 import firebase from '../../../base';
+import {user} from "./checkEmailWallet";
 
-submitCashOut(() => {
+export const submitCashOut = () => {
     const notificationRef = firebase.database().ref('notification');
     const balance = parseFloat(user[8] - this.state.cashoutamount).toFixed(2);
     console.log(balance);
@@ -43,6 +44,4 @@ submitCashOut(() => {
     document.getElementById('div_WalletTopUp').style.display = "none";
     document.getElementById('div_WalletHistory').style.display = "none";
     document.getElementById('div_CashOut').style.display = "none";
-})
-
-module.exports.submitCashOut = submitCashOut;
+}

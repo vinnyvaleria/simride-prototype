@@ -1,5 +1,9 @@
+import {user, unameArr} from './checkEmail';
 
-searchUsername((e) => {
+let clickedUser = '';
+let chatName = '';
+
+export const searchUsername = (e) => {
     let i = 0;
     // creates chat based on usernames
     while (i < unameArr.length) {
@@ -39,6 +43,6 @@ searchUsername((e) => {
         }
         i++;
     }
-})
+}
 
-module.exports.searchUsername = searchUsername;
+export {clickedUser, chatName};

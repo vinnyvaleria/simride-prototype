@@ -1,9 +1,9 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
-import viewCreatedBooking from './viewCreatedBooking';
+import {viewCreatedBooking} from './viewCreatedBooking';
 
-confirmRemovePassenger(() => {
+export const confirmRemovePassenger = () => {
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
 
     if (document.getElementById('ddRemovePassenger').value === "No passengers available") {
@@ -102,6 +102,4 @@ confirmRemovePassenger(() => {
     });
 
     viewCreatedBooking();
-})
-
-module.exports.confirmRemovePassenger = confirmRemovePassenger;
+}

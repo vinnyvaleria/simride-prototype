@@ -1,9 +1,10 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
+import { bindUser as user } from '../../functions/bindUserData';
 
 // submits driver details into realtime db
-submitDriverDetails(() => {
+export const submitDriverDetails = () => {
     var date = new Date;
     var m = date.getMonth() + 1;
     var d = date.getDate();
@@ -47,6 +48,4 @@ submitDriverDetails(() => {
             alert('You must be a driver for at least 2 years');
         }
     }
-})
-
-module.exports.submitDriverDetails = submitDriverDetails;
+}

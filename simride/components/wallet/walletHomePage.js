@@ -1,8 +1,10 @@
-import maxAmtCalc from './maxAmtCalc';
+import {maxAmtCalc} from './maxAmtCalc';
+import {user} from "./checkEmailWallet";
+import {getLastFiveBookings} from './getLastFiveBookings';
 
 // to show amount left in wallet
-walletHomePage(() => {
-    this.getLastFiveBookings();
+export const walletHomePage = () => {
+    getLastFiveBookings();
     if (maxAmtCalc() === 0) {
         document.getElementById('btnCashOut').style.display = "none";
     } else {
@@ -15,6 +17,4 @@ walletHomePage(() => {
     document.getElementById('div_CashOut').style.display = "none";
 
     document.getElementById('td_WalletAmount').innerHTML = "$" + parseFloat(user[8]).toFixed(2);
-})
-
-module.exports.walletHomePage = walletHomePage;
+}

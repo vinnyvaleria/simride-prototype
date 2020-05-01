@@ -1,9 +1,11 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
+import * as moment from 'moment';
 
 // view all available bookings and displays in table
-viewAllBookings(() => {
+export const viewAllBookings = () => {
+    let userDetails = [];
     const self = this;
     document.getElementById('tb_AllBookings').innerHTML = '';
 
@@ -77,6 +79,4 @@ viewAllBookings(() => {
             }
         }
     });
-})
-
-module.exports.viewAllBookings = viewAllBookings;
+}

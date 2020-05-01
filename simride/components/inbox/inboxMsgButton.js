@@ -1,7 +1,8 @@
-import openChat from './openChat';
+import {openChat} from './openChat';
+import {user, chats} from './checkEmail';
 
 // inbox, buttons dynamically created from the chats that you have
-inboxMsgButton(() => {
+export const inboxMsgButton = () => {
     document.getElementById("chatsStarted").innerHTML = "";
     document.getElementById('searchUser').style.display = "none";
     document.getElementById('inbox').style.display = "block";
@@ -13,10 +14,8 @@ inboxMsgButton(() => {
             btn.setAttribute('type', 'button')
             btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
             btn.setAttribute('id', c);
-            btn.onclick = openChat();
+            btn.onclick = openChat;
             document.getElementById('chatsStarted').appendChild(btn);
         }
     }
-})
-
-module.export.inboxMsgButton = inboxMsgButton;
+}

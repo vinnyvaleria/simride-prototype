@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import fire from './base';
 import Login from './simride/components/login/index';
-import Dashboard from './simride/components/dashboard/index';
+import Home from './simride/components/index';
 
 class App extends React.Component {
   constructor() {
@@ -39,7 +39,7 @@ class App extends React.Component {
       <View style={styles.container}>
         <View style={styles.fixToText}>
         </View>
-        <View>{this.state.user ? (<Dashboard />) : (<Login />)}</View>
+        <View>{this.state.user ? (<Home />) : (<Login />)}</View>
       </View>
     );
   }

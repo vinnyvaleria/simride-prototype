@@ -1,20 +1,24 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import { bindUser as user } from '../../functions/bindUserData';
 
+var allchats = [];
+var chats = [];
+var unameArr = [];
 // checks email and signs user out if no such email found
-checkEmail((e) => {
+export const checkEmail = (e) => {
     const email = firebase.auth().currentUser.email;
-    user[3] = email;
 
     const accountsRef = firebase.database().ref('accounts');
     accountsRef.orderByChild('email')
-        .equalTo(user[3])
+        .equalTo(email)
         .once('value')
         .then((snapshot) => {
             snapshot.forEach((child) => {
                 user[0] = child.val().fname;
                 user[1] = child.val().lname;
                 user[2] = child.val().uname;
+                user[3] = child.val().email;
                 user[4] = child.val().phone;
                 user[5] = child.val().isDriver;
                 user[6] = child.val().isAdmin;
@@ -49,6 +53,6 @@ checkEmail((e) => {
                 }
             }
         });
-})
+}
 
-module.exports.checkEmail = checkEmail;
+export {user, chats, unameArr};

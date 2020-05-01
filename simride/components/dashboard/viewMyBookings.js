@@ -1,6 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 import {user} from './checkEmailDashboard';
+import * as moment from 'moment';
 
 var userDetails = [];
 export const viewMyBookings = (tb) => {

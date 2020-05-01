@@ -1,9 +1,11 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
+import * as moment from 'moment';
 
 // view created bookings by driver
-viewCreatedBooking(() => {
+export const viewCreatedBooking = () => {
+    let userDetails = [];
     const self = this;
     document.getElementById('tb_CreatedBookings').innerHTML = '';
 
@@ -77,6 +79,4 @@ viewCreatedBooking(() => {
             }
         }
     });
-})
-
-module.exports.viewCreatedBooking = viewCreatedBooking;
+}

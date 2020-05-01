@@ -1,5 +1,10 @@
+import firebase from '../../../base';
+import 'firebase/firestore';
+import {chats} from './checkEmail';
+
 // opens the chat from inbox
-openChat((e) => {
+let chatName = '';
+export const openChat = (e) => {
     document.getElementById("messages").innerHTML = "";
 
     chatName = chats[e.target.id];
@@ -19,6 +24,4 @@ openChat((e) => {
             document.getElementById("messages").innerHTML += html;
         });
     });
-})
-
-module.exports.openChat = openChat;
+}

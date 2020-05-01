@@ -3,7 +3,7 @@ import "firebase/storage";
 import firebase from '../../../base';
 
 // change to remove passenger view
-removePassenger(() => {
+export const removePassenger = () => {
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
     const database = firebase.database().ref().child('bookings/' + bookingID);
     document.getElementById('ddRemovePassenger').innerHTML = "";
@@ -29,4 +29,4 @@ removePassenger(() => {
     document.getElementById('btnRemovePassenger').style.display = "none";
     document.getElementById('btnDeleteBooking').style.display = "none";
     document.getElementById('tbl_removePassengerExtend').style.display = "block";
-})
+}

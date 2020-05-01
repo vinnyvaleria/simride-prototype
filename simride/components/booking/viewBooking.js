@@ -1,5 +1,11 @@
+import firebase from '../../../base';
+import * as moment from 'moment';
+import {user} from './checkEmail';
+
 // view the booking clicked
-viewBooking((e) => {
+export const viewBooking = (e) => {
+    let userDetails = [];
+
     document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = null;
     document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = null;
     document.getElementById('td_viewSelectedBooking_driverName').innerHTML = null;
@@ -129,6 +135,4 @@ viewBooking((e) => {
             });
         }
     });
-})
-
-module.exports.viewBooking = viewBooking;
+}

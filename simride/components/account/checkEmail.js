@@ -1,9 +1,10 @@
 import firebase from '../../../base';
-import checkDriverApplicationStatus from './checkDriverApplicationStatus';
+import {checkDriverApplicationStatus} from './checkDriverApplicationStatus';
+import { bindUser as user } from '../../functions/bindUserData';
 
 // checks email and signs user out if no such email found
-checkEmail((e) => {
-    if (typeof user[3] === 'undefined') {
+export const checkEmail = (email) => {
+    if (typeof email === 'undefined') {
         firebase.auth().signOut();
     } else {
         if (user[6] !== "") {
@@ -14,6 +15,6 @@ checkEmail((e) => {
             }
         }
     }
-})
+}
 
-module.exports.checkEmail = checkEmail;
+export {user};

@@ -1,6 +1,8 @@
 import firebase from '../../../base';
+import * as moment from 'moment';
+import {user} from "./checkEmailWallet";
 
-getLastFiveBookings(() => {
+export const getLastFiveBookings = () => {
     document.getElementById('tb_LastFiveTransactions').innerHTML = '';
 
     // get all accounts
@@ -47,6 +49,4 @@ getLastFiveBookings(() => {
             document.getElementById('tb_LastFiveTransactions').innerHTML += content;
         }
     });
-})
-
-module.exports.getLastFiveBookings = getLastFiveBookings;
+}

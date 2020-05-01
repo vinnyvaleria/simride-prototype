@@ -3,7 +3,6 @@ import "firebase/storage";
 import firebase from '../../base';
 
 let bindUser = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
-
 // bind user data
 export const bindUserData = (email) => {
     const accountsRef = firebase.database().ref('accounts');

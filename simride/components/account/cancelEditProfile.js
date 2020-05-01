@@ -1,11 +1,15 @@
-cancelEditProfile(() => {
-    Util.profilePageReset();
+const util = require('./util')
+import {checkDriverApplicationStatus} from './checkDriverApplicationStatus';
+import { bindUser as user } from '../../functions/bindUserData';
+
+export const cancelEditProfile = () => {
+    util.profilePageReset();
 
     if (user[6] !== "") {
         document.getElementById('btnApplyDriver').style.display = "none";
     } else {
         if (user[5] === "no") {
-            this.checkDriverApplicationStatus();
+            checkDriverApplicationStatus();
         }
     }
 
@@ -18,6 +22,4 @@ cancelEditProfile(() => {
     document.getElementById('editfName').value = "";
     document.getElementById('editlName').value = "";
     document.getElementById('editPhone').value = "";
-})
-
-module.exports = cancelEditProfile = cancelEditProfile;
+}
