@@ -12,7 +12,7 @@
     "@react-native-firebase/app": "^6.7.1",
     "@react-navigation/bottom-tabs": "^5.3.3",
     "@react-navigation/native": "^5.2.3",
-    "@react-navigation/stack": "^5.2.14",
+    "@react-navigation/stack": "^5.2.18",
     "bootstrap": "^4.4.1",
     "expo": "~37.0.3",
     "express": "^4.17.1",

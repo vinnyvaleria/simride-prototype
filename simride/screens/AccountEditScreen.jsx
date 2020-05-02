@@ -8,18 +8,14 @@ import {
   Alert,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import { COLORS } from '../constants/colors';
 import logo from '../assets/images/logo.png';
+
 import profilepicture from '../assets/images/picture.jpg';
 import SubmitButton from '../components/individuals/SubmitButton';
 
-import AccountEditScreen from './AccountEditScreen';
-
-const Stack = createStackNavigator();
-
-export default class AccountMainScreen extends React.Component {
+export default class AccountEditScreen extends React.Component {
   constructor (props) {
     super(props);
 
@@ -27,7 +23,7 @@ export default class AccountMainScreen extends React.Component {
     this.lastName = 'Zhong';
     this.email = 'abc@yahoo.com';
     this.phoneNumber = 97328177;
-    this.driverstatus = 'null';
+    this.driverstatus = 'no';
   }
 
   render () {
@@ -38,13 +34,6 @@ export default class AccountMainScreen extends React.Component {
         <Text style={styles.subtitle}>Email : {this.email}</Text>
         <Text style={styles.subtitle}>Phone Number : +65 {this.phoneNumber}</Text>
         <Text style={styles.subtitle}>Driver Status : {this.driverstatus}</Text>
-
-        <View style={styles.equalspace}>
-          <SubmitButton 
-            title='Edit Profile' 
-            onPress={() => {this.props.navigation.navigate('Edit Profile');}}/>
-          <SubmitButton title='Logout' />
-        </View>
         
       </View>
     );
@@ -100,13 +89,4 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
 });
-
-function AccountStack () {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name='Account' component={Account} />
-      <Stack.Screen name='Edit Profile' component={AccountEditScreen} />
-    </Stack.Navigator>
-  )
-}
 
