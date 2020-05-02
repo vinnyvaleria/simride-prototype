@@ -26,11 +26,9 @@ const styles=StyleSheet.create({
     margin: 15,
     backgroundColor: COLORS.WHITE,
     borderRadius: 10,
-    fontSize: 50,
-    alignSelf: 'center',
     height: 150,
     width: 150,
-    justifyContent: 'space-evenly',
+    //justifyContent: 'space-evenly',
   },
 
   logo: {

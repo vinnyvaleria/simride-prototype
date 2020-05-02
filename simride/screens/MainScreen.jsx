@@ -17,12 +17,30 @@ import viewmessages from '../assets/images/view-messages.png';
 
 import DashboardBox from '../components/individuals/DashboardBox';
 
+import profilepicture from '../assets/images/picture.jpg';
+
 export default class MainScreen extends React.Component {
+  constructor (props) {
+    super(props);
+
+    this.firstName = 'Vinny';
+    this.balance = 10.00;
+  }
+
   render () {
     return (
       <View style={styles.formwrap}>
-        <Image style={styles.logo} source={logo} />
-        <Text style={styles.title}>This is main MainScreen</Text>
+
+        <View style={styles.equalspace}>
+          <View>
+            <Text style={styles.opening}>Welcome back, {'\n'}{this.firstName}</Text>
+            <Text style={styles.balance}>Current Balance: {this.balance}</Text>
+          </View>
+          
+          <Image style={styles.image} source={profilepicture} />
+        </View>
+        
+        <Text style={styles.subtitle}>How can I help you today?</Text>
 
         <View style={styles.equalspace}>
           <DashboardBox source={scheduleride} label='Schedule a Ride' />
@@ -44,17 +62,34 @@ const styles = StyleSheet.create({
     maxWidth: 500,
   },
 
-  logo: {
-    height: 80,
-    width: 80,
-    alignSelf: 'center',
-    marginBottom: 10,
+  image: {
+    height: 100,
+    width: 100,
+    alignSelf: 'flex-end',
+    marginBottom: 40,
+    borderRadius: 50,
   },
 
-  title: {
+  opening: {
     fontSize: 30,
+    fontWeight: '700',
+    marginBottom: 10,
+    color: COLORS.YELLOW,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+  },
+
+  balance: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 20,
+    color: COLORS.GREY,
+  },
+
+  subtitle: {
+    fontSize: 20,
     fontWeight: '600',
-    marginBottom: 30,
+    marginBottom: 10,
     color: COLORS.WHITE,
     textAlign: 'center',
   },
@@ -74,7 +109,7 @@ const styles = StyleSheet.create({
 
   equalspace: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });
 
