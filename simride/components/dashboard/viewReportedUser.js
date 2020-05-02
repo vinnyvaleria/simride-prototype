@@ -2,7 +2,7 @@ import firebase from '../../../base';
 import 'firebase/firestore';
 
 // view the reported user
-export const viewReportedUser = () => {
+export const viewReportedUser = (e) => {
     var userID = e.target.parentElement.parentElement.id;
     document.getElementById('div_ViewApplicant').style.display = "none";
     document.getElementById('div_ViewReportedUser').style.display = "block";

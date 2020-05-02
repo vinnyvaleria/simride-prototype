@@ -1,10 +1,10 @@
-import {checkEmailWallet} from './checkEmailWallet';
+import {checkEmailWallet, user} from './checkEmailWallet';
 import {maxAmtCalc} from './maxAmtCalc';
 import {topUpWalletPage} from './topUpWalletPage';
 import {walletHomePage} from './walletHomePage';
 import {cashOut} from './cashOut';
 import {submitCashOut} from './submitCashOut';
-import {transactionPage} from './transactionPage';
+import {transactionsPage} from './transactionsPage';
 
 import React from 'react';
 import { View } from 'react-native';
@@ -17,8 +17,6 @@ class Wallet extends React.Component {
         super(props);
         this.handleToken = this.handleToken.bind(this);
         this.setTwoNumberDecimal = this.setTwoNumberDecimal.bind(this);
-        this.topupWallet = this.topupWallet.bind(this);
-        this.transactionsPage = this.transactionsPage.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             amount: '',

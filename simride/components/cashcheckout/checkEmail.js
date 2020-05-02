@@ -1,8 +1,10 @@
 import firebase from '../../../base';
-import {checkDriverApplicationStatus} from './checkDriverApplicationStatus';
-import { bindUser as user } from '../../functions/bindUserData';
 
-// checks email and signs user out if no such email found
+import { loadCashout } from './loadCashout';
+import { loadCashoutHistory } from './loadCashoutHistory';
+
+let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+
 export const checkEmail = () => {
     const email = firebase.auth().currentUser.email;
     const accountsRef = firebase.database().ref('accounts');
@@ -23,15 +25,12 @@ export const checkEmail = () => {
                 user[9] = child.key;
             });
         }).then(() => {
-            if (typeof email === 'undefined') {
+            if (typeof user[3] === 'undefined') {
                 firebase.auth().signOut();
             } else {
-                if (user[6] === "yes") {
-                    document.getElementById('btnApplyDriver').style.display = "none";
-                } else {
-                    if (user[5] === "no") {
-                        checkDriverApplicationStatus();
-                    }
+                if (user[6] !== "") {
+                    loadCashout();
+                    loadCashoutHistory();
                 }
             }
         });

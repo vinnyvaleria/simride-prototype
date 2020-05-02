@@ -1,10 +1,11 @@
+import 'react-google-places-autocomplete/dist/index.min.css';
+import 'firebase/firestore';
+
 import React from 'react';
 import { View } from 'react-native';
-import 'firebase/firestore';
 import * as Datetime from "react-datetime";
 import { GoogleApiWrapper } from "google-maps-react";
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
-import 'react-google-places-autocomplete/dist/index.min.css';
 
 import {cancelBooking} from './cancelBooking';
 import {checkEmail} from './checkEmail'
@@ -12,15 +13,15 @@ import {confirmRemovePassenger} from './confirmRemovePassenger';
 import {createBooking} from './createBooking';
 import {deleteBooking} from './deleteBooking';
 import {extendJoinBooking} from './extendJoinBooking';
-import {filterChange} from './filterChange';
 import {joinBooking} from './joinBooking';
 import {removePassenger} from './removePassenger';
 import {showRecurring} from './showRecurring';
 import {submitCreateBooking} from './submitCreateBooking';
 import {valid} from './valid';
-import {viewAllBookings} from './viewAllBookings';
 import {viewCreatedBooking} from './viewCreatedBooking';
 import {viewMyBookings} from './viewMyBookings';
+import { viewAllBookings } from './viewAllBookings'
+import { filterChange } from './filterChange'
 
 class Booking extends React.Component {
     constructor(props) {

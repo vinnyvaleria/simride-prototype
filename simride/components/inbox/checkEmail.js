@@ -1,14 +1,14 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
-import { bindUser as user } from '../../functions/bindUserData';
 
 var allchats = [];
 var chats = [];
 var unameArr = [];
+var user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+
 // checks email and signs user out if no such email found
 export const checkEmail = (e) => {
     const email = firebase.auth().currentUser.email;
-
     const accountsRef = firebase.database().ref('accounts');
     accountsRef.orderByChild('email')
         .equalTo(email)
@@ -53,6 +53,7 @@ export const checkEmail = (e) => {
                 }
             }
         });
+        alert(user)
 }
 
 export {user, chats, unameArr};

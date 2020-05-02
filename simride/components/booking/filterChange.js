@@ -1,7 +1,6 @@
-import 'firebase/firestore';
-import "firebase/storage";
 import firebase from '../../../base';
 import * as moment from 'moment';
+import {viewBooking} from './viewBooking';
 
 export const filterChange = () => {
     const self = this;
@@ -91,7 +90,7 @@ export const filterChange = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'View');
-                btn.onclick = self.viewBooking;
+                btn.onclick = viewBooking;
                 document.getElementById('btnViewBooking' + v).appendChild(btn);
 
                 console.log(btn);

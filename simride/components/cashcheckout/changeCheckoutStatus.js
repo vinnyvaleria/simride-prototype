@@ -3,7 +3,6 @@ import 'firebase/firestore';
 import { bindUser as user } from '../../functions/bindUserData';
 import {loadCashout} from './loadCashout';
 import {loadCashoutHistory} from './loadCashoutHistory';
-import { bindUser as user } from '../../functions/bindUserData';
 
 export const changeCheckoutStatus = (e) => {
     var checkoutID = e.target.parentElement.parentElement.id;

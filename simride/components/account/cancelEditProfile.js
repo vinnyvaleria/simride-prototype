@@ -1,6 +1,6 @@
 const util = require('./util')
 import {checkDriverApplicationStatus} from './checkDriverApplicationStatus';
-import { bindUser as user } from '../../functions/bindUserData';
+import { user } from './checkEmail';
 
 export const cancelEditProfile = () => {
     util.profilePageReset();

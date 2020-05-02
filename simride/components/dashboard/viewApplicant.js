@@ -1,8 +1,9 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 
+let frontimg, backimg;
 // view applicant that applied to be driver
-export const viewApplicant = () => {
+export const viewApplicant = (e) => {
     var driverID = e.target.parentElement.parentElement.id;
     document.getElementById('div_ViewApplicant').style.display = "block";
     document.getElementById('div_ViewReportedUser').style.display = "none";
@@ -35,9 +36,10 @@ export const viewApplicant = () => {
         .child("front")
         .getDownloadURL()
         .then(frontURL => {
-            this.setState({
-                frontURL
-            });
+            // this.setState({
+            //     frontURL
+            // });
+            frontimg = frontURL;
         });
 
     firebase.storage()
@@ -45,8 +47,11 @@ export const viewApplicant = () => {
         .child("back")
         .getDownloadURL()
         .then(backURL => {
-            this.setState({
-                backURL
-            });
+            // this.setState({
+            //     backURL
+            // });
+            backimg = backURL;
         });
 }
+
+export {frontimg, backimg}

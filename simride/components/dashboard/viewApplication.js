@@ -1,5 +1,6 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import { viewApplicant } from './viewApplicant'
 
 // view list of applicants
 export const viewApplication = () => {
@@ -33,7 +34,7 @@ export const viewApplication = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'View');
-                btn.onclick = self.viewApplicant;
+                btn.onclick = viewApplicant;
                 document.getElementById('btnViewApplicant' + v).appendChild(btn);
             }
         }

@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import {user} from "./checkEmailWallet";
 
 export const getLastFiveBookings = () => {
+    let userDetails = [];
     document.getElementById('tb_LastFiveTransactions').innerHTML = '';
 
     // get all accounts

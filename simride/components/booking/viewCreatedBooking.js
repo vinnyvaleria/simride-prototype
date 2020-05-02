@@ -2,6 +2,8 @@ import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
 import * as moment from 'moment';
+import {user} from './checkEmail';
+import {viewBooking} from './viewBooking';
 
 // view created bookings by driver
 export const viewCreatedBooking = () => {
@@ -74,7 +76,7 @@ export const viewCreatedBooking = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'View');
-                btn.onclick = self.viewBooking;
+                btn.onclick = viewBooking;
                 document.getElementById('btnViewCreatedBooking' + v).appendChild(btn);
             }
         }

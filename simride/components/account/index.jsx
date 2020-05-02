@@ -14,9 +14,7 @@ import { submitDriverDetails } from './submitDriverDetails';
 import { submitEditProfile } from './submitEditProfile';
 import { submitPassword } from './submitPassword';
 import { cancelPassword } from './cancelPassword';
-import { handleUploadBack } from './handleUploadBack';
-import { handleUploadFront } from './handleUploadFront';
-import { bindUserData, bindUser } from '../../functions/bindUserData';
+import { bindUserData } from '../../functions/bindUserData';
 const util = require('./util')
 
 class Account extends React.Component {
@@ -71,7 +69,7 @@ class Account extends React.Component {
 
     // goes back to login page if stumble upon another page by accident without logging in
     componentDidMount() {
-        checkEmail(user[3]);
+        checkEmail();
     }
 
     editProfile = () => {
@@ -90,22 +88,145 @@ class Account extends React.Component {
         document.getElementById('submitDriverDetails').style.display = 'none';
     }
 
-    logout = () => {
-        user[0] = '';
-        user[1] = '';
-        user[2] = '';
-        user[3] = '';
-        user[4] = '';
-        user[5] = '';
-        user[6] = '';
-        user[7] = '';
-        user[8] = '';
-        user[9] = '';
-
-        firebase.auth().signOut();
+    submitEditProfile_Click = () => {
+      submitEditProfile(this.state.firstName, this.state.lastName, this.state.phone);
     }
 
-    render() {
+    submitPassword_Click = () => {
+      submitPassword(this.state.newPassword, this.state.confirmPassword);
+
+      this.setState({
+        newPassword: '',
+        confirmPassword: ''
+      });
+    }
+
+    submitDriverDetails_Click = () => {
+      submitDriverDetails(this.state.license, this.state.carplate);
+      this.state = {
+        carplate: '',
+        license: '',
+        status: '',
+        dateApplied: ''
+      };
+    }
+
+  // uplaods front license pic
+  handleUploadFront = () => {
+    document.getElementById('cancelApplyDriverButton').disabled = true;
+    const { image } = this.state;
+    if (document.getElementById('file').value !== '') {
+      const uploadTask = firebase.storage().ref().child(`license/${user[9]}/front`).put(image);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          alert('Error: ' + error);
+          console.log(error);
+        }, () => {
+          // complete function ...
+          alert('Image is uploaded!');
+          document.getElementById('cancelApplyDriverButton').disabled = false;
+          document.getElementById('btnImgFrontUpload').style.display = 'none';
+          document.getElementById('btnImgBackUpload').style.display = 'inline-block';
+          document.getElementById('td_license').innerHTML = 'License Back:';
+          document.getElementById('file').value = "";
+          firebase.storage()
+            .ref("license/" + user[9])
+            .child("front")
+            .getDownloadURL()
+            .then(frontURL => {
+              this.setState({
+                frontURL
+              });
+            });
+        });
+    } else {
+      alert('Error: No file selected');
+      document.getElementById('cancelApplyDriverButton').disabled = false;
+    }
+  }
+
+  // uploads back license pic
+  handleUploadBack = () => {
+    document.getElementById('cancelApplyDriverButton').disabled = true;
+    var date = new Date;
+    var m = date.getMonth();
+    var d = date.getDate();
+    var y = date.getFullYear();
+    var today = new Date(y, m, d);
+
+    const { image } = this.state;
+    if (document.getElementById('file').value !== '') {
+      const uploadTask = firebase.storage().ref().child(`license/${user[9]}/back`).put(image);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          console.log(error);
+        }, () => {
+          // complete function ...
+          document.getElementById('cancelApplyDriverButton').disabled = false;
+          alert('Image is uploaded!')
+          firebase.storage()
+            .ref("license/" + user[9])
+            .child("back")
+            .getDownloadURL()
+            .then(backURL => {
+              this.setState({
+                backURL
+              });
+            });
+
+          const accountsRef = firebase.database().ref('driverDetails/' + user[9]);
+          const driverDetails = {
+            completed: "yes",
+            dateApplied: today.toDateString()
+          }
+
+          accountsRef.update(driverDetails);
+          alert('Your application has been submitted!');
+          util.profilePageReset();
+          util.cancelApplyDriver();
+        });
+    } else {
+      alert('Error: No file selected');
+      document.getElementById('cancelApplyDriverButton').disabled = false;
+    }
+  }
+
+  logout = () => {
+      user[0] = '';
+      user[1] = '';
+      user[2] = '';
+      user[3] = '';
+      user[4] = '';
+      user[5] = '';
+      user[6] = '';
+      user[7] = '';
+      user[8] = '';
+      user[9] = '';
+
+      firebase.auth().signOut();
+  }
+
+render() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='acctPage'>
@@ -225,15 +346,15 @@ class Account extends React.Component {
           </div>
           <br />
           <br />
-          <button id='submitDriverDetails' onClick={submitDriverDetails} style={{display:'none'}}>Continue</button>
-          <button id='btnImgFrontUpload' onClick={handleUploadFront} style={{display:'none'}}>Upload Front</button>
-          <button id='btnImgBackUpload' onClick={handleUploadBack} style={{display:'none'}}>Upload Back</button>
+          <button id='submitDriverDetails' onClick={this.submitDriverDetails_Click} style={{display:'none'}}>Continue</button>
+          <button id='btnImgFrontUpload' onClick={this.handleUploadFront} style={{display:'none'}}>Upload Front</button>
+          <button id='btnImgBackUpload' onClick={this.handleUploadBack} style={{display:'none'}}>Upload Back</button>
           <button id='cancelApplyDriverButton' onClick={util.cancelApplyDriver} style={{display:'none'}}>Cancel</button>
           <button id='editButton' onClick={this.editProfile}>Edit Profile</button>
           <button id='changePasswordButton' onClick={util.changePassword}>Change Password</button>
-          <button id='submitEditButton' onClick={submitEditProfile} style={{display:'none'}}>Update</button>
+          <button id='submitEditButton' onClick={this.submitEditProfile_Click} style={{display:'none'}}>Update</button>
           <button id='cancelEditButton' onClick={cancelEditProfile} style={{display:'none'}}>Cancel</button>
-          <button id='submitPasswordButton' onClick={submitPassword} style={{display:'none'}}>Update</button>
+          <button id='submitPasswordButton' onClick={this.submitPassword_Click} style={{display:'none'}}>Update</button>
           <button id='cancelPasswordButton' onClick={cancelPassword} style={{display:'none'}}>Cancel</button>
           <div>
             <button id='btnApplyDriver' onClick={util.applyDriver} style={{display:'none'}}>Apply to be a driver</button>

@@ -2,9 +2,10 @@ import firebase from '../../../base';
 import * as moment from 'moment';
 import {user} from './checkEmail';
 
-// view the booking clicked
 export const viewBooking = (e) => {
     let userDetails = [];
+    var payMethod;
+    var PostalCode;
 
     document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = null;
     document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = null;

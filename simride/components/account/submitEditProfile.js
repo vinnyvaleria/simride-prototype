@@ -1,15 +1,16 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
-import { bindUser as user } from '../../functions/bindUserData';
+import { user } from './checkEmail';
+
+const util = require('./util')
 
 // submits the edited profile and updates the realtime db
-export const submitEditProfile = (e) => {
-    e.preventDefault();
-    if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.phone !== "") {
-        user[0] = this.state.firstName;
-        user[1] = this.state.lastName;
-        user[4] = this.state.phone;
+export const submitEditProfile = (fname, lname, phone) => {
+    if (fname !== "" && lname !== "" && phone !== "") {
+        user[0] = fname;
+        user[1] = lname;
+        user[4] = phone;
 
         const accountsRef = firebase.database().ref('accounts/' + user[9]);
         accountsRef.orderByChild('email')
@@ -33,7 +34,7 @@ export const submitEditProfile = (e) => {
     document.getElementById('lbllName').innerHTML = user[1];
     document.getElementById('lblPhone').innerHTML = user[4];
 
-    Util.profilePageReset();
+    util.profilePageReset();
 
     document.getElementById('editfName').value = "";
     document.getElementById('editlName').value = "";

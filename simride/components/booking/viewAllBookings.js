@@ -1,9 +1,7 @@
-import 'firebase/firestore';
-import "firebase/storage";
 import firebase from '../../../base';
 import * as moment from 'moment';
+import {viewBooking} from './viewBooking';
 
-// view all available bookings and displays in table
 export const viewAllBookings = () => {
     let userDetails = [];
     const self = this;
@@ -72,7 +70,7 @@ export const viewAllBookings = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'View');
-                btn.onclick = self.viewBooking;
+                btn.onclick = viewBooking;
                 document.getElementById('btnViewBooking' + v).appendChild(btn);
 
                 console.log(btn);

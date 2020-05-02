@@ -1,11 +1,10 @@
 import firebase from '../../../base';
-import { bindUser as user } from '../../functions/bindUserData';
+import { user } from './checkEmail';
 
 export const checkDriverApplicationStatus = () => {
     firebase.database().ref('driverDetails')
         .once('value')
         .then((snapshot) => {
-            var i = 0;
             snapshot.forEach((child) => {
                 if (user[9] === child.key) {
                     if (child.val().completed === "yes") {
@@ -19,7 +18,9 @@ export const checkDriverApplicationStatus = () => {
                         document.getElementById('btnApplyDriver').style.display = "none";
                     }
                 } else {
-                    document.getElementById('btnApplyDriver').style.display = "inline-block";
+                    if (document.getElementById('btnApplyDriver') !== null) {
+                        document.getElementById('btnApplyDriver').style.display = "inline-block";
+                    }
                 }
             })
         });

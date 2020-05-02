@@ -1,6 +1,7 @@
 import 'firebase/firestore';
 import firebase from '../../../base';
 import * as moment from 'moment';
+import { changeCheckoutStatus } from './changeCheckoutStatus';
 
 export const loadCashout = () => {
     const self = this;
@@ -37,7 +38,7 @@ export const loadCashout = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'Done');
-                btn.onclick = self.changeCheckoutStatus;
+                btn.onclick = changeCheckoutStatus;
                 document.getElementById('btnUpdateRequest' + v).appendChild(btn);
             }
         }

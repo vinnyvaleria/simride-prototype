@@ -1,5 +1,6 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import { viewReportedUser } from './viewReportedUser'
 
 // view reported users
 export const viewReportedList = () => {
@@ -33,7 +34,7 @@ export const viewReportedList = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'View');
-                btn.onclick = self.viewReportedUser;
+                btn.onclick = viewReportedUser;
                 document.getElementById('btnViewReportedUser' + v).appendChild(btn);
             }
         }

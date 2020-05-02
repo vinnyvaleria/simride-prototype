@@ -1,4 +1,5 @@
 import firebase from '../../../base';
+import {walletHomePage} from './walletHomePage';
 
 let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 // checks email and signs user out if no such email found
@@ -26,7 +27,7 @@ export const checkEmailWallet = (e) => {
                 firebase.auth().signOut();
             } else {
                 if (user[6] !== "") {
-                    this.walletHomePage();
+                    walletHomePage();
                     if (user[6].toLowerCase() === 'yes') {
                         document.getElementById("btnTopUpPage").style.display = "none";
                         document.getElementById("tbl_last5").style.display = "none";

@@ -3,15 +3,12 @@
 /* eslint-disable promise/catch-or-return */
 import React from 'react';
 import { View } from 'react-native';
-import firebase from '../../../base';
 import 'firebase/firestore';
 
-import {loadCashout} from './loadCashout';
-import {loadCashoutHistory} from './loadCashoutHistory';
+import {checkEmail} from './checkEmail';
 
 class Cashout extends React.Component {
     constructor(props) {
-
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
@@ -27,14 +24,9 @@ class Cashout extends React.Component {
 
     // goes back to login page if stumble upon another page by accident without logging in
     componentDidMount() {
-        if (typeof user[3] === 'undefined') {
-            firebase.auth().signOut();
-        }
-        else {
-            loadCashout();
-            loadCashoutHistory();
-        }
+        checkEmail();
     }
+    
 
     render() {
         return (

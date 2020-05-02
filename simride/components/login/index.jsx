@@ -21,11 +21,7 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.login = this.login.bind(this);
-    // checkEmailLogin = checkEmailLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    // signup = signup.bind(this);
-    // submitForgotPass = submitForgotPass.bind(this);
-    //this.forgotPass = () => forgotPass;
     this.state = {
       firstName: '',
       lastName: '',
@@ -72,7 +68,9 @@ class Login extends React.Component {
       });
     
     if (user[6] === "no") {
-      document.getElementById('checkOutTab').style.display = 'none';
+      if (document.getElementById('checkOutTab') !== null) {
+        document.getElementById('checkOutTab').style.display = 'none';
+      }
     }
   }
 
@@ -198,5 +196,5 @@ class Login extends React.Component {
 }
 
 export default Login;
-export { user }
+export { user, unameArr }
     

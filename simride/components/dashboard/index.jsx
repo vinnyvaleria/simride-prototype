@@ -10,25 +10,14 @@ import { back } from './back'
 import { banUser } from './banUser'
 import { unBanUser } from './unBanUser'
 import { checkEmailDashboard, user } from './checkEmailDashboard'
-
-// const acknowledgeNotif = require('./dashboard/acknowledgeNotif')
-// const unBanUser = require('./dashboard/unBanUser')
-// const validateAccount = require('./dashboard/validateAccount')
-// const viewApplicant = require('./dashboard/viewApplicant')
-// const viewApplication = require('./dashboard/viewApplication')
-// const viewCreatedBookingDashboard = require('./dashboard/viewCreatedBooking')
-// const viewMyBookingsDashboard = require('./dashboard/viewMyBookings')
-// const viewReportedList = require('./dashboard/viewReportedList')
-// const viewReportedUser = require('./dashboard/viewReportedUser')
-// const walletBalanceCheck = require('./dashboard/walletBalanceCheck')
-// const notifications = require('./dashboard/notifications')
+import { frontimg, backimg } from './viewApplicant'
 
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            frontURL: '',
-            backURL: ''
+            frontURL: frontimg,
+            backURL: backimg
         };
     }
 
@@ -83,7 +72,7 @@ render() {
                 <tbody>
                   <tr id='uploadedFront'>
                     <td>
-                      {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
+                      {this.state.frontURL && <img src={this.state.frontURL} onLoad={alert(this.state.frontURL, frontimg)} height='150' width='200' />}
                     </td>
                     <td>
                       {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}
