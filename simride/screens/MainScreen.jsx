@@ -59,7 +59,7 @@ export default class MainScreen extends React.Component {
 const styles = StyleSheet.create({
   formwrap: {
     alignSelf: 'center',
-    maxWidth: 500,
+    paddingTop: 150,
   },
 
   image: {
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
 
   subtitle: {
     fontSize: 20,
-    fontWeight: '600',
+    fontWeight: '500',
     marginBottom: 10,
     color: COLORS.WHITE,
     textAlign: 'center',

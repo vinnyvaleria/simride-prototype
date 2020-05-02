@@ -52,7 +52,8 @@ export default class RegisterScreen extends React.Component {
 const styles = StyleSheet.create({
   formwrap: {
     alignSelf: 'center',
-    maxWidth: 500,
+    justifyContent: 'center',
+    paddingTop: 150,
   },
 
   logo: {
