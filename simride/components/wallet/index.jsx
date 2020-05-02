@@ -11,6 +11,10 @@ import { View } from 'react-native';
 import 'firebase/firestore';
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
+import { toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 class Wallet extends React.Component {
     constructor(props) {
@@ -45,17 +49,19 @@ class Wallet extends React.Component {
 
     // handles payment -> check firestripe for stripe cloud functiosn with firebase
     async handleToken(token) {
-        let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
+        let product = {price: this.state.amount, name: "Top-Up E-Wallet", description: "Top-Up"}
         const response = await axios.post(
-            "http://localhost:5000/charge", // by right when served onto staging server port will be 5000
+            "http://localhost:5000/Wallet/checkout", // by right when served onto staging server port will be 5000
             { token, product }
         );
         const { status } = response.data;
         console.log("Response:", response.data);
         if (status === "success") {
-            toast("Success! Check email for details", { type: "success" });
+            alert('Success!');
+            //toast("Success! Check email for details", { type: "success" });
         } else {
-            toast("Something went wrong", { type: "error" });
+            //toast("Something went wrong", { type: "error" });
+            alert('Error');
         }
     }
 

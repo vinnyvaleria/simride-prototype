@@ -9,7 +9,7 @@
     "source": "functions"
   },
   "hosting": {
-    "public": "public",
+    "public": "web-build",
     "ignore": [
       "firebase.json",
       "**/.*",
