@@ -30,11 +30,20 @@ export default class AccountEditScreen extends React.Component {
     return (
       <View style={styles.formwrap}>
         <Image style={styles.image} source={profilepicture} />
-        <Text style={styles.title}>{this.firstName} {this.lastName}</Text>
-        <Text style={styles.subtitle}>Email : {this.email}</Text>
-        <Text style={styles.subtitle}>Phone Number : +65 {this.phoneNumber}</Text>
-        <Text style={styles.subtitle}>Driver Status : {this.driverstatus}</Text>
-        
+
+        <Text style={styles.header}>First Name</Text>
+        <TextInput style={styles.textinput} placeholder={this.firstName} />
+
+        <Text style={styles.header}>Last Name</Text>
+        <TextInput style={styles.textinput} placeholder={this.lastName} />
+
+        <Text style={styles.header}>Phone Number</Text>
+        <TextInput style={styles.textinput} placeholder={this.phoneNumber.toString()} />
+
+        <View style={styles.equalspace}>
+          <SubmitButton title='Update Profile' />
+          <SubmitButton title='Change Password' />
+        </View>
       </View>
     );
   }
@@ -43,7 +52,6 @@ export default class AccountEditScreen extends React.Component {
 const styles = StyleSheet.create({
   formwrap: {
     alignSelf: 'center',
-    paddingTop: 150,
   },
 
   image: {

@@ -44,8 +44,7 @@ export default class AccountMainScreen extends React.Component {
             title='Edit Profile' 
             onPress={() => {this.props.navigation.navigate('Edit Profile');}}/>
           <SubmitButton title='Logout' />
-        </View>
-        
+        </View>        
       </View>
     );
   }
