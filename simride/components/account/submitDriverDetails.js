@@ -23,7 +23,7 @@ export const submitDriverDetails = (license, carplate) => {
             issueDate: document.getElementById('txtIssueDate').value,
             completed: "no",
             status: "pending",
-            dateApplied: now
+            dateApplied: now.toDateString()
         }
 
         accountsRef.update(driverDetails);

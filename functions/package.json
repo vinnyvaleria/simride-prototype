@@ -21,5 +21,17 @@
     "eslint-plugin-promise": "^4.0.1",
     "firebase-functions-test": "^0.2.0"
   },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "@babel/preset-env"
+          ]
+        }
+      ]
+    ]
+  },
   "private": true
 }
