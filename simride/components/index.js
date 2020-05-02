@@ -1,4 +1,4 @@
-const app = require('express')();
+const express = require('express');
 
 const cancelEditProfile = require('./account/cancelEditProfile')
 const cancelPassword = require('./account/cancelPassword')
@@ -8,7 +8,7 @@ const checkDriverApplicationStatus = require('./account/checkDriverApplicationSt
 const checkEmailAccount = require('./account/checkEmailAccount')
 const editProfile = require('./account/editProfile')
 const getLastFiveBookings = require('./account/getLastFiveBookings')
-const handleImgChange = require('./account/handleImgChange')
+//const handleImgChange = require('./account/handleImgChange')
 const handleUploadBack = require('./account/handleUploadBack')
 const handleUploadFront = require('./account/handleUploadFront')
 const loadCashout = require('./account/loadCashout')
@@ -76,3 +76,5 @@ const searchUsername = require('./inbox/searchUsername')
 const sendMessage = require('./inbox/sendMessage')
 const submitReport = require('./inbox/submitReport')
 const viewUserProfile = require('./inbox/viewUserProfile')
+
+const PrimaryButton = require('./PrimaryButton')
