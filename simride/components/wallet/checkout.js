@@ -20,7 +20,7 @@ const errorPayment = data => {
 const onToken = (amount, description) => token =>
   axios.post(PAYMENT_SERVER_URL,
     {
-      description,
+      description: description,
       source: token.id,
       currency: CURRENCY,
       amount: fromDollarToCent(amount)

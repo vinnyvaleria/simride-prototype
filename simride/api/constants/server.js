@@ -1,6 +1,6 @@
 const path = require('path');
 
-const SERVER_PORT = 9000;
+const SERVER_PORT = 3000;
 
 const SERVER_CONFIGS = {
     PRODUCTION: process.env.NODE_ENV === 'production',
