@@ -21,7 +21,7 @@ class Wallet extends React.Component {
         this.setTwoNumberDecimal = this.setTwoNumberDecimal.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
-            amount: '',
+            amount: '0.00',
             maxAmt: maxAmtCalc(),
             cashoutamount: ''
         }
@@ -44,6 +44,14 @@ class Wallet extends React.Component {
             [e.target.name]: e.target.value
         });
     }
+
+    submitCashOut_Click = () => {
+        submitCashOut();
+
+        this.state = {
+            cashoutamount: ''
+        };
+    } 
 
     // // handles payment -> check firestripe for stripe cloud functiosn with firebase
     // async handleToken(token) {
@@ -99,7 +107,7 @@ class Wallet extends React.Component {
             </div>
         </div>
         <div id='div_WalletTopUp' style={{display: 'none'}}>
-            <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' /><br/><br/>
+            <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' style={{width: '9em'}} /><br/><br/>
                 <Checkout
                     name={'SIMRide'}
                     description={'E-Wallet Top Up'}
@@ -116,9 +124,9 @@ class Wallet extends React.Component {
             /> */}
         </div>
         <div id='div_CashOut' style={{display: 'none'}}>
-            <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} style={{width: '8em'}} name='cashoutamount' />
+            <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} style={{width: '9em'}} name='cashoutamount' />
             <br/><br/>
-            <button id='btnSubmitCashOut' onClick={ submitCashOut }>Cash-Out</button>
+            <button id='btnSubmitCashOut' onClick={ this.submitCashOut_Click }>Cash-Out</button>
         </div>
         <div id='div_WalletHistory' style={{display: 'none'}}>
         </div>

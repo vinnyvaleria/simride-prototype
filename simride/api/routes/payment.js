@@ -13,21 +13,14 @@ const postStripeCharge = res => (stripeErr, stripeRes) => {
 }
 
 const paymentApi = app => {
-    app.get('/Wallet', (req, res) => {
+    app.get('/', (req, res) => {
         res.send({
             message: 'Hello Stripe checkout server!',
             timestamp: new Date().toISOString()
         })
     });
 
-    app.post('/Wallet', (req, res) => {
-        const transaction = firebase.database().ref('transaction');
-        const transactionForm = {
-            details: req.body
-        }
-
-        transaction.push(transactionForm);
-
+    app.post('/', (req, res) => {
         stripe.charges.create(req.body, postStripeCharge(res));
     });
 

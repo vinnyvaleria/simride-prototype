@@ -33,10 +33,7 @@ export const submitCashOut = () => {
 
     notificationRef.push(notification);
     requestCheckOutRef.push(requestForm);
-    this.state = {
-        cashoutamount: ''
-    };
-
+    
     user[8] = balance;
     document.getElementById('cashOutInput').value = null;
 

@@ -40,6 +40,9 @@
     },
     "firestore": {
       "port": 8080
+    },
+    "stripe": {
+      "port": 3000
     }
   },
   "firestore": {
