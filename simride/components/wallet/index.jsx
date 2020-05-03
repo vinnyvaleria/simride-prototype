@@ -5,13 +5,11 @@ import {walletHomePage} from './walletHomePage';
 import {cashOut} from './cashOut';
 import {submitCashOut} from './submitCashOut';
 import {transactionsPage} from './transactionsPage';
+import Checkout from './checkout'
 
 import React from 'react';
 import { View } from 'react-native';
 import 'firebase/firestore';
-import StripeCheckout from "react-stripe-checkout";
-import axios from "axios";
-import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,7 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 class Wallet extends React.Component {
     constructor(props) {
         super(props);
-        this.handleToken = this.handleToken.bind(this);
+        //this.handleToken = this.handleToken.bind(this);
         this.setTwoNumberDecimal = this.setTwoNumberDecimal.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.state = {
@@ -47,23 +45,23 @@ class Wallet extends React.Component {
         });
     }
 
-    // handles payment -> check firestripe for stripe cloud functiosn with firebase
-    async handleToken(token) {
-        let product = {price: this.state.amount, name: "Top-Up E-Wallet", description: "Top-Up"}
-        const response = await axios.post(
-            "http://localhost:5000/Wallet/checkout", // by right when served onto staging server port will be 5000
-            { token, product }
-        );
-        const { status } = response.data;
-        console.log("Response:", response.data);
-        if (status === "success") {
-            alert('Success!');
-            //toast("Success! Check email for details", { type: "success" });
-        } else {
-            //toast("Something went wrong", { type: "error" });
-            alert('Error');
-        }
-    }
+    // // handles payment -> check firestripe for stripe cloud functiosn with firebase
+    // async handleToken(token) {
+    //     let product = {price: this.state.amount, name: "Top-Up E-Wallet", description: "Top-Up"}
+    //     const response = await axios.post(
+    //         "http://localhost:5000/Wallet/checkout", // by right when served onto staging server port will be 5000
+    //         { token, product }
+    //     );
+    //     const { status } = response.data;
+    //     console.log("Response:", response.data);
+    //     if (status === "success") {
+    //         alert('Success!');
+    //         //toast("Success! Check email for details", { type: "success" });
+    //     } else {
+    //         //toast("Something went wrong", { type: "error" });
+    //         alert('Error');
+    //     }
+    // }
 
     render() {
     return (
@@ -102,14 +100,20 @@ class Wallet extends React.Component {
         </div>
         <div id='div_WalletTopUp' style={{display: 'none'}}>
             <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' /><br/><br/>
-            <StripeCheckout
+                <Checkout
+                    name={'SIMRide'}
+                    description={'E-Wallet Top Up'}
+                    amount={this.state.amount}
+                    email={user[3]}
+                />
+            {/* <StripeCheckout
                 stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
                 token={this.handleToken}
                 amount={this.state.amount * 100}
                 name="E-Wallet Top-Up"
                 currency="SGD"
                 email={user[3]}
-            />
+            /> */}
         </div>
         <div id='div_CashOut' style={{display: 'none'}}>
             <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} style={{width: '8em'}} name='cashoutamount' />

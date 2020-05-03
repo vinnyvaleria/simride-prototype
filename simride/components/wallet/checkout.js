@@ -1,53 +1,43 @@
-const cors = require("cors");
-const express = require("express");
-const stripe = require("stripe")("sk_test_WzkXhy9bPK7Wir3HZrpiqxB800AbVi94mG");
-const uuid = require("uuid/v4");
+import React from 'react'
+import axios from 'axios';
+import StripeCheckout from 'react-stripe-checkout';
 
-const app = express();
+import STRIPE_PUBLISHABLE from './constants/stripe';
+import PAYMENT_SERVER_URL from './constants/server';
 
-app.use(express.json());
-app.use(cors());
+const CURRENCY = 'SGD';
 
-app.get("/Wallet", (req, res) => {
-    res.send("Wallet Page");
-});
+const fromDollarToCent = amount => parseInt(amount * 100);
 
-app.post("/checkout", async (req, res) => {
-    console.log("Request:", req.body);
+const successPayment = data => {
+  alert('Payment Successful');
+};
 
-    let error;
-    let status;
-    try {
-        const { token, product } = req.body;
+const errorPayment = data => {
+  alert('Payment Error');
+};
 
-        const customer = await stripe.customers.create({
-            email: token.email,
-            source: token.id
-        });
+const onToken = (amount, description) => token =>
+  axios.post(PAYMENT_SERVER_URL,
+    {
+      description,
+      source: token.id,
+      currency: CURRENCY,
+      amount: fromDollarToCent(amount)
+    })
+    .then(successPayment)
+    .catch(errorPayment);
 
-        const idempotency_key = uuid();
-        const charge = await stripe.charges.create({
-            amount: product.price * 100,
-            currency: "SGD",
-            customer: customer.id,
-            receipt_email: token.email,
-            description: product.description
-        }, {
-            idempotency_key
-        });
-        console.log("Charge:", {
-            charge
-        });
-        status = "success";
-    } catch (error) {
-        console.error("Error:", error);
-        status = "failure";
-    }
+const Checkout = ({ name, description, amount, email }) =>
+  <StripeCheckout
+     name={name}
+     description={description}
+     amount={fromDollarToCent(amount)}
+     token={onToken(amount, description)}
+     currency={CURRENCY}
+     stripeKey={STRIPE_PUBLISHABLE}
+     email={email}
+     allowRememberMe
+  />
 
-    res.json({
-        error,
-        status
-    });
-});
-
-app.listen(9000);
+export default Checkout;
