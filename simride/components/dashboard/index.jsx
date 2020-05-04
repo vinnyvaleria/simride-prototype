@@ -21,9 +21,8 @@ class Dashboard extends React.Component {
         };
     }
 
-    // goes back to login page if stumble upon another page by accident without logging in
-    componentDidMount() {
-        checkEmailDashboard();
+    componentWillMount() {
+      checkEmailDashboard();
     }
 
 render() {

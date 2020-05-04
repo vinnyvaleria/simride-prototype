@@ -22,6 +22,7 @@ const successPayment = data => {
 
 const errorPayment = data => {
   alert('Payment Error');
+  success = false;
 };
 
 const gotoWalletPage = (token, amount) => {

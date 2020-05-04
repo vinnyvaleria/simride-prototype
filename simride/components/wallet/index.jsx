@@ -108,12 +108,12 @@ class Wallet extends React.Component {
         </div>
         <div id='div_WalletTopUp' style={{display: 'none'}}>
             <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' style={{width: '9em'}} /><br/><br/>
-                <Checkout
-                    name={'SIMRide'}
-                    description={'E-Wallet Top Up'}
-                    amount={this.state.amount}
-                    email={user[3]}
-                />
+            <Checkout
+                name={'SIMRide'}
+                description={'E-Wallet Top Up'}
+                amount={this.state.amount}
+                email={user[3]}
+            />
             {/* <StripeCheckout
                 stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
                 token={this.handleToken}

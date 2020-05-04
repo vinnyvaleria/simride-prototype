@@ -1,6 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
 import * as moment from 'moment';
+import {user} from './checkEmailDashboard';
 var userDetails = [];
 
 export const notifications = (tb) => {
