@@ -1,4 +1,4 @@
-import 'react-google-places-autocomplete/dist/index.min.css';
+//import 'react-google-places-autocomplete/dist/index.min.css';
 import 'firebase/firestore';
 
 import React from 'react';

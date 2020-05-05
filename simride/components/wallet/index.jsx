@@ -11,7 +11,7 @@ import React from 'react';
 import { View } from 'react-native';
 import 'firebase/firestore';
 
-import 'react-toastify/dist/ReactToastify.css';
+//import 'react-toastify/dist/ReactToastify.css';
 
 
 class Wallet extends React.Component {

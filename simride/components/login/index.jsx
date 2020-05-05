@@ -1,5 +1,5 @@
-
 import 'firebase/firestore';
+import HTML from 'react-native-render-html';
 import firebase from '../../../base';
 import React from 'react';
 import logo from '../../assets/images/logo.png';
@@ -110,21 +110,21 @@ class Login extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ color: '#fff', fontSize: 30, fontFamily: 'Helvetica', fontWeight: '600' }}>Welcome to SIMRide</Text>
+        <Text style={{ color: '#fff', fontSize: 30, fontFamily: 'Roboto', fontWeight: '600' }}>Welcome to SIMRide</Text>
         <Image source={logo} />
         <div>
           <form>
             <div id="signinblock">
-              <br />
-              <br />
+              <br/>
+              <br/>
               <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
                 placeholder="E-Mail (test@this.com)" />
               <input value={this.state.password} onChange={this.handleChange} type="password"
                 name="password" placeholder="Password (shafiq)" style={{ marginLeft: '15px' }} />
-              <br />
+              <br/>
               <a onClick={forgotPass}>Forgot password?</a>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <div id="div_SubmitSignIn" style={{ textAlign: 'center' }}>
                 <button type="submit" onClick={this.login}>Sign In</button>
                 <button onClick={extendSignUp} style={{ marginLeft: '25px' }}>Sign Up</button>
@@ -132,12 +132,12 @@ class Login extends React.Component {
             </div>
 
             <div id="forgotpasswordblock" style={{ display: 'none' }}>
-              <br />
-              <br />
+              <br/>
+              <br/>
               <input id="forgotemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
                 placeholder="E-Mail (test@this.com)" />
-              <br />
-              <br />
+              <br/>
+              <br/>
               <div style={{ textAlign: 'center' }}>
                 <button type="submit" onClick={submitForgotPassword}>Reset Password</button>
                 <button type="submit" onClick={cancel}>Back</button>
@@ -182,7 +182,7 @@ class Login extends React.Component {
                   </tr>
                 </tbody>
               </table>
-              <br />
+              <br/>
               <div style={{ textAlign: 'center' }}>
                 <button onClick={signup}>Submit</button>
                 <button onClick={cancel} style={{ marginLeft: '25px' }}>Cancel</button>
