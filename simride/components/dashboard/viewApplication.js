@@ -1,10 +1,9 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
-import { viewApplicant } from './viewApplicant'
+import index from './index'
 
 // view list of applicants
 export const viewApplication = () => {
-    const self = this;
     document.getElementById('tb_driverApplication').innerHTML = '';
 
     const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
@@ -34,7 +33,7 @@ export const viewApplication = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'View');
-                btn.onclick = viewApplicant;
+                btn.onclick = new index().viewApplicant;
                 document.getElementById('btnViewApplicant' + v).appendChild(btn);
             }
         }

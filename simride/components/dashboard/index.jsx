@@ -2,6 +2,7 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 
+import firebase from '../../../base';
 import 'firebase/firestore';
 import React from 'react';
 import { View } from 'react-native';
@@ -10,20 +11,69 @@ import { back } from './back'
 import { banUser } from './banUser'
 import { unBanUser } from './unBanUser'
 import { checkEmailDashboard, user } from './checkEmailDashboard'
-import { frontimg, backimg } from './viewApplicant'
 
 class Dashboard extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            frontURL: frontimg,
-            backURL: backimg
-        };
-    }
+  constructor(props) {
+      super(props);
+      this.state = {
+          frontURL: '',
+          backURL: ''
+      };
+  }
 
-    componentWillMount() {
-      checkEmailDashboard();
-    }
+  componentWillMount() {
+    checkEmailDashboard();
+  }
+
+  viewApplicant = (e) => {
+    var driverID = e.target.parentElement.parentElement.id;
+    
+    const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
+    database.once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        snapshot.forEach((data) => {
+          if (data.key === driverID) {
+            let driverUname = data.val().driverUname;
+            let dateApplied = data.val().dateApplied;
+            let license = data.val().license;
+            let issuedDate = data.val().issueDate;
+            console.log(driverUname, dateApplied);
+
+            document.getElementById('td_ViewApplicant_driverID').innerHTML = data.key;
+            document.getElementById('td_ViewApplicant_username').innerHTML = driverUname;
+            document.getElementById('td_ViewApplicant_dateApplied').innerHTML = dateApplied;
+            document.getElementById('td_ViewApplicant_license').innerHTML = license;
+            document.getElementById('td_ViewApplicant_issuedDate').innerHTML = issuedDate;
+          }
+        });
+      }
+    });
+
+    firebase.storage()
+      .ref("license/" + driverID)
+      .child("front")
+      .getDownloadURL()
+      .then(frontURL => {
+        this.setState({
+          frontURL
+        });
+      });
+
+    firebase.storage()
+      .ref("license/" + driverID)
+      .child("back")
+      .getDownloadURL()
+      .then(backURL => {
+        this.setState({
+          backURL
+        });
+      });
+
+    document.getElementById('div_ViewApplicant').style.display = "block";
+    document.getElementById('div_ViewReportedUser').style.display = "none";
+    document.getElementById('div_driverApplication').style.display = "none";
+    document.getElementById('div_ReportedUsers').style.display = "none";
+  }
 
 render() {
     return (
@@ -71,7 +121,7 @@ render() {
                 <tbody>
                   <tr id='uploadedFront'>
                     <td>
-                      {this.state.frontURL && <img src={this.state.frontURL} onLoad={alert(this.state.frontURL, frontimg)} height='150' width='200' />}
+                      {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
                     </td>
                     <td>
                       {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}
@@ -122,6 +172,10 @@ render() {
                   <tr>
                     <td>Last Reported Date:</td>
                     <td id='td_ViewReportedUser_lastreport'></td>
+                  </tr>
+                  <tr>
+                    <td>No Show:</td>
+                    <td id='td_ViewReportedUser_noshow'></td>
                   </tr>
                   <tr>
                     <td>Fake Profile:</td>

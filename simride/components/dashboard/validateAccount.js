@@ -1,5 +1,6 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
+import {user} from './checkEmailDashboard';
 
 export const validateAccount = () => {
     document.getElementById("signinemail").focus();

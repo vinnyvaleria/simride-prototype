@@ -21,6 +21,7 @@ export const viewReportedUser = (e) => {
                     let safety = data.val().safety;
                     let inappropriate = data.val().inappropriate;
                     let vulgar = data.val().vulgar;
+                    let noshow = data.val().noshow;
                     console.log(username, lastReportDate);
 
                     document.getElementById('td_ViewReportedUser_userID').innerHTML = data.key;
@@ -30,6 +31,7 @@ export const viewReportedUser = (e) => {
                     document.getElementById('td_ViewReportedUser_fakeprofile').innerHTML = fake;
                     document.getElementById('td_ViewReportedUser_safety').innerHTML = safety;
                     document.getElementById('td_ViewReportedUser_inappropriate').innerHTML = inappropriate;
+                    document.getElementById('td_ViewReportedUser_noshow').innerHTML = noshow;
                     document.getElementById('td_ViewReportedUser_vulgar').innerHTML = vulgar;
 
                     if (status === "banned") {

@@ -2,10 +2,10 @@ import firebase from '../../../base';
 import 'firebase/firestore';
 import * as moment from 'moment';
 import {user} from './checkEmailDashboard';
+import {acknowledgeNotif} from './acknowledgeNotif';
 var userDetails = [];
 
 export const notifications = (tb) => {
-    const self = this;
     document.getElementById(tb).innerHTML = '';
 
     // get all accounts
@@ -48,7 +48,7 @@ export const notifications = (tb) => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'Ack');
-                btn.onclick = self.acknowledgeNotif;
+                btn.onclick = acknowledgeNotif;
                 document.getElementById('btnNotification' + v).appendChild(btn);
             }
         }

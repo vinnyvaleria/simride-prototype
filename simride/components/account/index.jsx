@@ -15,6 +15,7 @@ import { submitEditProfile } from './submitEditProfile';
 import { submitPassword } from './submitPassword';
 import { cancelPassword } from './cancelPassword';
 import { bindUserData } from '../../functions/bindUserData';
+import { checkDriverApplicationStatus } from './checkDriverApplicationStatus';
 const util = require('./util')
 
 class Account extends React.Component {
@@ -204,6 +205,7 @@ class Account extends React.Component {
           alert('Your application has been submitted!');
           util.profilePageReset();
           util.cancelApplyDriver();
+          checkDriverApplicationStatus();
         });
     } else {
       alert('Error: No file selected');

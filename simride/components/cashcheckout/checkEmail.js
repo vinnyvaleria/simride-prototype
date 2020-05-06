@@ -34,6 +34,9 @@ export const checkEmail = () => {
                 }
             }
         });
+    if (user[7] === "yes") {
+        firebase.auth().signOut();
+    }
 }
 
 export {user};

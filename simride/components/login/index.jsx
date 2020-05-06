@@ -1,5 +1,4 @@
 import 'firebase/firestore';
-import HTML from 'react-native-render-html';
 import firebase from '../../../base';
 import React from 'react';
 import logo from '../../assets/images/logo.png';
@@ -9,7 +8,6 @@ import { forgotPass } from './forgotPass';
 import { cancel } from './cancel';
 import { checkEmailLogin, user } from './checkEmailLogin';
 import { extendSignUp } from './extendSignUp';
-import { signup } from './signup';
 import { submitForgotPassword } from './submitForgotPass';
 
 var countArr = new Array(1); // account
@@ -74,13 +72,100 @@ class Login extends React.Component {
     }
   }
 
+  signup = (e) => {
+    e.preventDefault();
+    // checks for duplicate username
+    var i = 0;
+    var unameCheck = false;
+    while (i < unameArr.length) {
+      if (this.state.username === unameArr[i]) {
+        alert("Username has already been registered");
+        unameCheck = false;
+        break;
+      } else {
+        unameCheck = true;
+      }
+      i++;
+    }
+
+    // checks confirm password
+    if (this.state.password !== this.state.repassword) {
+      alert("Passwords do not match");
+    } else {
+      if (unameCheck) {
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
+          alert(error.code + ': ' + error.message);
+        }).then(() => {
+
+          const accountsRef = firebase.database().ref('accounts');
+          const account = {
+            fname: this.state.firstName,
+            lname: this.state.lastName,
+            uname: this.state.username,
+            phone: this.state.phone,
+            email: this.state.email.toLowerCase(),
+            isDriver: "no",
+            isAdmin: "no",
+            isBanned: "no",
+            wallet: "0.00"
+          }
+          let reg = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+
+          // after signup, stores user data into user
+          reg[0] = account.fname;
+          reg[1] = account.lname;
+          reg[2] = account.uname;
+          reg[3] = account.email;
+          reg[4] = account.phone;
+          reg[5] = account.isDriver;
+          reg[6] = account.isAdmin;
+          reg[7] = account.isBanned;
+          reg[8] = account.wallet;
+          reg[9] = account.key;
+
+          accountsRef.push(account);
+          this.state = {
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: '',
+            phone: '',
+            password: '',
+            repassword: '',
+            isDriver: '',
+            isAdmin: '',
+            isBanned: '',
+            wallet: ''
+          };
+          // writing
+          firebase.database().ref('admin/counter')
+            .once('value')
+            .then((snapshot) => {
+              countArr[0] = emailArr.length + 1;
+              console.log("rewrite: ", countArr[0]);
+              snapshot.ref.update({
+                acct: countArr[0]
+              });
+            });
+        })
+          .catch((error) => {
+            alert(error.message);
+          })
+      }
+    }
+  }
+
+  submitForgotPassword_click = () => {
+    submitForgotPassword(this.state.email);
+  }
+
   // login
   login(e) {
     e.preventDefault();
 
     if (typeof user[9] !== 'undefined') {
       var i = 0;
-      var email = this.state.email.toString().toLowerCase();
+      var email = this.state.email.toLowerCase();
 
       if (!validate(email)) {
         alert("Email not valid bro");
@@ -90,6 +175,7 @@ class Login extends React.Component {
           if (emailArr[i].toString() === email) {
             if (user[7].toString() === "yes") {
               alert("Account is banned. Please contact administrator.")
+              break;
             } else {
               firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => { }).catch((error) => {
                 alert(error.message)
@@ -126,7 +212,7 @@ class Login extends React.Component {
               <br/>
               <br/>
               <div id="div_SubmitSignIn" style={{ textAlign: 'center' }}>
-                <button type="submit" onClick={this.login}>Sign In</button>
+                <button id='btnSignIn' type="submit" onClick={this.login}>Sign In</button>
                 <button onClick={extendSignUp} style={{ marginLeft: '25px' }}>Sign Up</button>
               </div>
             </div>
@@ -139,7 +225,7 @@ class Login extends React.Component {
               <br/>
               <br/>
               <div style={{ textAlign: 'center' }}>
-                <button type="submit" onClick={submitForgotPassword}>Reset Password</button>
+                <button type="submit" onClick={this.submitForgotPassword_click}>Reset Password</button>
                 <button type="submit" onClick={cancel}>Back</button>
               </div>
             </div>
@@ -167,24 +253,21 @@ class Login extends React.Component {
                   </tr>
                   <tr>
                     <td>Username</td>
-                    <td><input value={this.state.username} onChange={this.handleChange} type="text" name="username" />
-                    </td>
+                    <td><input value={this.state.username} onChange={this.handleChange} type="text" name="username" /></td>
                   </tr>
                   <tr>
                     <td>Password</td>
-                    <td><input value={this.state.password} onChange={this.handleChange} type="password"
-                      name="password" /></td>
+                    <td><input value={this.state.password} onChange={this.handleChange} type="password" name="password" /></td>
                   </tr>
                   <tr>
                     <td>Re-Enter Password</td>
-                    <td><input value={this.state.repassword} onChange={this.handleChange} type="password"
-                      name="repassword" /></td>
+                    <td><input value={this.state.repassword} onChange={this.handleChange} type="password" name="repassword" /></td>
                   </tr>
                 </tbody>
               </table>
               <br/>
               <div style={{ textAlign: 'center' }}>
-                <button onClick={signup}>Submit</button>
+                <button onClick={this.signup}>Submit</button>
                 <button onClick={cancel} style={{ marginLeft: '25px' }}>Cancel</button>
               </div>
             </div>

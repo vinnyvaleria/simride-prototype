@@ -2,13 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import 'firebase/firestore';
 
-// import { back } from './back';
-// import { checkEmail, user, unameArr } from './checkEmail';
-// import { inboxMsgButton } from './inboxMsgButton';
-// import { report } from './report';
-// import { searchUsername, clickedUser, chatName } from './searchUsername';
-// import { submitReport } from './submitReport';
-// import { viewUserProfile } from './viewUserProfile';
 import { user } from '../login/index';
 import firebase from '../../../base';
 
@@ -99,6 +92,9 @@ class Inbox extends React.Component {
                     }
                 }
             });
+        if (user[7] === "yes") {
+            firebase.auth().signOut();
+        }
     }
 
     // goes back to login page if stumble upon another page by accident without logging in

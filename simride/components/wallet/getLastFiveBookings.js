@@ -23,9 +23,7 @@ export const getLastFiveBookings = () => {
         if (snapshot.exists()) {
             let content = '';
             snapshot.forEach((data) => {
-                console.log(data.val().currPassengers, data.val().driverID, 'haha')
                 if (data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) {
-                    console.log('fuck you');
                     let area = data.val().area;
                     let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
 

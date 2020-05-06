@@ -1,0 +1,156 @@
+[debug] [2020-05-05T15:07:09.868Z] ----------------------------------------------------------------------
+[debug] [2020-05-05T15:07:09.870Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-05-05T15:07:09.870Z] CLI Version:   8.1.0
+[debug] [2020-05-05T15:07:09.870Z] Platform:      win32
+[debug] [2020-05-05T15:07:09.870Z] Node Version:  v12.14.1
+[debug] [2020-05-05T15:07:09.871Z] Time:          Tue May 05 2020 23:07:09 GMT+0800 (Singapore Standard Time)
+[debug] [2020-05-05T15:07:09.871Z] ----------------------------------------------------------------------
+[debug] [2020-05-05T15:07:09.871Z] 
+[debug] [2020-05-05T15:07:09.879Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-05T15:07:09.879Z] > authorizing via signed-in user
+[debug] [2020-05-05T15:07:09.880Z] [iam] checking project carpool-world-5uck5 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2020-05-05T15:07:09.883Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/carpool-world-5uck5:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2020-05-05T15:07:10.939Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 05 May 2020 15:07:12 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1015","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-05T15:07:10.940Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/carpool-world-5uck5/serviceAccounts/carpool-world-5uck5@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-05-05T15:07:17.686Z] ----------------------------------------------------------------------
+[debug] [2020-05-05T15:07:17.688Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2020-05-05T15:07:17.688Z] CLI Version:   8.1.0
+[debug] [2020-05-05T15:07:17.688Z] Platform:      win32
+[debug] [2020-05-05T15:07:17.688Z] Node Version:  v12.14.1
+[debug] [2020-05-05T15:07:17.689Z] Time:          Tue May 05 2020 23:07:17 GMT+0800 (Singapore Standard Time)
+[debug] [2020-05-05T15:07:17.689Z] ----------------------------------------------------------------------
+[debug] [2020-05-05T15:07:17.689Z] 
+[debug] [2020-05-05T15:07:17.696Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-05T15:07:17.697Z] > authorizing via signed-in user
+[debug] [2020-05-05T15:07:17.697Z] [iam] checking project carpool-world-5uck5 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2020-05-05T15:07:17.699Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/carpool-world-5uck5:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2020-05-05T15:07:18.786Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 05 May 2020 15:07:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1047","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-05T15:07:18.787Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/carpool-world-5uck5/serviceAccounts/carpool-world-5uck5@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-05-05T15:07:20.359Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 05 May 2020 15:07:22 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'carpool-world-5uck5'...
+[info] 
+[info] i  deploying functions
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script.
+[debug] [2020-05-05T15:07:23.886Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "firebase-admin": "^8.11.0",
+    "firebase-functions": "^3.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "@babel/preset-env"
+          ]
+        }
+      ]
+    ]
+  },
+  "private": true
+}
+[debug] [2020-05-05T15:07:23.912Z] Error: ENOENT: no such file or directory, stat 'functions\package.json'
+    at Object.statSync (fs.js:915:3)
+    at Object.load (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cjson\index.js:200:12)
+    at getRuntimeChoice (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\parseRuntimeAndValidateSDK.js:55:26)
+    at module.exports (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\prepare.js:26:29)
+    at _chain (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:22:40)
+    at C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:63:16
+    at processTicksAndRejections (internal/process/task_queues.js:94:5)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2020-05-05T15:07:34.584Z] ----------------------------------------------------------------------
+[debug] [2020-05-05T15:07:34.586Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2020-05-05T15:07:34.586Z] CLI Version:   8.1.0
+[debug] [2020-05-05T15:07:34.586Z] Platform:      win32
+[debug] [2020-05-05T15:07:34.586Z] Node Version:  v12.14.1
+[debug] [2020-05-05T15:07:34.587Z] Time:          Tue May 05 2020 23:07:34 GMT+0800 (Singapore Standard Time)
+[debug] [2020-05-05T15:07:34.587Z] ----------------------------------------------------------------------
+[debug] [2020-05-05T15:07:34.587Z] 
+[debug] [2020-05-05T15:07:34.594Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-05T15:07:34.594Z] > authorizing via signed-in user
+[debug] [2020-05-05T15:07:34.595Z] [iam] checking project carpool-world-5uck5 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2020-05-05T15:07:34.597Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/carpool-world-5uck5:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2020-05-05T15:07:35.659Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 05 May 2020 15:07:37 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1021","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-05T15:07:35.661Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/carpool-world-5uck5/serviceAccounts/carpool-world-5uck5@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-05-05T15:07:37.242Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Tue, 05 May 2020 15:07:39 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'carpool-world-5uck5'...
+[info] 
+[info] i  deploying functions
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script.
+[debug] [2020-05-05T15:07:40.819Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "firebase-admin": "^8.11.0",
+    "firebase-functions": "^3.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "presets": [
+            "@babel/preset-env"
+          ]
+        }
+      ]
+    ]
+  },
+  "private": true
+}
+[debug] [2020-05-05T15:07:40.845Z] Error: ENOENT: no such file or directory, stat 'functions\package.json'
+    at Object.statSync (fs.js:915:3)
+    at Object.load (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\cjson\index.js:200:12)
+    at getRuntimeChoice (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\parseRuntimeAndValidateSDK.js:55:26)
+    at module.exports (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\prepare.js:26:29)
+    at _chain (C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:22:40)
+    at C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:63:16
+    at processTicksAndRejections (internal/process/task_queues.js:94:5)
+[error] 
+[error] Error: An unexpected error has occurred.

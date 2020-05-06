@@ -4,7 +4,6 @@ import { viewReportedUser } from './viewReportedUser'
 
 // view reported users
 export const viewReportedList = () => {
-    const self = this;
     document.getElementById('tb_ReportedUsers').innerHTML = '';
 
     const database = firebase.database().ref('reportedUsers').orderByChild('lastReportDate');
