@@ -2,8 +2,8 @@ import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
 import {viewAllBookings} from './viewAllBookings'
-
 import {bindUser as user} from '../../functions/bindUserData';
+
 // checks email and signs user out if no such email found
 export const checkEmail = (e) => {
     const email = firebase.auth().currentUser.email;

@@ -4,13 +4,12 @@ import firebase from '../../../base';
 import * as moment from 'moment';
 import {user} from './checkEmail';
 import {viewBooking} from './viewBooking';
-import {startBooking} from './startBooking.js';
+import index from './index';
 
 // view created bookings by driver
 export const viewCreatedBooking = () => {
     let userDetails = [];
     document.getElementById('tb_CreatedBookings').innerHTML = '';
-
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "none";
     document.getElementById('div_myBookings').style.display = "none";
@@ -83,7 +82,7 @@ export const viewCreatedBooking = () => {
                 let start = document.createElement('input');
                 start.setAttribute('type', 'button')
                 start.setAttribute('value', 'Start');
-                start.onclick = startBooking;
+                start.onclick = new index().startBooking;
                 document.getElementById('btnStartCreatedBooking' + v).appendChild(start);
             }
         }

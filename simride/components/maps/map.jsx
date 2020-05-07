@@ -14,7 +14,6 @@ let ppl = []
 let towards
 
 class map extends React.Component {
-
     constructor() {
         super();
         this.state = {
@@ -26,14 +25,48 @@ class map extends React.Component {
     }
 
     componentDidMount() {
-        this.getPostal('bookingID');
-        let geoOptions = {
-            enableHighAccuracy: true,
-            timeOut: 20000,
-            maximumAge: 10000
-        };
-        this.setState({ ready: false });
-        navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoFailure, geoOptions);
+        const self = this;
+
+        if ("geolocation" in navigator) {
+            console.log("Available");
+
+            navigator.geolocation.watchPosition(function (position) {
+                let d = self.distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
+                console.log("Distance from destination is:", d + 'km', position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
+            });
+
+            self.getPostal(document.getElementById('bookingID').value);
+
+            let geoOptions = {
+                enableHighAccuracy: true,
+                timeOut: 20000,
+                maximumAge: 10000
+            };
+            self.setState({ ready: false });
+            navigator.geolocation.getCurrentPosition(self.geoSuccess, self.geoFailure, geoOptions);
+
+        } else {
+            alert("Please switch on your GPS");
+        }
+    }
+
+    distance = (lon1, lat1, lon2, lat2) => {
+        var earthRadiusKm = 6371;
+
+        var dLat = this.degreesToRadians(lat2 - lat1);
+        var dLon = this.degreesToRadians(lon2 - lon1);
+
+        lat1 = this.degreesToRadians(lat1);
+        lat2 = this.degreesToRadians(lat2);
+
+        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return earthRadiusKm * c;
+    }
+
+    degreesToRadians = (degrees) => {
+        return degrees * Math.PI / 180;
     }
 
     geoSuccess = (position) => {
@@ -50,12 +83,12 @@ class map extends React.Component {
         this.setState({ error: err.message });
     }
 
-    getPostal = () => {
+    getPostal = (id) => {
         const database = firebase.database().ref('bookings');
         database.once('value', (snapshot) => {
             if (snapshot.exists()) {
                 snapshot.forEach((data) => {
-                    if (data.key === '-M5lzRNnCCt5RwXp9zmb') { // replace with bookingID later
+                    if (data.key === id) { // replace with bookingID later
                         towards = data.val().towards;
 
                         if (data.val().currPassengers !== "") {
@@ -71,7 +104,10 @@ class map extends React.Component {
                     btn.setAttribute('value', ppl[d]);
                     btn.setAttribute('id', postal[d]);
                     btn.onclick = this.plotPts;
-                    document.getElementById('directions').appendChild(btn);
+                    if (document.getElementById('directions') !== null) {
+                        document.getElementById('directions').appendChild(btn);
+                    }
+                    
                     console.log(btn)
                 }
             }
@@ -135,6 +171,7 @@ class map extends React.Component {
     render() {
         return (
             <View style={style.container}>
+                <div id='bookingID'>{this.props.bookingID}</div>
                 {!this.state.ready && (
                     <Text>Please allow location access.</Text>
                 )}
@@ -153,7 +190,6 @@ class map extends React.Component {
                                 <Marker
                                     name={'Destination'}
                                     position={{ lat: this.state.to.lat, lng: this.state.to.lat }} />
-
                             </Map>
                         </div>
                     </Text>
@@ -162,8 +198,6 @@ class map extends React.Component {
         );
     }
 }
-
-//lat: 1.329426, lng: 103.776571 SIM Coordinates
 
 const style = StyleSheet.create({
     container: {

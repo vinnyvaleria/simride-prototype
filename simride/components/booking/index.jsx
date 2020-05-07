@@ -40,7 +40,8 @@ class Booking extends React.Component {
             recurringWeeks: 1,
             createArea: 'Admiralty',
             createTowards: 'School',
-            createMaxPassengers: '1'
+            createMaxPassengers: '1',
+            bookingID : ''
         }
     }
 
@@ -80,6 +81,20 @@ class Booking extends React.Component {
       date: Datetime.moment(),
       recurringWeeks: 1
     };
+  }
+
+  startBooking = (e) => {
+   
+
+    this.setState({bookingID: e.target.parentElement.parentElement.id},
+      this.showMaps
+      );
+  }
+
+  showMaps = () => {
+    document.getElementById('maps').innerHTML
+    document.getElementById('bookPage').style.display = 'none';
+    document.getElementById('maps').style.display = 'block';
   }
 
 render() {
@@ -302,7 +317,7 @@ render() {
           </div>
         </div>
         <div id='maps' style={{ display: 'none' }}>
-          <Map></Map>
+          <Map bookingID={this.state.bookingID} />
         </div>
       </View>
       );
