@@ -2,9 +2,10 @@ import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
 import * as moment from 'moment';
+import {user} from './checkEmail';
 
 // submits created booking into realtime db
-export const submitCreateBooking = (e) => {
+export const submitCreateBooking = (createDate, createArea, createMaxPassengers, createTowards, recurringWeeks) => {
     // checks for duplicate booking
     let dates = [];
     let check = false;
@@ -23,7 +24,7 @@ export const submitCreateBooking = (e) => {
             check = true;
         } else {
             while (i < dates.length) {
-                if (this.state.date < moment.unix(dates[i] / 1000).add(2, 'hours') && this.state.date > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
+                if (createDate < moment.unix(dates[i] / 1000).add(2, 'hours') && createDate > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
                     alert("You have another booking set 2 hours before/after this time");
                     check = false;
                     break;
@@ -34,31 +35,27 @@ export const submitCreateBooking = (e) => {
             }
 
             if (check) {
-                const date = new Date(this.state.date);
-                const weeks = this.state.recurringWeeks;
+                const date = new Date(createDate);
+                const weeks = recurringWeeks;
                 let x = 0;
                 const bookingsRef = firebase.database().ref('bookings');
                 while (x < weeks) {
                     const booking = {
                         driverID: user[9],
                         date: date.setDate(date.getDate() + (7 * x)),
-                        area: this.state.createArea,
-                        maxPassengers: this.state.createMaxPassengers,
+                        area: createArea,
+                        maxPassengers: createMaxPassengers,
                         currPassengers: '',
                         payMethod: '',
                         postal: '',
-                        towards: this.state.createTowards
+                        towards: createTowards
                     }
-
                     bookingsRef.push(booking);
                     x++;
                 }
                 document.getElementById('tr_showRecurring').style.display = 'none';
                 document.getElementById('cbRecurring').checked = false;
-                this.state = {
-                    date: Datetime.moment(),
-                    recurringWeeks: 1
-                };
+                
             }
         }
     });

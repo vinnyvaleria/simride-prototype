@@ -5,7 +5,7 @@ import React from 'react';
 import { View } from 'react-native';
 import * as Datetime from "react-datetime";
 import { GoogleApiWrapper } from "google-maps-react";
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 
 import {cancelBooking} from './cancelBooking';
 import {checkEmail} from './checkEmail'
@@ -22,6 +22,9 @@ import {viewCreatedBooking} from './viewCreatedBooking';
 import {viewMyBookings} from './viewMyBookings';
 import { viewAllBookings } from './viewAllBookings'
 import { filterChange } from './filterChange'
+
+import Map from '../maps/map';
+import 'react-google-places-autocomplete/dist/index.min.css';
 
 class Booking extends React.Component {
     constructor(props) {
@@ -59,6 +62,25 @@ class Booking extends React.Component {
         });
         //alert(this.state.createMaxPassengers);
     }
+
+  joinBooking_click = () => {
+    joinBooking(this.state.postal);
+
+    this.state = {
+      currPassengers: '',
+      payMethod: '',
+      postal: ''
+    };
+  }
+
+  submitCreateBooking_click = () => {
+    submitCreateBooking(this.state.date, this.state.createArea, this.state.createMaxPassengers, this.state.createTowards, this.state.recurringWeeks);
+
+    this.state = {
+      date: Datetime.moment(),
+      recurringWeeks: 1
+    };
+  }
 
 render() {
     return (
@@ -167,7 +189,15 @@ render() {
                       id='postal' 
                       placeholder='Search' 
                       onSelect={({ description }) => (
-                        this.setState({ postal: description })
+                        geocodeByAddress(description)
+                          .then(results => getLatLng(results[0]))
+                          .then(({
+                            lat,
+                            lng
+                          }) => this.setState({
+                            postal: description + ":" + lat + ":" + lng
+                          }))
+                          .catch(error => console.error(error))
                       )}
                       required 
                     />
@@ -186,7 +216,7 @@ render() {
             </table>
             <br />
             <button id='btnJoinBooking' onClick={ extendJoinBooking }>Join Booking</button>
-            <button id='btnSubmitJoinBooking' onClick={ joinBooking } style={{display: 'none'}}>Submit Booking</button>
+            <button id='btnSubmitJoinBooking' onClick={ this.joinBooking_click } style={{display: 'none'}}>Submit Booking</button>
             <button id='btnCancelBooking' onClick={ cancelBooking }>Cancel Booking</button>
             <button id='btnRemovePassenger' onClick={ removePassenger }>Remove Passenger</button>
             <button id='btnDeleteBooking' onClick={ deleteBooking }>Delete Booking</button>
@@ -266,10 +296,13 @@ render() {
             </table>
             <br />
             <div style={{textAlign: 'center'}}>
-              <button onClick={submitCreateBooking}>Submit</button>
+              <button onClick={this.submitCreateBooking_click}>Submit</button>
               <button onClick={viewAllBookings} style={{marginLeft: '25px'}}>Cancel</button>
             </div>
           </div>
+        </div>
+        <div id='maps' style={{ display: 'none' }}>
+          <Map></Map>
         </div>
       </View>
       );

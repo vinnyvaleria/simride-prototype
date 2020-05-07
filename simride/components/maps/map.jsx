@@ -1,12 +1,13 @@
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable no-alert */
-import firebase from '../../base';
+import firebase from '../../../base';
 import React from 'react';
 import { Text, View, Button, StyleSheet } from 'react-native';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import Geocode from "react-geocode";
-Geocode.enableDebug();
 import getDirections from 'react-native-google-maps-directions'
+
+Geocode.enableDebug();
 
 let postal = []
 let ppl = []
@@ -83,8 +84,8 @@ class map extends React.Component {
         if (towards === 'Home') {
             this.setState({
                 to: {
-                    lat: parseFloat(latlng[0]),
-                    lng: parseFloat(latlng[1])
+                    lat: parseFloat(latlng[1]),
+                    lng: parseFloat(latlng[2])
                 },
                 from: {
                     lat: 1.329426,
@@ -95,8 +96,8 @@ class map extends React.Component {
         else {
             this.setState({
                 from: {
-                    lat: parseFloat(latlng[0]),
-                    lng: parseFloat(latlng[1])
+                    lat: parseFloat(latlng[1]),
+                    lng: parseFloat(latlng[2])
                 },
                 to: {
                     lat: 1.329426,
@@ -142,10 +143,7 @@ class map extends React.Component {
                 )}
                 {this.state.ready && (
                     <Text>Latitude:{this.state.to.lat}, Longitude:{this.state.to.lng}
-                        <div>
-                            <div id='directions'></div>
-                            <h1 align="center">WELCOME TO GOOGLE MAPS</h1>
-                        </div>
+                        <div id='directions'></div>
                         <div>
                             <Button onPress={this.handleGetDirections} title="Get Directions" />
 

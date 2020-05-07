@@ -2,10 +2,12 @@ import firebase from '../../../base';
 import * as moment from 'moment';
 import {user} from './checkEmail';
 
+var passengers;
+var payMethod;
+var PostalCode;
+
 export const viewBooking = (e) => {
     let userDetails = [];
-    var payMethod;
-    var PostalCode;
 
     document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = null;
     document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = null;
@@ -45,12 +47,13 @@ export const viewBooking = (e) => {
                     let towards = data.val().towards;
                     payMethod = data.val().payMethod;
                     PostalCode = data.val().postal;
+                    passengers = data.val().currPassengers;
                     let ppl = [];
                     let pay = [];
                     let meet = [];
 
                     if (data.val().currPassengers !== "") {
-                        ppl = data.val().currPassengers.split(', ');
+                        ppl = passengers.split(', ');
                         pay = payMethod.split(', ');
                         meet = PostalCode.split(', ');
                     }
@@ -67,7 +70,6 @@ export const viewBooking = (e) => {
                         }
                     }
 
-                    console.log(user[6].toLowerCase() === "yes", id, user[9], id === user[9], ppl.includes(user[2]), slotsleft > 0)
                     document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = bookingID;
                     document.getElementById('td_viewSelectedBooking_driverName').innerHTML = driver;
                     document.getElementById('td_viewSelectedBooking_date').innerHTML = date;
@@ -122,7 +124,8 @@ export const viewBooking = (e) => {
                         document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = "";
                         if (driver === user[2]) {
                             for (let ct = 0; ct < ppl.length; ct++) {
-                                document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML += ppl[ct] + " (Pick-Up Point: " + meet[ct] + ", Paying By: " + pay[ct] + ") <br/>";
+                                const p = meet[ct].split(':');
+                                document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML += ppl[ct] + " (Pick-Up Point: " + p[0] + ", Paying By: " + pay[ct] + ") <br/>";
                             }
                             document.getElementById('tr_viewSelectedBooking_currPassengers').style.visibility = "visible";
                         } else {
@@ -137,3 +140,5 @@ export const viewBooking = (e) => {
         }
     });
 }
+
+export {payMethod, PostalCode}

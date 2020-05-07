@@ -7,7 +7,6 @@ import Account from './account/index.jsx';
 import Booking from './booking/index.jsx';
 import Home from './dashboard/index.jsx';
 import Wallet from './wallet/index.jsx';
-import Map from './maps/map.jsx';
 import Cashout from './cashcheckout/index.jsx';
 
 export default function Start() {
@@ -27,9 +26,6 @@ export default function Start() {
             </li>
             <li>
               <Link to="/Wallet">Wallet</Link>
-            </li>
-            <li>
-                <Link to="/Map">Map</Link>
             </li>
             <li id='checkOutTab'>
               <Link to="/Checkout">Checkout Requests</Link>
@@ -54,9 +50,6 @@ export default function Start() {
           </Route>
           <Route path="/Wallet">
             <Wallet />
-          </Route>
-          <Route path="/Map">
-              <Map />
           </Route>
            <Route path="/Checkout">
               <Cashout />

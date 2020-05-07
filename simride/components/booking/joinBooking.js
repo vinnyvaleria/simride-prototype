@@ -6,35 +6,48 @@ import {user} from './checkEmail';
 import * as moment from 'moment';
 
 // join booking
-export const joinBooking = () => {
+export const joinBooking = (postal) => {
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
     let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
     let bookingDate = document.getElementById('td_viewSelectedBooking_date').innerHTML;
+    let PostalCode;
+    let payMethod;
 
-    if (payMethod === "") {
-        payMethod += document.getElementById('ddPayBy').value;
-    } else {
-        payMethod += (", " + document.getElementById('ddPayBy').value);
-    }
+    const database = firebase.database().ref('bookings');
+    database.once('value', (snapshot) => {
+        if (snapshot.exists()) {
+            snapshot.forEach((data) => {
+                if (data.key === bookingID) {
+                    payMethod = data.val().payMethod;
+                    PostalCode = data.val().postal;
+                
+                    if (payMethod === "") {
+                        payMethod += document.getElementById('ddPayBy').value;
+                    } else {
+                        payMethod += (", " + document.getElementById('ddPayBy').value);
+                    }
 
-    if (currPassengers === "") {
-        currPassengers += user[2];
-    } else {
-        currPassengers += (", " + user[2]);
-    }
-    if (PostalCode === "") {
-        PostalCode += this.state.postal;
-    } else {
-        PostalCode += (", " + this.state.postal);
-    }
+                    if (currPassengers === "") {
+                        currPassengers += user[2];
+                    } else {
+                        currPassengers += (", " + user[2]);
+                    }
+                    if (PostalCode === "") {
+                        PostalCode += postal;
+                    } else {
+                        PostalCode += (", " + postal);
+                    }
+                }
+            })
+        }
+    })
 
     // checks for duplicate booking
     let dates = [];
     let check = false;
-    const zip = PostalCode;
 
-    const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
-    database.once('value', (snapshot) => {
+    const join = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
+    join.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((data) => {
                 if (data.val().currPassengers.includes(user[2])) {
@@ -68,14 +81,9 @@ export const joinBooking = () => {
                 const bookingDetails = {
                     currPassengers: currPassengers,
                     payMethod: payMethod,
-                    postal: zip
+                    postal: PostalCode
                 }
                 accountsRef.update(bookingDetails);
-                this.state = {
-                    currPassengers: '',
-                    payMethod: '',
-                    postal: ''
-                };
 
                 payMethod = '';
                 currPassengers = '';

@@ -4,11 +4,11 @@ import firebase from '../../../base';
 import * as moment from 'moment';
 import {user} from './checkEmail';
 import {viewBooking} from './viewBooking';
+import {startBooking} from './startBooking.js';
 
 // view created bookings by driver
 export const viewCreatedBooking = () => {
     let userDetails = [];
-    const self = this;
     document.getElementById('tb_CreatedBookings').innerHTML = '';
 
     document.getElementById('div_availBookings').style.display = "none";
@@ -64,6 +64,7 @@ export const viewCreatedBooking = () => {
                     content += '<td>' + driver + '</td>';
                     content += '<td>' + passengers + '</td>';
                     content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
+                    content += '<td id=\'btnStartCreatedBooking' + rowCount + '\'></td>';
                     content += '</tr>';
 
                     rowCount++;
@@ -73,11 +74,17 @@ export const viewCreatedBooking = () => {
             document.getElementById('tb_CreatedBookings').innerHTML += content;
 
             for (let v = 0; v < rowCount; v++) {
-                let btn = document.createElement('input');
-                btn.setAttribute('type', 'button')
-                btn.setAttribute('value', 'View');
-                btn.onclick = viewBooking;
-                document.getElementById('btnViewCreatedBooking' + v).appendChild(btn);
+                let view = document.createElement('input');
+                view.setAttribute('type', 'button')
+                view.setAttribute('value', 'View');
+                view.onclick = viewBooking;
+                document.getElementById('btnViewCreatedBooking' + v).appendChild(view);
+
+                let start = document.createElement('input');
+                start.setAttribute('type', 'button')
+                start.setAttribute('value', 'Start');
+                start.onclick = startBooking;
+                document.getElementById('btnStartCreatedBooking' + v).appendChild(start);
             }
         }
     });

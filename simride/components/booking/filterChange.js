@@ -42,8 +42,6 @@ export const filterChange = () => {
         }
     });
 
-    console.log(areaNames);
-
     const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
@@ -92,8 +90,6 @@ export const filterChange = () => {
                 btn.setAttribute('value', 'View');
                 btn.onclick = viewBooking;
                 document.getElementById('btnViewBooking' + v).appendChild(btn);
-
-                console.log(btn);
             }
         }
     });

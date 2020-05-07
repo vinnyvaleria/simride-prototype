@@ -4,7 +4,6 @@ import {viewBooking} from './viewBooking';
 
 export const viewAllBookings = () => {
     let userDetails = [];
-    const self = this;
     document.getElementById('tb_AllBookings').innerHTML = '';
 
     document.getElementById('div_availBookings').style.display = "block";
@@ -72,8 +71,6 @@ export const viewAllBookings = () => {
                 btn.setAttribute('value', 'View');
                 btn.onclick = viewBooking;
                 document.getElementById('btnViewBooking' + v).appendChild(btn);
-
-                console.log(btn);
             }
         }
     });

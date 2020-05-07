@@ -2,12 +2,12 @@ import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
 import {user} from './checkEmail';
+import {viewBooking} from './viewBooking';
 import * as moment from 'moment';
 
 // view my bookings
 export const viewMyBookings = () => {
     let userDetails = [];
-    const self = this;
     document.getElementById('tb_myBookings').innerHTML = '';
 
     document.getElementById('div_availBookings').style.display = "none";
@@ -77,7 +77,7 @@ export const viewMyBookings = () => {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
                 btn.setAttribute('value', 'View');
-                btn.onclick = self.viewBooking;
+                btn.onclick = viewBooking;
                 document.getElementById('btnViewMyBooking' + v).appendChild(btn);
             }
         }
