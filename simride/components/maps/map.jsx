@@ -24,18 +24,27 @@ class map extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.bookingID !== this.props.bookingID) {
+            this.getPostal();
+        }
+    }
+
     componentDidMount() {
         const self = this;
-
         if ("geolocation" in navigator) {
             console.log("Available");
 
             navigator.geolocation.watchPosition(function (position) {
                 let d = self.distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
+                if (d < 0.01) {
+                    document.getElementById('btnHere').style.display = 'block';
+                }
+                else {
+                    document.getElementById('btnHere').style.display = 'none';
+                }
                 console.log("Distance from destination is:", d + 'km', position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
             });
-
-            self.getPostal(document.getElementById('bookingID').value);
 
             let geoOptions = {
                 enableHighAccuracy: true,
@@ -83,30 +92,39 @@ class map extends React.Component {
         this.setState({ error: err.message });
     }
 
-    getPostal = (id) => {
+    getPostal = () => {
         const database = firebase.database().ref('bookings');
         database.once('value', (snapshot) => {
             if (snapshot.exists()) {
+                let content = '';
                 snapshot.forEach((data) => {
-                    if (data.key === id) { // replace with bookingID later
+                    if (data.key === this.props.bookingID) { // replace with bookingID later
                         towards = data.val().towards;
 
                         if (data.val().currPassengers !== "") {
                             ppl = data.val().currPassengers.split(', ');
                             postal = data.val().postal.split(', ');
                         }
+
+                        for(let i=0;i<ppl.length;i++) {
+                            content += '<tr id=\'' + i + '_' + data.key + '\'>';
+                            content += '<td>' + ppl[i] + '</td>'; //column1
+                            content += '<td>' + postal[i].split(':')[0] + '</td>';
+                            content += '<td id=\'btnPlotPts' + i + '\'></td>';
+                            content += '</tr>';
+                        }
                     }
                 });
+
+                document.getElementById('directions').innerHTML += content;
 
                 for (var d = 0; d < ppl.length; d++) {
                     var btn = document.createElement('input');
                     btn.setAttribute('type', 'button')
-                    btn.setAttribute('value', ppl[d]);
+                    btn.setAttribute('value', 'Set Directions');
                     btn.setAttribute('id', postal[d]);
                     btn.onclick = this.plotPts;
-                    if (document.getElementById('directions') !== null) {
-                        document.getElementById('directions').appendChild(btn);
-                    }
+                    document.getElementById('btnPlotPts' + d).appendChild(btn);
                     
                     console.log(btn)
                 }
@@ -171,20 +189,24 @@ class map extends React.Component {
     render() {
         return (
             <View style={style.container}>
-                <div id='bookingID'>{this.props.bookingID}</div>
                 {!this.state.ready && (
-                    <Text>Please allow location access.</Text>
+                    <Text>Please turn on your GPS and allow GPS location</Text>
                 )}
                 {this.state.error && (
                     <Text>{this.state.error}</Text>
                 )}
                 {this.state.ready && (
                     <Text>Latitude:{this.state.to.lat}, Longitude:{this.state.to.lng}
-                        <div id='directions'></div>
+                        <div>
+                            <table>
+                                <tbody id='directions'></tbody>
+                            </table>
+                            <button id='btnHere' style={{display:'none'}}>I'm Here</button>
+                        </div>
                         <div>
                             <Button onPress={this.handleGetDirections} title="Get Directions" />
 
-                            <Map google={this.props.google} zoom={16} initialCenter={{ lat: this.state.from.lat, lng: this.state.from.lng }}>
+                            <Map google={this.props.google} zoom={17} initialCenter={{ lat: this.state.from.lat, lng: this.state.from.lng }}>
                                 <Marker onClick={this.onMarkerClick}
                                     name={'Current location'} />
                                 <Marker

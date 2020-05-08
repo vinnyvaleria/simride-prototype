@@ -1,6 +1,6 @@
 //import 'react-google-places-autocomplete/dist/index.min.css';
 import 'firebase/firestore';
-
+import firebase from '../../../base';
 import React from 'react';
 import { View } from 'react-native';
 import * as Datetime from "react-datetime";
@@ -8,7 +8,7 @@ import { GoogleApiWrapper } from "google-maps-react";
 import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 
 import {cancelBooking} from './cancelBooking';
-import {checkEmail} from './checkEmail'
+import {checkEmail, user} from './checkEmail'
 import {confirmRemovePassenger} from './confirmRemovePassenger';
 import {createBooking} from './createBooking';
 import {deleteBooking} from './deleteBooking';
@@ -18,11 +18,13 @@ import {removePassenger} from './removePassenger';
 import {showRecurring} from './showRecurring';
 import {submitCreateBooking} from './submitCreateBooking';
 import {valid} from './valid';
-import {viewCreatedBooking} from './viewCreatedBooking';
+//import {viewCreatedBooking} from './viewCreatedBooking';
 import {viewMyBookings} from './viewMyBookings';
 import { viewAllBookings } from './viewAllBookings'
 import { filterChange } from './filterChange'
+import {viewBooking} from './viewBooking';
 
+import * as moment from 'moment';
 import Map from '../maps/map';
 import 'react-google-places-autocomplete/dist/index.min.css';
 
@@ -41,7 +43,7 @@ class Booking extends React.Component {
             createArea: 'Admiralty',
             createTowards: 'School',
             createMaxPassengers: '1',
-            bookingID : ''
+            bookingID: ''
         }
     }
 
@@ -61,7 +63,6 @@ class Booking extends React.Component {
         this.setState({
             [e.target.name]: e.target.value
         });
-        //alert(this.state.createMaxPassengers);
     }
 
   joinBooking_click = () => {
@@ -76,26 +77,100 @@ class Booking extends React.Component {
 
   submitCreateBooking_click = () => {
     submitCreateBooking(this.state.date, this.state.createArea, this.state.createMaxPassengers, this.state.createTowards, this.state.recurringWeeks);
-
     this.state = {
       date: Datetime.moment(),
       recurringWeeks: 1
     };
   }
 
-  startBooking = (e) => {
-   
+  viewCreatedBooking = () => {
+    let userDetails = [];
+    document.getElementById('tb_CreatedBookings').innerHTML = '';
+    document.getElementById('div_availBookings').style.display = "none";
+    document.getElementById('div_createBooking').style.display = "none";
+    document.getElementById('div_myBookings').style.display = "none";
+    document.getElementById('div_viewSelectedBooking').style.display = "none";
+    document.getElementById('div_viewCreatedBooking').style.display = "block";
+    document.getElementById('btnSubmitJoinBooking').style.display = "none";
+    document.getElementById('tbl_viewSelectedBooking_ExtendBooking').style.display = "none";
 
-    this.setState({bookingID: e.target.parentElement.parentElement.id},
-      this.showMaps
-      );
+    // get all accounts
+    firebase.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then((snapshot) => {
+        let i = 0;
+        snapshot.forEach((child) => {
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          i++;
+        })
+      });
+
+    const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
+    database.once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        let content = '';
+        let rowCount = 0;
+        snapshot.forEach((data) => {
+          if (data.val().driverID === user[9]) {
+            let area = data.val().area;
+            let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+            let ppl = [];
+
+            if (data.val().currPassengers !== "") {
+              ppl = data.val().currPassengers.split(',')
+            }
+
+            let passengers = ppl.length + "/" + data.val().maxPassengers;
+            let id = data.val().driverID;
+            let driver = '';
+
+            for (let i = 0; i < userDetails.length; i++) {
+              let key = [];
+              key = userDetails[i].split(':');
+              if (key[0] === id) {
+                driver = key[1];
+              }
+            }
+
+            content += '<tr id=\'' + data.key + '\'>';
+            content += '<td>' + area + '</td>'; //column1
+            content += '<td>' + date + '</td>'; //column2
+            content += '<td>' + driver + '</td>';
+            content += '<td>' + passengers + '</td>';
+            content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
+            content += '<td id=\'btnStartCreatedBooking' + rowCount + '\'></td>';
+            content += '</tr>';
+
+            rowCount++;
+          }
+        });
+
+        document.getElementById('tb_CreatedBookings').innerHTML += content;
+
+        for (let v = 0; v < rowCount; v++) {
+          let view = document.createElement('input');
+          view.setAttribute('type', 'button')
+          view.setAttribute('value', 'View');
+          view.onclick = viewBooking;
+          document.getElementById('btnViewCreatedBooking' + v).appendChild(view);
+
+          let start = document.createElement('input');
+          start.setAttribute('type', 'button')
+          start.setAttribute('value', 'Start');
+          start.onclick = this.startBooking;
+          document.getElementById('btnStartCreatedBooking' + v).appendChild(start);
+        }
+      }
+    });
   }
 
-  showMaps = () => {
-    document.getElementById('maps').innerHTML
-    document.getElementById('bookPage').style.display = 'none';
-    document.getElementById('maps').style.display = 'block';
-  }
+ startBooking = (e) => {
+   this.setState({ bookingID: e.target.parentElement.parentElement.id});
+
+  document.getElementById('bookPage').style.display = 'none';
+  document.getElementById('maps').style.display = 'block';
+}
 
 render() {
     return (
@@ -105,7 +180,7 @@ render() {
             <button id='btnViewAllBookings' onClick={ viewAllBookings }>View All Rides</button>
             <button id='btnViewMyBookings' onClick={ viewMyBookings }>View My Rides</button>
             <button id='btnCreateBooking' onClick={ createBooking }>Create A Ride</button>
-            <button id='btnViewCreatedBooking' onClick={ viewCreatedBooking }>View My Created Rides</button>
+            <button id='btnViewCreatedBooking' onClick={ this.viewCreatedBooking }>View My Created Rides</button>
             <br />
             <br />
           </div>
