@@ -37,7 +37,7 @@ class map extends React.Component {
 
             navigator.geolocation.watchPosition(function (position) {
                 let d = self.distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
-                if (d < 0.01) {
+                if (d < 0.05) {
                     document.getElementById('btnHere').style.display = 'block';
                 }
                 else {
