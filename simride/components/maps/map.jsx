@@ -6,10 +6,11 @@ import { Text, View, Button, StyleSheet } from 'react-native';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import Geocode from "react-geocode";
 import getDirections from 'react-native-google-maps-directions'
-import {distance} from './distanceCalc';
-import {notifyHere} from './notifyHere';
-import {userBoard} from './userBoard';
-import {userNoShow} from './userNoShow';
+import { distance } from './distanceCalc';
+import { notifyHere } from './notifyHere';
+import { userBoard } from './userBoard';
+import { userNoShow } from './userNoShow';
+import { updateBooking } from './updateBooking';
 
 Geocode.enableDebug();
 
@@ -27,7 +28,8 @@ class map extends React.Component {
             from: { lat: null, lng: null },
             error: null,
             user: null,
-            payMethod: null
+            payMethod: null,
+            action: 'meet'
         }
     }
 
@@ -41,20 +43,27 @@ class map extends React.Component {
         const self = this;
         if ("geolocation" in navigator) {
             console.log("Available");
+            if (this.state.action == 'meet') {
+                navigator.geolocation.watchPosition(function (position) {
+                    let d = distance(position.coords.longitude, position.coords.latitude, self.state.from.lng, self.state.from.lat);
+                    if (document.getElementById('btnHere') !== null) {
+                        if (d < 0.05) {
+                            document.getElementById('btnHere').style.display = 'block';
+                        }
+                        else {
+                            document.getElementById('btnHere').style.display = 'none';
+                        }
+                    }
+                    console.log("Distance from destination is:", d + 'km', position.coords.longitude, position.coords.latitude, self.state.from.lng, self.state.from.lat);
+                });
+            }
+            else if (this.state.action == 'drive') {
+                navigator.geolocation.watchPosition(function (position) {
+                    let d = distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
 
-            navigator.geolocation.watchPosition(function (position) {
-                let d = distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
-                if (document.getElementById('btnHere') !== null) {
-                    if (d < 0.05) {
-                        document.getElementById('btnHere').style.display = 'block';
-                    }
-                    else {
-                        document.getElementById('btnHere').style.display = 'none';
-                    }
-                }
-                
-                console.log("Distance from destination is:", d + 'km', position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
-            });
+                    console.log("Distance from destination is:", d + 'km', position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
+                });
+            }
 
             let geoOptions = {
                 enableHighAccuracy: true,
@@ -116,12 +125,25 @@ class map extends React.Component {
                     btn.setAttribute('value', 'Set Directions');
                     btn.setAttribute('id', postal[d] + ':' + ppl[d] + ':' + payMethod[d]);
                     btn.onclick = this.plotPts;
-                    document.getElementById('btnPlotPts' + d).appendChild(btn);
+                    if (document.getElementById('btnPlotPts' + d) !== null) {
+                        document.getElementById('btnPlotPts' + d).appendChild(btn);
+                    }
                     
                     console.log(btn)
                 }
             }
         });
+
+        if (towards === 'School') {
+            if (document.getElementById('school') !== null) {
+                document.getElementById('school').style.display = 'none';
+            }
+        }
+        else {
+            if (document.getElementById('directions') !== null) {
+                document.getElementById('directions').style.display = 'none';
+            }
+        }
     }
 
     plotPts = (e) => {
@@ -182,6 +204,27 @@ class map extends React.Component {
         getDirections(data)
     }
 
+    pickedUpAll = () => {
+        this.setState({
+            action: 'drive'
+        },
+        function () {
+            if (this.state.action === 'drive') {
+                document.getElementById('div_meet').style.display = 'none';
+                document.getElementById('div_drive').style.display = 'block';
+
+                if (towards === 'School') {
+                    document.getElementById('school').style.display = 'block';
+                    document.getElementById('directions').style.display = 'none';
+                }
+                else {
+                    document.getElementById('school').style.display = 'none';
+                    document.getElementById('directions').style.display = 'block';
+                }
+            }
+        })
+    }
+
     render() {
         return (
             <View style={style.container}>
@@ -196,10 +239,23 @@ class map extends React.Component {
                         <div>
                             <table>
                                 <tbody id='directions'></tbody>
+                                <tbody id='school'>
+                                    <tr>
+                                        <td>School</td>
+                                        <td>SIM Global Education</td>
+                                        <td><input type="button" value="Set Directions" onClick={this.plotPts} id="SIM Global Education:1.329297:103.776518:School:cash" /></td>
+                                    </tr>
+                                </tbody>
                             </table>
-                            <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{display:'none'}}>I'm Here</button>
-                            <button id='btnBoard' onClick={() => userBoard(this.state.user, this.state.payMethod)} style={{ display:'none'}}>Passenger has boarded</button>
-                            <button id='btnNoShow' onClick={() => userNoShow(this.state.user)} style={{ display:'none'}}>Passenger did not show up</button>
+                            <div id='div_meet'>
+                                <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{ display: 'none' }}>I'm Here</button>
+                                <button id='btnBoard' onClick={() => userBoard(this.state.user, this.state.payMethod)} style={{ display: 'none' }}>Passenger has boarded</button>
+                                <button id='btnNoShow' onClick={() => userNoShow(this.state.user)} style={{ display: 'none' }}>Passenger did not show up</button>
+                                <button id='btnPickUpAll' onClick={this.pickedUpAll} style={{ display: 'block' }}>Picked up all passengers, let's go!</button>
+                            </div>
+                            <div id='div_drive' style={{ display: 'none' }}>
+                                <button id='btnDriveDone' onClick={() => updateBooking(this.props.bookingID)}>Drive is done</button>
+                            </div>
                         </div>
                         <div>
                             <Button onPress={this.handleGetDirections} title="Get Directions" />

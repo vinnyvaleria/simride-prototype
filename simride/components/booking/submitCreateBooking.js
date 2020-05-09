@@ -48,7 +48,8 @@ export const submitCreateBooking = (createDate, createArea, createMaxPassengers,
                         currPassengers: '',
                         payMethod: '',
                         postal: '',
-                        towards: createTowards
+                        towards: createTowards,
+                        completed: 'no'
                     }
                     bookingsRef.push(booking);
                     x++;

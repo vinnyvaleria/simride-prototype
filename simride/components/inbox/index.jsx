@@ -278,7 +278,7 @@ class Inbox extends React.Component {
             const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
-                    reportRef.set({
+                    reportRef.update({
                         lastReportDate: today * -1,
                         fake: snapshot.val().fake += 1,
                         safety: snapshot.val().safety += 0,
@@ -305,7 +305,7 @@ class Inbox extends React.Component {
             const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
-                    reportRef.set({
+                    reportRef.update({
                         lastReportDate: today * -1,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 1,
@@ -334,7 +334,7 @@ class Inbox extends React.Component {
             const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
-                    reportRef.set({
+                    reportRef.update({
                         lastReportDate: today * -1,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 0,
@@ -363,7 +363,7 @@ class Inbox extends React.Component {
             const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
-                    reportRef.set({
+                    reportRef.update({
                         lastReportDate: today * -1,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 0,
@@ -392,7 +392,7 @@ class Inbox extends React.Component {
             const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
-                    reportRef.set({
+                    reportRef.update({
                         lastReportDate: today * -1,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 0,
