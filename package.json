@@ -9,7 +9,8 @@
     "eject": "expo eject",
     "predeploy": "expo build:web",
     "deploy": "npm run predeploy && firebase deploy --only functions,hosting",
-    "serve": "npm run predeploy && firebase serve"
+    "serve": "npm run predeploy && firebase serve",
+    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.6",
@@ -44,6 +45,7 @@
     "react-native-render-html": "^4.2.0",
     "react-native-safe-area-context": "0.7.3",
     "react-native-screens": "~2.2.0",
+    "react-native-star-rating": "^1.1.0",
     "react-native-web": "~0.11.7",
     "react-native-webview": "^9.4.0",
     "react-router": "^5.1.2",

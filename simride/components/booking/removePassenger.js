@@ -21,8 +21,10 @@ export const removePassenger = () => {
                     content += "</option>";
                 }
                 document.getElementById('ddRemovePassenger').innerHTML += content;
+                document.getElementById('btnConfirmRemovePassenger').style.display = "inline-block";
             } else {
                 document.getElementById('ddRemovePassenger').innerHTML += "<option value='none'>No passengers available</option>";
+                document.getElementById('btnConfirmRemovePassenger').style.display = "none";
             }
         }
     });

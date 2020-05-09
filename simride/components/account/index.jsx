@@ -6,7 +6,7 @@ import firebase from '../../../base';
 import React from 'react';
 import { View } from 'react-native';
 import 'firebase/firestore';
-import "firebase/storage";
+import 'firebase/storage';
 
 import { cancelEditProfile } from './cancelEditProfile';
 import { checkEmail, user } from './checkEmail';
@@ -14,103 +14,123 @@ import { submitDriverDetails } from './submitDriverDetails';
 import { submitEditProfile } from './submitEditProfile';
 import { submitPassword } from './submitPassword';
 import { cancelPassword } from './cancelPassword';
-import { bindUserData } from '../../functions/bindUserData';
 import { checkDriverApplicationStatus } from './checkDriverApplicationStatus';
 const util = require('./util')
 
 class Account extends React.Component {
-    constructor(props) {
-      super(props);
-      this.handleChange = this.handleChange.bind(this);
-      this.handleImgChange = this.handleImgChange.bind(this);
-      this.editProfile = this.editProfile.bind(this);
-      this.logout = this.logout.bind(this);
-      this.state = {
-        firstName: '',
-        lastName: '',
-        username: user[2],
-        phone: '',
-        email: '',
-        newPassword: '',
-        confirmPassword: '',
-        isDriver: '',
-        isAdmin: '',
-        id: '',
-        image: null,
-        frontURL: '',
-        backURL: '',
-        progress: 0,
-        license: '',
-        carplate: '',
-        status: '',
-        dateApplied: ''
-      };
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleImgChange = this.handleImgChange.bind(this);
+    this.editProfile = this.editProfile.bind(this);
+    this.logout = this.logout.bind(this);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      username: '',
+      phone: '',
+      email: '',
+      newPassword: '',
+      confirmPassword: '',
+      isDriver: '',
+      isAdmin: '',
+      isBanned: '',
+      wallet: '',
+      id: '',
+      rating: '',
+      ratedBy: '',
+      avgRating: 0.00,
+      image: null,
+      frontURL: '',
+      backURL: '',
+      progress: 0,
+      license: '',
+      carplate: '',
+      status: '',
+      dateApplied: ''
+    };
+  }
+
+  // handles textbox change
+  handleChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  handleImgChange = (e) => {
+      if (e.target.files[0]) {
+          const image = e.target.files[0];
+          this.setState(() => ({
+              image
+          }));
+      }
+  }
+
+  componentDidUpdate(prevState) {
+    // Typical usage (don't forget to compare props):
+    if (this.state.firstName !== prevState.firstName) {
+      this.render();
     }
+  }
 
-    // handles textbox change
-    handleChange(e) {
-      this.setState({
-        [e.target.name]: e.target.value
-      });
+  // goes back to login page if stumble upon another page by accident without logging in
+  componentDidMount() {
+    checkEmail();
+
+    this.setState({
+      firstName: user[0],
+      lastName: user[1],
+      username: user[2],
+      email: user[3],
+      phone: user[4],
+      isDriver: user[5],
+      isAdmin: user[6],
+      isBanned: user[7],
+      wallet: user[8],
+      id: user[9],
+      rating: user[10],
+      ratedBy: user[11]
+    });
+
+    if (this.state.ratedBy > 0) {
+      const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
+      this.setState({avgRating: avg});
     }
+  }
 
-    handleImgChange = (e) => {
-        if (e.target.files[0]) {
-            const image = e.target.files[0];
-            this.setState(() => ({
-                image
-            }));
-        }
-    }
+  editProfile = () => {
+    util.editProfile();
+    document.getElementById('tblApplyDriver').style.display = 'none';
+    document.getElementById('btnApplyDriver').style.display = 'none';
+    document.getElementById('cancelApplyDriverButton').style.display = 'none';
+    document.getElementById('btnImgFrontUpload').style.display = 'none';
+    document.getElementById('btnImgBackUpload').style.display = 'none';
+    document.getElementById('submitDriverDetails').style.display = 'none';
+  }
 
-    componentWillMount() {
-        const email = firebase.auth().currentUser.email;
-        bindUserData(email);
-    }
+  submitEditProfile_Click = () => {
+    submitEditProfile(this.state.firstName, this.state.lastName, this.state.phone);
+  }
 
-    // goes back to login page if stumble upon another page by accident without logging in
-    componentDidMount() {
-        checkEmail();
-    }
+  submitPassword_Click = () => {
+    submitPassword(this.state.newPassword, this.state.confirmPassword);
 
-    editProfile = () => {
-        this.setState({
-            firstName: user[0],
-            lastName: user[1],
-            phone: user[4]
-        });
+    this.setState({
+      newPassword: '',
+      confirmPassword: ''
+    });
+  }
 
-        util.editProfile();
-        document.getElementById('tblApplyDriver').style.display = 'none';
-        document.getElementById('btnApplyDriver').style.display = 'none';
-        document.getElementById('cancelApplyDriverButton').style.display = 'none';
-        document.getElementById('btnImgFrontUpload').style.display = 'none';
-        document.getElementById('btnImgBackUpload').style.display = 'none';
-        document.getElementById('submitDriverDetails').style.display = 'none';
-    }
-
-    submitEditProfile_Click = () => {
-      submitEditProfile(this.state.firstName, this.state.lastName, this.state.phone);
-    }
-
-    submitPassword_Click = () => {
-      submitPassword(this.state.newPassword, this.state.confirmPassword);
-
-      this.setState({
-        newPassword: '',
-        confirmPassword: ''
-      });
-    }
-
-    submitDriverDetails_Click = () => {
-      submitDriverDetails(this.state.license, this.state.carplate);
-      this.state = {
-        carplate: '',
-        license: '',
-        status: '',
-        dateApplied: ''
-      };
-    }
+  submitDriverDetails_Click = () => {
+    submitDriverDetails(this.state.license, this.state.carplate);
+    this.state = {
+      carplate: '',
+      license: '',
+      status: '',
+      dateApplied: ''
+    };
+  }
 
   // uplaods front license pic
   handleUploadFront = () => {
@@ -224,6 +244,8 @@ class Account extends React.Component {
       user[7] = '';
       user[8] = '';
       user[9] = '';
+      user[10] = '';
+      user[11] = '';
 
       firebase.auth().signOut();
   }
@@ -239,43 +261,43 @@ render() {
               <tr>
                 <td>First Name:</td>
                 <td>
-                  <label id='lblfName' style={{display:'inline'}}>{user[0]}</label>
-                  <input id='editfName' style={{display:'none'}} placeholder={user[0]} value={this.state.firstName}
+                  <label id='lblfName' style={{display:'inline'}}>{this.state.firstName}</label>
+                  <input id='editfName' style={{display:'none'}} placeholder={this.state.firstName} value={this.state.firstName}
                     onChange={this.handleChange} type="text" name="firstName" />
                 </td>
               </tr>
               <tr>
                 <td>Last Name:</td>
                 <td>
-                  <label id='lbllName' style={{display:'inline'}}>{user[1]}</label>
-                  <input id='editlName' style={{display:'none'}} placeholder={user[1]} value={this.state.lastName}
+                  <label id='lbllName' style={{display:'inline'}}>{this.state.lastName}</label>
+                  <input id='editlName' style={{display:'none'}} placeholder={this.state.lastName} value={this.state.lastName}
                     onChange={this.handleChange} type="text" name="lastName" />
                 </td>
               </tr>
               <tr>
                 <td>Email:</td>
                 <td>
-                  <label id='lblEmail' style={{display:'inline'}} name='email'>{user[3]}</label>
+                  <label id='lblEmail' style={{display:'inline'}} name='email'>{this.state.email}</label>
                 </td>
               </tr>
               <tr>
                 <td>Phone:</td>
                 <td>
                   <label id='lblPhone' style={{display:'inline'}}>{user[4]}</label>
-                  <input id='editPhone' style={{display:'none'}} placeholder={user[4]} value={this.state.phone}
+                  <input id='editPhone' style={{display:'none'}} placeholder={this.state.phone} value={this.state.phone}
                    onChange={this.handleChange} type="phone" name="phone" />
                 </td>
               </tr>
               <tr>
-                <td>isDriver:</td>
+                <td>Driver :</td>
                 <td>
-                  <label id='lblDriver' name='isDriver'>{user[5]}</label>
+                  <label id='lblDriver' name='isDriver'>{this.state.isDriver}</label>
                 </td>
               </tr>
               <tr>
-                <td>isAdmin:</td>
+                <td>Rating:</td>
                 <td>
-                  <label id='lblAdmin' name='isAdmin'>{user[6]}</label>
+                  <label id='lblRating' name='rating'>{parseFloat(this.state.avgRating).toFixed(2)}</label>
                 </td>
               </tr>
             </tbody>

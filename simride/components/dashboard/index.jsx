@@ -17,12 +17,14 @@ class Dashboard extends React.Component {
       super(props);
       this.state = {
           frontURL: '',
-          backURL: ''
+          backURL: '',
+          username: ''
       };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     checkEmailDashboard();
+    this.setState({ username: user[2] });
   }
 
   viewApplicant = (e) => {
@@ -80,7 +82,7 @@ render() {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div id='homePage'>
           <div>
-            <h1>{"Ready for a ride, " + user[2] + "?"}</h1>
+            <h1>{"Ready for a ride, " + this.state.username + "?"}</h1>
           </div>
           <div id="adminDB" style={{display: 'none'}}>
             <div id="div_driverApplication">

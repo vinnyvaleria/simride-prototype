@@ -28,7 +28,9 @@ class Login extends React.Component {
       email: '',
       password: '',
       repassword: '',
-      wallet: ''
+      wallet: '',
+      rating: '',
+      ratedBy: ''
     };
   }
 
@@ -107,7 +109,9 @@ class Login extends React.Component {
             isDriver: "no",
             isAdmin: "no",
             isBanned: "no",
-            wallet: 0
+            wallet: 0,
+            rating: 0,
+            ratedBy: 0
           }
           let reg = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 
@@ -122,6 +126,8 @@ class Login extends React.Component {
           reg[7] = account.isBanned;
           reg[8] = account.wallet;
           reg[9] = account.key;
+          reg[10] = account.rating;
+          reg[11] = account.ratedBy
 
           accountsRef.push(account);
           this.state = {
@@ -135,7 +141,9 @@ class Login extends React.Component {
             isDriver: '',
             isAdmin: '',
             isBanned: '',
-            wallet: ''
+            wallet: '',
+            rating: '',
+            ratedBy: ''
           };
           // writing
           firebase.database().ref('admin/counter')

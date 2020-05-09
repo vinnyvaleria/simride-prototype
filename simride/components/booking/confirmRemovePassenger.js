@@ -1,16 +1,12 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
-import {viewCreatedBooking} from './viewCreatedBooking';
+import index from './index';
 
-export const confirmRemovePassenger = () => {
+export const confirmRemovePassenger = (removeReason) => {
+    let payMethod;
+    let PostalCode;
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
-
-    if (document.getElementById('ddRemovePassenger').value === "No passengers available") {
-        document.getElementById('btnConfirmRemovePassenger').style.display = "none";
-    } else {
-        document.getElementById('btnConfirmRemovePassenger').style.display = "inline-block";
-    }
 
     const database = firebase.database().ref('bookings');
     database.once('value', (snapshot) => {
@@ -84,22 +80,15 @@ export const confirmRemovePassenger = () => {
                         uname: document.getElementById('ddRemovePassenger').value,
                         date: Date.now(),
                         notification: 'Removed from booking ' + bookingID,
-                        reason: this.state.removeReason
+                        reason: removeReason
                     }
 
                     notificationRef.push(notification);
                     accountsRef.update(bookingDetails);
-                    this.state = {
-                        currPassengers: '',
-                        payMethod: '',
-                        postal: '',
-                        removeReason: '',
-                        date: Datetime.moment()
-                    };
                 }
             });
         }
     });
 
-    viewCreatedBooking();
+    new index.viewCreatedBooking;
 }

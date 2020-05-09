@@ -18,52 +18,53 @@ import {removePassenger} from './removePassenger';
 import {showRecurring} from './showRecurring';
 import {submitCreateBooking} from './submitCreateBooking';
 import {valid} from './valid';
-//import {viewCreatedBooking} from './viewCreatedBooking';
+// import {viewPastBooking} from './viewPastBooking';
 import {viewMyBookings} from './viewMyBookings';
-import { viewAllBookings } from './viewAllBookings'
-import { filterChange } from './filterChange'
+import {viewAllBookings} from './viewAllBookings'
+import {filterChange} from './filterChange'
 import {viewBooking} from './viewBooking';
+import Rating from '../rating';
 
 import * as moment from 'moment';
 import Map from '../maps/map';
 import 'react-google-places-autocomplete/dist/index.min.css';
 
 class Booking extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleChange = this.handleChange.bind(this);
-        this.onChange = this.onChange.bind(this);
-        this.state = {
-            currPassengers: '',
-            payMethod: '',
-            date: Datetime.moment(),
-            postal: '',
-            removeReason: '',
-            recurringWeeks: 1,
-            createArea: 'Admiralty',
-            createTowards: 'School',
-            createMaxPassengers: '1',
-            bookingID: ''
-        }
-    }
+  constructor(props) {
+      super(props);
+      this.handleChange = this.handleChange.bind(this);
+      this.onChange = this.onChange.bind(this);
+      this.state = {
+          currPassengers: '',
+          payMethod: '',
+          date: Datetime.moment(),
+          postal: '',
+          removeReason: '',
+          recurringWeeks: 1,
+          createArea: 'Admiralty',
+          createTowards: 'School',
+          createMaxPassengers: '1',
+          bookingID: ''
+      }
+  }
 
-    // goes back to login page if stumble upon another page by accident without logging in
-    componentDidMount() {
-        checkEmail();
-    }
+  // goes back to login page if stumble upon another page by accident without logging in
+  componentDidMount() {
+    checkEmail();
+  }
 
-    onChange(date) {
-        this.setState({
-            date: date
-        })
-    }
+  onChange(date) {
+    this.setState({
+        date: date
+    })
+  }
 
-    // handles change
-    handleChange(e) {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
+  // handles change
+  handleChange(e) {
+    this.setState({
+        [e.target.name]: e.target.value
+    });
+  }
 
   joinBooking_click = () => {
     joinBooking(this.state.postal);
@@ -165,12 +166,127 @@ class Booking extends React.Component {
     });
   }
 
- startBooking = (e) => {
-   this.setState({ bookingID: e.target.parentElement.parentElement.id});
+  viewPastBooking = () => {
+    let userDetails = [];
+    document.getElementById('tb_myBookings').innerHTML = '';
+    document.getElementById('tbl_MyBookings').style.display = 'block';
+    document.getElementById('showRating').style.display = 'none';
 
-  document.getElementById('bookPage').style.display = 'none';
-  document.getElementById('maps').style.display = 'block';
-}
+    document.getElementById('div_availBookings').style.display = "none";
+    document.getElementById('div_createBooking').style.display = "none";
+    document.getElementById('div_myBookings').style.display = "block";
+    document.getElementById('div_viewSelectedBooking').style.display = "none";
+    document.getElementById('div_viewCreatedBooking').style.display = "none";
+    document.getElementById('btnSubmitJoinBooking').style.display = "none";
+    document.getElementById('tbl_viewSelectedBooking_ExtendBooking').style.display = "none";
+
+    // get all accounts
+    firebase.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then((snapshot) => {
+        let i = 0;
+        snapshot.forEach((child) => {
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          i++;
+        })
+      });
+
+    const database = firebase.database().ref('bookings').orderByChild('date');
+    database.once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        let content = '';
+        let rowCount = 0;
+        snapshot.forEach((data) => {
+          if (data.val().currPassengers !== "") {
+            if (data.val().currPassengers.includes(user[2]) && data.val().completed === 'yes') {
+              let area = data.val().area;
+              let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+              let ppl = [];
+
+              if (data.val().currPassengers !== "") {
+                ppl = data.val().currPassengers.split(',')
+              }
+
+              let passengers = ppl.length + "/" + data.val().maxPassengers;
+              let id = data.val().driverID;
+              let driver = '';
+
+              for (let i = 0; i < userDetails.length; i++) {
+                let key = [];
+                key = userDetails[i].split(':');
+                if (key[0] === id) {
+                  driver = key[1];
+                }
+              }
+
+              content += '<tr id=\'' + data.key + '\'>';
+              content += '<td>' + area + '</td>'; //column1
+              content += '<td>' + date + '</td>'; //column2
+              content += '<td>' + driver + '</td>';
+              content += '<td>' + passengers + '</td>';
+              content += '<td id=\'btnViewMyBooking' + rowCount + '\'></td>';
+              content += '<td id=\'btnRate' + rowCount + '\'></td>';
+              content += '</tr>';
+
+              rowCount++;
+            }
+          }
+        });
+
+        document.getElementById('tb_myBookings').innerHTML += content;
+
+        for (let v = 0; v < rowCount; v++) {
+          let btn = document.createElement('input');
+          btn.setAttribute('type', 'button')
+          btn.setAttribute('value', 'View');
+          btn.onclick = viewBooking;
+          document.getElementById('btnViewMyBooking' + v).appendChild(btn);
+
+          let rate = document.createElement('input');
+          rate.setAttribute('type', 'button')
+          rate.setAttribute('value', 'Rate');
+          rate.onclick = this.rateUsers;
+          document.getElementById('btnRate' + v).appendChild(rate);
+        }
+      }
+    });
+  }
+
+  startBooking = (e) => {
+    this.setState({ bookingID: e.target.parentElement.parentElement.id});
+
+    document.getElementById('bookPage').style.display = 'none';
+    document.getElementById('maps').style.display = 'block';
+  }
+
+  rateUsers = (e) => {
+    this.setState({ bookingID: e.target.parentElement.parentElement.id });
+    
+    document.getElementById('tbl_MyBookings').style.display = 'none';
+    document.getElementById('showRating').style.display = 'block';
+  }
+
+  confirmRemovePassenger_click = () => {
+    confirmRemovePassenger(this.state.removeReason);
+
+    this.state = {
+      currPassengers: '',
+      payMethod: '',
+      postal: '',
+      removeReason: '',
+      date: Datetime.moment()
+    };
+  }
+
+  cancelBooking_click = () => {
+    cancelBooking();
+    this.state = {
+      currPassengers: '',
+      payMethod: '',
+      postal: ''
+    };
+  }
 
 render() {
     return (
@@ -181,6 +297,7 @@ render() {
             <button id='btnViewMyBookings' onClick={ viewMyBookings }>View My Rides</button>
             <button id='btnCreateBooking' onClick={ createBooking }>Create A Ride</button>
             <button id='btnViewCreatedBooking' onClick={ this.viewCreatedBooking }>View My Created Rides</button>
+            <button id='btnViewPastBooking' onClick={this.viewPastBooking}>View Past Rides</button>
             <br />
             <br />
           </div>
@@ -197,6 +314,9 @@ render() {
               </thead>
               <tbody id="tb_myBookings"></tbody>
             </table>
+            <div id='showRating' style={{ display: 'none' }}>
+              <Rating bookingID={this.state.bookingID} />
+            </div>
           </div>
 
           <div id='div_viewCreatedBooking' style={{display: 'none'}}>
@@ -307,7 +427,7 @@ render() {
             <br />
             <button id='btnJoinBooking' onClick={ extendJoinBooking }>Join Booking</button>
             <button id='btnSubmitJoinBooking' onClick={ this.joinBooking_click } style={{display: 'none'}}>Submit Booking</button>
-            <button id='btnCancelBooking' onClick={ cancelBooking }>Cancel Booking</button>
+            <button id='btnCancelBooking' onClick={ this.cancelBooking_click }>Cancel Booking</button>
             <button id='btnRemovePassenger' onClick={ removePassenger }>Remove Passenger</button>
             <button id='btnDeleteBooking' onClick={ deleteBooking }>Delete Booking</button>
             <table id='tbl_removePassengerExtend' style={{display: 'none'}}>
@@ -323,7 +443,7 @@ render() {
               </tbody>
             </table>
             <br/>
-            <button id='btnConfirmRemovePassenger' onClick={ confirmRemovePassenger } style={{display: 'none'}}>Confirm Remove Passenger</button>
+            <button id='btnConfirmRemovePassenger' onClick={ this.confirmRemovePassenger_click } style={{display: 'none'}}>Confirm Remove Passenger</button>
           </div>
 
           <div id='div_createBooking' style={{display: 'none'}}>

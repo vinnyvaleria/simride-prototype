@@ -43,7 +43,7 @@ class map extends React.Component {
         const self = this;
         if ("geolocation" in navigator) {
             console.log("Available");
-            if (this.state.action == 'meet') {
+            if (this.state.action === 'meet') {
                 navigator.geolocation.watchPosition(function (position) {
                     let d = distance(position.coords.longitude, position.coords.latitude, self.state.from.lng, self.state.from.lat);
                     if (document.getElementById('btnHere') !== null) {
@@ -57,7 +57,7 @@ class map extends React.Component {
                     console.log("Distance from destination is:", d + 'km', position.coords.longitude, position.coords.latitude, self.state.from.lng, self.state.from.lat);
                 });
             }
-            else if (this.state.action == 'drive') {
+            else if (this.state.action === 'drive') {
                 navigator.geolocation.watchPosition(function (position) {
                     let d = distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
 

@@ -1,5 +1,3 @@
-//const app = require('express')();
-
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Messages from './inbox/index.jsx';
@@ -27,7 +25,7 @@ export default function Start() {
             <li>
               <Link to="/Wallet">Wallet</Link>
             </li>
-            <li id='checkOutTab'>
+            <li>
               <Link to="/Checkout">Checkout Requests</Link>
             </li>
             <li>

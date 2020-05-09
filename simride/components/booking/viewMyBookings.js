@@ -9,6 +9,8 @@ import * as moment from 'moment';
 export const viewMyBookings = () => {
     let userDetails = [];
     document.getElementById('tb_myBookings').innerHTML = '';
+    document.getElementById('tbl_MyBookings').style.display = 'block';
+    document.getElementById('showRating').style.display = 'none';
 
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "none";

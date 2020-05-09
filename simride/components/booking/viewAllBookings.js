@@ -32,35 +32,37 @@ export const viewAllBookings = () => {
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
-                let area = data.val().area;
-                let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
-                let ppl = [];
+                if (data.val().completed === 'no') {
+                    let area = data.val().area;
+                    let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+                    let ppl = [];
 
-                if (data.val().currPassengers !== "") {
-                    ppl = data.val().currPassengers.split(',')
-                }
-
-                let passengers = ppl.length + "/" + data.val().maxPassengers;
-                let id = data.val().driverID;
-                let driver = '';
-
-                for (let i = 0; i < userDetails.length; i++) {
-                    let key = [];
-                    key = userDetails[i].split(':');
-                    if (key[0] === id) {
-                        driver = key[1];
+                    if (data.val().currPassengers !== "") {
+                        ppl = data.val().currPassengers.split(',')
                     }
+
+                    let passengers = ppl.length + "/" + data.val().maxPassengers;
+                    let id = data.val().driverID;
+                    let driver = '';
+
+                    for (let i = 0; i < userDetails.length; i++) {
+                        let key = [];
+                        key = userDetails[i].split(':');
+                        if (key[0] === id) {
+                            driver = key[1];
+                        }
+                    }
+
+                    content += '<tr id=\'' + data.key + '\'>';
+                    content += '<td>' + area + '</td>'; //column1
+                    content += '<td>' + date + '</td>'; //column2
+                    content += '<td>' + driver + '</td>';
+                    content += '<td>' + passengers + '</td>';
+                    content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
+                    content += '</tr>';
+
+                    rowCount++;
                 }
-
-                content += '<tr id=\'' + data.key + '\'>';
-                content += '<td>' + area + '</td>'; //column1
-                content += '<td>' + date + '</td>'; //column2
-                content += '<td>' + driver + '</td>';
-                content += '<td>' + passengers + '</td>';
-                content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
-                content += '</tr>';
-
-                rowCount++;
             });
 
             document.getElementById('tb_AllBookings').innerHTML += content;

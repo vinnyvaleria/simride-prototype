@@ -34,7 +34,10 @@ class Inbox extends React.Component {
             to: '',
             from: '',
             message: '',
-            id: ''
+            id: '',
+            rating: '',
+            ratedBy: '',
+            avgRating: 0.00
         };
     }
 
@@ -64,6 +67,8 @@ class Inbox extends React.Component {
                     user[7] = child.val().isBanned;
                     user[8] = child.val().wallet;
                     user[9] = child.key;
+                    user[10] = child.val().rating;
+                    user[11] = child.val().ratedBy;
                 });
             }).then(() => {
                 if (typeof user[3] === 'undefined') {
@@ -203,9 +208,15 @@ class Inbox extends React.Component {
                     lblotherlName.innerHTML = child.val().lname;
                     lblotherEmail.innerHTML = child.val().email;
                     lblotherDriver.innerHTML = child.val().isDriver;
-                    lblotherAdmin.innerHTML = child.val().isAdmin;
+                    let rating = child.val().rating;
+                    let count = child.val().ratedBy;
+                    if (count > 0) {
+                        lblotherRating.innerHTML = parseFloat(parseFloat(rating)/parseInt(count)).toFixed(2);
+                    }
+                    else {
+                        lblotherRating.innerHTML = '0.00'
+                    }
                     clickedUserID = child.key;
-                    console.log(child.val().fname, child.val().email);
                 });
             })
     }
@@ -498,15 +509,15 @@ class Inbox extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>isDriver:</td>
+                                    <td>Driver:</td>
                                     <td>
                                         <label id='lblotherDriver' name='isDriver'></label>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>isAdmin:</td>
+                                    <td>Rating:</td>
                                     <td>
-                                        <label id='lblotherAdmin' name='isAdmin'></label>
+                                        <label id='lblotherRating' name='rating'></label>
                                     </td>
                                 </tr>
                             </tbody>

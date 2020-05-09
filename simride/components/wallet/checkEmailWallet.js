@@ -1,7 +1,7 @@
 import firebase from '../../../base';
 import {walletHomePage} from './walletHomePage';
 
-let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+let user = new Array(12); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id, 10rating, 11ratedby
 // checks email and signs user out if no such email found
 export const checkEmailWallet = (e) => {
     const email = firebase.auth().currentUser.email;
@@ -21,6 +21,8 @@ export const checkEmailWallet = (e) => {
                 user[7] = child.val().isBanned;
                 user[8] = child.val().wallet;
                 user[9] = child.key;
+                user[10] = child.val().rating;
+                user[11] = child.val().ratedBy;
             });
         }).then(() => {
             if (typeof user[3] === 'undefined') {

@@ -2,7 +2,7 @@ import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../base';
 
-let bindUser = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+let bindUser = new Array(12); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id, 10rating, 11ratedby
 // bind user data
 export const bindUserData = (email) => {
     const accountsRef = firebase.database().ref('accounts');
@@ -21,6 +21,8 @@ export const bindUserData = (email) => {
                 bindUser[7] = child.val().isBanned;
                 bindUser[8] = child.val().wallet;
                 bindUser[9] = child.key;
+                bindUser[10] = child.val().rating;
+                bindUser[11] = child.val().ratedBy;
             });
         })
 }

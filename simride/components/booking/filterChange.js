@@ -3,7 +3,6 @@ import * as moment from 'moment';
 import {viewBooking} from './viewBooking';
 
 export const filterChange = () => {
-    const self = this;
     let areaNames = [];
     let userDetails = [];
     document.getElementById('tb_AllBookings').innerHTML = '';

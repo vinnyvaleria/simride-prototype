@@ -48,6 +48,7 @@ export const viewBooking = (e) => {
                     payMethod = data.val().payMethod;
                     PostalCode = data.val().postal;
                     passengers = data.val().currPassengers;
+                    let completed = data.val().completed;
                     let ppl = [];
                     let pay = [];
                     let meet = [];
@@ -118,6 +119,10 @@ export const viewBooking = (e) => {
                                 }
                             }
                         }
+                    }
+
+                    if (completed === 'yes') {
+                        document.getElementById('btnCancelBooking').style.display = "none";
                     }
 
                     if (ppl.length > 0) {
