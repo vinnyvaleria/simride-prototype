@@ -279,9 +279,7 @@ class Inbox extends React.Component {
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
                     reportRef.set({
-                        status: "not banned",
                         lastReportDate: today * -1,
-                        username: clickedUser,
                         fake: snapshot.val().fake += 1,
                         safety: snapshot.val().safety += 0,
                         vulgar: snapshot.val().vulgar += 0,
@@ -308,9 +306,7 @@ class Inbox extends React.Component {
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
                     reportRef.set({
-                        status: "not banned",
                         lastReportDate: today * -1,
-                        username: clickedUser,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 1,
                         vulgar: snapshot.val().vulgar += 0,
@@ -339,9 +335,7 @@ class Inbox extends React.Component {
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
                     reportRef.set({
-                        status: "not banned",
                         lastReportDate: today * -1,
-                        username: clickedUser,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 0,
                         vulgar: snapshot.val().vulgar += 1,
@@ -370,9 +364,7 @@ class Inbox extends React.Component {
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
                     reportRef.set({
-                        status: "not banned",
                         lastReportDate: today * -1,
-                        username: clickedUser,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 0,
                         vulgar: snapshot.val().vulgar += 0,
@@ -401,9 +393,7 @@ class Inbox extends React.Component {
             reportRef.once('value', (snapshot) => {
                 if (snapshot.exists()) {
                     reportRef.set({
-                        status: "not banned",
                         lastReportDate: today * -1,
-                        username: clickedUser,
                         fake: snapshot.val().fake += 0,
                         safety: snapshot.val().safety += 0,
                         vulgar: snapshot.val().vulgar += 0,

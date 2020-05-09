@@ -6,11 +6,16 @@ import { Text, View, Button, StyleSheet } from 'react-native';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import Geocode from "react-geocode";
 import getDirections from 'react-native-google-maps-directions'
+import {distance} from './distanceCalc';
+import {notifyHere} from './notifyHere';
+import {userBoard} from './userBoard';
+import {userNoShow} from './userNoShow';
 
 Geocode.enableDebug();
 
 let postal = []
 let ppl = []
+let payMethod = []
 let towards
 
 class map extends React.Component {
@@ -20,7 +25,9 @@ class map extends React.Component {
             ready: false,
             to: { lat: null, lng: null },
             from: { lat: null, lng: null },
-            error: null
+            error: null,
+            user: null,
+            payMethod: null
         }
     }
 
@@ -36,13 +43,16 @@ class map extends React.Component {
             console.log("Available");
 
             navigator.geolocation.watchPosition(function (position) {
-                let d = self.distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
-                if (d < 0.05) {
-                    document.getElementById('btnHere').style.display = 'block';
+                let d = distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
+                if (document.getElementById('btnHere') !== null) {
+                    if (d < 0.05) {
+                        document.getElementById('btnHere').style.display = 'block';
+                    }
+                    else {
+                        document.getElementById('btnHere').style.display = 'none';
+                    }
                 }
-                else {
-                    document.getElementById('btnHere').style.display = 'none';
-                }
+                
                 console.log("Distance from destination is:", d + 'km', position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
             });
 
@@ -59,29 +69,8 @@ class map extends React.Component {
         }
     }
 
-    distance = (lon1, lat1, lon2, lat2) => {
-        var earthRadiusKm = 6371;
-
-        var dLat = this.degreesToRadians(lat2 - lat1);
-        var dLon = this.degreesToRadians(lon2 - lon1);
-
-        lat1 = this.degreesToRadians(lat1);
-        lat2 = this.degreesToRadians(lat2);
-
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return earthRadiusKm * c;
-    }
-
-    degreesToRadians = (degrees) => {
-        return degrees * Math.PI / 180;
-    }
-
     geoSuccess = (position) => {
         console.log(position);
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
         this.setState({
             ready: true,
             from: { lat: position.coords.latitude, lng: position.coords.longitude }
@@ -104,9 +93,10 @@ class map extends React.Component {
                         if (data.val().currPassengers !== "") {
                             ppl = data.val().currPassengers.split(', ');
                             postal = data.val().postal.split(', ');
+                            payMethod = data.val().payMethod.split(', ');
                         }
 
-                        for(let i=0;i<ppl.length;i++) {
+                        for(let i=0; i<ppl.length; i++) {
                             content += '<tr id=\'' + i + '_' + data.key + '\'>';
                             content += '<td>' + ppl[i] + '</td>'; //column1
                             content += '<td>' + postal[i].split(':')[0] + '</td>';
@@ -116,13 +106,15 @@ class map extends React.Component {
                     }
                 });
 
-                document.getElementById('directions').innerHTML += content;
+                if (document.getElementById('directions') != null) {
+                    document.getElementById('directions').innerHTML += content;
+                }
 
                 for (var d = 0; d < ppl.length; d++) {
                     var btn = document.createElement('input');
                     btn.setAttribute('type', 'button')
                     btn.setAttribute('value', 'Set Directions');
-                    btn.setAttribute('id', postal[d]);
+                    btn.setAttribute('id', postal[d] + ':' + ppl[d] + ':' + payMethod[d]);
                     btn.onclick = this.plotPts;
                     document.getElementById('btnPlotPts' + d).appendChild(btn);
                     
@@ -137,6 +129,8 @@ class map extends React.Component {
         let latlng = postal.split(':');
         if (towards === 'Home') {
             this.setState({
+                payMethod: latlng[4],
+                user: latlng[3],
                 to: {
                     lat: parseFloat(latlng[1]),
                     lng: parseFloat(latlng[2])
@@ -149,6 +143,8 @@ class map extends React.Component {
         }
         else {
             this.setState({
+                payMethod: latlng[4],
+                user: latlng[3],
                 from: {
                     lat: parseFloat(latlng[1]),
                     lng: parseFloat(latlng[2])
@@ -201,7 +197,9 @@ class map extends React.Component {
                             <table>
                                 <tbody id='directions'></tbody>
                             </table>
-                            <button id='btnHere' style={{display:'none'}}>I'm Here</button>
+                            <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{display:'none'}}>I'm Here</button>
+                            <button id='btnBoard' onClick={() => userBoard(this.state.user, this.state.payMethod)} style={{ display:'none'}}>Passenger has boarded</button>
+                            <button id='btnNoShow' onClick={() => userNoShow(this.state.user)} style={{ display:'none'}}>Passenger did not show up</button>
                         </div>
                         <div>
                             <Button onPress={this.handleGetDirections} title="Get Directions" />

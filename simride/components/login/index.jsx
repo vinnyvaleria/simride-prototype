@@ -107,7 +107,7 @@ class Login extends React.Component {
             isDriver: "no",
             isAdmin: "no",
             isBanned: "no",
-            wallet: "0.00"
+            wallet: 0
           }
           let reg = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 
