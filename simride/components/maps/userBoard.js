@@ -18,29 +18,29 @@ export const userBoard = (username, payMethod) => {
                     currBalance = child.val().wallet;
                 });
 
-                // const newBalancePassenger = parseFloat(currBalance) - 5;
-                // const accountsRefUpdatePassenger = firebase.database().ref('accounts/' + userID);
-                // accountsRefUpdatePassenger.orderByChild('uname')
-                //     .equalTo(username)
-                //     .once('value')
-                //     .then((snapshot) => {
-                //         snapshot.ref.update({
-                //             wallet: newBalancePassenger.toFixed(2)
-                //         })
-                //     });
+                const newBalancePassenger = parseFloat(currBalance) - 5;
+                const accountsRefUpdatePassenger = firebase.database().ref('accounts/' + userID);
+                accountsRefUpdatePassenger.orderByChild('uname')
+                    .equalTo(username)
+                    .once('value')
+                    .then((snapshot) => {
+                        snapshot.ref.update({
+                            wallet: newBalancePassenger.toFixed(2)
+                        })
+                    });
 
-                // const newBalanceDriver = parseFloat(user[8]) + 5;
-                // const accountsRefUpdateDriver = firebase.database().ref('accounts/' + user[9]);
-                // accountsRefUpdateDriver.orderByChild('email')
-                //     .equalTo(user[3])
-                //     .once('value')
-                //     .then((snapshot) => {
-                //         snapshot.ref.update({
-                //             wallet: newBalanceDriver.toFixed(2)
-                //         })
-                //     });
+                const newBalanceDriver = parseFloat(user[8]) + 5;
+                const accountsRefUpdateDriver = firebase.database().ref('accounts/' + user[9]);
+                accountsRefUpdateDriver.orderByChild('email')
+                    .equalTo(user[3])
+                    .once('value')
+                    .then((snapshot) => {
+                        snapshot.ref.update({
+                            wallet: newBalanceDriver.toFixed(2)
+                        })
+                    });
 
-                //user[8] = newBalanceDriver;
+                user[8] = newBalanceDriver;
             })
     }
     document.getElementById('div_' + username).style.display = 'none';

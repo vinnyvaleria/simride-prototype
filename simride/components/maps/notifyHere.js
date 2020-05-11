@@ -24,7 +24,7 @@ export const notifyHere = (username) => {
                     notification: 'Driver is here!',
                     reason: 'Please look for vehicle no. ' + carplate + '.'
                 }
-                //notificationRef.push(notification);
+                notificationRef.push(notification);
 
                 document.getElementById('div_' + users[u]).style.display = 'block';
             }
@@ -37,7 +37,7 @@ export const notifyHere = (username) => {
                 notification: 'Driver is here!',
                 reason: 'Please look for vehicle no. ' + carplate + '.'
             }
-            //notificationRef.push(notification);
+            notificationRef.push(notification);
 
             document.getElementById('div_' + username).style.display = 'block';
         }
