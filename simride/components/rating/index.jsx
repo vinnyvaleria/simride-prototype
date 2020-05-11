@@ -36,7 +36,6 @@ class rating extends Component {
                         let users = []
                         users = child.val().currPassengers.split(', ');
                         let driverID = child.val().driverID;
-                        console.log(users)
                         for (let i = 0; i < users.length; i++) {
                             if (users[i] !== user[2]) {
                                 content += "<option value=\"";

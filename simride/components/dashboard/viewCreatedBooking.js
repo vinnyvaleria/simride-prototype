@@ -57,7 +57,9 @@ export const viewCreatedBooking = () => {
                     content += '</tr>';
                 }
             });
-            document.getElementById('tb_DriverUpcomingDrives').innerHTML += content;
+            if (document.getElementById('tb_DriverUpcomingDrives') !== null) {
+                document.getElementById('tb_DriverUpcomingDrives').innerHTML += content;
+            }
         }
     });
 }
