@@ -44,9 +44,6 @@ export const userNoShow = (username) => {
         //     }
         //});
     })
-
+    document.getElementById('div_' + username).style.display = 'none';
     alert("Report has been sent");
-    document.getElementById('btnBoard').style.display = 'none';
-    document.getElementById('btnNoShow').style.display = 'none';
-    document.getElementById('btnHere').style.display = 'none';
 }

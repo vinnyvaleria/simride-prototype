@@ -24,8 +24,9 @@ export const notifyHere = (username) => {
                     notification: 'Driver is here!',
                     reason: 'Please look for vehicle no. ' + carplate + '.'
                 }
-                console.log(notification)
                 //notificationRef.push(notification);
+
+                document.getElementById('div_' + users[u]).style.display = 'block';
             }
         }
         else {
@@ -37,10 +38,10 @@ export const notifyHere = (username) => {
                 reason: 'Please look for vehicle no. ' + carplate + '.'
             }
             //notificationRef.push(notification);
-            console.log(notification)
+
+            document.getElementById('div_' + username).style.display = 'block';
         }
         
-        document.getElementById('btnBoard').style.display = 'inline-block';
-        document.getElementById('btnNoShow').style.display = 'inline-block';
+        document.getElementById('userAttendance').style.display = 'block';
     })
 }

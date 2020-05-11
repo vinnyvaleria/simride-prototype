@@ -43,7 +43,5 @@ export const userBoard = (username, payMethod) => {
                 //user[8] = newBalanceDriver;
             })
     }
-    document.getElementById('btnBoard').style.display = 'none';
-    document.getElementById('btnNoShow').style.display = 'none';
-    document.getElementById('btnHere').style.display = 'none';
+    document.getElementById('div_' + username).style.display = 'none';
 }

@@ -149,13 +149,20 @@ class map extends React.Component {
                 for (var d = 0; d < ppl.length; d++) {
                     const a = ppl[d];
                     const b = payMethod[d];
+                    var node = document.createElement("div");
+                    node.setAttribute('id', 'div_' + a);
+                    node.style.display = 'none';
+                    if (document.getElementById('userAttendance') !== null) {
+                        document.getElementById('userAttendance').appendChild(node);
+                    }
+
                     var board = document.createElement('input');
                     board.setAttribute('type', 'button')
                     board.setAttribute('value', a + ' has boarded');
                     board.setAttribute('id', 'bo_'+a);
                     board.onclick = () => userBoard(a, b);
-                    if (document.getElementById('userAttendance') !== null) {
-                        document.getElementById('userAttendance').appendChild(board);
+                    if (document.getElementById('div_' + a) !== null) {
+                        document.getElementById('div_' + a).appendChild(board);
                     }
                 }
 
@@ -166,8 +173,8 @@ class map extends React.Component {
                     noshow.setAttribute('value', a + ' did not show up');
                     noshow.setAttribute('id', 'ns_'+a);
                     noshow.onclick = () => userNoShow(a);
-                    if (document.getElementById('userAttendance') !== null) {
-                        document.getElementById('userAttendance').appendChild(noshow);
+                    if (document.getElementById('div_' + a) !== null) {
+                        document.getElementById('div_' + a).appendChild(noshow);
                     }
                 }
 
@@ -186,6 +193,8 @@ class map extends React.Component {
     }
 
     plotPts = (e) => {
+        document.getElementById('btnHere').style.display = 'none';
+
         postal = e.target.id;
         let latlng = postal.split(':');
         if (latlng[3] === 'School') {
@@ -288,7 +297,7 @@ class map extends React.Component {
                             <div id='div_meet'>
                                 <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{ display: 'none' }}>I'm here</button>
                                 <br/>
-                                <div id='userAttendance' style={{ display: 'block' }}></div>
+                                <div id='userAttendance' style={{ display: 'none' }}></div>
                                 <button id='btnBoard' onClick={() => userBoard(this.state.user, this.state.payMethod)} style={{ display: 'none' }}>Passenger has boarded</button>
                                 <button id='btnNoShow' onClick={() => userNoShow(this.state.user)} style={{ display: 'none' }}>Passenger did not show up</button>
                                 <button id='btnPickUpAll' onClick={this.pickedUpAll} style={{ display: 'block' }}>Picked up all passengers, let's go!</button>
