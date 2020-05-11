@@ -61,7 +61,8 @@ class Wallet extends React.Component {
             email: user[3],
             token: this.state.token,
             amount: this.state.amount,
-            date: Date.now() * -1
+            date: Date.now() * -1,
+            action: 'top-up'
         }
 
         transaction.push(transactionForm);
@@ -167,6 +168,7 @@ class Wallet extends React.Component {
                     <thead>
                         <tr>
                             <th>Date & Time</th>
+                            <th>Type</th>
                             <th>Amount</th>
                         </tr>
                     </thead>

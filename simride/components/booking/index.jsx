@@ -71,8 +71,7 @@ class Booking extends React.Component {
 
     this.state = {
       currPassengers: '',
-      payMethod: '',
-      postal: ''
+      payMethod: ''
     };
   }
 
@@ -113,7 +112,7 @@ class Booking extends React.Component {
         let content = '';
         let rowCount = 0;
         snapshot.forEach((data) => {
-          if (data.val().driverID === user[9]) {
+          if (data.val().driverID === user[9] && data.val().completed === 'no') {
             let area = data.val().area;
             let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
             let ppl = [];
@@ -199,7 +198,7 @@ class Booking extends React.Component {
         let rowCount = 0;
         snapshot.forEach((data) => {
           if (data.val().currPassengers !== "") {
-            if (data.val().currPassengers.includes(user[2]) && data.val().completed === 'yes') {
+            if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && data.val().completed === 'yes') {
               let area = data.val().area;
               let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
               let ppl = [];
@@ -273,7 +272,6 @@ class Booking extends React.Component {
     this.state = {
       currPassengers: '',
       payMethod: '',
-      postal: '',
       removeReason: '',
       date: Datetime.moment()
     };
@@ -283,8 +281,7 @@ class Booking extends React.Component {
     cancelBooking();
     this.state = {
       currPassengers: '',
-      payMethod: '',
-      postal: ''
+      payMethod: ''
     };
   }
 
@@ -396,8 +393,8 @@ render() {
                   <td>Postal Code of Meeting/Drop-Off Point:</td>
                   <td>
                     <GooglePlacesAutocomplete 
-                      id='postal' 
-                      placeholder='Search' 
+                      id='postal'
+                      placeholder='Search address' 
                       onSelect={({ description }) => (
                         geocodeByAddress(description)
                           .then(results => getLatLng(results[0]))

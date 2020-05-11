@@ -18,8 +18,10 @@ export const transactionsPage = () => {
                 if (data.val().email === firebase.auth().currentUser.email) {
                     let amount = data.val().amount;
                     let date = moment.unix((data.val().date * -1) / 1000).format("DD MMM YYYY hh:mm a");
+                    let action = data.val().action;
                     content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + date + '</td>'; //column1
+                    content += '<td>' + action + '</td>'; //column1
                     content += '<td>' + '$' + parseFloat(amount).toFixed(2) + '</td>'; //column2
                     content += '</tr>';
                 }
