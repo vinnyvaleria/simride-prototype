@@ -121,6 +121,10 @@ class map extends React.Component {
                             }
                         }
 
+                        this.setState({
+                            user: data.val().currPassengers
+                        })
+
                         if (data.val().currPassengers !== "") {
                             ppl = data.val().currPassengers.split(', ');
                             postal = data.val().postal.split(', ');
@@ -145,14 +149,12 @@ class map extends React.Component {
                 for (var d = 0; d < ppl.length; d++) {
                     var btn = document.createElement('input');
                     btn.setAttribute('type', 'button')
-                    btn.setAttribute('value', 'Set Directions');
+                    btn.setAttribute('value', 'Set directions');
                     btn.setAttribute('id', postal[d] + ':' + ppl[d] + ':' + payMethod[d]);
                     btn.onclick = this.plotPts;
                     if (document.getElementById('btnPlotPts' + d) !== null) {
                         document.getElementById('btnPlotPts' + d).appendChild(btn);
                     }
-                    
-                    console.log(btn)
                 }
             }
         });
@@ -160,20 +162,35 @@ class map extends React.Component {
 
     plotPts = (e) => {
         postal = e.target.id;
-        alert(this.state.curr.lat)
         let latlng = postal.split(':');
-        this.setState({
-            payMethod: latlng[4],
-            user: latlng[3],
-            to: {
-                lat: parseFloat(latlng[1]),
-                lng: parseFloat(latlng[2])
-            },
-            from: {
-                lat: this.state.curr.lat,
-                lng: this.state.curr.lng
-            },
-        })
+        alert(latlng[3])
+        if (latlng[3] === 'School') {
+            this.setState({
+                payMethod: latlng[4],
+                to: {
+                    lat: parseFloat(latlng[1]),
+                    lng: parseFloat(latlng[2])
+                },
+                from: {
+                    lat: this.state.curr.lat,
+                    lng: this.state.curr.lng
+                },
+            })
+        }
+        else {
+            this.setState({
+                payMethod: latlng[4],
+                user: latlng[3],
+                to: {
+                    lat: parseFloat(latlng[1]),
+                    lng: parseFloat(latlng[2])
+                },
+                from: {
+                    lat: this.state.curr.lat,
+                    lng: this.state.curr.lng
+                },
+            })
+        }
     }
 
     //Testing1 This shows route, but it brings you to the actual google maps
@@ -246,6 +263,8 @@ class map extends React.Component {
                             </table>
                             <div id='div_meet'>
                                 <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{ display: 'none' }}>I'm here</button>
+                                <br/>
+                                <div id='userAttendance' style={{ display: 'none' }}></div>
                                 <button id='btnBoard' onClick={() => userBoard(this.state.user, this.state.payMethod)} style={{ display: 'none' }}>Passenger has boarded</button>
                                 <button id='btnNoShow' onClick={() => userNoShow(this.state.user)} style={{ display: 'none' }}>Passenger did not show up</button>
                                 <button id='btnPickUpAll' onClick={this.pickedUpAll} style={{ display: 'block' }}>Picked up all passengers, let's go!</button>
