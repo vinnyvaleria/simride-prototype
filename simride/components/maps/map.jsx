@@ -147,6 +147,19 @@ class map extends React.Component {
                 }
 
                 for (var d = 0; d < ppl.length; d++) {
+                    const a = ppl[d];
+                    const b = payMethod[d];
+                    var board = document.createElement('input');
+                    board.setAttribute('type', 'button')
+                    board.setAttribute('value', a + ' has boarded');
+                    board.setAttribute('id', a);
+                    board.onclick = () => userBoard(a, b);
+                    if (document.getElementById('userAttendance') !== null) {
+                        document.getElementById('userAttendance').appendChild(board);
+                    }
+                }
+
+                for (var d = 0; d < ppl.length; d++) {
                     var btn = document.createElement('input');
                     btn.setAttribute('type', 'button')
                     btn.setAttribute('value', 'Set directions');
@@ -163,7 +176,6 @@ class map extends React.Component {
     plotPts = (e) => {
         postal = e.target.id;
         let latlng = postal.split(':');
-        alert(latlng[3])
         if (latlng[3] === 'School') {
             this.setState({
                 payMethod: latlng[4],
@@ -264,7 +276,7 @@ class map extends React.Component {
                             <div id='div_meet'>
                                 <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{ display: 'none' }}>I'm here</button>
                                 <br/>
-                                <div id='userAttendance' style={{ display: 'none' }}></div>
+                                <div id='userAttendance' style={{ display: 'block' }}></div>
                                 <button id='btnBoard' onClick={() => userBoard(this.state.user, this.state.payMethod)} style={{ display: 'none' }}>Passenger has boarded</button>
                                 <button id='btnNoShow' onClick={() => userNoShow(this.state.user)} style={{ display: 'none' }}>Passenger did not show up</button>
                                 <button id='btnPickUpAll' onClick={this.pickedUpAll} style={{ display: 'block' }}>Picked up all passengers, let's go!</button>
