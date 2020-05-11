@@ -29,7 +29,8 @@ class map extends React.Component {
             error: null,
             user: null,
             payMethod: null,
-            action: 'meet'
+            action: 'meet',
+            curr: {lat: null, lng: null}
         }
     }
 
@@ -45,7 +46,15 @@ class map extends React.Component {
             console.log("Available");
             if (this.state.action === 'meet') {
                 navigator.geolocation.watchPosition(function (position) {
-                    let d = distance(position.coords.longitude, position.coords.latitude, self.state.from.lng, self.state.from.lat);
+                    let d = distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
+
+                    self.setState({
+                        curr: {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        }
+                    })
+
                     if (document.getElementById('btnHere') !== null) {
                         if (d < 0.05) {
                             document.getElementById('btnHere').style.display = 'block';
@@ -99,6 +108,19 @@ class map extends React.Component {
                     if (data.key === this.props.bookingID) { // replace with bookingID later
                         towards = data.val().towards;
 
+                        if (towards === 'School') {
+                            if (document.getElementById('school') !== null) {
+                                document.getElementById('school').style.display = 'none';
+                                document.getElementById('directions').style.display = 'block';
+                            }
+                        }
+                        else {
+                            if (document.getElementById('directions') !== null) {
+                                document.getElementById('school').style.display = 'block';
+                                document.getElementById('directions').style.display = 'none';
+                            }
+                        }
+
                         if (data.val().currPassengers !== "") {
                             ppl = data.val().currPassengers.split(', ');
                             postal = data.val().postal.split(', ');
@@ -109,6 +131,7 @@ class map extends React.Component {
                             content += '<tr id=\'' + i + '_' + data.key + '\'>';
                             content += '<td>' + ppl[i] + '</td>'; //column1
                             content += '<td>' + postal[i].split(':')[0] + '</td>';
+                            content += '<td>' + payMethod[i] + '</td>'
                             content += '<td id=\'btnPlotPts' + i + '\'></td>';
                             content += '</tr>';
                         }
@@ -133,50 +156,24 @@ class map extends React.Component {
                 }
             }
         });
-
-        if (towards === 'School') {
-            if (document.getElementById('school') !== null) {
-                document.getElementById('school').style.display = 'none';
-            }
-        }
-        else {
-            if (document.getElementById('directions') !== null) {
-                document.getElementById('directions').style.display = 'none';
-            }
-        }
     }
 
     plotPts = (e) => {
         postal = e.target.id;
+        alert(this.state.curr.lat)
         let latlng = postal.split(':');
-        if (towards === 'Home') {
-            this.setState({
-                payMethod: latlng[4],
-                user: latlng[3],
-                to: {
-                    lat: parseFloat(latlng[1]),
-                    lng: parseFloat(latlng[2])
-                },
-                from: {
-                    lat: 1.329426,
-                    lng: 103.776571
-                },
-            })
-        }
-        else {
-            this.setState({
-                payMethod: latlng[4],
-                user: latlng[3],
-                from: {
-                    lat: parseFloat(latlng[1]),
-                    lng: parseFloat(latlng[2])
-                },
-                to: {
-                    lat: 1.329426,
-                    lng: 103.776571
-                },
-            })
-        }
+        this.setState({
+            payMethod: latlng[4],
+            user: latlng[3],
+            to: {
+                lat: parseFloat(latlng[1]),
+                lng: parseFloat(latlng[2])
+            },
+            from: {
+                lat: this.state.curr.lat,
+                lng: this.state.curr.lng
+            },
+        })
     }
 
     //Testing1 This shows route, but it brings you to the actual google maps
@@ -248,7 +245,7 @@ class map extends React.Component {
                                 </tbody>
                             </table>
                             <div id='div_meet'>
-                                <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{ display: 'none' }}>I'm Here</button>
+                                <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{ display: 'none' }}>I'm here</button>
                                 <button id='btnBoard' onClick={() => userBoard(this.state.user, this.state.payMethod)} style={{ display: 'none' }}>Passenger has boarded</button>
                                 <button id='btnNoShow' onClick={() => userNoShow(this.state.user)} style={{ display: 'none' }}>Passenger did not show up</button>
                                 <button id='btnPickUpAll' onClick={this.pickedUpAll} style={{ display: 'block' }}>Picked up all passengers, let's go!</button>
