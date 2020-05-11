@@ -152,10 +152,22 @@ class map extends React.Component {
                     var board = document.createElement('input');
                     board.setAttribute('type', 'button')
                     board.setAttribute('value', a + ' has boarded');
-                    board.setAttribute('id', a);
+                    board.setAttribute('id', 'bo_'+a);
                     board.onclick = () => userBoard(a, b);
                     if (document.getElementById('userAttendance') !== null) {
                         document.getElementById('userAttendance').appendChild(board);
+                    }
+                }
+
+                for (var d = 0; d < ppl.length; d++) {
+                    const a = ppl[d];
+                    var noshow = document.createElement('input');
+                    noshow.setAttribute('type', 'button')
+                    noshow.setAttribute('value', a + ' did not show up');
+                    noshow.setAttribute('id', 'ns_'+a);
+                    noshow.onclick = () => userNoShow(a);
+                    if (document.getElementById('userAttendance') !== null) {
+                        document.getElementById('userAttendance').appendChild(noshow);
                     }
                 }
 
