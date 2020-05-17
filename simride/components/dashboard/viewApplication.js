@@ -15,7 +15,6 @@ export const viewApplication = () => {
                 if (data.val().status === "pending" && data.val().completed === "yes") {
                     let driverUname = data.val().driverUname;
                     let dateApplied = data.val().dateApplied;
-                    console.log(driverUname, dateApplied);
                     content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + driverUname + '</td>'; //column1
                     content += '<td>' + dateApplied + '</td>'; //column2
@@ -23,7 +22,6 @@ export const viewApplication = () => {
                     content += '</tr>';
 
                     rowCount++;
-                    console.log(rowCount, content);
                 }
             });
 

@@ -4,6 +4,7 @@
 
 import firebase from '../../../base';
 import 'firebase/firestore';
+import "firebase/storage";
 import React from 'react';
 import { View } from 'react-native';
 import { approveApplicant } from './approveApplicant'
@@ -14,17 +15,51 @@ import { checkEmailDashboard, user } from './checkEmailDashboard'
 
 class Dashboard extends React.Component {
   constructor(props) {
-      super(props);
-      this.state = {
-          frontURL: '',
-          backURL: '',
-          username: ''
-      };
+    super(props);
+    this.state = {
+      loading: true,
+      isMounted: false,
+      frontURL: null,
+      backURL: null,
+      username: ''
+    };
   }
 
   componentDidMount() {
+    this.setState({ isMounted: true }, (() => {
+      console.log("MOUNTED: " + this.state.isMounted);
+    }));
     checkEmailDashboard();
     this.setState({ username: user[2] });
+  }
+
+  componentWillUnmount() {
+    this.setState({ isMounted: false }, (() => {
+      console.log("MOUNTED: " + this.state.isMounted);
+    }));
+  }
+
+  getAndLoadHttpUrl = async (driverID) => {
+    if (this.state.isMounted === false) {
+      const fref = firebase.storage().ref("license/" + driverID).child('front');
+      fref.getDownloadURL().then(data => {
+        front = data;
+        this.setState({ frontURL: data }, alert(this.state.frontURL));
+        this.setState({ loading: false });
+      }).catch(error => {
+        this.setState({ frontURL: '' });
+        this.setState({ loading: false });
+      });
+
+      const bref = firebase.storage().ref("license/" + driverID).child('back');
+      bref.getDownloadURL().then(data => {
+        this.setState({ backURL: data });
+        this.setState({ loading: false });
+      }).catch(error => {
+        this.setState({ backURL: '' });
+        this.setState({ loading: false });
+      });
+    }
   }
 
   viewApplicant = (e) => {
@@ -39,7 +74,6 @@ class Dashboard extends React.Component {
             let dateApplied = data.val().dateApplied;
             let license = data.val().license;
             let issuedDate = data.val().issueDate;
-            console.log(driverUname, dateApplied);
 
             document.getElementById('td_ViewApplicant_driverID').innerHTML = data.key;
             document.getElementById('td_ViewApplicant_username').innerHTML = driverUname;
@@ -59,7 +93,11 @@ class Dashboard extends React.Component {
         this.setState({
           frontURL
         });
+      }).catch(() => {
+        alert('Front image could not be loaded')
       });
+
+      
 
     firebase.storage()
       .ref("license/" + driverID)
@@ -69,7 +107,12 @@ class Dashboard extends React.Component {
         this.setState({
           backURL
         });
+      }).catch(() => {
+        alert('Back image could not be loaded')
       });
+
+    console.log(this.state.isMounted);
+    //this.getAndLoadHttpUrl(driverID);
 
     document.getElementById('div_ViewApplicant').style.display = "block";
     document.getElementById('div_ViewReportedUser').style.display = "none";

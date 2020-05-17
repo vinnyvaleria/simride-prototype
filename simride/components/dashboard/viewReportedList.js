@@ -15,7 +15,6 @@ export const viewReportedList = () => {
                 let username = data.val().username;
                 let lastDate = new Date(data.val().lastReportDate * -1);
                 let status = data.val().status;
-                console.log(username, lastDate);
                 content += '<tr id=\'' + data.key + '\'>';
                 content += '<td>' + username + '</td>'; //column1
                 content += '<td>' + lastDate.toDateString() + '</td>'; //column2
@@ -24,7 +23,6 @@ export const viewReportedList = () => {
                 content += '</tr>';
 
                 rowCount++;
-                console.log(rowCount, content);
             });
 
             document.getElementById('tb_ReportedUsers').innerHTML += content;
