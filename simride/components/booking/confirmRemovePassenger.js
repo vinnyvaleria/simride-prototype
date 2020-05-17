@@ -1,7 +1,7 @@
 import 'firebase/firestore';
 import "firebase/storage";
 import firebase from '../../../base';
-import index from './index';
+import {viewAllBookings} from './viewAllBookings';
 
 export const confirmRemovePassenger = (removeReason) => {
     let payMethod;
@@ -90,5 +90,5 @@ export const confirmRemovePassenger = (removeReason) => {
         }
     });
 
-    new index.viewCreatedBooking;
+    viewAllBookings();
 }

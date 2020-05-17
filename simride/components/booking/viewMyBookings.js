@@ -8,7 +8,6 @@ import * as moment from 'moment';
 // view my bookings
 export const viewMyBookings = () => {
     let userDetails = [];
-    document.getElementById('tb_myBookings').innerHTML = '';
     document.getElementById('tbl_MyBookings').style.display = 'block';
     document.getElementById('showRating').style.display = 'none';
 
@@ -30,58 +29,66 @@ export const viewMyBookings = () => {
                 userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
                 i++;
             })
-        });
-
-    const database = firebase.database().ref('bookings').orderByChild('date');
-    database.once('value', (snapshot) => {
-        if (snapshot.exists()) {
-            let content = '';
-            let rowCount = 0;
-            snapshot.forEach((data) => {
-                if (data.val().currPassengers !== "") {
-                    if (data.val().currPassengers.includes(user[2]) && data.val().completed === 'no') {
-                        let area = data.val().area;
-                        let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
-                        let ppl = [];
-
+        }).then(() => {
+            const database = firebase.database().ref('bookings').orderByChild('date');
+            database.on('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    if (document.getElementById('tb_myBookings') !== null) {
+                        document.getElementById('tb_myBookings').innerHTML = '';
+                    }
+                    let content = '';
+                    let rowCount = 0;
+                    snapshot.forEach((data) => {
                         if (data.val().currPassengers !== "") {
-                            ppl = data.val().currPassengers.split(',')
-                        }
+                            if (data.val().currPassengers.includes(user[2]) && data.val().date > moment.now()) {
+                                let area = data.val().area;
+                                let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+                                let ppl = [];
 
-                        let passengers = ppl.length + "/" + data.val().maxPassengers;
-                        let id = data.val().driverID;
-                        let driver = '';
+                                if (data.val().currPassengers !== "") {
+                                    ppl = data.val().currPassengers.split(',')
+                                }
 
-                        for (let i = 0; i < userDetails.length; i++) {
-                            let key = [];
-                            key = userDetails[i].split(':');
-                            if (key[0] === id) {
-                                driver = key[1];
+                                let passengers = ppl.length + "/" + data.val().maxPassengers;
+                                let id = data.val().driverID;
+                                let driver = '';
+
+                                for (let i = 0; i < userDetails.length; i++) {
+                                    let key = [];
+                                    key = userDetails[i].split(':');
+                                    if (key[0] === id) {
+                                        driver = key[1];
+                                    }
+                                }
+
+                                content += '<tr id=\'' + data.key + '\'>';
+                                content += '<td>' + area + '</td>'; //column1
+                                content += '<td>' + date + '</td>'; //column2
+                                content += '<td>' + driver + '</td>';
+                                content += '<td>' + passengers + '</td>';
+                                content += '<td id=\'btnViewMyBooking' + rowCount + '\'></td>';
+                                content += '</tr>';
+
+                                rowCount++;
                             }
                         }
+                    });
 
-                        content += '<tr id=\'' + data.key + '\'>';
-                        content += '<td>' + area + '</td>'; //column1
-                        content += '<td>' + date + '</td>'; //column2
-                        content += '<td>' + driver + '</td>';
-                        content += '<td>' + passengers + '</td>';
-                        content += '<td id=\'btnViewMyBooking' + rowCount + '\'></td>';
-                        content += '</tr>';
+                    if (document.getElementById('tb_myBookings') !== null) {
+                        document.getElementById('tb_myBookings').innerHTML += content;
+                    }
 
-                        rowCount++;
+                    for (let v = 0; v < rowCount; v++) {
+                        let btn = document.createElement('input');
+                        btn.setAttribute('type', 'button')
+                        btn.setAttribute('value', 'View');
+                        btn.onclick = viewBooking;
+
+                        if (document.getElementById('btnViewMyBooking' + v) !== null) {
+                            document.getElementById('btnViewMyBooking' + v).appendChild(btn);
+                        }
                     }
                 }
             });
-
-            document.getElementById('tb_myBookings').innerHTML += content;
-
-            for (let v = 0; v < rowCount; v++) {
-                let btn = document.createElement('input');
-                btn.setAttribute('type', 'button')
-                btn.setAttribute('value', 'View');
-                btn.onclick = viewBooking;
-                document.getElementById('btnViewMyBooking' + v).appendChild(btn);
-            }
-        }
-    });
+        });
 }

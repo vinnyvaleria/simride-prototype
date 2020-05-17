@@ -6,8 +6,6 @@ import {acknowledgeNotif} from './acknowledgeNotif';
 var userDetails = [];
 
 export const notifications = (tb) => {
-    document.getElementById(tb).innerHTML = '';
-
     // get all accounts
     firebase.database().ref('accounts')
         .orderByChild('email')
@@ -21,8 +19,11 @@ export const notifications = (tb) => {
         });
 
     const database = firebase.database().ref('notification').orderByChild('date');
-    database.once('value', (snapshot) => {
+    database.on('value', (snapshot) => {
         if (snapshot.exists()) {
+            if (document.getElementById(tb) !== null) {
+                document.getElementById(tb).innerHTML = '';
+            }
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
@@ -42,14 +43,19 @@ export const notifications = (tb) => {
                 }
             });
 
-            document.getElementById(tb).innerHTML += content;
-
+            if (document.getElementById(tb) !== null) {
+                document.getElementById(tb).innerHTML += content;
+            }
+            
             for (let v = 0; v < rowCount; v++) {
                 let btn = document.createElement('input');
                 btn.setAttribute('type', 'button')
-                btn.setAttribute('value', 'Ack');
+                btn.setAttribute('value', 'OK');
                 btn.onclick = acknowledgeNotif;
-                document.getElementById('btnNotification' + v).appendChild(btn);
+
+                if (document.getElementById('btnNotification' + v) !== null) {
+                    document.getElementById('btnNotification' + v).appendChild(btn);
+                }
             }
         }
     });
