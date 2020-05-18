@@ -91,12 +91,12 @@ class Account extends React.Component {
       id: user[9],
       rating: user[10],
       ratedBy: user[11]
-    });
-
-    if (this.state.ratedBy > 0) {
-      const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
-      this.setState({avgRating: avg});
-    }
+    }, (() => {
+        if (this.state.ratedBy > 0) {
+          const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
+          this.setState({ avgRating: avg });
+        }
+    }));
   }
 
   editProfile = () => {

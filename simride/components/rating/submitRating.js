@@ -54,7 +54,6 @@ export const submitRating = (username, rating, bookingID, currUser) => {
                             });
                         }
                     });
-                alert(names)
             }
         });
         
