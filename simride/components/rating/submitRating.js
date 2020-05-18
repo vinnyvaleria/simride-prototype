@@ -1,9 +1,11 @@
 import firebase from '../../../base';
 
-export const submitRating = (username, rating) => {
+export const submitRating = (username, rating, bookingID, currUser) => {
     let currRating;
     let currRatedBy;
     let id;
+    let names = '';
+    let driverID
 
     const accountsRef = firebase.database().ref('accounts');
     accountsRef.orderByChild('uname')
@@ -27,8 +29,35 @@ export const submitRating = (username, rating) => {
                 });
         });
 
+    const bookingsRef = firebase.database().ref().child('bookings');
+        bookingsRef.once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                snapshot.forEach((child) => {
+                    if (child.key === bookingID) {
+                        names = child.val().ratedBy;
+                        driverID = child.val().driverID;
+                    }
+                });
+                const updateBooking = firebase.database().ref('bookings/' + bookingID);
+                updateBooking.orderByChild('driverID')
+                    .equalTo(driverID)
+                    .once('value')
+                    .then((snapshot) => {
+                        if (names === '') {
+                            snapshot.ref.update({
+                                ratedBy: currUser
+                            });
+                        }
+                        else if (names !== '' && !(names.includes(currUser))) {
+                            snapshot.ref.update({
+                                ratedBy: names + ',' + currUser
+                            });
+                        }
+                    });
+                alert(names)
+            }
+        });
         
-    
-
+        
     alert('Rating for ' + username + ' submitted!');
 }

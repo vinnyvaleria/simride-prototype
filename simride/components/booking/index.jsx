@@ -196,7 +196,7 @@ class Booking extends React.Component {
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
-              if (data.val().currPassengers !== "") {
+              if (typeof data.val().currPassengers !== "undefined") {
                 if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && data.val().date < moment.now()) {
                   let area = data.val().area;
                   let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
@@ -224,7 +224,9 @@ class Booking extends React.Component {
                   content += '<td>' + driver + '</td>';
                   content += '<td>' + passengers + '</td>';
                   content += '<td id=\'btnViewMyBooking' + rowCount + '\'></td>';
-                  content += '<td id=\'btnRate' + rowCount + '\'></td>';
+                  if (!(data.val().ratedBy.includes(user[2]))) {
+                    content += '<td id=\'btnRate' + rowCount + '\'></td>';
+                  }
                   content += '</tr>';
 
                   rowCount++;
