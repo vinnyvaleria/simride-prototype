@@ -1,27 +1,41 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { AppLoading } from 'expo';
+import * as Font from 'expo-font';
+
 import { StyleSheet, Text, View } from 'react-native';
 
-import { COLORS } from './simride/constants/colors';
+import { COLORS } from './constants/colors';
 
-import DashboardNav from './simride/navigation/DashboardNav';
-import RegisterScreen from './simride/screens/RegisterScreen';
-import StartScreen from './simride/screens/StartScreen';
-import MainScreen from './simride/screens/MainScreen';
-import AccountMainScreen from './simride/screens/AccountMainScreen';
-import InboxMainScreen from './simride/screens/InboxMainScreen';
+import DashboardNav from './navigation/DashboardNav';
+import LandingStack from './navigation/LandingStack';
+import { RegisterScreen } from './screens/Landing';
 
-export default function App() {
-  return (
-    <DashboardNav />
-    /*<View style={styles.container}>
-      <StartScreen />
-    </View>*/
-  );
+const getFonts = () => Font.loadAsync({
+  'notoSans': require('./assets/fonts/NotoSansCJKtc-Regular.otf'),
+  'notoSansMedium': require('./assets/fonts/NotoSansCJKtc-Medium.otf'),
+  'notoSansBold': require('./assets/fonts/NotoSansCJKtc-Bold.otf'),
+  'notoSansBlack': require('./assets/fonts/NotoSansCJKtc-Black.otf'),
+});
+
+
+const App = () => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  if(fontsLoaded) {
+    return (
+      <DashboardNav />
+    );
+  } else {
+    return (
+      <AppLoading
+        startAsync={getFonts}
+        onFinish={() => setFontsLoaded(true)} 
+      />
+    )
+  }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -32,3 +46,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
+
+export default App;
+
+
