@@ -15,10 +15,15 @@ export default function MessagesStack() {
     <Stack.Navigator
       initialRouteName = 'Inbox'
       screenOptions = {{
-        headerTintColor: COLORS.GREEN_PRI,
+        headerTintColor: COLORS.GREEN_SEC,
         headerBackTitleStyle: {
           color: COLORS.GREEN_PRI,
         },
+        headerTitleStyle: {
+          fontFamily: 'notoSansMedium',
+          fontSize: 18,
+        },
+        headerTruncatedBackTitle: true,
       }}  
     >
       <Stack.Screen name='Inbox' component={InboxMainScreen} />

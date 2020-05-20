@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 import viewMyBookings from './viewMyBookings';
 
 // cancel booking
@@ -56,7 +56,7 @@ cancelBooking(() => {
         }
     }
 
-    const accountsRef = firebase.database().ref('bookings/' + bookingID);
+    const accountsRef = db.ref('bookings/' + bookingID);
     const bookingDetails = {
         currPassengers: passengerToPush,
         payMethod: payToPush,

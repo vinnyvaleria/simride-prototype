@@ -1,11 +1,11 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 
 // change to remove passenger view
 removePassenger(() => {
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
-    const database = firebase.database().ref().child('bookings/' + bookingID);
+    const database = db.ref().child('bookings/' + bookingID);
     document.getElementById('ddRemovePassenger').innerHTML = "";
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {

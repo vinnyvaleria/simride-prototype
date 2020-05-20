@@ -6,6 +6,8 @@ import {
   Image,
 } from 'react-native';
 
+import { db } from '../../config';
+
 // components
 import SubmitButton from '../../components/SubmitButton';
 
@@ -15,15 +17,19 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
+// functions
+import RetrieveAccountDetails from '../../functions/Account';
+
 export default class AccountMainScreen extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
+      accounts: [],
       firstName: '',
       lastName: '',
       username: '',
       phone: '',
-      email: '',
+      email: 'test@this.com',
       newPassword: '',
       confirmPassword: '',
       isDriver: '',
@@ -41,12 +47,14 @@ export default class AccountMainScreen extends React.Component {
   }
 
   render () {
+    // RetrieveAccountDetails.bindUser(this.email);
+
     return (
       <ScrollView style={screenStyle}>
         <View style={pageStyle.wrapper}>
           <Image style={pageStyle.image} source={profilepicture} />
           <Text style={pageStyle.title}>{this.firstName} {this.lastName}</Text>
-          <Text style={pageStyle.subtitle}>Email : {this.email}</Text>
+          <Text style={pageStyle.subtitle}>Email : {this.state.email}</Text>
           <Text style={pageStyle.subtitle}>Phone Number : +65 {this.phoneNumber}</Text>
           <Text style={pageStyle.subtitle}>Driver Status : {this.driverstatus}</Text>
 

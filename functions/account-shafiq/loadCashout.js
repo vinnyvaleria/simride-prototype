@@ -1,11 +1,11 @@
 import 'firebase/firestore';
-import firebase from '../../base';
+import { db } from '../../config';
 
 loadCashout(() => {
     const self = this;
     document.getElementById('tb_NotDisbursedCashout').innerHTML = '';
 
-    const database = firebase.database().ref('cashcheckout').orderByChild('date');
+    const database = db.ref('cashcheckout').orderByChild('date');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

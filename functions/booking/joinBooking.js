@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 import viewMyBookings from './viewMyBookings';
 
 // join booking
@@ -31,7 +31,7 @@ joinBooking(() => {
     let check = false;
     const zip = PostalCode;
 
-    const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
+    const database = db.ref('bookings').orderByChild('date').startAt(Date.now());
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((data) => {
@@ -62,7 +62,7 @@ joinBooking(() => {
             if (user[8] < 5.00 && document.getElementById('ddPayBy').value === "wallet") {
                 alert("You do not have sufficient funds in your e-wallet");
             } else {
-                const accountsRef = firebase.database().ref('bookings/' + bookingID);
+                const accountsRef = db.ref('bookings/' + bookingID);
                 const bookingDetails = {
                     currPassengers: currPassengers,
                     payMethod: payMethod,

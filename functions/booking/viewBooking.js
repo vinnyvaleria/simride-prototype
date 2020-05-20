@@ -17,7 +17,7 @@ viewBooking((e) => {
     document.getElementById('div_viewCreatedBooking').style.display = "none";
 
     // get all accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {
@@ -28,7 +28,7 @@ viewBooking((e) => {
             })
         });
 
-    const database = firebase.database().ref('bookings');
+    const database = db.ref('bookings');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((data) => {

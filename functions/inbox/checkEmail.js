@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 // checks email and signs user out if no such email found
@@ -6,7 +6,7 @@ checkEmail((e) => {
     const email = firebase.auth().currentUser.email;
     user[3] = email;
 
-    const accountsRef = firebase.database().ref('accounts');
+    const accountsRef = db.ref('accounts');
     accountsRef.orderByChild('email')
         .equalTo(user[3])
         .once('value')
@@ -28,7 +28,7 @@ checkEmail((e) => {
             } else {
                 if (user[6] !== "") {
                     // loads accounts
-                    firebase.database()
+                    db
                         .ref('accounts')
                         .orderByChild('email')
                         .once('value')

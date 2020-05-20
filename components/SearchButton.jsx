@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  //Button,
+  TextInput,
 } from 'react-native';
 import { 
   Container, 
@@ -15,19 +15,25 @@ import { COLORS } from '../constants/colors';
 export default class SearchButton extends React.Component {
   render() {
     return (
-      <Container style={styles.buttonContainer}>
+      <Container style={styles.wrapper}>
+        <TextInput 
+          style={styles.textinput} 
+          name='search'
+          placeholder='Enter username to search' 
+          value={this.props.value}         
+        />
+
         <Button 
-          rounded 
           light
-          full
+          block
           style={styles.buttonstyle}
           onPress={this.props.onPress}
         >
           <Text style={{
             color: COLORS.GREEN_PRI, 
             fontFamily: 'notoSans',
-            textTransform: 'uppercase',
-          }}>{this.props.title}</Text>
+            textTransform: 'capitalize',
+          }}>Search</Text>
         </Button>
       </Container>
     );  
@@ -35,18 +41,25 @@ export default class SearchButton extends React.Component {
 }
 
 const styles=StyleSheet.create({
-  buttonContainer: {
+  wrapper: {
     backgroundColor: 'transparent',
     display: 'flex',
-    flexWrap: 'nowrap',
-    flex: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 20,
   },
 
   buttonstyle: {
-    marginVertical: 5,
-    marginHorizontal: 10,
+    backgroundColor: COLORS.PALE_WHITE,
+    height: 40,
+    borderRadius: 0,
+  },
+  
+  textinput: {
+    padding: 10,
+    fontFamily: 'notoSans',
+    width: 300,
     backgroundColor: COLORS.WHITE,
-    borderRadius: 50,
-    alignSelf: 'center',
+    height: 40,
   },
 });

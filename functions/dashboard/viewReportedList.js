@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 // view reported users
@@ -6,7 +6,7 @@ viewReportedList(() => {
     const self = this;
     document.getElementById('tb_ReportedUsers').innerHTML = '';
 
-    const database = firebase.database().ref('reportedUsers').orderByChild('lastReportDate');
+    const database = db.ref('reportedUsers').orderByChild('lastReportDate');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

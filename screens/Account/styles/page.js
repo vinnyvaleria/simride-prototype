@@ -11,7 +11,7 @@ const image = {
   height: 150,
   width: 150,
   alignSelf: 'center',
-  marginBottom: 40,
+  marginVertical: 15,
   borderRadius: 100,
 };
 

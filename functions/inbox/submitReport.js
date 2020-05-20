@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 submitReport(() => {
@@ -9,7 +9,7 @@ submitReport(() => {
     const today = new Date(y, m, d);
 
     if (document.getElementById('ddReportReason').value === "fake") {
-        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        const reportRef = db.ref('reportedUsers/' + clickedUserID);
         reportRef.once('value', (snapshot) => {
             if (snapshot.exists()) {
                 reportRef.set({
@@ -23,7 +23,7 @@ submitReport(() => {
                     noshow: snapshot.val().inappropriate += 0
                 });
             } else {
-                const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+                const reportRef = db.ref('reportedUsers/' + clickedUserID);
                 reportRef.set({
                     username: clickedUser,
                     status: "not banned",
@@ -37,7 +37,7 @@ submitReport(() => {
             }
         });
     } else if (document.getElementById('ddReportReason').value === "safety") {
-        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        const reportRef = db.ref('reportedUsers/' + clickedUserID);
         reportRef.once('value', (snapshot) => {
             if (snapshot.exists()) {
                 reportRef.set({
@@ -51,7 +51,7 @@ submitReport(() => {
                     noshow: snapshot.val().inappropriate += 0
                 });
             } else {
-                const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+                const reportRef = db.ref('reportedUsers/' + clickedUserID);
                 reportRef.set({
                     username: clickedUser,
                     status: "not banned",
@@ -65,7 +65,7 @@ submitReport(() => {
             }
         });
     } else if (document.getElementById('ddReportReason').value === "vulgar") {
-        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        const reportRef = db.ref('reportedUsers/' + clickedUserID);
         reportRef.once('value', (snapshot) => {
             if (snapshot.exists()) {
                 reportRef.set({
@@ -92,7 +92,7 @@ submitReport(() => {
             }
         });
     } else if (document.getElementById('ddReportReason').value === "inappropriate") {
-        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        const reportRef = db.ref('reportedUsers/' + clickedUserID);
         reportRef.once('value', (snapshot) => {
             if (snapshot.exists()) {
                 reportRef.set({
@@ -119,7 +119,7 @@ submitReport(() => {
             }
         });
     } else if (document.getElementById('ddReportReason').value === "noshow") {
-        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        const reportRef = db.ref('reportedUsers/' + clickedUserID);
         reportRef.once('value', (snapshot) => {
             if (snapshot.exists()) {
                 reportRef.set({

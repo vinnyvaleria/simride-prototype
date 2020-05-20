@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 // view another user's profile
@@ -6,7 +6,7 @@ viewUserProfile(() => {
     document.getElementById('otherAcctPage').style.display = "block";
     document.getElementById('msgsPage').style.display = "none";
 
-    const accountsRef = firebase.database().ref('accounts');
+    const accountsRef = db.ref('accounts');
     accountsRef.orderByChild('uname')
         .equalTo(clickedUser)
         .once('value')

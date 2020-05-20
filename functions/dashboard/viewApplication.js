@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 // view list of applicants
@@ -6,7 +6,7 @@ viewApplication(() => {
     const self = this;
     document.getElementById('tb_driverApplication').innerHTML = '';
 
-    const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
+    const database = db.ref('driverDetails').orderByChild('dateApplied');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

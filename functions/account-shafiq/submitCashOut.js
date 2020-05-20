@@ -1,7 +1,7 @@
-import firebase from '../../base';
+import { db } from '../../config';
 
 submitCashOut(() => {
-    const notificationRef = firebase.database().ref('notification');
+    const notificationRef = db.ref('notification');
     const balance = parseFloat(user[8] - this.state.cashoutamount).toFixed(2);
     console.log(balance);
     const notification = {
@@ -11,7 +11,7 @@ submitCashOut(() => {
         reason: user[2] + ' has requested to cash-out $' + this.state.cashoutamount
     }
 
-    const requestCheckOutRef = firebase.database().ref('cashcheckout');
+    const requestCheckOutRef = db.ref('cashcheckout');
     const requestForm = {
         requester: user[2],
         requesterID: user[9],
@@ -20,7 +20,7 @@ submitCashOut(() => {
         disbursed: 'no'
     }
 
-    const accountsRef = firebase.database().ref('accounts/' + user[9]);
+    const accountsRef = db.ref('accounts/' + user[9]);
     accountsRef.orderByChild('email')
         .equalTo(user[3])
         .once('value')

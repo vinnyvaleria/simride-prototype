@@ -1,11 +1,11 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 checkEmailDashboard((e) => {
     const email = firebase.auth().currentUser.email;
     user[3] = email;
 
-    const accountsRef = firebase.database().ref('accounts');
+    const accountsRef = db.ref('accounts');
     accountsRef.orderByChild('email')
         .equalTo(user[3])
         .once('value')

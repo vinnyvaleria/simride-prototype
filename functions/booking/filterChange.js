@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 
 filterChange(() => {
     const self = this;
@@ -14,7 +14,7 @@ filterChange(() => {
     document.getElementById('div_viewCreatedBooking').style.display = "none";
 
     // get all accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {
@@ -26,7 +26,7 @@ filterChange(() => {
         });
 
     // get all area
-    const areadatabase = firebase.database().ref().child('admin/area');
+    const areadatabase = db.ref().child('admin/area');
     areadatabase.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((child) => {
@@ -43,7 +43,7 @@ filterChange(() => {
 
     console.log(areaNames);
 
-    const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
+    const database = db.ref('bookings').orderByChild('date').startAt(Date.now());
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

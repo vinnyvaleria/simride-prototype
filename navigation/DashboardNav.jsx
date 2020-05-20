@@ -12,6 +12,7 @@ import MainScreen from '../screens/MainScreen';
 import { 
   AccountStack,
   InboxStack, 
+  LandingStack,
 } from '../navigation';
 
 const Tab = createBottomTabNavigator();
@@ -61,6 +62,7 @@ export default function DashboardNav() {
         <Tab.Screen name='Home' component={MainScreen} />
         <Tab.Screen name='Inbox Menu' component={InboxStack} />
         <Tab.Screen name='Account Menu' component={AccountStack} />
+        <Tab.Screen name='Landing Menu' component={LandingStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );

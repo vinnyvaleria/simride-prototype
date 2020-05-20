@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 // view the reported user
@@ -9,7 +9,7 @@ viewReportedUser((e) => {
     document.getElementById('div_driverApplication').style.display = "none";
     document.getElementById('div_ReportedUsers').style.display = "none";
 
-    const database = firebase.database().ref('reportedUsers').orderByChild('lastReportDate');
+    const database = db.ref('reportedUsers').orderByChild('lastReportDate');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((data) => {

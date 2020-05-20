@@ -1,25 +1,34 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
+
+// styling
+import { COLORS } from '../constants/colors';
 
 // screens 
-import { StartScreen, RegisterScreen } from '../screens/Landing';
+import { StartScreen, RegisterScreen, ForgotPasswordScreen } from '../screens/Landing';
 
 const Stack = createStackNavigator();
 
 export default function LandingStack() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName = 'Start'
-        screenOptions = {{
-          headerShown: true,
-        }}  
-      >
-        <Stack.Screen name='Start' component={StartScreen} />
-        <Stack.Screen name='Register' component={RegisterScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>   
+    <Stack.Navigator
+      initialRouteName = 'Start'
+      screenOptions = {{
+        headerTintColor: COLORS.GREEN_SEC,
+        headerBackTitleStyle: {
+          color: COLORS.GREEN_PRI,
+        },
+        headerTitleStyle: {
+          fontFamily: 'notoSansMedium',
+          fontSize: 18,
+        },
+        headerTruncatedBackTitle: true,
+      }}  
+    >
+      <Stack.Screen name='Start' component={StartScreen} />
+      <Stack.Screen name='Register' component={RegisterScreen} />
+      <Stack.Screen name='Forgot Password' component={ForgotPasswordScreen} />
+    </Stack.Navigator> 
   );
 }

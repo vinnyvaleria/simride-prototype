@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 
 logout(() => {
     user[0] = '';

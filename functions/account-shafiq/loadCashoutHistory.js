@@ -1,6 +1,6 @@
 loadCashoutHistory(() => {
     document.getElementById('tb_AllCashout').innerHTML = '';
-    const database = firebase.database().ref('cashcheckout').orderByChild('date');
+    const database = db.ref('cashcheckout').orderByChild('date');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

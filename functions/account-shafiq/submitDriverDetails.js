@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 
 // submits driver details into realtime db
 submitDriverDetails(() => {
@@ -14,7 +14,7 @@ submitDriverDetails(() => {
     var now = new Date(yy, m, d)
 
     if (this.state.license !== "" && this.state.carplate !== "" && this.state.license.length === 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
-        const accountsRef = firebase.database().ref('driverDetails/' + user[9]);
+        const accountsRef = db.ref('driverDetails/' + user[9]);
         const driverDetails = {
             driverUname: user[2],
             carplate: this.state.carplate,

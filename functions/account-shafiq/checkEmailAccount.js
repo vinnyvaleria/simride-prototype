@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 
 // checks email and signs user out if no such email found
 checkEmailAccount((e) => {

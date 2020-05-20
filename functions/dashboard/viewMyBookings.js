@@ -1,11 +1,11 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 viewMyBookings((tb) => {
     document.getElementById(tb).innerHTML = '';
 
     // get all accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {
@@ -16,7 +16,7 @@ viewMyBookings((tb) => {
             })
         });
 
-    const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
+    const database = db.ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

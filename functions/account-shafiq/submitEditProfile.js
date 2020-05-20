@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 
 // submits the edited profile and updates the realtime db
 submitEditProfile((e) => {
@@ -10,7 +10,7 @@ submitEditProfile((e) => {
         user[1] = this.state.lastName;
         user[4] = this.state.phone;
 
-        const accountsRef = firebase.database().ref('accounts/' + user[9]);
+        const accountsRef = db.ref('accounts/' + user[9]);
         accountsRef.orderByChild('email')
             .equalTo(user[3])
             .once('value')

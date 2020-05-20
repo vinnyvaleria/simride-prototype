@@ -40,6 +40,7 @@ const styles=StyleSheet.create({
     display: 'flex',
     flexWrap: 'nowrap',
     flex: 0,
+    maxHeight: 100,
   },
 
   buttonstyle: {
@@ -48,5 +49,6 @@ const styles=StyleSheet.create({
     backgroundColor: COLORS.WHITE,
     borderRadius: 50,
     alignSelf: 'center',
+    minWidth: 150,
   },
 });

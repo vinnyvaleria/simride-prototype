@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
  
  // display create booking information, binds area from db
  createBooking(() => {
@@ -12,7 +12,7 @@ import firebase from '../../base';
 
      document.getElementById('driverID').innerHTML = user[9];
 
-     const database = firebase.database().ref().child('admin/area');
+     const database = db.ref().child('admin/area');
      database.once('value', (snapshot) => {
          if (snapshot.exists()) {
              let content = '';

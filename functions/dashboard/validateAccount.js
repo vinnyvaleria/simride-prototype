@@ -1,11 +1,11 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 validateAccount(() => {
     document.getElementById("signinemail").focus();
 
     // counts current total account registered
-    firebase.database()
+    db
         .ref('admin')
         .orderByChild('acct')
         .once('value')
@@ -16,7 +16,7 @@ validateAccount(() => {
         });
 
     // loads accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {

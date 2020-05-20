@@ -1,10 +1,10 @@
-import firebase from '../../base';
+import { db } from '../../config';
 
 getLastFiveBookings(() => {
     document.getElementById('tb_LastFiveTransactions').innerHTML = '';
 
     // get all accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {
@@ -15,7 +15,7 @@ getLastFiveBookings(() => {
             })
         });
 
-    const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(5).endAt(Date.now());
+    const database = db.ref('bookings').orderByChild('date').limitToFirst(5).endAt(Date.now());
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

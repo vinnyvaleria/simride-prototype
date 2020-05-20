@@ -1,9 +1,9 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 walletBalanceCheck(() => {
     if (user[8] < 5.00) {
-        const notificationRef = firebase.database().ref('notification');
+        const notificationRef = db.ref('notification');
         const notification = {
             uname: user[2],
             date: Date.now(),

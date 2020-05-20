@@ -3,21 +3,23 @@ import {
   StyleSheet,
   View,
   Text,
-  TextInput,
+  ScrollView,
   Image,
   Alert,
 } from 'react-native';
 
+// styling
 import { COLORS } from '../constants/colors';
 import logo from '../assets/images/logo.png';
 import scheduleride from '../assets/images/schedule-a-ride.png';
 import viewaccount from '../assets/images/view-account.png';
 import viewbookings from '../assets/images/view-bookings.png';
 import viewmessages from '../assets/images/view-messages.png';
-
-import DashboardBox from '../components/DashboardBox';
-
+import viewWallet from '../assets/images/wallets.png';
 import profilepicture from '../assets/images/picture.jpg';
+
+// components
+import DashboardBox from '../components/DashboardBox';
 
 export default class MainScreen extends React.Component {
   constructor (props) {
@@ -29,29 +31,35 @@ export default class MainScreen extends React.Component {
 
   render () {
     return (
-      <View style={styles.formwrap}>
-
-        <View style={styles.equalspace}>
-          <View>
-            <Text style={styles.opening}>Welcome back, {'\n'}{this.firstName}</Text>
-            <Text style={styles.balance}>Current Balance: {this.balance}</Text>
+      <ScrollView>
+        <View style={styles.formwrap}>
+          <View style={styles.equalspace}>
+            <View>
+              <Text style={styles.opening}>Welcome back, {'\n'}{this.firstName}</Text>
+              <Text style={styles.balance}>Current Balance: {this.balance}</Text>
+            </View>
+            
+            <Image style={styles.image} source={profilepicture} />
           </View>
           
-          <Image style={styles.image} source={profilepicture} />
-        </View>
-        
-        <Text style={styles.subtitle}>How can I help you today?</Text>
+          <Text style={styles.subtitle}>How can I help you today?</Text>
 
-        <View style={styles.equalspace}>
-          <DashboardBox source={scheduleride} label='Schedule a Ride' />
-          <DashboardBox source={viewmessages} label='View Messages' />
-        </View>
+          <View style={styles.equalspace}>
+            <DashboardBox source={scheduleride} label='Schedule a Ride' />
+            <DashboardBox source={viewmessages} label='View Messages' />
+          </View>
 
-        <View style={styles.equalspace}>
-          <DashboardBox source={viewbookings} label='Manage Bookings' />
-          <DashboardBox source={viewaccount} label='Account Settings' />
+          <View style={styles.equalspace}>
+            <DashboardBox source={viewbookings} label='Manage Bookings' />
+            <DashboardBox source={viewaccount} label='Account Settings' />
+          </View>
+
+          <View style={styles.equalspace}>
+            <DashboardBox source={viewWallet} label='Wallets' />
+          </View>
         </View>
-      </View>
+      </ScrollView>
+      
     );
   }
 }
@@ -59,7 +67,7 @@ export default class MainScreen extends React.Component {
 const styles = StyleSheet.create({
   formwrap: {
     alignSelf: 'center',
-    paddingTop: 50,
+    paddingTop: 80,
   },
 
   image: {
@@ -72,7 +80,7 @@ const styles = StyleSheet.create({
 
   opening: {
     fontSize: 30,
-    fontWeight: '700',
+    fontFamily: 'notoSansBold',
     marginBottom: 10,
     color: COLORS.YELLOW,
     textAlign: 'left',
@@ -81,14 +89,14 @@ const styles = StyleSheet.create({
 
   balance: {
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'notoSansMedium',
     marginBottom: 20,
     color: COLORS.GREY,
   },
 
   subtitle: {
     fontSize: 20,
-    fontWeight: '500',
+    fontFamily: 'notoSansMedium',
     marginBottom: 10,
     color: COLORS.WHITE,
     textAlign: 'center',
@@ -96,6 +104,7 @@ const styles = StyleSheet.create({
 
   header: {
     fontSize: 18,
+    fontFamily: 'notoSansMedium',
     color: COLORS.WHITE,
     marginBottom: 2,
   },
@@ -109,7 +118,7 @@ const styles = StyleSheet.create({
 
   equalspace: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
 });
 

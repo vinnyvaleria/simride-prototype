@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 notifications((tb) => {
@@ -6,7 +6,7 @@ notifications((tb) => {
     document.getElementById(tb).innerHTML = '';
 
     // get all accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {
@@ -17,7 +17,7 @@ notifications((tb) => {
             })
         });
 
-    const database = firebase.database().ref('notification').orderByChild('date');
+    const database = db.ref('notification').orderByChild('date');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

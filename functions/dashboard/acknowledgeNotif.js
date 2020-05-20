@@ -1,10 +1,10 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 acknowledgeNotif((e) => {
     const notifID = e.target.parentElement.parentElement.id;
     console.log(notifID);
-    const notifRef = firebase.database().ref('notification/' + notifID);
+    const notifRef = db.ref('notification/' + notifID);
     notifRef.remove();
 
     if (user[6] === 'yes') {

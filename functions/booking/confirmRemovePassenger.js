@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 import viewCreatedBooking from './viewCreatedBooking';
 
 confirmRemovePassenger(() => {
@@ -12,7 +12,7 @@ confirmRemovePassenger(() => {
         document.getElementById('btnConfirmRemovePassenger').style.display = "inline-block";
     }
 
-    const database = firebase.database().ref('bookings');
+    const database = db.ref('bookings');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((data) => {
@@ -72,14 +72,14 @@ confirmRemovePassenger(() => {
                             }
                         }
                     }
-                    const accountsRef = firebase.database().ref('bookings/' + bookingID);
+                    const accountsRef = db.ref('bookings/' + bookingID);
                     const bookingDetails = {
                         currPassengers: passengerToPush,
                         payMethod: payToPush,
                         postal: meetToPush
                     }
 
-                    const notificationRef = firebase.database().ref('notification');
+                    const notificationRef = db.ref('notification');
                     const notification = {
                         uname: document.getElementById('ddRemovePassenger').value,
                         date: Date.now(),

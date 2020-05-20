@@ -1,7 +1,7 @@
-import firebase from '../../base';
+import { db } from '../../config';
 
 checkDriverApplicationStatus(() => {
-    firebase.database().ref('driverDetails')
+    db.ref('driverDetails')
         .once('value')
         .then((snapshot) => {
             var i = 0;

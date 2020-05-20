@@ -8,8 +8,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { COLORS } from './constants/colors';
 
 import DashboardNav from './navigation/DashboardNav';
-import LandingStack from './navigation/LandingStack';
-import { RegisterScreen } from './screens/Landing';
 
 const getFonts = () => Font.loadAsync({
   'notoSans': require('./assets/fonts/NotoSansCJKtc-Regular.otf'),

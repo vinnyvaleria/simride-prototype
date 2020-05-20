@@ -1,9 +1,9 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 unBanUser(() => {
     const userID = document.getElementById('td_ViewReportedUser_userID').innerHTML;
-    const accountsRef = firebase.database().ref('accounts/' + userID);
+    const accountsRef = db.ref('accounts/' + userID);
     accountsRef.once('value')
         .then((snapshot) => {
             snapshot.ref.update({
@@ -11,7 +11,7 @@ unBanUser(() => {
             })
         });
 
-    const reportedRef = firebase.database().ref('reportedUsers/' + userID);
+    const reportedRef = db.ref('reportedUsers/' + userID);
     reportedRef.once('value')
         .then((snapshot) => {
             snapshot.ref.update({

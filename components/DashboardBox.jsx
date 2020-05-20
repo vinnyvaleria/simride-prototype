@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   StyleSheet,
-  Button,
   View,
   Text,
   ImageBackground,
@@ -28,7 +27,7 @@ const styles=StyleSheet.create({
     borderRadius: 10,
     height: 150,
     width: 150,
-    //justifyContent: 'space-evenly',
+    justifyContent: 'center',
   },
 
   logo: {

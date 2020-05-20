@@ -1,6 +1,6 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 
 // view my bookings
 viewMyBookings(() => {
@@ -16,7 +16,7 @@ viewMyBookings(() => {
     document.getElementById('tbl_viewSelectedBooking_ExtendBooking').style.display = "none";
 
     // get all accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {
@@ -27,7 +27,7 @@ viewMyBookings(() => {
             })
         });
 
-    const database = firebase.database().ref('bookings').orderByChild('date');
+    const database = db.ref('bookings').orderByChild('date');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

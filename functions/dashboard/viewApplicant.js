@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 // view applicant that applied to be driver
@@ -9,7 +9,7 @@ viewApplicant((e) => {
     document.getElementById('div_driverApplication').style.display = "none";
     document.getElementById('div_ReportedUsers').style.display = "none";
 
-    const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
+    const database = db.ref('driverDetails').orderByChild('dateApplied');
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((data) => {

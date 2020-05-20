@@ -1,5 +1,11 @@
 import { COLORS } from '../../../constants/colors';
 
+const formwrap = {
+  paddingTop: 80,
+  flex: 1,
+  alignSelf: 'center',
+};
+
 const logo = {
   height: 80,
   width: 80,
@@ -32,14 +38,15 @@ const textinput = {
 
 const equalspace = {
   flexDirection: 'row',
-  alignSelf: 'center',
+  justifyContent: 'space-around',
+  marginTop: 50,
 };
 
-
 export default { 
+  formwrap,
   logo, 
   title, 
   header, 
   textinput, 
-  equalspace 
+  equalspace,
 };

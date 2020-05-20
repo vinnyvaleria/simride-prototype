@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 // view created bookings by driver
@@ -6,7 +6,7 @@ viewCreatedBooking(() => {
     document.getElementById('tb_DriverUpcomingDrives').innerHTML = '';
 
     // get all accounts
-    firebase.database().ref('accounts')
+    db.ref('accounts')
         .orderByChild('email')
         .once('value')
         .then((snapshot) => {
@@ -20,7 +20,7 @@ viewCreatedBooking(() => {
     let date = new Date();
     date.setDate(date.getDate() - 1);
 
-    const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
+    const database = db.ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
     database.on('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';

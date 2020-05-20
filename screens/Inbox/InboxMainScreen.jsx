@@ -10,6 +10,7 @@ import {
 
 // components
 import SubmitButton from '../../components/SubmitButton';
+import SearchButton from '../../components/SearchButton';
 
 //styling
 import { pageStyle, screenStyle } from'./styles';
@@ -43,14 +44,8 @@ export default class InboxMainScreen extends React.Component {
     return (
       <ScrollView style={screenStyle}>
         <View style={pageStyle.formwrap}>
-          <Text style={pageStyle.title}>Inbox</Text>
-
-          <View style={pageStyle.equalspace}>
-            <SubmitButton 
-              title='nama orang' 
-              onPress={() => {{this.props.navigation.navigate('Personal Chat')}}} />
-            <SubmitButton title='Logout' />
-          </View> 
+          <SearchButton  
+            onPress={() => {{this.props.navigation.navigate('Personal Chat')}}} />
         </View>
       </ScrollView>
     );

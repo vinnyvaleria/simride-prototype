@@ -1,13 +1,13 @@
 import 'firebase/firestore';
 import "firebase/storage";
-import firebase from '../../base';
+import { db } from '../../config';
 
 // submits created booking into realtime db
 submitCreateBooking((e) => {
     // checks for duplicate booking
     let dates = [];
     let check = false;
-    const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
+    const database = db.ref('bookings').orderByChild('date').startAt(Date.now());
     database.once('value', (snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach((data) => {
@@ -36,7 +36,7 @@ submitCreateBooking((e) => {
                 const date = new Date(this.state.date);
                 const weeks = this.state.recurringWeeks;
                 let x = 0;
-                const bookingsRef = firebase.database().ref('bookings');
+                const bookingsRef = db.ref('bookings');
                 while (x < weeks) {
                     const booking = {
                         driverID: user[9],

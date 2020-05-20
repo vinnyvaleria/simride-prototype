@@ -1,4 +1,4 @@
-import firebase from '../../base';
+import { db } from '../../config';
 import 'firebase/firestore';
 
 signup((e) => {
@@ -25,7 +25,7 @@ signup((e) => {
         console.log(unameCheck);
         if (unameCheck) {
             firebase.auth().createUserWithEmailAndPassword(this.state.email.toString().toLowerCase(), this.state.password).then((u) => {}).then((u) => {
-                    const accountsRef = firebase.database().ref('accounts');
+                    const accountsRef = db.ref('accounts');
                     const account = {
                         fname: this.state.firstName,
                         lname: this.state.lastName,
@@ -66,7 +66,7 @@ signup((e) => {
                     };
 
                     // writing
-                    firebase.database().ref('admin/counter')
+                    db.ref('admin/counter')
                         .once('value')
                         .then((snapshot) => {
                             countArr[0] = emailArr.length + 1;
