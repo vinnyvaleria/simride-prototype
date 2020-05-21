@@ -17,9 +17,6 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
-// functions
-import RetrieveAccountDetails from '../../functions/Account';
-
 export default class AccountMainScreen extends React.Component {
   constructor (props) {
     super(props);

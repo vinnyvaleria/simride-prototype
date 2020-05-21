@@ -6,7 +6,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { COLORS } from '../constants/colors';
 
 // screens 
-import { StartScreen, RegisterScreen, ForgotPasswordScreen } from '../screens/Landing';
+import { RegisterScreen, ForgotPasswordScreen } from '../screens/Landing';
+import StartScreen from '../screens/Landing/StartScreen';
+import MainScreen from '../screens/MainScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +30,7 @@ export default function LandingStack() {
     >
       <Stack.Screen name='Start' component={StartScreen} />
       <Stack.Screen name='Register' component={RegisterScreen} />
+      <Stack.Screen name='Home' component={MainScreen} />
       <Stack.Screen name='Forgot Password' component={ForgotPasswordScreen} />
     </Stack.Navigator> 
   );

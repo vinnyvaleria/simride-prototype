@@ -41,7 +41,7 @@ export default class RegisterScreen extends React.Component {
     var unameCheck = false;
     while (i < unameArr.length) {
       if (this.state.username === unameArr[i]) {
-        alert('Username has already been registered');
+        alert('Username has already been taken!');
         unameCheck = false;
         break;
       } else {
@@ -52,7 +52,7 @@ export default class RegisterScreen extends React.Component {
 
     // checks confirm password
     if (this.state.password !== this.state.repassword) {
-      alert('Passwords do not match');
+      alert('Passwords do not match!');
     } else {
       console.log(unameCheck);
       if (unameCheck) {

@@ -6,9 +6,8 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import { db } from '../../config';
 import { validate } from 'email-validator';
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 
 // styling
 import { pageStyle, screenStyle } from './styles';
@@ -41,7 +40,7 @@ class StartScreen extends React.Component {
 
   componentDidMount = () => {
     // counts current total account registered
-    db
+    firebase.database()
       .ref('admin')
       .orderByChild('acct')
       .once('value')
@@ -52,7 +51,7 @@ class StartScreen extends React.Component {
       });
 
     // loads accounts
-    db.ref('accounts')
+    firebase.database().ref('accounts')
       .orderByChild('email')
       .once('value')
       .then((snapshot) => {
@@ -71,7 +70,7 @@ class StartScreen extends React.Component {
     user[3] = this.state.email;
     user[3] = user[3].toString().toLowerCase();
 
-    const accountsRef = db.ref('accounts');
+    const accountsRef = firebase.database().ref('accounts');
     accountsRef.orderByChild('email')
       .equalTo(user[3])
       .once('value')
@@ -107,8 +106,11 @@ class StartScreen extends React.Component {
             if (user[7].toString() === 'yes') {
               alert('Account is banned. Please contact administrator.')
             } else {
-              firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
-                alert(error.message)
+              firebase.auth().signInWithEmailAndPassword(email, this.state.password)
+                .then((u) => {
+                  this.props.navigation.navigate('Home');
+                }).catch((error) => {
+                  alert(error.message)
               })
               break;
             }

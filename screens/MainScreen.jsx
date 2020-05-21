@@ -5,7 +5,6 @@ import {
   Text,
   ScrollView,
   Image,
-  Alert,
 } from 'react-native';
 
 // styling
