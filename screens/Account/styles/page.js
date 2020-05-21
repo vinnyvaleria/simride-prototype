@@ -21,6 +21,7 @@ const title = {
   marginBottom: 30,
   color: COLORS.WHITE,
   textAlign: 'center',
+  textTransform: 'capitalize',
 };
 
 const subtitle = {
@@ -42,8 +43,10 @@ const textinput = {
   padding: 10,
   fontFamily: 'notoSans',
   alignSelf: 'stretch',
+  minWidth: 350,
   backgroundColor: COLORS.WHITE,
   marginBottom:15,
+  textTransform: 'capitalize',
 };
 
 const equalspace = {

@@ -26,8 +26,8 @@ import DashboardBox from '../components/DashboardBox';
 import { user } from './Landing/StartScreen';
 
 export default class MainScreen extends React.Component {
-  constructor (user) {
-    super(user);
+  constructor (props) {
+    super(props);
     this.state = {
       firstName: '',
       lastName: '',
@@ -47,11 +47,11 @@ export default class MainScreen extends React.Component {
       carplate: '',
       status: '',
       dateApplied: '',
-      binded: ''
+      binded: false,
     };
   }
 
-  componentWillMount = () => {
+  UNSAFE_componentWillMount = () => {
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
@@ -64,8 +64,7 @@ export default class MainScreen extends React.Component {
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
-      .once('value')
-      .then((snapshot) => {
+      .on('value', snapshot => {
         snapshot.forEach((child) => {
           user[0] = child.val().fname;
           user[1] = child.val().lname;
@@ -88,7 +87,7 @@ export default class MainScreen extends React.Component {
           <View style={styles.formwrap}>
             <View style={styles.equalspace}>
               <View>
-                <Text style={styles.opening}>Welcome back, {'\n'}{user[0]}</Text>
+                <Text style={styles.opening}>Welcome back, {user[0]}</Text>
                 <Text style={styles.balance}>Current Balance: ${user[8]}</Text>
               </View>
               
@@ -140,6 +139,8 @@ const styles = StyleSheet.create({
     color: COLORS.YELLOW,
     textAlign: 'left',
     alignSelf: 'flex-start',
+    maxWidth: 280,
+    textTransform: 'capitalize',
   },
 
   balance: {

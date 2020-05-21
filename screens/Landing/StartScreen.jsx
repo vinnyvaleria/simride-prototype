@@ -74,43 +74,7 @@ class StartScreen extends React.Component {
       });
   }
 
-/*
-  // user = 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9key  
-  user = (firstName, lastName, username, email, phone, isDriver, isAdmin, isBanned, wallet, key) => {
-    this.setState({ firstName });
-    this.setState({ lastName });
-    this.setState({ username });
-    this.setState({ email });
-    this.setState({ phone });
-    this.setState({ isDriver });
-    this.setState({ isAdmin });
-    this.setState({ isBanned });
-    this.setState({ wallet });
-    this.setState({ key });
-  }*/
-
-  // get all information from this account and stores into user
   checkEmail =  () => {
-    /*var currUserEmail = this.state.email.toString().toLowerCase();
-
-    const accountsRef = firebase.database().ref('accounts');
-    accountsRef
-      .orderByChild('email')
-      .equalTo(currUserEmail)
-      .once('value')
-      .then((snapshot) => {
-        snapshot.forEach((child) => {
-          this.state.firstName = child.val().fName;
-          this.state.lastName = child.val().lname;
-          this.state.username = child.val().uname;
-          this.state.phone = child.val().phone;
-          this.state.isDriver = child.val().isDriver;
-          this.state.isAdmin = child.val().isAdmin;
-          this.state.isBanned = child.val().isBanned;
-          this.state.wallet = child.val().wallet;
-          this.state.key }) = child.key;
-        });
-      }*/
       user = [];
       user[3] = this.state.email;
       user[3] = user[3].toString().toLowerCase();
@@ -118,8 +82,7 @@ class StartScreen extends React.Component {
       const accountsRef = firebase.database().ref('accounts');
       accountsRef.orderByChild('email')
         .equalTo(user[3])
-        .once('value')
-        .then((snapshot) => {
+        .on('value', snapshot => {
           snapshot.forEach((child) => {
             user[0] = child.val().fname;
             user[1] = child.val().lname;
@@ -161,7 +124,6 @@ class StartScreen extends React.Component {
             alert('E-mail not found!');
             i++;
           } else {
-            alert('E-mail not found!');
             i++;
           }
         }
@@ -178,7 +140,6 @@ class StartScreen extends React.Component {
 
           <Text style={pageStyle.header}>E-mail</Text>
           <TextInput 
-            id='signinemail'
             style={pageStyle.textinput} 
             placeholder='Your e-mail'
             value={this.state.email} 

@@ -16,15 +16,12 @@ export default function MessagesStack() {
       initialRouteName = 'Inbox'
       screenOptions = {{
         headerTintColor: COLORS.GREEN_SEC,
-        headerBackTitleStyle: {
-          color: COLORS.GREEN_PRI,
-        },
+        headerBackTitleVisible: false,
         headerTitleStyle: {
           fontFamily: 'notoSansMedium',
           fontSize: 18,
         },
-        headerTruncatedBackTitle: true,
-      }}  
+      }}
     >
       <Stack.Screen name='Inbox' component={InboxMainScreen} />
       <Stack.Screen name='Personal Chat' component={InboxPersonalChat} />

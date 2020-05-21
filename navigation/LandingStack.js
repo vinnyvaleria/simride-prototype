@@ -18,14 +18,11 @@ export default function LandingStack() {
       initialRouteName = 'Start'
       screenOptions = {{
         headerTintColor: COLORS.GREEN_SEC,
-        headerBackTitleStyle: {
-          color: COLORS.GREEN_PRI,
-        },
+        headerBackTitleVisible: false,
         headerTitleStyle: {
           fontFamily: 'notoSansMedium',
           fontSize: 18,
         },
-        headerTruncatedBackTitle: true,
       }}  
     >
       <Stack.Screen name='Start' component={StartScreen} />
