@@ -7,5 +7,5 @@ export {
   RegisterScreen,
   StartScreen, 
   ForgotPasswordScreen,
-  user
+  user,
 };

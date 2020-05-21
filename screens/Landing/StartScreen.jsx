@@ -18,7 +18,7 @@ import { COLORS } from '../../constants/colors';
 import SubmitButton from '../../components/SubmitButton';
 
 // variables 
-let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+let user = new Array(10);
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
@@ -32,9 +32,19 @@ class StartScreen extends React.Component {
       username: '',
       phone: '',
       email: '',
-      password: '',
-      repassword: '',
-      wallet: ''
+      newPassword: '',
+      confirmPassword: '',
+      isDriver: '',
+      isAdmin: '',
+      id: '',
+      image: null,
+      frontURL: '',
+      backURL: '',
+      progress: 0,
+      license: '',
+      carplate: '',
+      status: '',
+      dateApplied: '',
     };
   }
 
@@ -64,35 +74,68 @@ class StartScreen extends React.Component {
       });
   }
 
+/*
+  // user = 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9key  
+  user = (firstName, lastName, username, email, phone, isDriver, isAdmin, isBanned, wallet, key) => {
+    this.setState({ firstName });
+    this.setState({ lastName });
+    this.setState({ username });
+    this.setState({ email });
+    this.setState({ phone });
+    this.setState({ isDriver });
+    this.setState({ isAdmin });
+    this.setState({ isBanned });
+    this.setState({ wallet });
+    this.setState({ key });
+  }*/
+
   // get all information from this account and stores into user
-  checkEmail =  (e) => {
-    user = [];
-    user[3] = this.state.email;
-    user[3] = user[3].toString().toLowerCase();
+  checkEmail =  () => {
+    /*var currUserEmail = this.state.email.toString().toLowerCase();
 
     const accountsRef = firebase.database().ref('accounts');
-    accountsRef.orderByChild('email')
-      .equalTo(user[3])
+    accountsRef
+      .orderByChild('email')
+      .equalTo(currUserEmail)
       .once('value')
       .then((snapshot) => {
         snapshot.forEach((child) => {
-          user[0] = child.val().fname;
-          user[1] = child.val().lname;
-          user[2] = child.val().uname;
-          user[4] = child.val().phone;
-          user[5] = child.val().isDriver;
-          user[6] = child.val().isAdmin;
-          user[7] = child.val().isBanned;
-          user[8] = child.val().wallet;
-          user[9] = child.key;
+          this.state.firstName = child.val().fName;
+          this.state.lastName = child.val().lname;
+          this.state.username = child.val().uname;
+          this.state.phone = child.val().phone;
+          this.state.isDriver = child.val().isDriver;
+          this.state.isAdmin = child.val().isAdmin;
+          this.state.isBanned = child.val().isBanned;
+          this.state.wallet = child.val().wallet;
+          this.state.key }) = child.key;
         });
-      })
+      }*/
+      user = [];
+      user[3] = this.state.email;
+      user[3] = user[3].toString().toLowerCase();
+
+      const accountsRef = firebase.database().ref('accounts');
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
+            user[0] = child.val().fname;
+            user[1] = child.val().lname;
+            user[2] = child.val().uname;
+            user[4] = child.val().phone;
+            user[5] = child.val().isDriver;
+            user[6] = child.val().isAdmin;
+            user[7] = child.val().isBanned;
+            user[8] = child.val().wallet;
+            user[9] = child.key;
+          });
+        })
   }
 
   // login
-  login = (e) => {
-    e.preventDefault();
-
+  login = () => {
     if (typeof user[9] !== 'undefined') {
       var i = 0;
       var email = this.state.email.toString().toLowerCase();
@@ -108,9 +151,9 @@ class StartScreen extends React.Component {
             } else {
               firebase.auth().signInWithEmailAndPassword(email, this.state.password)
                 .then((u) => {
-                  this.props.navigation.navigate('Home');
+                  {() => this.props.navigation.navigate('Home')};
                 }).catch((error) => {
-                  alert(error.message)
+                  alert('Invalid password!');
               })
               break;
             }
@@ -118,6 +161,7 @@ class StartScreen extends React.Component {
             alert('E-mail not found!');
             i++;
           } else {
+            alert('E-mail not found!');
             i++;
           }
         }
@@ -159,7 +203,7 @@ class StartScreen extends React.Component {
           <View style={pageStyle.equalspace}>
             <SubmitButton 
               title='Login'
-              onPress={this.login} 
+              onPress={() => this.login()} 
             />
 
             <SubmitButton title='Register' onPress={() => {{this.props.navigation.navigate('Register')}}} />
@@ -171,5 +215,4 @@ class StartScreen extends React.Component {
 }
 
 export default StartScreen;
-export { user };
-
+export { user }

@@ -7,6 +7,10 @@ import {
   Image,
 } from 'react-native';
 
+import fire from '../config';
+import 'firebase/firestore';
+import 'firebase/storage';
+
 // styling
 import { COLORS } from '../constants/colors';
 import logo from '../assets/images/logo.png';
@@ -19,47 +23,99 @@ import profilepicture from '../assets/images/picture.jpg';
 
 // components
 import DashboardBox from '../components/DashboardBox';
+import { user } from './Landing/StartScreen';
 
 export default class MainScreen extends React.Component {
-  constructor (props) {
-    super(props);
+  constructor (user) {
+    super(user);
+    this.state = {
+      firstName: '',
+      lastName: '',
+      username: '',
+      phone: '',
+      email: '',
+      newPassword: '',
+      confirmPassword: '',
+      isDriver: '',
+      isAdmin: '',
+      id: '',
+      image: null,
+      frontURL: '',
+      backURL: '',
+      progress: 0,
+      license: '',
+      carplate: '',
+      status: '',
+      dateApplied: '',
+      binded: ''
+    };
+  }
 
-    this.firstName = 'Vinny';
-    this.balance = 10.00;
+  componentWillMount = () => {
+    const emailTemp = fire.auth().currentUser.email;
+    user[3] = emailTemp;
+    this.state.email = user[3];
+    this.bindUserData();
+  }
+
+  // bind user data
+  bindUserData = () => {
+    const accountsRef = fire.database().ref('accounts');
+    accountsRef
+      .orderByChild('email')
+      .equalTo(user[3])
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          user[0] = child.val().fname;
+          user[1] = child.val().lname;
+          user[2] = child.val().uname;
+          user[4] = child.val().phone;
+          user[5] = child.val().isDriver;
+          user[6] = child.val().isAdmin;
+          user[7] = child.val().isBanned;
+          user[8] = child.val().wallet;
+          user[9] = child.key;
+      });
+    })
+    this.setState({ binded: true });
   }
 
   render () {
-    return (
-      <ScrollView>
-        <View style={styles.formwrap}>
-          <View style={styles.equalspace}>
-            <View>
-              <Text style={styles.opening}>Welcome back, {'\n'}{this.firstName}</Text>
-              <Text style={styles.balance}>Current Balance: {this.balance}</Text>
+    if (this.state.binded) {
+      return (
+        <ScrollView>
+          <View style={styles.formwrap}>
+            <View style={styles.equalspace}>
+              <View>
+                <Text style={styles.opening}>Welcome back, {'\n'}{user[0]}</Text>
+                <Text style={styles.balance}>Current Balance: ${user[8]}</Text>
+              </View>
+              
+              <Image style={styles.image} source={profilepicture} />
             </View>
             
-            <Image style={styles.image} source={profilepicture} />
-          </View>
-          
-          <Text style={styles.subtitle}>How can I help you today?</Text>
+            <Text style={styles.subtitle}>How can I help you today?</Text>
 
-          <View style={styles.equalspace}>
-            <DashboardBox source={scheduleride} label='Schedule a Ride' />
-            <DashboardBox source={viewmessages} label='View Messages' />
-          </View>
+            <View style={styles.equalspace}>
+              <DashboardBox source={scheduleride} label='Schedule a Ride' />
+              <DashboardBox source={viewmessages} label='View Messages' />
+            </View>
 
-          <View style={styles.equalspace}>
-            <DashboardBox source={viewbookings} label='Manage Bookings' />
-            <DashboardBox source={viewaccount} label='Account Settings' />
-          </View>
+            <View style={styles.equalspace}>
+              <DashboardBox source={viewbookings} label='Manage Bookings' />
+              <DashboardBox source={viewaccount} label='Account Settings' />
+            </View>
 
-          <View style={styles.equalspace}>
-            <DashboardBox source={viewWallet} label='Wallets' />
+            <View style={styles.equalspace}>
+              <DashboardBox source={viewWallet} label='Wallets' />
+            </View>
           </View>
-        </View>
-      </ScrollView>
-      
-    );
+        </ScrollView>
+      );
+    } else {
+      return null && console.log('There is a problem with binging user data');
+    }
   }
 }
 
