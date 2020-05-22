@@ -114,7 +114,6 @@ export default class MainScreen extends React.Component {
         snapshot.forEach((data) => {
           if (data.val().uname === user[2]) {
             this.displayNotifs(data.val().notification, data.val().reason, data.key);
-            console.log(data.val().notification, data.val().reason);
           }
         });
       }
@@ -122,7 +121,6 @@ export default class MainScreen extends React.Component {
   }
 
   ackNotifs = (id) => {
-    console.log(id);
     const notifRef = fire.database().ref('notification/' + id);
     notifRef.remove();
 

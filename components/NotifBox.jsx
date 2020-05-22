@@ -16,20 +16,19 @@ export default class NotifBox extends React.Component {
       <View style={styles.wrapperstyle}>
         <Text style={styles.title}>Notifications</Text>
         <ScrollView>
-          <Text style={styles.content}>{this.props.content}</Text>
-          
-          <Button
-            light
-            block
-            style={styles.buttonstyle}
-            onPress={this.props.onPress}
-          >
-            <Text style={{
-              color: COLORS.GREEN_SEC,
-              fontFamily: 'notoSans',
-              textTransform: 'capitalize',
-            }}>Acknowledge</Text>
-          </Button>
+          <View style={styles.equalspace}>
+            <View>
+              <Text style={styles.label}>{this.props.id} - {this.props.label}</Text>
+              <Text style={styles.content}>{this.props.content}</Text>
+            </View>
+            
+            <Button
+              style={styles.buttonstyle}
+              onPress={this.props.onPress}
+            >
+              <Text style={styles.buttontext}>Acknowledge</Text>
+            </Button>
+          </View>
         </ScrollView>
       </View>
     );

@@ -11,7 +11,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SubmitButton } from '../../components';
+import { SubmitButton, Badge } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 // styling
@@ -47,6 +47,7 @@ export default class AccountMainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
+      driverStatus: false,
     };
   }
 
@@ -114,7 +115,16 @@ export default class AccountMainScreen extends React.Component {
             });
         });
       })
+
     this.setState({ binded: true });
+  }
+
+  driverStatus = () => {
+    if (this.state.isDriver.toLowerCase() === 'yes') {
+      this.setState({ driverStatus: true });
+    } else {
+      this.setState({ driverStatus: false });
+    }
   }
 
   // logout
@@ -140,11 +150,11 @@ export default class AccountMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
+            <Badge label='Driver' />
             <Image style={pageStyle.image} source={profilepicture} />
             <Text style={pageStyle.title}>{this.state.firstName} {this.state.lastName}</Text>
             <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>
             <Text style={pageStyle.subtitle}>Phone Number: +65 {this.state.phone}</Text>
-            <Text style={pageStyle.subtitle}>Is user a driver: {this.state.isDriver}</Text>
             <Text style={pageStyle.subtitle}>Rating: {this.state.avgRating}</Text>
 
             <View style={pageStyle.equalspace}>
@@ -156,7 +166,7 @@ export default class AccountMainScreen extends React.Component {
             </View> 
           </View>
         </ScrollView>
-      );
+      )
     } else {
       return null && console.log('There is a problem with binging user data');
     }
