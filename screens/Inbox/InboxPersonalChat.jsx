@@ -37,7 +37,7 @@ export default class InboxPersonalChat extends React.Component {
       binded: false,
       email: '',
       message: '',
-      displayMsgs: '',
+      displayMsgs: [],
     };
   }
 
@@ -104,7 +104,6 @@ export default class InboxPersonalChat extends React.Component {
       querySnapshot.docChanges().forEach((doc) => {
         var message = doc.doc.data();
         this.displayChatBox(message.text);
-        console.log(message.text)
       });
     });
   }
@@ -112,14 +111,9 @@ export default class InboxPersonalChat extends React.Component {
   // open chat with searched user 
   displayChatBox = (text) => {
     msgsComponent.push(<ChatboxDisplay label={text} />)
-    // this.setState({
-    //   displayMsgs: 
-    // })
-    // return (
-    //   <View>
-        
-    //   </View>
-    // )
+    this.setState({
+      displayMsgs: msgsComponent
+    })
   }
 
   newChat = () => {
@@ -153,7 +147,7 @@ export default class InboxPersonalChat extends React.Component {
             label='Vinny'
           />
           <ScrollView style={pageStyle.formwrap}>
-            {msgsComponent}
+            {this.state.displayMsgs}
           </ScrollView>
           <SendMessageButton
             value={this.state.message}
