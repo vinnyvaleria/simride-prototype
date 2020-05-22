@@ -20,6 +20,8 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
+var transactions = [];
+
 export default class WalletMainScreen extends React.Component {
   constructor (props) {
     super(props);
@@ -43,6 +45,7 @@ export default class WalletMainScreen extends React.Component {
       status: '',
       dateApplied: '',
       binded: false,
+      displayTransactions: []
     };
   }
 
@@ -51,16 +54,6 @@ export default class WalletMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-  }
-
-  // handles image change
-  handleImgChange = (e) => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({
-        image
-      }));
-    }
   }
 
   // bind user data
@@ -119,7 +112,6 @@ export default class WalletMainScreen extends React.Component {
     const database = fire.database().ref('bookings').orderByChild('date').limitToFirst(5).endAt(Date.now());
     database.once('value', (snapshot) => {
       if (snapshot.exists()) {
-        let content = '';
         snapshot.forEach((data) => {
           if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && data.val().completed === 'yes') {
             let area = data.val().area;
@@ -136,16 +128,19 @@ export default class WalletMainScreen extends React.Component {
               }
             }
             console.log(data.key + ';' + area + ';' + date + ';' + driver)
-            /*content += '<tr id=\'' + data.key + '\'>';
-            content += '<td>' + area + '</td>'; //column1
-            content += '<td>' + date + '</td>'; //column2
-            content += '<td>' + driver + '</td>';
-            content += '</tr>';*/
           }
         });
       }
     });
 }
+
+  displayTransactions = () => {
+    notifsComponent.push(<TransactionBox label={label} price={price} date={date} onPress={() => this.ackNotifs(id)} />)
+    this.setState({
+      displayNotifs: notifsComponent,
+    });
+  }
+
 
 
   render () {
@@ -154,7 +149,7 @@ export default class WalletMainScreen extends React.Component {
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
             <Text style={pageStyle.subtitle}>Your current balance:</Text>
-            <Text style={pageStyle.title}>$ {user[8]}</Text>
+            <Text style={pageStyle.title}>$ {this.state.wallet}</Text>
             
             <View style={pageStyle.equalspace}>
               <SubmitButton 
@@ -169,7 +164,7 @@ export default class WalletMainScreen extends React.Component {
             </View>
 
             <Text style={pageStyle.header}>Past Transactions</Text>
-            <TransactionBox />
+            {}
           </View>
         </ScrollView>
       );
