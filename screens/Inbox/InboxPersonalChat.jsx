@@ -137,8 +137,6 @@ export default class InboxPersonalChat extends React.Component {
       .catch((error) => {
         alert('Error sending message.', error);
       });  
-      
-    //this.displayChatBox(text);
   }
 
   render () {
@@ -160,7 +158,6 @@ export default class InboxPersonalChat extends React.Component {
             value={this.state.message}
             onChangeText={(message) => this.setState({ message })}
             onPress={this.newChat}
-            //onPress={() => this.props.navigation.navigate('Personal Chat')} 
           />
         </View>
       );

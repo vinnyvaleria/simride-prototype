@@ -3,15 +3,15 @@ import {
   ScrollView,
   View,
   Text,
+  Image,
 } from 'react-native';
-import * as moment from 'moment';
 
 import fire from '../../config';
 import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SubmitButton, TransactionBox } from '../../components';
+import { SubmitButton } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 // styling
@@ -20,9 +20,7 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
-var transactions = [];
-
-export default class WalletMainScreen extends React.Component {
+export default class WalletTopUpScreen extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -36,6 +34,8 @@ export default class WalletMainScreen extends React.Component {
       isDriver: '',
       isAdmin: '',
       id: '',
+      rating: '',
+      ratedBy: '',
       image: null,
       frontURL: '',
       backURL: '',
@@ -45,18 +45,14 @@ export default class WalletMainScreen extends React.Component {
       status: '',
       dateApplied: '',
       binded: false,
-      displayTransactions: []
     };
   }
 
   componentDidMount = () => {
-    this.setState({ displayTransactions: [] });
-    transactions = [];
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-    this.getTransactions();
   }
 
   // bind user data
@@ -97,28 +93,22 @@ export default class WalletMainScreen extends React.Component {
     this.setState({ binded: true });
   }
 
-  getTransactions = () => {
-    const database = fire.database().ref('transaction').orderByChild('date');
-    database.on('value', (snapshot) => {
-      if (snapshot.exists()) {
-        snapshot.forEach((data) => {
-          if (data.val().email === fire.auth().currentUser.email) {
-            let amount = data.val().amount;
-            let date = moment.unix((data.val().date * -1) / 1000).format("DD MMM YYYY hh:mm a");
-            let action = data.val().action;
+  // logout
+  logout = () => {
+    user[0] = '';
+    user[1] = '';
+    user[2] = '';
+    user[3] = '';
+    user[4] = '';
+    user[5] = '';
+    user[6] = '';
+    user[7] = '';
+    user[8] = '';
+    user[9] = '';
+    user[10] = '';
+    user[11] = '';
 
-            this.displayTransactions(action, amount, date);
-          }
-        });
-      }
-    });
-}
-
-  displayTransactions = (label, amount, date) => {
-    transactions.push(<TransactionBox label={label} amount={amount} date={date} />)
-    this.setState({
-      displayTransactions: transactions,
-    });
+    fire.auth().signOut();
   }
 
   render () {
@@ -126,23 +116,7 @@ export default class WalletMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <Text style={pageStyle.subtitle}>Your current balance:</Text>
-            <Text style={pageStyle.title}>$ {this.state.wallet}</Text>
-            
-            <View style={pageStyle.equalspace}>
-              <SubmitButton 
-                title='Top Up' 
-                onPress={() => {{this.props.navigation.navigate('Top-Up')}}} 
-              />
-
-              <SubmitButton 
-                title='Withdraw' 
-                onPress={() => {{this.props.navigation.navigate('Withdraw')}}} 
-              />  
-            </View>
-
-            <Text style={pageStyle.header}>Past Transactions</Text>
-            {this.state.displayTransactions}
+            <Text>Lorem Ipsum</Text>
           </View>
         </ScrollView>
       );
