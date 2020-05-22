@@ -13,15 +13,18 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { ChatboxDisplayLeft, SearchButton } from '../../components';
+import { ChatboxDisplayLeft, SearchButton, PrevMsgsBox } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
 import { pageStyle, screenStyle } from'./styles';
 
+import { COLORS } from '../../constants/colors';
+
 var unameArr = [];
 var allchats = [];
 var chats = [];
+var prevMsgComponent = [];
 
 var chatName;
 var search;
@@ -33,14 +36,19 @@ export default class InboxMainScreen extends React.Component {
       searchUname: '',
       email: '',
       userFound: false,
+      displayPrevMsg: []
     };
   }
 
   componentDidMount = () => {
+    const that = this;
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    setTimeout(function () {
+      that.getPrevMsgs();
+    }, 1000);
   }
 
   // bind user data
@@ -144,6 +152,23 @@ export default class InboxMainScreen extends React.Component {
     }
   }
 
+  getPrevMsgs = () => {
+    for (var c = 0; c < chats.length; c++) {
+      if (chats[c].includes(user[2])) {
+        let value = chats[c].toString().replace(user[2], '').replace('-', '');
+        console.log(value)
+        this.displayPrevMsgs(value);
+      }
+    }
+  }
+
+  displayPrevMsgs = (user) => {
+    prevMsgComponent.push(<PrevMsgsBox user={user} onPress={() => { this.setState({ searchUname: user }, this.searchUser)}} />)
+    this.setState({
+      displayPrevMsg: prevMsgComponent,
+    })
+  }
+
   render () {
     if (this.state.binded) {
       return (
@@ -154,6 +179,16 @@ export default class InboxMainScreen extends React.Component {
               onChangeText={(searchUname) => this.setState({ searchUname })}
               onPress={this.searchUser}
             />
+          </View>
+          <View style={pageStyle.wrapper}>
+            <Text style={{
+              color: COLORS.PALE_WHITE,
+              fontFamily: 'notoSans',
+              textTransform: 'capitalize',
+            }}>My Messages</Text>
+            <View>
+              {this.state.displayPrevMsg}
+            </View>
           </View>
         </ScrollView>
       );
