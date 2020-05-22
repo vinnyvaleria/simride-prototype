@@ -80,6 +80,8 @@ export default class BookingMainScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
       });
     })
     this.setState({ binded: true });

@@ -8,6 +8,10 @@ import {
 } from 'react-native';
 import * as firebase from 'firebase';
 
+import fire from '../../config';
+import 'firebase/firestore';
+import 'firebase/storage';
+
 // styling
 import { pageStyle, screenStyle } from './styles';
 import logo from '../../assets/images/logo.png';
@@ -17,6 +21,8 @@ import { SubmitButton } from '../../components';
 import { user } from './StartScreen';
 
 var unameArr = [];
+var emailArr = [];
+var phoneArr = [];
 
 export default class RegisterScreen extends React.Component {
   constructor(props) {
@@ -35,8 +41,33 @@ export default class RegisterScreen extends React.Component {
     };
   }
 
-  signup = (e) => {
-    e.preventDefault();
+  componentDidMount = () => {
+    // counts current total account registered
+    firebase.database()
+    .ref('admin')
+    .orderByChild('acct')
+    .once('value')
+    .then((snapshot) => {
+      snapshot.forEach((child) => {
+        countArr[0] = child.val().acct;
+      })
+    });
+
+  // loads accounts
+  firebase.database().ref('accounts')
+    .orderByChild('email')
+    .once('value', snapshot => {
+      var i = 0;
+      snapshot.forEach((child) => {
+        unameArr[i] = child.val().uname;
+        emailArr[i] = child.val().email;
+        phoneArr[i] = child.val().phone;
+        i++;
+      })
+    });
+  }
+
+  signup = () => {
 
     // checks for duplicate username
     var i = 0;
@@ -89,6 +120,7 @@ export default class RegisterScreen extends React.Component {
           user[11] = account.ratedBy;
 
           accountsRef.push(account);
+          
           this.state = {
             firstName: '',
             lastName: '',
