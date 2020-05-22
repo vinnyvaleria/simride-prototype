@@ -12,7 +12,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
@@ -48,7 +48,7 @@ export default class AccountEditScreen extends React.Component {
     };
   }
 
-  UNSAFE_componentWillMount = () => {
+  componentDidMount = () => {
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
@@ -71,8 +71,7 @@ export default class AccountEditScreen extends React.Component {
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
-      .once('value')
-      .then((snapshot) => {
+      .on('value', snapshot => {
         snapshot.forEach((child) => {
           user[0] = child.val().fname;
           user[1] = child.val().lname;
@@ -96,17 +95,18 @@ export default class AccountEditScreen extends React.Component {
       user[4] = this.state.phone;
 
       const accountsRef = fire.database().ref('accounts/' + user[9]);
-      accountsRef.orderByChild('email')
+      accountsRef
+        .orderByChild('email')
         .equalTo(user[3])
         .on('value', snapshot => {
           snapshot.ref.update({
-            fname: user[0]
+            fname: user[0],
           })
           snapshot.ref.update({
-            lname: user[1]
+            lname: user[1],
           })
           snapshot.ref.update({
-            phone: user[4]
+            phone: user[4],
           })
         });
     } else {

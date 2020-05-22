@@ -6,13 +6,11 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 import { COLORS } from '../constants/colors';
 
-import MainScreen from '../screens/MainScreen';
+import { MainScreen } from '../screens/Home';
 
 // navigation
-import { 
-  AccountStack,
-  InboxStack, 
-} from '../navigation';
+import AccountStack from './AccountStack';
+import InboxStack from './InboxStack';
 
 const Tab = createBottomTabNavigator();
 

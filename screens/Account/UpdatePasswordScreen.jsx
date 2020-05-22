@@ -12,7 +12,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
@@ -49,7 +49,7 @@ export default class UpdatePasswordScreen extends React.Component {
     };
   }
 
-  UNSAFE_componentWillMount = () => {
+  componentDidMount = () => {
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
@@ -72,8 +72,7 @@ export default class UpdatePasswordScreen extends React.Component {
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
-      .once('value')
-      .then((snapshot) => {
+      .on('value', snapshot => {
         snapshot.forEach((child) => {
           user[0] = child.val().fname;
           user[1] = child.val().lname;

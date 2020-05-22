@@ -12,7 +12,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
@@ -48,7 +48,7 @@ export default class DriverApplicationScreen extends React.Component {
     };
   }
 
-  UNSAFE_componentWillMount = () => {
+  componentDidMount = () => {
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
@@ -71,8 +71,7 @@ export default class DriverApplicationScreen extends React.Component {
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
-      .once('value')
-      .then((snapshot) => {
+      .on('value', snapshot => {
         snapshot.forEach((child) => {
           user[0] = child.val().fname;
           user[1] = child.val().lname;
@@ -121,11 +120,10 @@ export default class DriverApplicationScreen extends React.Component {
 
           <Text
             style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
-          >Applying to be a driver?</Text>
+          />
 
           <View style={pageStyle.equalspace}>
-            <SubmitButton title='Update Profile' />
-            <SubmitButton title='Change Password' />
+            <SubmitButton title='Submit' />
           </View>
         </View>
         

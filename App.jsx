@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import fire from './config';
-
+import { YellowBox } from 'react-native';
 import { COLORS } from './constants/colors';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import DashboardNav from './navigation/DashboardNav';
 import StartScreen from './screens/Landing/StartScreen';
+
+YellowBox.ignoreWarnings(['Remote debugger']);
 
 let customFonts = {
   'notoSans': require('./assets/fonts/NotoSansCJKtc-Regular.otf'),
@@ -39,7 +41,6 @@ export default class App extends React.Component {
     fire
       .auth()
       .onAuthStateChanged((user) => {
-        console.log(user);
         if (user) {
           //localStorage.setItem('user', user.uid);
           this.setState({ user: true });
@@ -62,7 +63,7 @@ export default class App extends React.Component {
         return (
           <DashboardNav />
         );
-      } else {
+      } else if (!this.state.user) {
         return (
           <StartScreen />
         )

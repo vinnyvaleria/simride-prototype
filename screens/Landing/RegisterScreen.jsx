@@ -13,7 +13,7 @@ import { pageStyle, screenStyle } from './styles';
 import logo from '../../assets/images/logo.png';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 import { user } from './StartScreen';
 
 var unameArr = [];
@@ -99,8 +99,7 @@ export default class RegisterScreen extends React.Component {
 
           // writing
           db.ref('admin/counter')
-            .once('value')
-            .then((snapshot) => {
+            .on('value', snapshot => {
               countArr[0] = emailArr.length+1;
               console.log('rewrite: ', countArr[0]);
               snapshot.ref.update({

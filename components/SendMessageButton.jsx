@@ -12,14 +12,14 @@ import {
 
 import { COLORS } from '../constants/colors';
 
-export default class SearchButton extends React.Component {
+export default class SendMessageButton extends React.Component {
   render() {
     return (
       <Container style={styles.wrapper}>
         <TextInput 
           style={styles.textinput} 
-          name='search'
-          placeholder='Enter exact username to search' 
+          name='send'
+          placeholder='Enter your message' 
           value={this.props.value} 
           onChangeText={this.props.onChangeText}        
         />
@@ -34,7 +34,7 @@ export default class SearchButton extends React.Component {
             color: COLORS.GREEN_PRI, 
             fontFamily: 'notoSans',
             textTransform: 'capitalize',
-          }}>Search</Text>
+          }}>Send</Text>
         </Button>
       </Container>
     );  

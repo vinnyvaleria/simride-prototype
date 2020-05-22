@@ -15,7 +15,7 @@ import logo from '../../assets/images/logo.png';
 import { COLORS } from '../../constants/colors';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 
 // variables 
 let user = new Array(10);
@@ -82,7 +82,8 @@ class StartScreen extends React.Component {
       const accountsRef = firebase.database().ref('accounts');
       accountsRef.orderByChild('email')
         .equalTo(user[3])
-        .on('value', snapshot => {
+        .once('value')
+        .then((snapshot) => {
           snapshot.forEach((child) => {
             user[0] = child.val().fname;
             user[1] = child.val().lname;
