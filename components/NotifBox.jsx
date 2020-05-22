@@ -17,6 +17,18 @@ export default class NotifBox extends React.Component {
         <Text style={styles.label}>{this.props.label}</Text>
         <ScrollView>
           <Text style={styles.content}>{this.props.content}</Text>
+          <Button
+            light
+            block
+            style={styles.buttonstyle}
+            onPress={this.props.onPress}
+          >
+            <Text style={{
+              color: COLORS.GREEN_SEC,
+              fontFamily: 'notoSans',
+              textTransform: 'capitalize',
+            }}>Acknowledged</Text>
+          </Button>
         </ScrollView>
       </View>
     );
@@ -41,6 +53,14 @@ const styles=StyleSheet.create({
     fontFamily: 'notoSansMedium',
     textAlign: 'center',
     marginBottom: 5,
+  },
+
+  buttonstyle: {
+    backgroundColor: COLORS.PALE_WHITE,
+    height: 40,
+    borderRadius: 0,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
   },
 
   content: {
