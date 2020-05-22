@@ -8,7 +8,10 @@ import CheckProfile from './CheckProfile';
 import NotifBox from './NotifBox';
 import TransactionBox from './TransactionBox';
 import PrevMsgsBox from './PrevMsgsBox';
+<<<<<<< HEAD
 import Badge from './Badge';
+=======
+>>>>>>> 7cab3e2fd5b4ab5209e21ddcd274adbe9031737d
 
 export {
   SearchButton,
@@ -20,6 +23,10 @@ export {
   NotifBox,
   ChatboxDisplayRight,
   TransactionBox,
+<<<<<<< HEAD
   PrevMsgsBox,
   Badge
+=======
+  PrevMsgsBox
+>>>>>>> 7cab3e2fd5b4ab5209e21ddcd274adbe9031737d
 }

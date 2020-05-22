@@ -20,6 +20,8 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
+var transactions = [];
+
 export default class WalletMainScreen extends React.Component {
   constructor (props) {
     super(props);
@@ -43,6 +45,7 @@ export default class WalletMainScreen extends React.Component {
       status: '',
       dateApplied: '',
       binded: false,
+      displayTransactions: []
     };
   }
 
@@ -51,16 +54,7 @@ export default class WalletMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-  }
-
-  // handles image change
-  handleImgChange = (e) => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({
-        image
-      }));
-    }
+    this.getTransactions();
   }
 
   // bind user data
@@ -101,52 +95,29 @@ export default class WalletMainScreen extends React.Component {
     this.setState({ binded: true });
   }
 
-  getLastFiveBookings = () => {
-    let userDetails = [];
-
-    // get all accounts
-    fire.database().ref('accounts')
-      .orderByChild('email')
-      .once('value')
-      .then((snapshot) => {
-        let i = 0;
-        snapshot.forEach((child) => {
-          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
-          i++;
-        })
-      });
-
-    const database = fire.database().ref('bookings').orderByChild('date').limitToFirst(5).endAt(Date.now());
+  getTransactions = () => {
+    const database = fire.database().ref('transaction').orderByChild('date');
     database.once('value', (snapshot) => {
       if (snapshot.exists()) {
-        let content = '';
         snapshot.forEach((data) => {
-          if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && data.val().completed === 'yes') {
-            let area = data.val().area;
-            let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+          if (data.val().email === fire.auth().currentUser.email) {
+            let amount = data.val().amount;
+            let date = moment.unix((data.val().date * -1) / 1000).format("DD MMM YYYY hh:mm a");
+            let action = data.val().action;
 
-            let id = data.val().driverID;
-            let driver = '';
-
-            for (let i = 0; i < userDetails.length; i++) {
-              let key = [];
-              key = userDetails[i].split(':');
-              if (key[0] === id) {
-                driver = key[1];
-              }
-            }
-            console.log(data.key + ';' + area + ';' + date + ';' + driver)
-            /*content += '<tr id=\'' + data.key + '\'>';
-            content += '<td>' + area + '</td>'; //column1
-            content += '<td>' + date + '</td>'; //column2
-            content += '<td>' + driver + '</td>';
-            content += '</tr>';*/
+            this.displayTransactions(action, amount, date);
           }
         });
       }
     });
 }
 
+  displayTransactions = (label, amount, date) => {
+    transactions.push(<TransactionBox label={label} amount={amount} date={date} />)
+    this.setState({
+      displayTransactions: transactions,
+    });
+  }
 
   render () {
     if (this.state.binded) {
@@ -154,7 +125,7 @@ export default class WalletMainScreen extends React.Component {
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
             <Text style={pageStyle.subtitle}>Your current balance:</Text>
-            <Text style={pageStyle.title}>$ {user[8]}</Text>
+            <Text style={pageStyle.title}>$ {this.state.wallet}</Text>
             
             <View style={pageStyle.equalspace}>
               <SubmitButton 
@@ -169,7 +140,7 @@ export default class WalletMainScreen extends React.Component {
             </View>
 
             <Text style={pageStyle.header}>Past Transactions</Text>
-            <TransactionBox />
+            {this.state.displayTransactions}
           </View>
         </ScrollView>
       );

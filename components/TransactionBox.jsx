@@ -22,6 +22,7 @@ export default class TransactionBox extends React.Component {
         <Image source={car} style={styles.logo} />
         <View>
           <Text style={styles.label}>{this.props.label}</Text>
+          <Text style={styles.amount}>$ {this.props.amount}</Text>
           <Text style={styles.date}>{this.props.date}</Text>
         </View>
       </TouchableOpacity>
@@ -60,6 +61,13 @@ const styles=StyleSheet.create({
   date: {
     color: COLORS.GREEN_SEC,
     fontSize: 14,
+    fontFamily: 'notoSans',
+    textAlign: 'right',
+  },
+
+  amount: {
+    color: COLORS.GREEN_SEC,
+    fontSize: 20,
     fontFamily: 'notoSans',
     textAlign: 'right',
   },

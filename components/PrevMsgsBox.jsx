@@ -54,11 +54,13 @@ const styles=StyleSheet.create({
   },
 
   buttonstyle: {
-    backgroundColor: COLORS.PALE_WHITE,
-    height: 40,
-    borderRadius: 0,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
+    backgroundColor: COLORS.GREEN_PRI,
+    width: 100,
+    borderRadius: 10,
+    textTransform: 'capitalize',
+    alignSelf: 'flex-end',
+    alignContent: 'center',
+    justifyContent: 'center'
   },
 
   content: {
