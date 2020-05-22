@@ -23,6 +23,9 @@ import profilepicture from '../../assets/images/picture.jpg';
 import { DashboardBox, NotifBox } from '../../components';
 import { user } from '../Landing/StartScreen';
 
+
+var notifsComponent = [];
+
 export default class MainScreen extends React.Component {
   constructor (props) {
     super(props);
@@ -50,14 +53,18 @@ export default class MainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
+      displayNotifs: []
     };
   }
 
   componentDidMount = () => {
+    this.setState({ displayNotifs: [] });
+    notifsComponent = [];
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.getNotifs();
   }
 
   // bind user data
@@ -98,6 +105,28 @@ export default class MainScreen extends React.Component {
     this.setState({ binded: true });
   }
 
+  getNotifs = () => {
+    const database = fire.database().ref('notification').orderByChild('date');
+    database.on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        snapshot.forEach((data) => {
+          if (data.val().uname === user[2]) {
+            this.displayNotifs(data.val().notification, data.val().reason);
+            console.log(data.val().notification, data.val().reason);
+          }
+        });
+      }
+    });
+  }
+
+  // display notifs
+  displayNotifs = (label, content) => {
+    notifsComponent.push(<NotifBox label={label} content={content} />)
+    this.setState({
+      displayNotifs: notifsComponent,
+    })
+  }
+
   render () {
     if (this.state.binded) {
       return (
@@ -105,7 +134,7 @@ export default class MainScreen extends React.Component {
           <View style={pageStyle.formwrap}>
             <View style={pageStyle.equalspace}>
               <View>
-                <Text style={pageStyle.opening}>Welcome back, {this.state.firstName}</Text>
+                <Text style={pageStyle.opening}>Welcome back, {this.state.username}</Text>
                 <Text style={pageStyle.balance}>Current Balance: $ {this.state.wallet}</Text>
               </View>
               
@@ -113,10 +142,7 @@ export default class MainScreen extends React.Component {
             </View>
 
             <View style={pageStyle.equalspace}>
-              <NotifBox 
-                label='Notification Bar'
-                content='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
-                />
+              {this.state.displayNotifs}
             </View>
             
             <View style={pageStyle.equalspace}>

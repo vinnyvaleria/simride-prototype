@@ -99,6 +99,8 @@ export default class WalletMainScreen extends React.Component {
     user[7] = '';
     user[8] = '';
     user[9] = '';
+    user[10] = '';
+    user[11] = '';
 
     fire.auth().signOut();
   }
