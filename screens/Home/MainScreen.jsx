@@ -109,6 +109,8 @@ export default class MainScreen extends React.Component {
     const database = fire.database().ref('notification').orderByChild('date');
     database.on('value', (snapshot) => {
       if (snapshot.exists()) {
+        this.setState({ displayNotifs: [] });
+        notifsComponent = [];
         snapshot.forEach((data) => {
           if (data.val().uname === user[2]) {
             this.displayNotifs(data.val().notification, data.val().reason, data.key);
