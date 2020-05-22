@@ -36,7 +36,10 @@ export default class MainScreen extends React.Component {
       confirmPassword: '',
       isDriver: '',
       isAdmin: '',
+      wallet: '',
       id: '',
+      rating: '',
+      ratedBy: '',
       image: null,
       frontURL: '',
       backURL: '',
@@ -74,6 +77,22 @@ export default class MainScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
+
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          });
       });
     })
     this.setState({ binded: true });
@@ -86,11 +105,18 @@ export default class MainScreen extends React.Component {
           <View style={pageStyle.formwrap}>
             <View style={pageStyle.equalspace}>
               <View>
-                <Text style={pageStyle.opening}>Welcome back, {user[0]}</Text>
-                <Text style={pageStyle.balance}>Current Balance: $ {user[8]}</Text>
+                <Text style={pageStyle.opening}>Welcome back, {this.state.firstName}</Text>
+                <Text style={pageStyle.balance}>Current Balance: $ {this.state.wallet}</Text>
               </View>
               
               <Image style={pageStyle.image} source={profilepicture} />
+            </View>
+
+            <View style={pageStyle.equalspace}>
+              <NotifBox 
+                label='Notification Bar'
+                content='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+                />
             </View>
             
             <View style={pageStyle.equalspace}>
@@ -118,25 +144,6 @@ export default class MainScreen extends React.Component {
                 source={viewWallet} 
                 label='View Wallet' 
                 onPress={() => this.props.navigation.navigate('Wallet Menu')}
-                />
-            </View>
-
-            <View style={pageStyle.equalspace}>
-              <NotifBox 
-                label='Notification Bar'
-                content=
-                'Eu consequat ac felis donec et odio pellentexzcxque
-                 diam volutpat commodo sed egestas egestas fringilla 
-                 phasellus faucibus scelerisque eleifend donec pretium v
-                 ulputate sapien nec sagittis aliquam malesuada bibendum 
-                 arcu vitae elementum curabitur vitae nunc sed velit dignissim
-                sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu non.
-                Eu consequat ac felis donec et odio pellentesque
-                 diam volutpat commodo sed egestas egestas fringilla 
-                 phasellus faucibus scelerisque eleifend donec pretium v
-                 ulputate sapien nec sagittis aliquam malesuada bibendum 
-                 arcu vitae elementum curabitur vitae nunc sed velit dignissim
-                sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu non.'
                 />
             </View>
           </View>
