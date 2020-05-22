@@ -19,7 +19,7 @@ export default class SearchButton extends React.Component {
         <TextInput 
           style={styles.textinput} 
           name='search'
-          placeholder='Enter exact username to search' 
+          placeholder='Search for users with their username' 
           value={this.props.value} 
           onChangeText={this.props.onChangeText}        
         />

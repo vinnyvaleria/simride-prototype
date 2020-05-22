@@ -6,6 +6,7 @@ import ChatboxDisplayRight from './ChatboxDisplayRight';
 import SendMessageButton from './SendMessageButton';
 import CheckProfile from './CheckProfile';
 import NotifBox from './NotifBox';
+import PrevMsgsBox from './PrevMsgsBox';
 
 export {
   SearchButton,
@@ -15,5 +16,6 @@ export {
   SendMessageButton,
   CheckProfile,
   NotifBox,
-  ChatboxDisplayRight
+  ChatboxDisplayRight,
+  PrevMsgsBox
 }
