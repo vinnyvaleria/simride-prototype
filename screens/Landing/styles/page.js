@@ -4,6 +4,7 @@ const formwrap = {
   paddingTop: 80,
   flex: 1,
   alignSelf: 'center',
+  backgroundColor: COLORS.GREEN_PRI,
 };
 
 const logo = {
