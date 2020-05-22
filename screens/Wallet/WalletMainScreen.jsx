@@ -54,6 +54,7 @@ export default class WalletMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.getTransactions();
   }
 
   // bind user data
@@ -94,54 +95,29 @@ export default class WalletMainScreen extends React.Component {
     this.setState({ binded: true });
   }
 
-  getLastFiveBookings = () => {
-    let userDetails = [];
-
-    // get all accounts
-    fire.database().ref('accounts')
-      .orderByChild('email')
-      .once('value')
-      .then((snapshot) => {
-        let i = 0;
-        snapshot.forEach((child) => {
-          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
-          i++;
-        })
-      });
-
-    const database = fire.database().ref('bookings').orderByChild('date').limitToFirst(5).endAt(Date.now());
+  getTransactions = () => {
+    const database = fire.database().ref('transaction').orderByChild('date');
     database.once('value', (snapshot) => {
       if (snapshot.exists()) {
         snapshot.forEach((data) => {
-          if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && data.val().completed === 'yes') {
-            let area = data.val().area;
-            let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+          if (data.val().email === fire.auth().currentUser.email) {
+            let amount = data.val().amount;
+            let date = moment.unix((data.val().date * -1) / 1000).format("DD MMM YYYY hh:mm a");
+            let action = data.val().action;
 
-            let id = data.val().driverID;
-            let driver = '';
-
-            for (let i = 0; i < userDetails.length; i++) {
-              let key = [];
-              key = userDetails[i].split(':');
-              if (key[0] === id) {
-                driver = key[1];
-              }
-            }
-            console.log(data.key + ';' + area + ';' + date + ';' + driver)
+            this.displayTransactions(action, amount, date);
           }
         });
       }
     });
 }
 
-  displayTransactions = () => {
-    notifsComponent.push(<TransactionBox label={label} price={price} date={date} onPress={() => this.ackNotifs(id)} />)
+  displayTransactions = (label, amount, date) => {
+    transactions.push(<TransactionBox label={label} amount={amount} date={date} />)
     this.setState({
-      displayNotifs: notifsComponent,
+      displayTransactions: transactions,
     });
   }
-
-
 
   render () {
     if (this.state.binded) {
@@ -164,7 +140,7 @@ export default class WalletMainScreen extends React.Component {
             </View>
 
             <Text style={pageStyle.header}>Past Transactions</Text>
-            {}
+            {this.state.displayTransactions}
           </View>
         </ScrollView>
       );

@@ -126,7 +126,6 @@ export default class MainScreen extends React.Component {
     const notifRef = fire.database().ref('notification/' + id);
     notifRef.remove();
 
-
     this.setState({ displayNotifs: [] });
     notifsComponent = [];
     this.getNotifs();
