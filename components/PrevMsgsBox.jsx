@@ -14,20 +14,7 @@ export default class PrevMsgsBox extends React.Component {
   render() {
     return (
       <View style={styles.wrapperstyle}>
-        <ScrollView>
-          <Button
-            light
-            block
-            style={styles.buttonstyle}
-            onPress={this.props.onPress}
-          >
-            <Text style={{
-              color: COLORS.GREEN_SEC,
-              fontFamily: 'notoSans',
-              textTransform: 'capitalize',
-            }}>{this.props.user}</Text>
-          </Button>
-        </ScrollView>
+        <Text style={styles.label} onPress={this.props.onPress}>{this.props.user}</Text>
       </View>
     );
   }
@@ -35,38 +22,25 @@ export default class PrevMsgsBox extends React.Component {
 
 const styles=StyleSheet.create({
   wrapperstyle: {
-    padding: 15,
-    margin: 15,
+    marginVertical: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
     backgroundColor: COLORS.WHITE,
     borderRadius: 10,
-    justifyContent: 'center',
-    minWidth: 350,
-    maxHeight: 200,
+    minHeight: 80,
+    justifyContent: 'space-between',
+    alignItems: 'center',
     alignSelf: 'stretch',
+    display: 'flex',
+    flexDirection: 'row',
   },
 
   label: {
     color: COLORS.GREEN_SEC,
-    fontSize: 16,
-    fontFamily: 'notoSansMedium',
+    fontSize: 15,
+    fontFamily: 'notoSansBold',
     textAlign: 'center',
-    marginBottom: 5,
-  },
-
-  buttonstyle: {
-    backgroundColor: COLORS.GREEN_PRI,
-    width: 100,
-    borderRadius: 10,
-    textTransform: 'capitalize',
-    alignSelf: 'flex-end',
-    alignContent: 'center',
-    justifyContent: 'center'
-  },
-
-  content: {
-    color: COLORS.GREEN_PRI,
-    fontSize: 14,
-    fontFamily: 'notoSans',
-    textAlign: 'center',
-  },
+    width: '99%',
+    margin: 'auto',
+  }
 });
