@@ -21,7 +21,7 @@ export default class SubmitCashout extends React.Component {
           name='send'
           placeholder='Enter amount' 
           value={this.props.value} 
-          onChangeText={this.props.onChangeText}        
+          onChangeText={this.props.onChangeText}
         />
 
         <Button 

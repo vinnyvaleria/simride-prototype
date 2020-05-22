@@ -81,7 +81,7 @@ export default class WalletWithdrawScreen extends React.Component {
                 requester: this.state.username,
                 requesterID: this.state.id,
                 date: Date.now(),
-                amount: this.state.cashoutamount,
+                amount: parseFloat(this.state.cashoutamount).toFixed(2),
                 disbursed: 'no'
             }
 
@@ -99,6 +99,9 @@ export default class WalletWithdrawScreen extends React.Component {
             requestCheckOutRef.push(requestForm);
 
             this.setState({ wallet: balance });
+            alert('Cash-out submitted!')
+
+            this.props.navigation.navigate('Wallet');
         }
         else {
             alert('Please withdraw an amount less than $' + this.maxAmtCalc());
@@ -160,6 +163,13 @@ export default class WalletWithdrawScreen extends React.Component {
 
     fire.auth().signOut();
   }
+
+    // sets amount in text box to two decimal places on blur and sets to this.state.amount
+    setTwoNumberDecimal() {
+        this.setState({
+            cashamount: parseFloat(this.state.cashoutamount).toFixed(2)
+        });
+    }
 
   render () {
     if (this.state.binded) {
