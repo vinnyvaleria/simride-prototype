@@ -180,8 +180,8 @@ export default class WalletTopUpScreen extends React.Component {
           <SubmitTopUp
             value={this.state.amount}
             onChange={(amount) => this.setState({ amount })}
-            token={this.state.token}
-            amount={this.state.amount}
+            token={this.handleToken}
+            amount={parseInt(this.state.amount * 100)}
             email={this.state.email}
            />
           </View>
