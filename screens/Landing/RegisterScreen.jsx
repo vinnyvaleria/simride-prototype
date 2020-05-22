@@ -29,7 +29,9 @@ export default class RegisterScreen extends React.Component {
       email: '',
       password: '',
       repassword: '',
-      wallet: ''
+      wallet: '',
+      rating: '',
+      ratedBy: ''
     };
   }
 
@@ -67,7 +69,9 @@ export default class RegisterScreen extends React.Component {
             isDriver: 'no',
             isAdmin: 'no',
             isBanned: 'no',
-            wallet: '0.00'
+            wallet: 0.00,
+            rating: 0,
+            ratedBy: 0
           }
           user = [];
           // after signup, stores user data into user
@@ -81,6 +85,8 @@ export default class RegisterScreen extends React.Component {
           user[7] = account.isBanned;
           user[8] = account.wallet;
           user[9] = account.key;
+          user[10] = account.rating;
+          user[11] = account.ratedBy;
 
           accountsRef.push(account);
           this.state = {
@@ -94,7 +100,9 @@ export default class RegisterScreen extends React.Component {
             isDriver: '',
             isAdmin: '',
             isBanned: '',
-            wallet: ''
+            wallet: '',
+            rating: '',
+            ratedBy: ''
           };
 
           // writing
