@@ -10,12 +10,14 @@ import {
   Text 
 } from 'native-base';
 
+import StripeCheckout from 'react-stripe-checkout'
+
 import { COLORS } from '../constants/colors';
 
 export default class SubmitTopUp extends React.Component {
   render() {
     return (
-      <Container style={styles.wrapper}>
+      <Container>
         <TextInput 
           style={styles.textinput} 
           name='send'
