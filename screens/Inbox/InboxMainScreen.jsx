@@ -163,7 +163,8 @@ export default class InboxMainScreen extends React.Component {
   }
 
   displayPrevMsgs = (user) => {
-    prevMsgComponent.push(<PrevMsgsBox user={user} onPress={() => { this.setState({ searchUname: user }, this.searchUser)}} />)
+    this.setState({ searchUname: user });
+    prevMsgComponent.push(<PrevMsgsBox user={user} onPress={this.searchUser} />)
     this.setState({
       displayPrevMsg: prevMsgComponent,
     })
@@ -173,7 +174,7 @@ export default class InboxMainScreen extends React.Component {
     if (this.state.binded) {
       return (
         <ScrollView style={screenStyle}>
-          <View style={pageStyle.formwrap}>
+          <View style={pageStyle.wrapper}>
             <SearchButton  
               value={this.state.searchUname}
               onChangeText={(searchUname) => this.setState({ searchUname })}
@@ -181,14 +182,7 @@ export default class InboxMainScreen extends React.Component {
             />
           </View>
           <View style={pageStyle.wrapper}>
-            <Text style={{
-              color: COLORS.PALE_WHITE,
-              fontFamily: 'notoSans',
-              textTransform: 'capitalize',
-            }}>My Messages</Text>
-            <View>
-              {this.state.displayPrevMsg}
-            </View>
+            {this.state.displayPrevMsg}
           </View>
         </ScrollView>
       );

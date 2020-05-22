@@ -17,8 +17,8 @@ export default class CHeckProfile extends React.Component {
         style={styles.wrapperstyle}
         onPress={this.props.onPress}
       >
-        <Text style={styles.label}>{this.props.label}</Text>
         <Image style={styles.logo} source={this.props.source} />
+        <Text style={styles.label}>{this.props.label}</Text>
       </TouchableOpacity>
     );
   }
@@ -26,10 +26,12 @@ export default class CHeckProfile extends React.Component {
 
 const styles=StyleSheet.create({
   wrapperstyle: {
-    padding: 15,
-    backgroundColor: COLORS.WHITE,
+    padding: 10,
+    backgroundColor: COLORS.GREEN_SEC,
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignSelf: 'stretch',
     alignItems: 'center',
   },
 
@@ -41,9 +43,10 @@ const styles=StyleSheet.create({
   },
 
   label: {
-    color: COLORS.GREEN_PRI,
+    color: COLORS.WHITE,
     fontSize: 16,
     marginBottom: 5,
     textAlign: 'center',
+    paddingHorizontal: 10,
   },
 });

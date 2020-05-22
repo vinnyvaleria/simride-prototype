@@ -2,7 +2,6 @@ import { COLORS } from '../../../constants/colors';
 
 const wrapper ={
   paddingTop: 10,
-  flex: 1,
   alignSelf: 'center',
 };
 
