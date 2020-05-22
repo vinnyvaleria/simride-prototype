@@ -42,12 +42,13 @@ export default class InboxPersonalChat extends React.Component {
   }
 
   componentDidMount = () => {
+    this.setState({displayMsgs: []});
+    msgsComponent = [];
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
     this.getMessages();
-
   }
 
   // bind user data
