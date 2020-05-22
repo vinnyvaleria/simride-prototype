@@ -156,7 +156,7 @@ export default class InboxMainScreen extends React.Component {
     for (var c = 0; c < chats.length; c++) {
       if (chats[c].includes(user[2])) {
         let value = chats[c].toString().replace(user[2], '').replace('-', '');
-        console.log(value)
+        console.log(value);
         this.displayPrevMsgs(value);
       }
     }

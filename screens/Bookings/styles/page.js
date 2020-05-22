@@ -1,8 +1,8 @@
 import { COLORS } from '../../../constants/colors';
 
-const formwrap = {
+const wrapper = {
   alignSelf: 'center',
-  paddingTop: 80,
+  paddingTop: 10,
 };
 
 const image = {
@@ -59,7 +59,7 @@ const equalspace = {
 };
 
 export default {
-  formwrap,
+  wrapper,
   opening,
   balance,
   image,
