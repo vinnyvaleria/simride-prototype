@@ -36,7 +36,7 @@ export const userBoard = (username, payMethod) => {
                      user: username,
                      email: email,
                      token: null,
-                     amount: '-5.00',
+                     amount: '5.00',
                      date: Date.now() * -1,
                      action: 'cash-out for booking'
                  }
@@ -59,7 +59,7 @@ export const userBoard = (username, payMethod) => {
                     user: user[2],
                     email: user[3],
                     token: null,
-                    amount: '+5.00',
+                    amount: '5.00',
                     date: Date.now() * -1,
                     action: 'cash-in for booking'
                 }
