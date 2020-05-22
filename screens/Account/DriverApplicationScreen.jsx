@@ -3,6 +3,7 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
   Image,
 } from 'react-native';
 
@@ -14,15 +15,16 @@ import 'firebase/storage';
 import { SubmitButton } from '../../components';
 import { user } from '../Landing/StartScreen';
 
-// styling
+//styling
 import { pageStyle, screenStyle } from './styles';
+import { COLORS } from '../../constants/colors';
 
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
-export default class AccountMainScreen extends React.Component {
-  constructor (props) {
-    super(props);
+export default class DriverApplicationScreen extends React.Component {
+  constructor (user) {
+    super(user);
     this.state = {
       firstName: '',
       lastName: '',
@@ -42,7 +44,7 @@ export default class AccountMainScreen extends React.Component {
       carplate: '',
       status: '',
       dateApplied: '',
-      binded: false,
+      binded: ''
     };
   }
 
@@ -102,28 +104,31 @@ export default class AccountMainScreen extends React.Component {
   }
 
   render () {
-    if (this.state.binded) {
-      return (
-        <ScrollView style={screenStyle}>
-          <View style={pageStyle.wrapper}>
-            <Image style={pageStyle.image} source={profilepicture} />
-            <Text style={pageStyle.title}>{user[0]} {user[1]}</Text>
-            <Text style={pageStyle.subtitle}>Email : {user[3]}</Text>
-            <Text style={pageStyle.subtitle}>Phone Number : +65 {user[4]}</Text>
-            <Text style={pageStyle.subtitle}>Driver Status : {user[7]}</Text>
+    return (
+      <ScrollView style={screenStyle}>
+        <View style={pageStyle.wrapper}>
+          <Image style={pageStyle.image} source={profilepicture} />
 
-            <View style={pageStyle.equalspace}>
-              <SubmitButton 
-                title='Edit Profile' 
-                onPress={() => {{this.props.navigation.navigate('Edit Profile')}}} />
-              <SubmitButton title='Logout' onPress={() => this.logout()} />
-            </View> 
+          <Text style={pageStyle.header}>First Name</Text>
+          <TextInput style={pageStyle.textinput} placeholder={user[0]} />
+
+          <Text style={pageStyle.header}>Last Name</Text>
+          <TextInput style={pageStyle.textinput} placeholder={user[1]} />
+
+          <Text style={pageStyle.header}>Phone Number</Text>
+          <TextInput style={pageStyle.textinput} placeholder={user[4].toString()} />
+
+          <Text
+            style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
+          />
+
+          <View style={pageStyle.equalspace}>
+            <SubmitButton title='Submit' />
           </View>
-        </ScrollView>
-      );
-    } else {
-      return null && console.log('There is a problem with binging user data');
-    }
+        </View>
+        
+      </ScrollView>
+    );
   }
 }
 

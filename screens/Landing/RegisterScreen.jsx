@@ -13,7 +13,7 @@ import { pageStyle, screenStyle } from './styles';
 import logo from '../../assets/images/logo.png';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 import { user } from './StartScreen';
 
 var unameArr = [];
@@ -41,7 +41,7 @@ export default class RegisterScreen extends React.Component {
     var unameCheck = false;
     while (i < unameArr.length) {
       if (this.state.username === unameArr[i]) {
-        alert('Username has already been registered');
+        alert('Username has already been taken!');
         unameCheck = false;
         break;
       } else {
@@ -52,7 +52,7 @@ export default class RegisterScreen extends React.Component {
 
     // checks confirm password
     if (this.state.password !== this.state.repassword) {
-      alert('Passwords do not match');
+      alert('Passwords do not match!');
     } else {
       console.log(unameCheck);
       if (unameCheck) {
@@ -99,8 +99,7 @@ export default class RegisterScreen extends React.Component {
 
           // writing
           db.ref('admin/counter')
-            .once('value')
-            .then((snapshot) => {
+            .on('value', snapshot => {
               countArr[0] = emailArr.length+1;
               console.log('rewrite: ', countArr[0]);
               snapshot.ref.update({

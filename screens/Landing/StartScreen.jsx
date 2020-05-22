@@ -6,9 +6,8 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import { db } from '../../config';
 import { validate } from 'email-validator';
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 
 // styling
 import { pageStyle, screenStyle } from './styles';
@@ -16,10 +15,10 @@ import logo from '../../assets/images/logo.png';
 import { COLORS } from '../../constants/colors';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 
 // variables 
-let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+let user = new Array(10);
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
@@ -33,15 +32,25 @@ class StartScreen extends React.Component {
       username: '',
       phone: '',
       email: '',
-      password: '',
-      repassword: '',
-      wallet: ''
+      newPassword: '',
+      confirmPassword: '',
+      isDriver: '',
+      isAdmin: '',
+      id: '',
+      image: null,
+      frontURL: '',
+      backURL: '',
+      progress: 0,
+      license: '',
+      carplate: '',
+      status: '',
+      dateApplied: '',
     };
   }
 
   componentDidMount = () => {
     // counts current total account registered
-    db
+    firebase.database()
       .ref('admin')
       .orderByChild('acct')
       .once('value')
@@ -52,7 +61,7 @@ class StartScreen extends React.Component {
       });
 
     // loads accounts
-    db.ref('accounts')
+    firebase.database().ref('accounts')
       .orderByChild('email')
       .once('value')
       .then((snapshot) => {
@@ -65,35 +74,32 @@ class StartScreen extends React.Component {
       });
   }
 
-  // get all information from this account and stores into user
-  checkEmail =  (e) => {
-    user = [];
-    user[3] = this.state.email;
-    user[3] = user[3].toString().toLowerCase();
+  checkEmail =  () => {
+      user = [];
+      user[3] = this.state.email;
+      user[3] = user[3].toString().toLowerCase();
 
-    const accountsRef = db.ref('accounts');
-    accountsRef.orderByChild('email')
-      .equalTo(user[3])
-      .once('value')
-      .then((snapshot) => {
-        snapshot.forEach((child) => {
-          user[0] = child.val().fname;
-          user[1] = child.val().lname;
-          user[2] = child.val().uname;
-          user[4] = child.val().phone;
-          user[5] = child.val().isDriver;
-          user[6] = child.val().isAdmin;
-          user[7] = child.val().isBanned;
-          user[8] = child.val().wallet;
-          user[9] = child.key;
-        });
-      })
+      const accountsRef = firebase.database().ref('accounts');
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
+            user[0] = child.val().fname;
+            user[1] = child.val().lname;
+            user[2] = child.val().uname;
+            user[4] = child.val().phone;
+            user[5] = child.val().isDriver;
+            user[6] = child.val().isAdmin;
+            user[7] = child.val().isBanned;
+            user[8] = child.val().wallet;
+            user[9] = child.key;
+          });
+        })
   }
 
   // login
-  login = (e) => {
-    e.preventDefault();
-
+  login = () => {
     if (typeof user[9] !== 'undefined') {
       var i = 0;
       var email = this.state.email.toString().toLowerCase();
@@ -107,8 +113,11 @@ class StartScreen extends React.Component {
             if (user[7].toString() === 'yes') {
               alert('Account is banned. Please contact administrator.')
             } else {
-              firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
-                alert(error.message)
+              firebase.auth().signInWithEmailAndPassword(email, this.state.password)
+                .then((u) => {
+                  {() => this.props.navigation.navigate('Home')};
+                }).catch((error) => {
+                  alert('Invalid password!');
               })
               break;
             }
@@ -132,7 +141,6 @@ class StartScreen extends React.Component {
 
           <Text style={pageStyle.header}>E-mail</Text>
           <TextInput 
-            id='signinemail'
             style={pageStyle.textinput} 
             placeholder='Your e-mail'
             value={this.state.email} 
@@ -157,7 +165,7 @@ class StartScreen extends React.Component {
           <View style={pageStyle.equalspace}>
             <SubmitButton 
               title='Login'
-              onPress={this.login} 
+              onPress={() => this.login()} 
             />
 
             <SubmitButton title='Register' onPress={() => {{this.props.navigation.navigate('Register')}}} />
@@ -169,5 +177,4 @@ class StartScreen extends React.Component {
 }
 
 export default StartScreen;
-export { user };
-
+export { user }

@@ -12,7 +12,7 @@ import { pageStyle, screenStyle } from './styles';
 import logo from '../../assets/images/logo.png';
 
 // components
-import SubmitButton from '../../components/SubmitButton';
+import { SubmitButton } from '../../components';
 import StartScreen from './StartScreen';
 
 // functions

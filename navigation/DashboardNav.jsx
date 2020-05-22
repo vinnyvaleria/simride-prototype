@@ -6,14 +6,11 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 
 import { COLORS } from '../constants/colors';
 
-import MainScreen from '../screens/MainScreen';
+import { MainScreen } from '../screens/Home';
 
 // navigation
-import { 
-  AccountStack,
-  InboxStack, 
-  LandingStack,
-} from '../navigation';
+import AccountStack from './AccountStack';
+import InboxStack from './InboxStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -62,7 +59,6 @@ export default function DashboardNav() {
         <Tab.Screen name='Home' component={MainScreen} />
         <Tab.Screen name='Inbox Menu' component={InboxStack} />
         <Tab.Screen name='Account Menu' component={AccountStack} />
-        <Tab.Screen name='Landing Menu' component={LandingStack} />
       </Tab.Navigator>
     </NavigationContainer>
   );

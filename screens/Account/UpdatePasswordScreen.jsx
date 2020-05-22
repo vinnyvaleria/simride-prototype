@@ -22,7 +22,7 @@ import { COLORS } from '../../constants/colors';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
-export default class AccountEditScreen extends React.Component {
+export default class UpdatePasswordScreen extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -31,6 +31,7 @@ export default class AccountEditScreen extends React.Component {
       username: '',
       phone: '',
       email: '',
+      currPassword: '',
       newPassword: '',
       confirmPassword: '',
       isDriver: '',
@@ -88,29 +89,22 @@ export default class AccountEditScreen extends React.Component {
   }
 
   // real time update profile
-  submitEditProfile = () => {
-    if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.phone !== "") {
-      user[0] = this.state.firstName;
-      user[1] = this.state.lastName;
-      user[4] = this.state.phone;
+  updatePassword = () => {
+    if (this.state.newPassword === this.state.confirmPassword) {
+      var user = fire.auth().currentUser;
 
-      const accountsRef = fire.database().ref('accounts/' + user[9]);
-      accountsRef
-        .orderByChild('email')
-        .equalTo(user[3])
-        .on('value', snapshot => {
-          snapshot.ref.update({
-            fname: user[0],
-          })
-          snapshot.ref.update({
-            lname: user[1],
-          })
-          snapshot.ref.update({
-            phone: user[4],
-          })
-        });
+      user.updatePassword(this.state.confirmPassword).then(() => {
+        alert("Password updated successfully!");
+      }).catch((error) => {
+        alert(error);
+      });
+
+      this.setState({
+        newPassword: '',
+        confirmPassword: ''
+      });
     } else {
-      alert("Your profile is updated!")
+      alert("Passwords do not match!");
     }
   }
 
@@ -121,38 +115,26 @@ export default class AccountEditScreen extends React.Component {
           <View style={pageStyle.wrapper}>
             <Image style={pageStyle.image} source={profilepicture} />
 
-            <Text style={pageStyle.header}>First Name</Text>
+            <Text style={pageStyle.header}>New Password</Text>
             <TextInput 
               style={pageStyle.textinput} 
-              placeholder={user[0]} 
-              value={this.state.firstName} 
-              onChangeText={(firstName) => this.setState({ firstName })}
+              placeholder='Please enter your new password'
+              value={this.state.newPassword} 
+              onChangeText={(newPassword) => this.setState({ newPassword })}
+              secureTextEntry
             />
 
-            <Text style={pageStyle.header}>Last Name</Text>
+            <Text style={pageStyle.header}>Re-enter New Password</Text>
             <TextInput 
               style={pageStyle.textinput} 
-              placeholder={user[1]} 
-              value={this.state.lastName} 
-              onChangeText={(lastName) => this.setState({ lastName })}
+              placeholder='Please re-enter your new password'
+              value={this.state.confirmPassword}
+              onChangeText={(confirmPassword) => this.setState({ confirmPassword })}
+              secureTextEntry
             />
-
-            <Text style={pageStyle.header}>Phone Number</Text>
-            <TextInput 
-              style={pageStyle.textinput} 
-              placeholder={user[4].toString()} 
-              value={this.state.phone}
-              onChangeText={(phone) => this.setState({ phone })}
-            />
-
-            <Text
-              style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
-              onPress={() => this.props.navigation.navigate('Driver Application')}
-            >Applying to be a driver?</Text>
-
+            
             <View style={pageStyle.equalspace}>
-              <SubmitButton title='Update Profile' onPress={this.submitEditProfile} />
-              <SubmitButton title='Update Password' onPress={() => this.props.navigation.navigate('Update Password')} />
+              <SubmitButton title='Save' onPress={this.updatePassword} />
             </View>
           </View>
           

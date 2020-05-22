@@ -10,7 +10,7 @@ import {
 
 import { COLORS } from '../constants/colors';
 
-export default class DashboardBox extends React.Component {
+export default class ChatboxDisplay extends React.Component {
   render() {
     return (
       <TouchableOpacity 
@@ -32,7 +32,8 @@ const styles=StyleSheet.create({
     borderRadius: 10,
     height: 150,
     width: 150,
-    justifyContent: 'center',
+    display: 'flex',
+    flexDirection: 'row',
   },
 
   logo: {

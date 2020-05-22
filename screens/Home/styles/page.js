@@ -1,27 +1,34 @@
 import { COLORS } from '../../../constants/colors';
 
-const wrapper ={
+const formwrap = {
+  alignSelf: 'center',
   paddingTop: 80,
-  paddingHorizontal: '5%',
-  flex: 1,
-  alignSelf: 'center',
-}
-
-const image = {
-  height: 150,
-  width: 150,
-  alignSelf: 'center',
-  marginVertical: 15,
-  borderRadius: 100,
 };
 
-const title = {
+const image = {
+  height: 100,
+  width: 100,
+  alignSelf: 'flex-end',
+  marginBottom: 40,
+  borderRadius: 50,
+};
+
+const opening = {
   fontSize: 30,
   fontFamily: 'notoSansBold',
-  marginBottom: 30,
-  color: COLORS.WHITE,
-  textAlign: 'center',
+  marginBottom: 10,
+  color: COLORS.YELLOW,
+  textAlign: 'left',
+  alignSelf: 'flex-start',
+  maxWidth: 280,
   textTransform: 'capitalize',
+};
+
+const balance = {
+  fontSize: 14,
+  fontFamily: 'notoSansMedium',
+  marginBottom: 20,
+  color: COLORS.GREY,
 };
 
 const subtitle = {
@@ -29,7 +36,7 @@ const subtitle = {
   fontFamily: 'notoSansMedium',
   marginBottom: 10,
   color: COLORS.WHITE,
-  textAlign: 'left',
+  textAlign: 'center',
 };
 
 const header = {
@@ -41,26 +48,23 @@ const header = {
 
 const textinput = {
   padding: 10,
-  fontFamily: 'notoSans',
   alignSelf: 'stretch',
-  minWidth: 350,
   backgroundColor: COLORS.WHITE,
   marginBottom:15,
-  textTransform: 'capitalize',
 };
 
 const equalspace = {
   flexDirection: 'row',
   justifyContent: 'space-around',
-  marginTop: 50,
 };
 
-export default { 
-  wrapper,
-  image, 
-  title, 
-  subtitle, 
-  header, 
-  textinput, 
-  equalspace 
-};
+export default {
+  formwrap,
+  opening,
+  balance,
+  image,
+  subtitle,
+  header,
+  textinput,
+  equalspace,
+}
