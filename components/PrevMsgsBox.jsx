@@ -1,11 +1,9 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {
   StyleSheet,
-  View,
-  ScrollView,
+  TouchableOpacity,
   Text,
-  ImageBackground,
-  Button,
 } from 'react-native';
 
 import { COLORS } from '../constants/colors';
@@ -13,9 +11,12 @@ import { COLORS } from '../constants/colors';
 export default class PrevMsgsBox extends React.Component {
   render() {
     return (
-      <View style={styles.wrapperstyle}>
-        <Text style={styles.label} onPress={this.props.onPress}>{this.props.user}</Text>
-      </View>
+      <TouchableOpacity 
+        style={styles.wrapperstyle}
+        onPress={this.props.onPress}
+      >
+        <Text style={styles.label}>{this.props.user}</Text>
+      </TouchableOpacity>
     );
   }
 }
