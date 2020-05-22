@@ -67,7 +67,7 @@ export default class InboxMainScreen extends React.Component {
         if (typeof user[3] === 'undefined') {
           fire.auth().signOut();
         } else {
-          if (user[6] !== "") {
+          if (user[6] !== '') {
             // loads accounts
             fire.database()
               .ref('accounts')
@@ -81,7 +81,7 @@ export default class InboxMainScreen extends React.Component {
                 })
               });
 
-            fire.firestore().collection("chat").get().then((querySnapshot) => {
+            fire.firestore().collection('chat').get().then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
                 allchats.push(doc.id);
                 chats = Array.from(new Set(allchats))
@@ -120,7 +120,6 @@ export default class InboxMainScreen extends React.Component {
         }
         console.log(chatName);     
         this.state.userFound = true;
-        found = true;
       } else if (search != unameArr[i]) {
         console.log('User not found');
       }
@@ -131,6 +130,15 @@ export default class InboxMainScreen extends React.Component {
       this.props.navigation.navigate('Personal Chat');
     } else {
       alert('User not found');
+    }
+  }
+
+  listAllChats = () => {
+    for (var c = 0; c < chats.length; c++) {
+      if (chats[c].includes(user[2])) {
+        value = chats[c].toString().replace(user[2], '').replace('-', '');
+        <ChatboxDisplay label={value} /> 
+      }
     }
   }
 

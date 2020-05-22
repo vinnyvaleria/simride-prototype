@@ -10,12 +10,16 @@ import {
 
 import { COLORS } from '../constants/colors';
 
-export default class ChatboxDisplay extends React.Component {
+export default class CHeckProfile extends React.Component {
   render() {
     return (
-      <View style={styles.wrapperstyle}>
+      <TouchableOpacity 
+        style={styles.wrapperstyle}
+        onPress={this.props.onPress}
+      >
         <Text style={styles.label}>{this.props.label}</Text>
-      </View>
+        <ImageBackground style={styles.logo} source={this.props.source} />
+      </TouchableOpacity>
     );
   }
 }
@@ -23,19 +27,23 @@ export default class ChatboxDisplay extends React.Component {
 const styles=StyleSheet.create({
   wrapperstyle: {
     padding: 15,
-    margin: 15,
     backgroundColor: COLORS.WHITE,
-    borderRadius: 15,
-    borderBottomLeftRadius: 0,
-    minHeight: 10,
-    width: 300,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+
+  logo: {
+    height: 50,
+    width: 50,
+    borderRadius: 50,
+    alignSelf: 'center',
   },
 
   label: {
     color: COLORS.GREEN_PRI,
     fontSize: 16,
+    marginBottom: 5,
     textAlign: 'center',
   },
 });

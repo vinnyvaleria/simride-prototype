@@ -13,13 +13,17 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SendMessageButton } from '../../components';
+import { SendMessageButton, ChatboxDisplay, CheckProfile } from '../../components';
 import { user } from '../Landing/StartScreen';
 import { chatName } from './InboxMainScreen';
 import { search } from './InboxMainScreen';
 
 //styling
 import { pageStyle, screenStyle } from'./styles';
+
+// images
+import profilepicture from '../../assets/images/picture.jpg';
+
 
 var unameArr = [];
 var allchats = [];
@@ -92,26 +96,14 @@ export default class InboxPersonalChat extends React.Component {
   }
 
   // open chat with searched user 
-  openChat = () => {
-    let chatsRef = fire.firestore().collection('chat');
-
-    chatsRef
-      .doc(chatName)
-      .collection('messages')
-      .orderBy('timestamp')
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.docChanges().forEach((doc) => {
-          var message = doc.doc.data();
-          var html = "";
-          // give each message a unique ID
-          html += "<li id='message-" + message.timestamp + "'>";
-          html += message.from + ": " + message.text;
-          html += "</li>";
-
-          console.log(html);
-        });
-      });
-
+  displayChatBox = (text) => {
+    return (
+      <View>
+        <ChatboxDisplay
+          label={text}
+        />
+      </View>
+    )
   }
 
   newChat = () => {
@@ -131,33 +123,31 @@ export default class InboxPersonalChat extends React.Component {
       })
       .catch((error) => {
         alert('Error sending message.', error);
-      });
-    /*chatsRef
-      .get()
-      .then((docSnapshot) => {
-        if ((docSnapshot.exists)) {
-          fire.firestore().collection('messages/' + chatName).add({data});
-        }
-      })
-      .catch((error) => {
-        alert('Error sending message.', error);
-      });*/
+      });  
+      
+    //this.displayChatBox(text);
   }
 
   render () {
     if (this.state.binded) {
       return (
-        <ScrollView style={screenStyle}>
-          <View style={pageStyle.formwrap}>
-            <Text style={pageStyle.title}>Anjir</Text>
-            <SendMessageButton
-              value={this.state.message}
-              onChangeText={(message) => this.setState({ message })}
-              onPress={this.newChat}
-              //onPress={() => this.props.navigation.navigate('Personal Chat')} 
+        <View style={screenStyle}>
+          <CheckProfile
+            source={profilepicture}
+            label='Vinny'
+          />
+          <ScrollView style={pageStyle.formwrap}>
+            <ChatboxDisplay
+              label='Lorem ipsum'
             />
-          </View>
-        </ScrollView>
+          </ScrollView>
+          <SendMessageButton
+            value={this.state.message}
+            onChangeText={(message) => this.setState({ message })}
+            onPress={this.newChat}
+            //onPress={() => this.props.navigation.navigate('Personal Chat')} 
+          />
+        </View>
       );
     } else {
       return null && console.log('There is a problem with binging user data');
