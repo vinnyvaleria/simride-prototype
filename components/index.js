@@ -10,6 +10,7 @@ import TransactionBox from './TransactionBox';
 import PrevMsgsBox from './PrevMsgsBox';
 import Badge from './Badge';
 import SubmitCashout from './SubmitCashout';
+import SubmitTopUp from './SubmitTopUp';
 
 export {
   SearchButton,
@@ -23,5 +24,6 @@ export {
   TransactionBox,
   PrevMsgsBox,
   Badge,
-  SubmitCashout
+  SubmitCashout,
+  SubmitTopUp
 }

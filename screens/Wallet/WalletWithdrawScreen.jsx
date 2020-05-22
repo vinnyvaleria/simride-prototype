@@ -164,12 +164,13 @@ export default class WalletWithdrawScreen extends React.Component {
     fire.auth().signOut();
   }
 
-    // sets amount in text box to two decimal places on blur and sets to this.state.amount
-    setTwoNumberDecimal() {
-        this.setState({
-            cashamount: parseFloat(this.state.cashoutamount).toFixed(2)
-        });
-    }
+    // // sets amount in text box to two decimal places on blur and sets to this.state.amount
+    // setTwoNumberDecimal(e) {
+    //     e.target.value = parseFloat(e.target.value).toFixed(2);
+    //     this.setState({
+    //         [e.target.name]: e.target.value
+    //     });
+    // }
 
   render () {
     if (this.state.binded) {
@@ -178,7 +179,7 @@ export default class WalletWithdrawScreen extends React.Component {
           <View style={pageStyle.wrapper}>
             <SubmitCashout 
                 value={this.state.cashoutamount}
-                onChangeText={(cashoutamount) => this.setState({ cashoutamount })}
+                onChange={(cashoutamount) => this.setState({ cashoutamount })}
                 onPress={this.submitCashOut}
             />
           </View>

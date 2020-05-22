@@ -11,7 +11,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SubmitButton } from '../../components';
+import { SubmitTopUp } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 // styling
@@ -19,6 +19,8 @@ import { pageStyle, screenStyle } from './styles';
 
 // images
 import profilepicture from '../../assets/images/picture.jpg';
+
+const checkoutUrl = "https://us-central1-carpool-world-5uck5.cloudfunctions.net/charge";
 
 export default class WalletTopUpScreen extends React.Component {
   constructor (props) {
@@ -45,6 +47,7 @@ export default class WalletTopUpScreen extends React.Component {
       status: '',
       dateApplied: '',
       binded: false,
+      token: '',
     };
   }
 
@@ -111,12 +114,76 @@ export default class WalletTopUpScreen extends React.Component {
     fire.auth().signOut();
   }
 
+    gotoWalletPage = () => {
+        const transaction = firebase.database().ref('transaction');
+        const transactionForm = {
+            user: this.state.username,
+            email: this.state.email,
+            token: this.state.token,
+            amount: this.state.amount,
+            date: Date.now() * -1,
+            action: 'top-up'
+        }
+
+        transaction.push(transactionForm);
+        const balance = parseFloat(this.state.wallet) + parseFloat(this.state.amount);
+        this.state.wallet = balance;
+
+        const accountsRef = firebase.database().ref('accounts/' + this.state.id);
+        accountsRef.orderByChild('email')
+            .equalTo(this.state.email)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.ref.update({
+                    wallet: balance
+                })
+            });
+
+        alert('Wallet topped-up!')
+        this.props.navigation.navigate('Wallet');
+    }
+
+    handleToken = (token) => {
+        this.setState({ token: token.id });
+        fetch(checkoutUrl, {
+            method: "POST",
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify({
+                token,
+                charge: {
+                    amount: parseInt(this.state.amount * 100),
+                    currency: 'SGD'
+                }
+            }),
+        })
+            .then(res => {
+                console.log(res);
+                return res.json();
+            })
+            .then(result => {
+                if (result.statusCode === 200) {
+                    this.gotoWalletPage()
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
   render () {
     if (this.state.binded) {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <Text>Lorem Ipsum</Text>
+          <SubmitTopUp
+            value={this.state.amount}
+            onChange={(amount) => this.setState({ amount })}
+            token={this.state.token}
+            amount={this.state.amount}
+            email={this.state.email}
+           />
           </View>
         </ScrollView>
       );
