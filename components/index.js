@@ -1,7 +1,8 @@
 import SearchButton from './SearchButton';
 import SubmitButton from './SubmitButton';
 import DashboardBox from './DashboardBox';
-import ChatboxDisplay from './ChatboxDisplay';
+import ChatboxDisplayLeft from './ChatboxDisplayLeft';
+import ChatboxDisplayRight from './ChatboxDisplayRight';
 import SendMessageButton from './SendMessageButton';
 import CheckProfile from './CheckProfile';
 import NotifBox from './NotifBox';
@@ -10,8 +11,9 @@ export {
   SearchButton,
   SubmitButton,
   DashboardBox,
-  ChatboxDisplay,
+  ChatboxDisplayLeft,
   SendMessageButton,
   CheckProfile,
-  NotifBox
+  NotifBox,
+  ChatboxDisplayRight
 }

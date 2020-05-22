@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { ChatboxDisplay, SearchButton } from '../../components';
+import { ChatboxDisplayLeft, SearchButton } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
@@ -139,7 +139,7 @@ export default class InboxMainScreen extends React.Component {
     for (var c = 0; c < chats.length; c++) {
       if (chats[c].includes(user[2])) {
         value = chats[c].toString().replace(user[2], '').replace('-', '');
-        <ChatboxDisplay label={value} /> 
+        <ChatboxDisplayLeft label={value} /> 
       }
     }
   }

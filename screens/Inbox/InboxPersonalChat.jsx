@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SendMessageButton, ChatboxDisplay, CheckProfile } from '../../components';
+import { SendMessageButton, ChatboxDisplayRight, CheckProfile } from '../../components';
 import { user } from '../Landing/StartScreen';
 import { chatName } from './InboxMainScreen';
 import { search } from './InboxMainScreen';
@@ -113,7 +113,7 @@ export default class InboxPersonalChat extends React.Component {
 
   // open chat with searched user 
   displayChatBox = (text) => {
-    msgsComponent.push(<ChatboxDisplay label={text} />)
+    msgsComponent.push(<ChatboxDisplayRight label={text} />)
     this.setState({
       displayMsgs: msgsComponent,
     })

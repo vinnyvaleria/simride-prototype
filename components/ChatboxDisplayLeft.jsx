@@ -10,7 +10,7 @@ import {
 
 import { COLORS } from '../constants/colors';
 
-export default class ChatboxDisplay extends React.Component {
+export default class ChatboxDisplayLeft extends React.Component {
   render() {
     return (
       <View style={styles.wrapperstyle}>
