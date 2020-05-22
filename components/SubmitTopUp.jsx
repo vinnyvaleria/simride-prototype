@@ -10,8 +10,6 @@ import {
   Text 
 } from 'native-base';
 
-import StripeCheckout from 'react-stripe-checkout'
-
 import { COLORS } from '../constants/colors';
 
 export default class SubmitTopUp extends React.Component {
@@ -24,15 +22,6 @@ export default class SubmitTopUp extends React.Component {
           placeholder='Enter amount' 
           value={this.props.value} 
           onChangeText={this.props.onChangeText}
-        />
-
-        <StripeCheckout
-          stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
-          token={this.props.token}
-          amount={this.props.amount}
-          name="E-Wallet Top-Up"
-          currency="SGD"
-          email={this.props.email}
         />
       </Container>
     );  

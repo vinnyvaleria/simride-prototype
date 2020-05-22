@@ -20,6 +20,8 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
+import StripeCheckout from 'react-stripe-checkout'
+
 const checkoutUrl = "https://us-central1-carpool-world-5uck5.cloudfunctions.net/charge";
 
 export default class WalletTopUpScreen extends React.Component {
@@ -48,6 +50,7 @@ export default class WalletTopUpScreen extends React.Component {
       dateApplied: '',
       binded: false,
       token: '',
+      amount: ''
     };
   }
 
@@ -153,7 +156,7 @@ export default class WalletTopUpScreen extends React.Component {
             body: JSON.stringify({
                 token,
                 charge: {
-                    amount: parseInt(this.state.amount * 100),
+                    amount: parseInt(10 * 100),
                     currency: 'SGD'
                 }
             }),
@@ -172,18 +175,38 @@ export default class WalletTopUpScreen extends React.Component {
             });
     }
 
+    // sets amount in text box to two decimal places on blur and sets to this.state.amount
+    setTwoNumberDecimal = (e) => {
+        e.target.value = parseFloat(e.target.value).toFixed(2);
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
   render () {
     if (this.state.binded) {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-          <SubmitTopUp
+          {/* <SubmitTopUp
             value={this.state.amount}
             onChange={(amount) => this.setState({ amount })}
+           /> */}
+           <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' style={{ width: '9em' }} /><br /><br />
+           <StripeCheckout
+            stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
             token={this.handleToken}
-            amount={parseInt(this.state.amount * 100)}
+            amount={parseInt(10 * 100)}
+            name="E-Wallet Top-Up"
+            currency="SGD"
             email={this.state.email}
-           />
+            />
           </View>
         </ScrollView>
       );
