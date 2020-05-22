@@ -1,11 +1,14 @@
 import { COLORS } from '../../../constants/colors';
 
 const wrapper ={
-  paddingTop: 80,
-  paddingHorizontal: '5%',
-  flex: 1,
+  paddingTop: 10,
   alignSelf: 'center',
-}
+};
+
+const formwrap = {
+  width: '100%',
+  marginBottom: 80,
+};
 
 const image = {
   height: 150,
@@ -54,6 +57,7 @@ const equalspace = {
 
 export default { 
   wrapper,
+  formwrap,
   image, 
   title, 
   subtitle, 

@@ -3,8 +3,10 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
   Image,
 } from 'react-native';
+import * as Datetime from 'react-datetime';
 
 import fire from '../../config';
 import 'firebase/firestore';
@@ -24,25 +26,17 @@ export default class ScheduleRideScreen extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
-      phone: '',
       email: '',
-      newPassword: '',
-      confirmPassword: '',
-      isDriver: '',
-      isAdmin: '',
-      id: '',
-      image: null,
-      frontURL: '',
-      backURL: '',
-      progress: 0,
-      license: '',
-      carplate: '',
-      status: '',
-      dateApplied: '',
-      binded: false,
+      currPassengers: '',
+      payMethod: '',
+      date: Datetime.moment(),
+      postal: '',
+      removeReason: '',
+      recurringWeeks: 1,
+      createArea: 'Admiralty',
+      createTowards: 'School',
+      createMaxPassengers: '1',
+      bookingID: ''
     };
   }
 
@@ -108,7 +102,69 @@ export default class ScheduleRideScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <Text>Lorem Ipsum</Text>
+
+            <Text style={pageStyle.header}>First Name</Text>
+            <TextInput 
+              style={pageStyle.textinput} 
+              placeholder='Your first name' 
+              value={this.state.firstName}
+              onChangeText={(firstName) => this.setState({ firstName })}
+            />
+
+            <Text style={pageStyle.header}>Last Name</Text>
+            <TextInput 
+              style={pageStyle.textinput} 
+              placeholder='Your last name'
+              value={this.state.lastName} 
+              onChangeText={(lastName) => this.setState({ lastName })}
+            />
+
+            <Text style={pageStyle.header}>E-mail</Text>
+            <TextInput 
+              style={pageStyle.textinput} 
+              placeholder='Your e-mail'
+              value={this.state.email}
+              onChangeText={(email) => this.setState({ email })}
+            />
+
+            <Text style={pageStyle.header}>Phone Number</Text>
+            <TextInput 
+              style={pageStyle.textinput} 
+              placeholder='Your phone number'
+              value={this.state.phone}
+              onChangeText={(phone) => this.setState({ phone })} 
+            />
+
+            <Text style={pageStyle.header}>Username</Text>
+            <TextInput 
+              style={pageStyle.textinput} 
+              placeholder='Your preferred username'
+              value={this.state.username}
+              onChangeText={(username) => this.setState({ username })}  
+            />
+
+            <Text style={pageStyle.header}>Password</Text>
+            <TextInput 
+              style={pageStyle.textinput}
+              placeholder='Your password' 
+              value={this.state.password}
+              onChangeText={(password) => this.setState({ password })}
+              secureTextEntry
+            />
+
+            <Text style={pageStyle.header}>Re-enter Password</Text>
+            <TextInput 
+              style={pageStyle.textinput} 
+              placeholder='Please re-enter your password'
+              value={this.state.repassword}
+              onChangeText={(repassword) => this.setState({ repassword })}
+              secureTextEntry 
+            />
+          
+            <View style={pageStyle.equalspace}>
+              <SubmitButton title='Submit' onPress={this.signup} />
+              <SubmitButton title='Cancel' onPress={() => {{this.props.navigation.navigate('Start')}}} />
+            </View>
           </View>
         </ScrollView>
       );
