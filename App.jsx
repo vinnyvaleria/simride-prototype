@@ -9,6 +9,7 @@ import { StyleSheet } from 'react-native';
 
 import DashboardNav from './navigation/DashboardNav';
 import StartScreen from './screens/Landing/StartScreen';
+import LandingStack from './navigation/LandingStack';
 
 YellowBox.ignoreWarnings(['Remote debugger']);
 
@@ -65,7 +66,7 @@ export default class App extends React.Component {
         );
       } else if (!this.state.user) {
         return (
-          <StartScreen />
+          <LandingStack />
         )
       }
     } else {

@@ -168,7 +168,10 @@ class StartScreen extends React.Component {
               onPress={() => this.login()} 
             />
 
-            <SubmitButton title='Register' onPress={() => {{this.props.navigation.navigate('Register')}}} />
+            <SubmitButton 
+              title='Register' 
+              onPress={() => {{this.props.navigation.navigate('Register')}}}
+             />
           </View>        
         </View>
       </ScrollView>
