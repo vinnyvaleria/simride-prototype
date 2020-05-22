@@ -31,7 +31,7 @@ export default class SendMessageButton extends React.Component {
           onPress={this.props.onPress}
         >
           <Text style={{
-            color: COLORS.GREEN_PRI, 
+            color: COLORS.GREEN_SEC, 
             fontFamily: 'notoSans',
             textTransform: 'capitalize',
           }}>Send</Text>
@@ -43,12 +43,16 @@ export default class SendMessageButton extends React.Component {
 
 const styles=StyleSheet.create({
   wrapper: {
-    backgroundColor: 'transparent',
+    backgroundColor: COLORS.GREEN_SEC,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 20,
-    maxHeight: 40,
+    alignSelf: 'stretch',
+    width: '100%',
+    maxHeight: 70,
+    paddingVertical: 15,
+    position: 'absolute',
+    bottom: 0,
   },
 
   buttonstyle: {

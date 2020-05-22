@@ -6,17 +6,16 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { COLORS } from '../constants/colors';
 
 // screens 
-import { MainScreen } from '../screens/Home';
-import { AccountMainScreen } from '../screens/Account';
-import { ScheduleRideScreen, BookingMainScreen } from '../screens/Bookings';
-import { WalletMainScreen } from '../screens/Wallet';
+import { 
+  WalletMainScreen
+ } from '../screens/Wallet';
 
 const Stack = createStackNavigator();
 
-export default function HomeStack() {
+export default function WalletStack() {
   return (
     <Stack.Navigator
-      initialRouteName = 'Home'
+      initialRouteName = 'Wallet'
       screenOptions = {{
         headerTintColor: COLORS.GREEN_SEC,
         headerBackTitleVisible: false,
@@ -26,9 +25,6 @@ export default function HomeStack() {
         },
       }}  
     >
-      <Stack.Screen name='Home' component={MainScreen} />
-      <Stack.Screen name='Schedule a Ride' component={ScheduleRideScreen} />
-      <Stack.Screen name='Bookings' component={BookingMainScreen} />
       <Stack.Screen name='Wallet' component={WalletMainScreen} />
     </Stack.Navigator> 
   );

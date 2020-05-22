@@ -20,7 +20,7 @@ import viewWallet from '../../assets/images/wallets.png';
 import profilepicture from '../../assets/images/picture.jpg';
 
 // components
-import { DashboardBox } from '../../components';
+import { DashboardBox, NotifBox } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 export default class MainScreen extends React.Component {
@@ -98,32 +98,35 @@ export default class MainScreen extends React.Component {
             <View style={pageStyle.equalspace}>
               <DashboardBox 
                 source={scheduleride} 
-                label='Schedule a Ride' 
+                label='Schedule a Ride'
+                onPress={() => this.props.navigation.navigate('Schedule a Ride')} 
                 />
 
               <DashboardBox 
                 source={viewmessages} 
-                label='View Messages' 
+                label='Send Messages' 
+                onPress={() => this.props.navigation.navigate('Inbox Menu')}
                 />
             </View>
 
             <View style={pageStyle.equalspace}>
               <DashboardBox 
                 source={viewbookings} 
-                label='Manage Bookings' 
+                label='Bookings' 
+                onPress={() => this.props.navigation.navigate('Bookings')}
                 />
 
               <DashboardBox 
-                source={viewaccount} 
-                label='Account Settings' 
-                onPress={() => this.props.navigation.navigate('Account Settings')}
+                source={viewWallet} 
+                label='View Wallet' 
+                onPress={() => this.props.navigation.navigate('Wallet Menu')}
                 />
             </View>
 
             <View style={pageStyle.equalspace}>
-              <DashboardBox 
+              <NotifBox 
                 source={viewWallet} 
-                label='Wallet' 
+                label='Notification Bar'
                 />
             </View>
           </View>

@@ -20,7 +20,7 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
-export default class AccountMainScreen extends React.Component {
+export default class WalletMainScreen extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -106,19 +106,10 @@ export default class AccountMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <Image style={pageStyle.image} source={profilepicture} />
-            <Text style={pageStyle.title}>{user[0]} {user[1]}</Text>
-            <Text style={pageStyle.subtitle}>Email : {user[3]}</Text>
-            <Text style={pageStyle.subtitle}>Phone Number : +65 {user[4]}</Text>
-            <Text style={pageStyle.subtitle}>Driver Status : {user[7]}</Text>
-
-            <View style={pageStyle.equalspace}>
-              <SubmitButton 
-                title='Edit Profile' 
-                onPress={() => {{this.props.navigation.navigate('Edit Profile')}}} 
-              />
-              <SubmitButton title='Logout' onPress={() => this.logout()} />
-            </View> 
+            <SubmitButton 
+              title='Wallet' 
+              onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
+            />
           </View>
         </ScrollView>
       );

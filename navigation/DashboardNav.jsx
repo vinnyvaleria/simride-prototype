@@ -3,6 +3,7 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { COLORS } from '../constants/colors';
 
@@ -11,6 +12,8 @@ import { MainScreen } from '../screens/Home';
 // navigation
 import AccountStack from './AccountStack';
 import InboxStack from './InboxStack';
+import BookingStack from './BookingStack';
+import WalletStack from './WalletStack';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,11 +36,15 @@ export default function DashboardNav() {
             let iconColor
 
             if (route.name === 'Home') {
-              iconName = focused ? 'ios-home' : 'md-apps';
+              iconName = focused ? 'ios-home' : 'ios-home';
+            } else if (route.name === 'Bookings') {
+              iconName = focused ? 'ios-calendar' : 'ios-calendar';
             } else if (route.name === 'Inbox Menu') {
-              iconName = focused ? 'ios-mail-open' : 'ios-mail';
+              iconName = focused ? 'ios-mail' : 'ios-mail';
+            } else if (route.name === 'Wallet Menu') {
+              iconName = focused ? 'ios-wallet' : 'ios-wallet';
             } else if (route.name === 'Account Menu') {
-              iconName = focused ? 'ios-bulb' : 'ios-cog';
+              iconName = focused ? 'ios-cog' : 'ios-cog';
             }
 
             iconColor = focused ? COLORS.GREEN_PRI : COLORS.GREY;
@@ -47,6 +54,7 @@ export default function DashboardNav() {
         })}
 
         tabBarOptions={{
+          keyboardHidesTabBar: true,
           activeTintColor: COLORS.GREEN_PRI,
           showLabel: false,
           style: {
@@ -57,9 +65,11 @@ export default function DashboardNav() {
         }}
       >
         <Tab.Screen name='Home' component={MainScreen} />
+        <Tab.Screen name='Bookings' component={BookingStack} />
         <Tab.Screen name='Inbox Menu' component={InboxStack} />
+        <Tab.Screen name='Wallet Menu' component={WalletStack} />
         <Tab.Screen name='Account Menu' component={AccountStack} />
       </Tab.Navigator>
     </NavigationContainer>
-  );
+  )
 }

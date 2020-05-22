@@ -112,7 +112,7 @@ export default class InboxPersonalChat extends React.Component {
   displayChatBox = (text) => {
     msgsComponent.push(<ChatboxDisplay label={text} />)
     this.setState({
-      displayMsgs: msgsComponent
+      displayMsgs: msgsComponent,
     })
   }
 
@@ -146,7 +146,11 @@ export default class InboxPersonalChat extends React.Component {
             source={profilepicture}
             label='Vinny'
           />
-          <ScrollView style={pageStyle.formwrap}>
+          <ScrollView 
+            style={pageStyle.formwrap}
+            ref={ref => {this.scrollView = ref}}
+            onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
+          >
             {this.state.displayMsgs}
           </ScrollView>
           <SendMessageButton

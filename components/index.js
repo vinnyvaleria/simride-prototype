@@ -4,6 +4,7 @@ import DashboardBox from './DashboardBox';
 import ChatboxDisplay from './ChatboxDisplay';
 import SendMessageButton from './SendMessageButton';
 import CheckProfile from './CheckProfile';
+import NotifBox from './NotifBox';
 
 export {
   SearchButton,
@@ -11,5 +12,6 @@ export {
   DashboardBox,
   ChatboxDisplay,
   SendMessageButton,
-  CheckProfile
+  CheckProfile,
+  NotifBox
 }
