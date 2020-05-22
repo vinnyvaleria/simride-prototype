@@ -17,6 +17,7 @@ export default class NotifBox extends React.Component {
         <Text style={styles.label}>{this.props.label}</Text>
         <ScrollView>
           <Text style={styles.content}>{this.props.content}</Text>
+          
           <Button
             light
             block
