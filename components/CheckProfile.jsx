@@ -4,7 +4,7 @@ import {
   View,
   TouchableOpacity,
   Text,
-  ImageBackground,
+  Image,
   Button,
 } from 'react-native';
 
@@ -18,7 +18,7 @@ export default class CHeckProfile extends React.Component {
         onPress={this.props.onPress}
       >
         <Text style={styles.label}>{this.props.label}</Text>
-        <ImageBackground style={styles.logo} source={this.props.source} />
+        <Image style={styles.logo} source={this.props.source} />
       </TouchableOpacity>
     );
   }

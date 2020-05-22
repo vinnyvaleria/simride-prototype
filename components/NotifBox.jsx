@@ -5,8 +5,8 @@ import {
   ScrollView,
   Text,
   ImageBackground,
-  Button,
 } from 'react-native';
+import { Button } from 'native-base'
 
 import { COLORS } from '../constants/colors';
 
@@ -14,21 +14,21 @@ export default class NotifBox extends React.Component {
   render() {
     return (
       <View style={styles.wrapperstyle}>
-        <Text style={styles.label}>{this.props.label}</Text>
+        <Text style={styles.title}>Notifications</Text>
         <ScrollView>
-          <Text style={styles.content}>{this.props.content}</Text>
-          <Button
-            light
-            block
-            style={styles.buttonstyle}
-            onPress={this.props.onPress}
-          >
-            <Text style={{
-              color: COLORS.GREEN_SEC,
-              fontFamily: 'notoSans',
-              textTransform: 'capitalize',
-            }}>Acknowledged</Text>
-          </Button>
+          <View style={styles.equalspace}>
+            <View>
+              <Text style={styles.label}>{this.props.id} - {this.props.label}</Text>
+              <Text style={styles.content}>{this.props.content}</Text>
+            </View>
+            
+            <Button
+              style={styles.buttonstyle}
+              onPress={this.props.onPress}
+            >
+              <Text style={styles.buttontext}>Acknowledge</Text>
+            </Button>
+          </View>
         </ScrollView>
       </View>
     );
@@ -47,26 +47,53 @@ const styles=StyleSheet.create({
     alignSelf: 'stretch',
   },
 
-  label: {
+  title: {
     color: COLORS.GREEN_SEC,
     fontSize: 16,
     fontFamily: 'notoSansMedium',
     textAlign: 'center',
     marginBottom: 5,
+    marginBottom: 20,
+    textDecorationLine: 'underline'
   },
 
   buttonstyle: {
-    backgroundColor: COLORS.PALE_WHITE,
-    height: 40,
-    borderRadius: 0,
-    borderTopRightRadius: 5,
-    borderBottomRightRadius: 5,
+    backgroundColor: COLORS.GREEN_PRI,
+    width: 100,
+    borderRadius: 10,
+    textTransform: 'capitalize',
+    alignSelf: 'flex-end',
+    alignContent: 'center',
+    justifyContent: 'center'
+  },
+
+  buttontext: {
+    color: COLORS.WHITE, 
+    fontFamily: 'notoSansMedium',
+    fontSize: 10,
+    paddingVertical: 2,
+    textTransform: 'uppercase',
+  },
+
+  label: {
+    color: COLORS.GREEN_PRI,
+    fontSize: 14,
+    fontFamily: 'notoSansMedium',
+    textAlign: 'left',
+    textTransform: 'capitalize',
   },
 
   content: {
-    color: COLORS.GREEN_PRI,
+    color: COLORS.GREY,
     fontSize: 14,
     fontFamily: 'notoSans',
-    textAlign: 'center',
+    textAlign: 'left',
+  },
+
+  equalspace: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row',
   },
 });

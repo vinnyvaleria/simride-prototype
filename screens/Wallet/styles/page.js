@@ -16,7 +16,7 @@ const image = {
 };
 
 const title = {
-  fontSize: 30,
+  fontSize: 50,
   fontFamily: 'notoSansBold',
   marginBottom: 30,
   color: COLORS.WHITE,
@@ -27,9 +27,9 @@ const title = {
 const subtitle = {
   fontSize: 20,
   fontFamily: 'notoSansMedium',
-  marginBottom: 10,
+  marginVertical: 10,
   color: COLORS.WHITE,
-  textAlign: 'left',
+  textAlign: 'center',
 };
 
 const header = {
@@ -37,6 +37,7 @@ const header = {
   fontFamily: 'notoSansMedium',
   color: COLORS.WHITE,
   marginBottom: 2,
+  textDecorationLine: 'underline',
 };
 
 const textinput = {
@@ -52,7 +53,7 @@ const textinput = {
 const equalspace = {
   flexDirection: 'row',
   justifyContent: 'space-around',
-  marginTop: 50,
+  marginVertical: 20,
 };
 
 export default { 

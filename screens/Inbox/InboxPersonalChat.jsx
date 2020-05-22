@@ -147,7 +147,7 @@ export default class InboxPersonalChat extends React.Component {
         <View style={screenStyle}>
           <CheckProfile
             source={profilepicture}
-            label='Vinny'
+            label={search}
           />
           <ScrollView 
             style={pageStyle.formwrap}
