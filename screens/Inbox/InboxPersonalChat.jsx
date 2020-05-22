@@ -28,6 +28,7 @@ import profilepicture from '../../assets/images/picture.jpg';
 var unameArr = [];
 var allchats = [];
 var chats = [];
+var msgsComponent = [];
 
 export default class InboxPersonalChat extends React.Component {
   constructor (props) {
@@ -36,6 +37,7 @@ export default class InboxPersonalChat extends React.Component {
       binded: false,
       email: '',
       message: '',
+      displayMsgs: '',
     };
   }
 
@@ -44,6 +46,8 @@ export default class InboxPersonalChat extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.getMessages();
+
   }
 
   // bind user data
@@ -95,15 +99,27 @@ export default class InboxPersonalChat extends React.Component {
     this.setState({ binded: true });
   }
 
+  getMessages = () => {
+    fire.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+      querySnapshot.docChanges().forEach((doc) => {
+        var message = doc.doc.data();
+        this.displayChatBox(message.text);
+        console.log(message.text)
+      });
+    });
+  }
+
   // open chat with searched user 
   displayChatBox = (text) => {
-    return (
-      <View>
-        <ChatboxDisplay
-          label={text}
-        />
-      </View>
-    )
+    msgsComponent.push(<ChatboxDisplay label={text} />)
+    // this.setState({
+    //   displayMsgs: 
+    // })
+    // return (
+    //   <View>
+        
+    //   </View>
+    // )
   }
 
   newChat = () => {
@@ -137,9 +153,7 @@ export default class InboxPersonalChat extends React.Component {
             label='Vinny'
           />
           <ScrollView style={pageStyle.formwrap}>
-            <ChatboxDisplay
-              label='Lorem ipsum'
-            />
+            {msgsComponent}
           </ScrollView>
           <SendMessageButton
             value={this.state.message}
