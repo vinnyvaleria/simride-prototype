@@ -93,8 +93,6 @@ export default class MainScreen extends React.Component {
               <Image style={pageStyle.image} source={profilepicture} />
             </View>
             
-            <Text style={pageStyle.subtitle}>How can I help you today?</Text>
-
             <View style={pageStyle.equalspace}>
               <DashboardBox 
                 source={scheduleride} 
@@ -125,8 +123,20 @@ export default class MainScreen extends React.Component {
 
             <View style={pageStyle.equalspace}>
               <NotifBox 
-                source={viewWallet} 
                 label='Notification Bar'
+                content=
+                'Eu consequat ac felis donec et odio pellentexzcxque
+                 diam volutpat commodo sed egestas egestas fringilla 
+                 phasellus faucibus scelerisque eleifend donec pretium v
+                 ulputate sapien nec sagittis aliquam malesuada bibendum 
+                 arcu vitae elementum curabitur vitae nunc sed velit dignissim
+                sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu non.
+                Eu consequat ac felis donec et odio pellentesque
+                 diam volutpat commodo sed egestas egestas fringilla 
+                 phasellus faucibus scelerisque eleifend donec pretium v
+                 ulputate sapien nec sagittis aliquam malesuada bibendum 
+                 arcu vitae elementum curabitur vitae nunc sed velit dignissim
+                sodales ut eu sem integer vitae justo eget magna fermentum iaculis eu non.'
                 />
             </View>
           </View>

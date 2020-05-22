@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  TouchableOpacity,
+  ScrollView,
   Text,
   ImageBackground,
   Button,
@@ -13,12 +13,12 @@ import { COLORS } from '../constants/colors';
 export default class NotifBox extends React.Component {
   render() {
     return (
-      <TouchableOpacity 
-        style={styles.wrapperstyle}
-        onPress={this.props.onPress}
-      >
+      <View style={styles.wrapperstyle}>
         <Text style={styles.label}>{this.props.label}</Text>
-      </TouchableOpacity>
+        <ScrollView>
+          <Text style={styles.content}>{this.props.content}</Text>
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -31,13 +31,22 @@ const styles=StyleSheet.create({
     borderRadius: 10,
     justifyContent: 'center',
     minWidth: 350,
+    maxHeight: 200,
     alignSelf: 'stretch',
   },
 
   label: {
-    color: COLORS.GREEN_PRI,
+    color: COLORS.GREEN_SEC,
     fontSize: 16,
     fontFamily: 'notoSansMedium',
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+
+  content: {
+    color: COLORS.GREEN_PRI,
+    fontSize: 14,
+    fontFamily: 'notoSans',
     textAlign: 'center',
   },
 });
