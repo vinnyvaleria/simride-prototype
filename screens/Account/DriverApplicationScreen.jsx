@@ -191,7 +191,7 @@ export default class DriverApplicationScreen extends React.Component {
           <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={this.handleChange} />
 
           <Text style={pageStyle.header}>Issue Date</Text>
-          <Datetime isValidDate={valid} locale="en-sg" id='datepicker' onChange={this.onChange} value={this.state.date} required />
+          <Datetime locale="en-sg" id='datepicker' onChange={this.onChange} value={this.state.date} required />
 
           <Text style={pageStyle.header}>Car Plate Number</Text>
           <TextInput style={pageStyle.textinput} value={this.state.carplate} name='carplate' onChange={this.handleChange} />
