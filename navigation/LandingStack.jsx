@@ -9,26 +9,30 @@ import { COLORS } from '../constants/colors';
 import { RegisterScreen, ForgotPasswordScreen } from '../screens/Landing';
 import StartScreen from '../screens/Landing/StartScreen';
 import { MainScreen } from '../screens/Home';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
 export default function LandingStack() {
   return (
-    <Stack.Navigator
-      initialRouteName = 'Start'
-      screenOptions = {{
-        headerTintColor: COLORS.GREEN_SEC,
-        headerBackTitleVisible: false,
-        headerTitleStyle: {
-          fontFamily: 'notoSansMedium',
-          fontSize: 18,
-        },
-      }}  
-    >
-      <Stack.Screen name='Start' component={StartScreen} />
-      <Stack.Screen name='Register' component={RegisterScreen} />
-      <Stack.Screen name='Home' component={MainScreen} />
-      <Stack.Screen name='Forgot Password' component={ForgotPasswordScreen} />
-    </Stack.Navigator> 
+    <NavigationContainer>
+        <Stack.Navigator
+        initialRouteName = 'Start'
+        screenOptions = {{
+          headerTintColor: COLORS.GREEN_SEC,
+          headerBackTitleVisible: false,
+          headerTitleStyle: {
+            fontFamily: 'notoSansMedium',
+            fontSize: 18,
+          },
+        }}  
+      >
+        <Stack.Screen name='Start' component={StartScreen} />
+        <Stack.Screen name='Register' component={RegisterScreen} />
+        <Stack.Screen name='Home' component={MainScreen} />
+        <Stack.Screen name='Forgot Password' component={ForgotPasswordScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+     
   );
 }

@@ -11,7 +11,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SubmitButton } from '../../components';
+import { SubmitButton, Badge } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 // styling
@@ -33,7 +33,10 @@ export default class AccountMainScreen extends React.Component {
       confirmPassword: '',
       isDriver: '',
       isAdmin: '',
+      wallet: '',
       id: '',
+      rating: '',
+      ratedBy: '',
       image: null,
       frontURL: '',
       backURL: '',
@@ -42,7 +45,9 @@ export default class AccountMainScreen extends React.Component {
       carplate: '',
       status: '',
       dateApplied: '',
+      balance: '',
       binded: false,
+      driverStatus: false,
     };
   }
 
@@ -80,9 +85,46 @@ export default class AccountMainScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
-      });
-    })
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
+
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          },
+            function () {
+              let c;
+              if (this.state.ratedBy === 0) {
+                c = 1;
+              }
+              else {
+                c = this.state.ratedBy
+              }
+
+              const avg = parseInt(this.state.rating) / c;
+              this.setState({ avgRating: avg })
+            });
+        });
+      })
+
     this.setState({ binded: true });
+  }
+
+  driverStatus = () => {
+    if (this.state.isDriver.toLowerCase() === 'yes') {
+      this.setState({ driverStatus: true });
+    } else {
+      this.setState({ driverStatus: false });
+    }
   }
 
   // logout
@@ -97,6 +139,8 @@ export default class AccountMainScreen extends React.Component {
     user[7] = '';
     user[8] = '';
     user[9] = '';
+    user[10] = '';
+    user[11] = '';
 
     fire.auth().signOut();
   }
@@ -106,23 +150,25 @@ export default class AccountMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
+            <Badge label='Driver' />
             <Image style={pageStyle.image} source={profilepicture} />
-            <Text style={pageStyle.title}>{user[0]} {user[1]}</Text>
-            <Text style={pageStyle.subtitle}>Email : {user[3]}</Text>
-            <Text style={pageStyle.subtitle}>Phone Number : +65 {user[4]}</Text>
-            <Text style={pageStyle.subtitle}>Driver Status : {user[7]}</Text>
+            <Text style={pageStyle.title}>{this.state.firstName} {this.state.lastName}</Text>
+            <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>
+            <Text style={pageStyle.subtitle}>Phone Number: +65 {this.state.phone}</Text>
+            <Text style={pageStyle.subtitle}>Rating: {this.state.avgRating}</Text>
 
             <View style={pageStyle.equalspace}>
               <SubmitButton 
                 title='Edit Profile' 
-                onPress={() => {{this.props.navigation.navigate('Edit Profile')}}} />
+                onPress={() => {{this.props.navigation.navigate('Edit Profile')}}} 
+              />
               <SubmitButton title='Logout' onPress={() => this.logout()} />
             </View> 
           </View>
         </ScrollView>
-      );
+      )
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }

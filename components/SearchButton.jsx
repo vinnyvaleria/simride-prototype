@@ -19,7 +19,7 @@ export default class SearchButton extends React.Component {
         <TextInput 
           style={styles.textinput} 
           name='search'
-          placeholder='Enter exact username to search' 
+          placeholder='Search for users with their username' 
           value={this.props.value} 
           onChangeText={this.props.onChangeText}        
         />
@@ -48,12 +48,15 @@ const styles=StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginVertical: 20,
+    maxHeight: 20,
   },
 
   buttonstyle: {
     backgroundColor: COLORS.PALE_WHITE,
     height: 40,
     borderRadius: 0,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 5,
   },
   
   textinput: {
@@ -62,5 +65,7 @@ const styles=StyleSheet.create({
     width: 300,
     backgroundColor: COLORS.WHITE,
     height: 40,
+    borderTopLeftRadius: 5,
+    borderBottomLeftRadius: 5,
   },
 });

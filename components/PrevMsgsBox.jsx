@@ -1,24 +1,21 @@
+import 'react-native-gesture-handler';
 import React from 'react';
 import {
   StyleSheet,
-  View,
   TouchableOpacity,
   Text,
-  ImageBackground,
-  Button,
 } from 'react-native';
 
 import { COLORS } from '../constants/colors';
 
-export default class ChatboxDisplay extends React.Component {
+export default class PrevMsgsBox extends React.Component {
   render() {
     return (
       <TouchableOpacity 
         style={styles.wrapperstyle}
         onPress={this.props.onPress}
       >
-        <ImageBackground source={this.props.source} style={styles.logo} />
-        <Text style={styles.label}>{this.props.label}</Text>
+        <Text style={styles.label}>{this.props.user}</Text>
       </TouchableOpacity>
     );
   }
@@ -26,26 +23,24 @@ export default class ChatboxDisplay extends React.Component {
 
 const styles=StyleSheet.create({
   wrapperstyle: {
-    padding: 15,
-    margin: 15,
+    marginVertical: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 20,
     backgroundColor: COLORS.WHITE,
     borderRadius: 10,
-    height: 150,
-    width: 150,
-    display: 'flex',
-    flexDirection: 'row',
-  },
-
-  logo: {
-    height: 70,
-    width: 70,
+    minHeight: 50,
+    minWidth: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
     alignSelf: 'center',
-    marginBottom: 10,
   },
 
   label: {
-    color: COLORS.GREEN_PRI,
+    color: COLORS.GREEN_SEC,
     fontSize: 16,
+    fontFamily: 'notoSansMedium',
     textAlign: 'center',
-  },
+    width: '99%',
+    margin: 'auto',
+  }
 });

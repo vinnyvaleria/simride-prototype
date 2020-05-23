@@ -31,12 +31,14 @@ export default class UpdatePasswordScreen extends React.Component {
       username: '',
       phone: '',
       email: '',
-      currPassword: '',
       newPassword: '',
       confirmPassword: '',
       isDriver: '',
       isAdmin: '',
+      wallet: '',
       id: '',
+      rating: '',
+      ratedBy: '',
       image: null,
       frontURL: '',
       backURL: '',
@@ -45,6 +47,7 @@ export default class UpdatePasswordScreen extends React.Component {
       carplate: '',
       status: '',
       dateApplied: '',
+      balance: '',
       binded: false,
     };
   }
@@ -83,6 +86,8 @@ export default class UpdatePasswordScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
       });
     })
     this.setState({ binded: true });
@@ -141,7 +146,7 @@ export default class UpdatePasswordScreen extends React.Component {
         </ScrollView>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }

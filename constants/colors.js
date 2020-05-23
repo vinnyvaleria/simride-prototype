@@ -4,6 +4,6 @@ export const COLORS = {
     GREEN_SEC: '#4b87a1',
     GREY: '#222222',
     WHITE: '#FFFFFF',
-    PALE_WHITE: '#DDDDDD',
+    PALE_WHITE: '#EEEEEE',
     YELLOW: '#F9C70C',
 };

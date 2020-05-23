@@ -22,6 +22,8 @@ import { COLORS } from '../../constants/colors';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
+var phoneArr = []
+
 export default class AccountEditScreen extends React.Component {
   constructor (props) {
     super(props);
@@ -35,7 +37,10 @@ export default class AccountEditScreen extends React.Component {
       confirmPassword: '',
       isDriver: '',
       isAdmin: '',
+      wallet: '',
       id: '',
+      rating: '',
+      ratedBy: '',
       image: null,
       frontURL: '',
       backURL: '',
@@ -44,6 +49,7 @@ export default class AccountEditScreen extends React.Component {
       carplate: '',
       status: '',
       dateApplied: '',
+      balance: '',
       binded: false,
     };
   }
@@ -53,7 +59,17 @@ export default class AccountEditScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-  }
+
+    fire.database().ref('accounts')
+      .orderByChild('email')
+      .once('value', snapshot => {
+        var i = 0;
+        snapshot.forEach((child) => {
+          phoneArr[i] = child.val().phone;
+          i++;
+        })
+      });
+    }
 
   // handles image change
   handleImgChange  = () => {
@@ -82,6 +98,8 @@ export default class AccountEditScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
       });
     })
     this.setState({ binded: true });
@@ -89,28 +107,51 @@ export default class AccountEditScreen extends React.Component {
 
   // real time update profile
   submitEditProfile = () => {
-    if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.phone !== "") {
-      user[0] = this.state.firstName;
-      user[1] = this.state.lastName;
-      user[4] = this.state.phone;
+    var phoneCheck = false;
+    const rg = new RegExp("^((8|9)[0-9]{7}$)");
 
-      const accountsRef = fire.database().ref('accounts/' + user[9]);
-      accountsRef
-        .orderByChild('email')
-        .equalTo(user[3])
-        .on('value', snapshot => {
-          snapshot.ref.update({
-            fname: user[0],
-          })
-          snapshot.ref.update({
-            lname: user[1],
-          })
-          snapshot.ref.update({
-            phone: user[4],
-          })
-        });
+    while (i < phoneArr.length) {
+      if (this.state.phone === phoneArr[i]) {
+        alert('Phone number has already been registered!');
+        phoneCheck = false;
+        break;
+      } else {
+        phoneCheck = true;
+      }
+      i++;
+    };
+
+    if (rg.test(this.state.phone)) {
+      phoneCheck = true;
     } else {
-      alert("Your profile is updated!")
+      alert('Phone number is invalid')
+      phoneCheck = false;
+    }
+
+    if (phoneCheck) {
+      if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.phone !== "") {
+        user[0] = this.state.firstName;
+        user[1] = this.state.lastName;
+        user[4] = this.state.phone;
+
+        const accountsRef = fire.database().ref('accounts/' + user[9]);
+        accountsRef
+          .orderByChild('email')
+          .equalTo(user[3])
+          .on('value', snapshot => {
+            snapshot.ref.update({
+              fname: user[0],
+            })
+            snapshot.ref.update({
+              lname: user[1],
+            })
+            snapshot.ref.update({
+              phone: user[4],
+            })
+          });
+      } else {
+        alert("Your profile is updated!")
+      }
     }
   }
 
@@ -159,7 +200,7 @@ export default class AccountEditScreen extends React.Component {
         </ScrollView>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }

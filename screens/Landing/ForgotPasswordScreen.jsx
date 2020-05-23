@@ -45,23 +45,24 @@ export default class ForgotPasswordScreen extends React.Component {
 
   render () {
     return (
-      <View style={pageStyle.formwrap}>
-        <Image style={pageStyle.logo} source={logo} />
-        <Text style={pageStyle.title}>Reset Your Password</Text>
+      <View style={screenStyle}>
+        <View style={pageStyle.formwrap}>
+          <Image style={pageStyle.logo} source={logo} />
+          <Text style={pageStyle.title}>Reset Your Password</Text>
 
-        <Text style={pageStyle.header}>E-mail</Text>
-        <TextInput 
-          style={pageStyle.textinput} 
-          placeholder='Your e-mail'
-          value={this.state.email}
-          onChangeText={(email) => this.setState({ email })}
-        />
+          <Text style={pageStyle.header}>E-mail</Text>
+          <TextInput 
+            style={pageStyle.textinput} 
+            placeholder='Your e-mail'
+            value={this.state.email}
+            onChangeText={(email) => this.setState({ email })}
+          />
 
-        <View style={pageStyle.equalspace}>
-          <SubmitButton title='Submit' onPress={this.submitForgotPassword}/>
-          <SubmitButton title='Cancel' onPress={() => {{this.props.navigation.navigate('Start')}}} />
+          <View style={pageStyle.equalspace}>
+            <SubmitButton title='Submit' onPress={this.submitForgotPassword}/>
+            <SubmitButton title='Cancel' onPress={() => {{this.props.navigation.navigate('Start')}}} />
+          </View>
         </View>
-      
       </View>
     )
   }

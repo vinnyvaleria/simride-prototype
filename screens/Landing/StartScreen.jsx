@@ -45,6 +45,8 @@ class StartScreen extends React.Component {
       carplate: '',
       status: '',
       dateApplied: '',
+      rating: '',
+      ratedBy: '',
     };
   }
 
@@ -94,6 +96,8 @@ class StartScreen extends React.Component {
             user[7] = child.val().isBanned;
             user[8] = child.val().wallet;
             user[9] = child.key;
+            user[10] = child.val().rating;
+            user[11] = child.val().ratedBy;
           });
         })
   }
@@ -168,7 +172,10 @@ class StartScreen extends React.Component {
               onPress={() => this.login()} 
             />
 
-            <SubmitButton title='Register' onPress={() => {{this.props.navigation.navigate('Register')}}} />
+            <SubmitButton 
+              title='Register' 
+              onPress={() => {{this.props.navigation.navigate('Register')}}}
+             />
           </View>        
         </View>
       </ScrollView>

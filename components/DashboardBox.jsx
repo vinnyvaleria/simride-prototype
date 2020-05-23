@@ -43,8 +43,9 @@ const styles=StyleSheet.create({
   },
 
   label: {
-    color: COLORS.GREEN_PRI,
+    color: COLORS.GREEN_SEC,
     fontSize: 16,
+    fontFamily: 'notoSansMedium',
     textAlign: 'center',
   },
 });

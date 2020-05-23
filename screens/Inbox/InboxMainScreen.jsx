@@ -13,15 +13,18 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { ChatboxDisplay, SearchButton } from '../../components';
+import { ChatboxDisplayLeft, SearchButton, PrevMsgsBox } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
 import { pageStyle, screenStyle } from'./styles';
 
+import { COLORS } from '../../constants/colors';
+
 var unameArr = [];
 var allchats = [];
 var chats = [];
+var prevMsgComponent = [];
 
 var chatName;
 var search;
@@ -33,14 +36,19 @@ export default class InboxMainScreen extends React.Component {
       searchUname: '',
       email: '',
       userFound: false,
+      displayPrevMsg: []
     };
   }
 
   componentDidMount = () => {
+    const that = this;
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    setTimeout(function () {
+      that.getPrevMsgs();
+    }, 1000);
   }
 
   // bind user data
@@ -61,13 +69,15 @@ export default class InboxMainScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
         })
       })    
       .then(() => {
         if (typeof user[3] === 'undefined') {
           fire.auth().signOut();
         } else {
-          if (user[6] !== "") {
+          if (user[6] !== '') {
             // loads accounts
             fire.database()
               .ref('accounts')
@@ -81,7 +91,7 @@ export default class InboxMainScreen extends React.Component {
                 })
               });
 
-            fire.firestore().collection("chat").get().then((querySnapshot) => {
+            fire.firestore().collection('chat').get().then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
                 allchats.push(doc.id);
                 chats = Array.from(new Set(allchats))
@@ -120,7 +130,6 @@ export default class InboxMainScreen extends React.Component {
         }
         console.log(chatName);     
         this.state.userFound = true;
-        found = true;
       } else if (search != unameArr[i]) {
         console.log('User not found');
       }
@@ -134,21 +143,51 @@ export default class InboxMainScreen extends React.Component {
     }
   }
 
+  listAllChats = () => {
+    for (var c = 0; c < chats.length; c++) {
+      if (chats[c].includes(user[2])) {
+        value = chats[c].toString().replace(user[2], '').replace('-', '');
+        <ChatboxDisplayLeft label={value} /> 
+      }
+    }
+  }
+
+  getPrevMsgs = () => {
+    for (var c = 0; c < chats.length; c++) {
+      if (chats[c].includes(user[2])) {
+        let value = chats[c].toString().replace(user[2], '').replace('-', '');
+        console.log(value);
+        this.displayPrevMsgs(value);
+      }
+    }
+  }
+
+  displayPrevMsgs = (user) => {
+    this.setState({ searchUname: user });
+    prevMsgComponent.push(<PrevMsgsBox user={user} onPress={this.searchUser} />)
+    this.setState({
+      displayPrevMsg: prevMsgComponent,
+    })
+  }
+
   render () {
     if (this.state.binded) {
       return (
         <ScrollView style={screenStyle}>
-          <View style={pageStyle.formwrap}>
+          <View style={pageStyle.wrapper}>
             <SearchButton  
               value={this.state.searchUname}
               onChangeText={(searchUname) => this.setState({ searchUname })}
               onPress={this.searchUser}
             />
           </View>
+          <View style={pageStyle.wrapper}>
+            {this.state.displayPrevMsg}
+          </View>
         </ScrollView>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   } 
 }

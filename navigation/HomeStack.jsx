@@ -8,6 +8,8 @@ import { COLORS } from '../constants/colors';
 // screens 
 import { MainScreen } from '../screens/Home';
 import { AccountMainScreen } from '../screens/Account';
+import { ScheduleRideScreen, BookingMainScreen } from '../screens/Bookings';
+import { WalletMainScreen } from '../screens/Wallet';
 
 const Stack = createStackNavigator();
 
@@ -25,10 +27,9 @@ export default function HomeStack() {
       }}  
     >
       <Stack.Screen name='Home' component={MainScreen} />
-      <Stack.Screen name='Schedule a Ride' component={ScheduleRide} />
-      <Stack.Screen name='Bookings' component={BookingStack} />
-      <Stack.Screen name='Accounts' component={AccountMainScreen} />
-      <Stack.Screen name='Wallet' component={WalletStack} />
+      <Stack.Screen name='Schedule a Ride' component={ScheduleRideScreen} />
+      <Stack.Screen name='Bookings' component={BookingMainScreen} />
+      <Stack.Screen name='Wallet' component={WalletMainScreen} />
     </Stack.Navigator> 
   );
 }

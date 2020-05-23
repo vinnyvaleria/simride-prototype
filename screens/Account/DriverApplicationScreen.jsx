@@ -35,7 +35,10 @@ export default class DriverApplicationScreen extends React.Component {
       confirmPassword: '',
       isDriver: '',
       isAdmin: '',
+      wallet: '',
       id: '',
+      rating: '',
+      ratedBy: '',
       image: null,
       frontURL: '',
       backURL: '',
@@ -44,7 +47,8 @@ export default class DriverApplicationScreen extends React.Component {
       carplate: '',
       status: '',
       dateApplied: '',
-      binded: ''
+      balance: '',
+      binded: false,
     };
   }
 
@@ -82,6 +86,8 @@ export default class DriverApplicationScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
       });
     })
     this.setState({ binded: true });
@@ -99,6 +105,8 @@ export default class DriverApplicationScreen extends React.Component {
     user[7] = '';
     user[8] = '';
     user[9] = '';
+    user[10] = '';
+    user[11] = '';
 
     fire.auth().signOut();
   }
@@ -110,13 +118,13 @@ export default class DriverApplicationScreen extends React.Component {
           <Image style={pageStyle.image} source={profilepicture} />
 
           <Text style={pageStyle.header}>First Name</Text>
-          <TextInput style={pageStyle.textinput} placeholder={user[0]} />
+          <TextInput style={pageStyle.textinput} placeholder={this.state.firstName} />
 
           <Text style={pageStyle.header}>Last Name</Text>
-          <TextInput style={pageStyle.textinput} placeholder={user[1]} />
+          <TextInput style={pageStyle.textinput} placeholder={this.state.lastName} />
 
           <Text style={pageStyle.header}>Phone Number</Text>
-          <TextInput style={pageStyle.textinput} placeholder={user[4].toString()} />
+          <TextInput style={pageStyle.textinput} placeholder={this.state.phone.toString()} />
 
           <Text
             style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}

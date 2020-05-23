@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SendMessageButton } from '../../components';
+import { SendMessageButton, ChatboxDisplayRight, CheckProfile } from '../../components';
 import { user } from '../Landing/StartScreen';
 import { chatName } from './InboxMainScreen';
 import { search } from './InboxMainScreen';
@@ -21,9 +21,14 @@ import { search } from './InboxMainScreen';
 //styling
 import { pageStyle, screenStyle } from'./styles';
 
+// images
+import profilepicture from '../../assets/images/picture.jpg';
+
+
 var unameArr = [];
 var allchats = [];
 var chats = [];
+var msgsComponent = [];
 
 export default class InboxPersonalChat extends React.Component {
   constructor (props) {
@@ -32,14 +37,18 @@ export default class InboxPersonalChat extends React.Component {
       binded: false,
       email: '',
       message: '',
+      displayMsgs: [],
     };
   }
 
   componentDidMount = () => {
+    this.setState({displayMsgs: []});
+    msgsComponent = [];
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.getMessages();
   }
 
   // bind user data
@@ -60,6 +69,8 @@ export default class InboxPersonalChat extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
         })
       })    
       .then(() => {
@@ -91,27 +102,21 @@ export default class InboxPersonalChat extends React.Component {
     this.setState({ binded: true });
   }
 
-  // open chat with searched user 
-  openChat = () => {
-    let chatsRef = fire.firestore().collection('chat');
-
-    chatsRef
-      .doc(chatName)
-      .collection('messages')
-      .orderBy('timestamp')
-      .onSnapshot((querySnapshot) => {
-        querySnapshot.docChanges().forEach((doc) => {
-          var message = doc.doc.data();
-          var html = "";
-          // give each message a unique ID
-          html += "<li id='message-" + message.timestamp + "'>";
-          html += message.from + ": " + message.text;
-          html += "</li>";
-
-          console.log(html);
-        });
+  getMessages = () => {
+    fire.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+      querySnapshot.docChanges().forEach((doc) => {
+        var message = doc.doc.data();
+        this.displayChatBox(message.text);
       });
+    });
+  }
 
+  // open chat with searched user 
+  displayChatBox = (text) => {
+    msgsComponent.push(<ChatboxDisplayRight label={text} />)
+    this.setState({
+      displayMsgs: msgsComponent,
+    })
   }
 
   newChat = () => {
@@ -131,36 +136,33 @@ export default class InboxPersonalChat extends React.Component {
       })
       .catch((error) => {
         alert('Error sending message.', error);
-      });
-    /*chatsRef
-      .get()
-      .then((docSnapshot) => {
-        if ((docSnapshot.exists)) {
-          fire.firestore().collection('messages/' + chatName).add({data});
-        }
-      })
-      .catch((error) => {
-        alert('Error sending message.', error);
-      });*/
+      });  
   }
 
   render () {
     if (this.state.binded) {
       return (
-        <ScrollView style={screenStyle}>
-          <View style={pageStyle.formwrap}>
-            <Text style={pageStyle.title}>Anjir</Text>
-            <SendMessageButton
-              value={this.state.message}
-              onChangeText={(message) => this.setState({ message })}
-              onPress={this.newChat}
-              //onPress={() => this.props.navigation.navigate('Personal Chat')} 
-            />
-          </View>
-        </ScrollView>
+        <View style={screenStyle}>
+          <CheckProfile
+            source={profilepicture}
+            label={search}
+          />
+          <ScrollView 
+            style={pageStyle.formwrap}
+            ref={ref => {this.scrollView = ref}}
+            onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
+          >
+            {this.state.displayMsgs}
+          </ScrollView>
+          <SendMessageButton
+            value={this.state.message}
+            onChangeText={(message) => this.setState({ message })}
+            onPress={this.newChat}
+          />
+        </View>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }

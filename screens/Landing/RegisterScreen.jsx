@@ -6,7 +6,10 @@ import {
   TextInput,
   Image,
 } from 'react-native';
-import * as firebase from 'firebase';
+
+import fire from '../../config';
+import 'firebase/firestore';
+import 'firebase/storage';
 
 // styling
 import { pageStyle, screenStyle } from './styles';
@@ -17,6 +20,9 @@ import { SubmitButton } from '../../components';
 import { user } from './StartScreen';
 
 var unameArr = [];
+var emailArr = [];
+var phoneArr = [];
+var countArr = [];
 
 export default class RegisterScreen extends React.Component {
   constructor(props) {
@@ -29,16 +35,44 @@ export default class RegisterScreen extends React.Component {
       email: '',
       password: '',
       repassword: '',
-      wallet: ''
+      wallet: '',
+      rating: '',
+      ratedBy: ''
     };
   }
 
-  signup = (e) => {
-    e.preventDefault();
+  componentDidMount = () => {
+    // counts current total account registered
+    fire.database()
+    .ref('admin')
+    .orderByChild('acct')
+    .once('value')
+    .then((snapshot) => {
+      snapshot.forEach((child) => {
+        countArr[0] = child.val().acct;
+      })
+    });
 
+  // loads accounts
+  fire.database().ref('accounts')
+    .orderByChild('email')
+    .once('value', snapshot => {
+      var i = 0;
+      snapshot.forEach((child) => {
+        unameArr[i] = child.val().uname;
+        emailArr[i] = child.val().email;
+        phoneArr[i] = child.val().phone;
+        i++;
+      })
+    });
+  }
+
+  signup = () => {
     // checks for duplicate username
     var i = 0;
     var unameCheck = false;
+    var phoneCheck = false;
+    const rg = new RegExp("^((8|9)[0-9]{7}$)");
     while (i < unameArr.length) {
       if (this.state.username === unameArr[i]) {
         alert('Username has already been taken!');
@@ -47,17 +81,30 @@ export default class RegisterScreen extends React.Component {
       } else {
         unameCheck = true;
       }
+      if (this.state.phone === phoneArr[i]) {
+        alert('Phone number has already been registered!');
+        phoneCheck = false;
+        break;
+      } else {
+        phoneCheck = true;
+      }
       i++;
     };
+
+    if (rg.test(this.state.phone)) {
+      phoneCheck = true;
+    } else {
+      alert('Phone number is invalid')
+      phoneCheck = false;
+    }
 
     // checks confirm password
     if (this.state.password !== this.state.repassword) {
       alert('Passwords do not match!');
     } else {
-      console.log(unameCheck);
-      if (unameCheck) {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email.toString().toLowerCase(), this.state.password).then((u) => {}).then((u) => {
-          const accountsRef = db.ref('accounts');
+      if (unameCheck && phoneCheck) {
+        fire.auth().createUserWithEmailAndPassword(this.state.email.toString().toLowerCase(), this.state.password).then((u) => {
+          const accountsRef = fire.database().ref('accounts');
           const account = {
             fname: this.state.firstName,
             lname: this.state.lastName,
@@ -67,22 +114,13 @@ export default class RegisterScreen extends React.Component {
             isDriver: 'no',
             isAdmin: 'no',
             isBanned: 'no',
-            wallet: '0.00'
+            wallet: 0,
+            rating: 0,
+            ratedBy: 0
           }
-          user = [];
-          // after signup, stores user data into user
-          user[0] = account.fname;
-          user[1] = account.lname;
-          user[2] = account.uname;
-          user[3] = account.email;
-          user[4] = account.phone;
-          user[5] = account.isDriver;
-          user[6] = account.isAdmin;
-          user[7] = account.isBanned;
-          user[8] = account.wallet;
-          user[9] = account.key;
 
           accountsRef.push(account);
+
           this.state = {
             firstName: '',
             lastName: '',
@@ -94,19 +132,21 @@ export default class RegisterScreen extends React.Component {
             isDriver: '',
             isAdmin: '',
             isBanned: '',
-            wallet: ''
+            wallet: '',
+            rating: '',
+            ratedBy: ''
           };
 
           // writing
-          db.ref('admin/counter')
+          fire.database().ref('admin/counter')
             .on('value', snapshot => {
-              countArr[0] = emailArr.length+1;
+              countArr[0] = emailArr.length + 1;
               console.log('rewrite: ', countArr[0]);
               snapshot.ref.update({
                 acct: countArr[0]
               });
             });
-        })
+          })
         .catch((error) => {
           alert(error.message);
         })

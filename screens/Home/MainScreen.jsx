@@ -20,8 +20,11 @@ import viewWallet from '../../assets/images/wallets.png';
 import profilepicture from '../../assets/images/picture.jpg';
 
 // components
-import { DashboardBox } from '../../components';
+import { DashboardBox, NotifBox } from '../../components';
 import { user } from '../Landing/StartScreen';
+
+
+var notifsComponent = [];
 
 export default class MainScreen extends React.Component {
   constructor (props) {
@@ -36,7 +39,10 @@ export default class MainScreen extends React.Component {
       confirmPassword: '',
       isDriver: '',
       isAdmin: '',
+      wallet: '',
       id: '',
+      rating: '',
+      ratedBy: '',
       image: null,
       frontURL: '',
       backURL: '',
@@ -47,14 +53,18 @@ export default class MainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
+      displayNotifs: []
     };
   }
 
   componentDidMount = () => {
+    this.setState({ displayNotifs: [] });
+    notifsComponent = [];
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.getNotifs();
   }
 
   // bind user data
@@ -74,9 +84,57 @@ export default class MainScreen extends React.Component {
           user[7] = child.val().isBanned;
           user[8] = child.val().wallet;
           user[9] = child.key;
+          user[10] = child.val().rating;
+          user[11] = child.val().ratedBy;
+
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          });
       });
     })
     this.setState({ binded: true });
+  }
+
+  getNotifs = () => {
+    const database = fire.database().ref('notification').orderByChild('date');
+    database.on('value', (snapshot) => {
+      if (snapshot.exists()) {
+        this.setState({ displayNotifs: [] });
+        notifsComponent = [];
+        snapshot.forEach((data) => {
+          if (data.val().uname === user[2]) {
+            this.displayNotifs(data.val().notification, data.val().reason, data.key);
+          }
+        });
+      }
+    });
+  }
+
+  ackNotifs = (id) => {
+    const notifRef = fire.database().ref('notification/' + id);
+    notifRef.remove();
+
+    this.setState({ displayNotifs: [] });
+    notifsComponent = [];
+    this.getNotifs();
+  }
+
+  // display notifs
+  displayNotifs = (label, content, id) => {
+    notifsComponent.push(<NotifBox label={label} id={id} content={content} onPress={() => this.ackNotifs(id)} />)
+    this.setState({
+      displayNotifs: notifsComponent,
+    })
   }
 
   render () {
@@ -86,51 +144,49 @@ export default class MainScreen extends React.Component {
           <View style={pageStyle.formwrap}>
             <View style={pageStyle.equalspace}>
               <View>
-                <Text style={pageStyle.opening}>Welcome back, {user[0]}</Text>
-                <Text style={pageStyle.balance}>Current Balance: $ {user[8]}</Text>
+                <Text style={pageStyle.opening}>Welcome back, {this.state.username}</Text>
+                <Text style={pageStyle.balance}>Current Balance: $ {this.state.wallet}</Text>
               </View>
               
               <Image style={pageStyle.image} source={profilepicture} />
             </View>
-            
-            <Text style={pageStyle.subtitle}>How can I help you today?</Text>
 
+            <View style={pageStyle.equalspace}>
+              {this.state.displayNotifs}
+            </View>
+            
             <View style={pageStyle.equalspace}>
               <DashboardBox 
                 source={scheduleride} 
-                label='Schedule a Ride' 
+                label='Schedule a Ride'
+                onPress={() => this.props.navigation.navigate('Schedule a Ride')} 
                 />
 
               <DashboardBox 
                 source={viewmessages} 
-                label='View Messages' 
+                label='Send Messages' 
+                onPress={() => this.props.navigation.navigate('Inbox Menu')}
                 />
             </View>
 
             <View style={pageStyle.equalspace}>
               <DashboardBox 
                 source={viewbookings} 
-                label='Manage Bookings' 
+                label='Bookings' 
+                onPress={() => this.props.navigation.navigate('Bookings')}
                 />
 
-              <DashboardBox 
-                source={viewaccount} 
-                label='Account Settings' 
-                onPress={() => this.props.navigation.navigate('Account Settings')}
-                />
-            </View>
-
-            <View style={pageStyle.equalspace}>
               <DashboardBox 
                 source={viewWallet} 
-                label='Wallet' 
+                label='View Wallet' 
+                onPress={() => this.props.navigation.navigate('Wallet Menu')}
                 />
             </View>
           </View>
         </ScrollView>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }
