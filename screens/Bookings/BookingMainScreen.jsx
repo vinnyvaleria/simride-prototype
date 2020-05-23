@@ -187,11 +187,11 @@ export default class BookingMainScreen extends React.Component {
                 title='my bookings' 
                 onPress={() => {this.props.navigation.navigate('View My Bookings')}} 
               />
-              {(user[5] === 'yes') ? this.state.checkDriverStatus : null}
+              {(this.state.isDriver === 'yes') ? this.state.checkDriverStatus : null}
               </View>
             </View>
           <View style={pageStyle.wrapper}>
-            <Text style={pageStyle.header}>Available Rides</Text>
+            <Text style={pageStyle.header}>All Rides</Text>
             {this.state.displayPrevBooking}
           </View>
         </ScrollView>
