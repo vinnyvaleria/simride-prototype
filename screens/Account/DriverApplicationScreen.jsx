@@ -11,7 +11,7 @@ import fire from '../../config';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-import DateTimePicker from 'react-datetime-picker'
+import * as Datetime from "react-datetime";
 
 // components
 import { SubmitButton } from '../../components';
@@ -191,7 +191,7 @@ export default class DriverApplicationScreen extends React.Component {
           <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={this.handleChange} />
 
           <Text style={pageStyle.header}>Issue Date</Text>
-          <DateTimePicker disableClock ='true' />
+          <Datetime isValidDate={valid} locale="en-sg" id='datepicker' onChange={this.onChange} value={this.state.date} required />
 
           <Text style={pageStyle.header}>Car Plate Number</Text>
           <TextInput style={pageStyle.textinput} value={this.state.carplate} name='carplate' onChange={this.handleChange} />
