@@ -9,6 +9,7 @@ import { cancel } from './cancel';
 import { checkEmailLogin, user } from './checkEmailLogin';
 import { extendSignUp } from './extendSignUp';
 import { submitForgotPassword } from './submitForgotPass';
+import '../../constants/custom.css';
 
 var countArr = new Array(1); // account
 var unameArr = [];
