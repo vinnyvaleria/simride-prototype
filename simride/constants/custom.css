@@ -64,7 +64,7 @@ input {
 button {
   border-radius: 50px !important;
   padding: 0.25em 1.5em !important;
-  margin-top: 1em !important;
+  margin: 0.5em !important;
   border: 0 !important;
   cursor: pointer;
 }
@@ -73,9 +73,6 @@ button:hover {
   background-color: #4b87a1 !important;
   color: white !important;
 }
-
-
-// media query
 @media only screen and (max-width: 767px) {
   #signin-input-wrapper {
       flex-direction: column;
