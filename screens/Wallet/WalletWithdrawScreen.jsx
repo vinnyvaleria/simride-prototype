@@ -179,7 +179,7 @@ export default class WalletWithdrawScreen extends React.Component {
           <View style={pageStyle.wrapper}>
             <SubmitCashout 
                 value={this.state.cashoutamount}
-                onChange={(cashoutamount) => this.setState({ cashoutamount })}
+                onChangeText={(cashoutamount) => this.setState({ cashoutamount })}
                 onPress={this.submitCashOut}
             />
           </View>

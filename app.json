@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "simride",
+    "name": "SIMRide",
     "slug": "simride",
     "platforms": [
       "ios",
@@ -23,6 +23,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "FYP20-S!-10 Carpooling System designated for SIM staff and students",
+    "githubUrl": "https://github.com/utyumba/simride-prototype.git"
   }
 }

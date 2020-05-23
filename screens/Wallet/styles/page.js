@@ -1,7 +1,7 @@
 import { COLORS } from '../../../constants/colors';
 
 const wrapper ={
-  paddingTop: 80,
+  paddingTop: 10,
   paddingHorizontal: '5%',
   flex: 1,
   alignSelf: 'center',
@@ -48,6 +48,7 @@ const textinput = {
   backgroundColor: COLORS.WHITE,
   marginBottom:15,
   textTransform: 'capitalize',
+  borderRadius: 3,
 };
 
 const equalspace = {

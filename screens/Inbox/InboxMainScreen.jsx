@@ -41,6 +41,8 @@ export default class InboxMainScreen extends React.Component {
   }
 
   componentDidMount = () => {
+    this.setState({displayPrevMsgs: []});
+    prevMsgComponent = [];
     const that = this;
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
@@ -57,8 +59,7 @@ export default class InboxMainScreen extends React.Component {
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
-      .once('value')
-      .then((snapshot) => {
+      .once('value', snapshot => {
         snapshot.forEach((child) => {
           user[0] = child.val().fname;
           user[1] = child.val().lname;
@@ -82,8 +83,7 @@ export default class InboxMainScreen extends React.Component {
             fire.database()
               .ref('accounts')
               .orderByChild('uname')
-              .once('value')
-              .then((snapshot) => {
+              .once('value', snapshot => {
                 var i = 0;
                 snapshot.forEach((child) => {
                   unameArr[i] = child.val().uname;
@@ -143,6 +143,47 @@ export default class InboxMainScreen extends React.Component {
     }
   }
 
+  clickUser = (name) => {
+    let i = 0;
+    var currUser = user[2];
+    search = name;
+
+    // creates chat based on usernames
+    while (i < unameArr.length) {
+      // checks if there is a valid account in the database
+      if (search === unameArr[i].toLowerCase()) {
+        //creates chat based on username length
+        if (currUser.length !== search.length) {
+          if (currUser.length < search.length) {
+            chatName = (currUser + '-' + search)
+          } else {
+            chatName = (search + '-' + currUser)
+          }
+        }
+
+        // if same length compare by alphabets
+        else {
+          if (currUser < search) {
+            chatName = (currUser + '-' + search)
+          } else {
+            chatName = (search + '-' + currUser)
+          }
+        }
+        console.log(chatName);
+        this.state.userFound = true;
+      } else if (search != unameArr[i]) {
+        console.log('User not found');
+      }
+      i++;
+    }
+
+    if (this.state.userFound) {
+      this.props.navigation.navigate('Personal Chat');
+    } else {
+      alert('User not found');
+    }
+  }
+
   listAllChats = () => {
     for (var c = 0; c < chats.length; c++) {
       if (chats[c].includes(user[2])) {
@@ -163,8 +204,7 @@ export default class InboxMainScreen extends React.Component {
   }
 
   displayPrevMsgs = (user) => {
-    this.setState({ searchUname: user });
-    prevMsgComponent.push(<PrevMsgsBox user={user} onPress={this.searchUser} />)
+    prevMsgComponent.push(<PrevMsgsBox user={user} onPress={() => this.clickUser(user)} />)
     this.setState({
       displayPrevMsg: prevMsgComponent,
     })
@@ -175,7 +215,7 @@ export default class InboxMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <SearchButton  
+            <SearchButton
               value={this.state.searchUname}
               onChangeText={(searchUname) => this.setState({ searchUname })}
               onPress={this.searchUser}

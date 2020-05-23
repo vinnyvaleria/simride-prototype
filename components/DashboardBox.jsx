@@ -30,14 +30,14 @@ const styles=StyleSheet.create({
     margin: 15,
     backgroundColor: COLORS.WHITE,
     borderRadius: 10,
-    height: 150,
-    width: 150,
+    height: 140,
+    width: 140,
     justifyContent: 'center',
   },
 
   logo: {
-    height: 70,
-    width: 70,
+    height: 60,
+    width: 60,
     alignSelf: 'center',
     marginBottom: 10,
   },

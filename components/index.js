@@ -12,6 +12,7 @@ import Badge from './Badge';
 import BookingBox from './BookingBox';
 import SubmitCashout from './SubmitCashout';
 import SubmitTopUp from './SubmitTopUp';
+import ImagePickerComponent from './ImagePickerComponent';
 
 export {
   SearchButton,
@@ -28,4 +29,5 @@ export {
   BookingBox,
   SubmitCashout,
   SubmitTopUp,
+  ImagePickerComponent,
 }

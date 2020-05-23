@@ -5,6 +5,8 @@ import {
   Text,
   TextInput,
   Image,
+  Picker,
+  CheckBox
 } from 'react-native';
 import * as Datetime from 'react-datetime';
 
@@ -34,7 +36,12 @@ export default class ScheduleRideScreen extends React.Component {
       createArea: 'Admiralty',
       createTowards: 'School',
       createMaxPassengers: '1',
-      bookingID: ''
+      bookingID: '',
+      ddArea: [],
+      selectArea: '',
+      selectTowards: '',
+      selectRecurring: '',
+      selectPassengers: ''
     };
   }
 
@@ -43,22 +50,12 @@ export default class ScheduleRideScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-    this.loadAllAccounts();
-  }
-
-  // handles image change
-  handleImgChange = (e) => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({
-        image
-      }));
-    }
+    this.bindArea();
   }
 
   // bind user data
   bindUserData = () => {
-    var accountsRef = fire.database().ref('accounts');
+    const accountsRef = fire.database().ref('accounts');
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
@@ -94,89 +91,96 @@ export default class ScheduleRideScreen extends React.Component {
     this.setState({ binded: true });
   }
 
-  loadAllAccounts = () => {
-    var accountsRef = fire.database.ref('accounts');
-    accountsRef
-      .orderByChild('email')
-      .once('value')
-      .then((snapshot) => {
-        let i = 0;
+  bindArea = () => {
+    let newarea = [];
+    const database = fire.database().ref().child('admin/area');
+    database.once('value', (snapshot) => {
+      if (snapshot.exists()) {
         snapshot.forEach((child) => {
-          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
-          i++;
-        })
-      })
-      .then(() => {
-        var bookingsRef = fire.database().ref('bookings');
-        bookingsRef
-          .on('value', snapshot => {
-            if (snapshot.exists()) {
-              // document.getElementById('tb_CreatedBookings').innerHTML = '';
-              let content = [];
-              let rowCount = 0;
-              snapshot.forEach((data) => {
-                if (data.val().driverID === user[9] && data.val().date > moment.now()) {
-                  let area = data.val().area;
-                  let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
-                  let ppl = [];
-  
-                  if (data.val().currPassengers !== "") {
-                    ppl = data.val().currPassengers.split(',')
-                  }
-  
-                  let passengers = ppl.length + "/" + data.val().maxPassengers;
-                  let id = data.val().driverID;
-                  let driver = '';
-  
-                  for (let i = 0; i < userDetails.length; i++) {
-                    let key = [];
-                    key = userDetails[i].split(':');
-                    if (key[0] === id) {
-                      driver = key[1];
-                    }
-                  }
-
-                  area.replace('$ ', '');
-                  this.displayPrevBooking(driver, area, date, passengers);
-                  /*
-                  content += '<tr id=\'' + data.key + '\'>';
-                  content += '<td>' + area + '</td>'; //column1
-                  content += '<td>' + date + '</td>'; //column2
-                  content += '<td>' + driver + '</td>';
-                  content += '<td>' + passengers + '</td>';
-                  content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
-                  content += '<td id=\'btnStartCreatedBooking' + rowCount + '\'></td>';
-                  content += '</tr>';
-                  */
-                  rowCount++;
-                }
-              });
-
-              //document.getElementById('tb_CreatedBookings').innerHTML += content;
-
-              for (let v = 0; v < rowCount; v++) {
-                let view = document.createElement('input');
-                view.setAttribute('type', 'button')
-                view.setAttribute('value', 'View');
-                view.onclick = viewBooking;
-                document.getElementById('btnViewCreatedBooking' + v).appendChild(view);
-
-                let start = document.createElement('input');
-                start.setAttribute('type', 'button')
-                start.setAttribute('value', 'Start');
-                start.onclick = this.startBooking;
-                document.getElementById('btnStartCreatedBooking' + v).appendChild(start);
-              }
-            }
-          });
-      });
+          let ar = [];
+          ar = child.val().split(',');
+          newarea.push(<Picker.Item label={ar[0]} value={ar[0]} />);
+        });
+        this.setState({
+          ddArea: newarea
+        });
+      }
+    });
   }
 
-  displayPrevBooking = (label, area, date, passenger) => {
-    prevBooking.push(<BookingBox label={label} area={area} date={date} passenger={passenger} icon={icon} />)
-    this.setState({
-      displayPrevBooking: prevBooking
-    })
+  valid = (current) => {
+    let yesterday = Datetime.moment().subtract(1, 'day');
+    return current.isAfter(yesterday);
+  }
+
+  // submits created booking into realtime db
+  submitCreateBooking = (e) => {
+    // checks for duplicate booking
+    let dates = [];
+    let check = false;
+    const database = fire.database().ref('bookings').orderByChild('date').startAt(Date.now());
+    database.once('value', (snapshot) => {
+      if (snapshot.exists()) {
+        snapshot.forEach((data) => {
+          if (data.val().driverID === this.state.id) {
+            dates.push(data.val().date);
+          }
+        });
+      }
+    }).then(() => {
+      var i = 0;
+      if (dates.length === 0) {
+        check = true;
+      }
+      else {
+        while (i < dates.length) {
+          if (this.state.date < moment.unix(dates[i] / 1000).add(2, 'hours') && this.state.date > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
+            alert("You have another booking set 2 hours before/after this time");
+            check = false;
+            break;
+          } else {
+            check = true;
+          }
+          i++;
+        }
+
+        if (check) {
+          const date = new Date(this.state.date);
+          const weeks = this.state.selectRecurring;
+          let x = 0;
+          const bookingsRef = fire.database().ref('bookings');
+          while (x < weeks) {
+            const booking = {
+              driverID: this.state.id,
+              date: date.setDate(date.getDate() + (7 * x)),
+              area: this.state.selectArea,
+              maxPassengers: this.state.selectPassengers,
+              currPassengers: '',
+              payMethod: '',
+              postal: '',
+              towards: this.state.selectTowards
+            }
+
+            console.log(booking)
+            //bookingsRef.push(booking);
+            x++;
+          }
+          
+          this.state = {
+            date: Datetime.moment()
+          };
+        }
+      }
+    });
+  }
+
+  showRecurring = () => {
+    if (this.state.checked === true) {
+      document.getElementById('txtRecurringWeeks').style.display = 'block';
+    }
+    else {
+      document.getElementById('txtRecurringWeeks').style.display = 'none';
+    }
   }
 
   render () {
@@ -189,63 +193,57 @@ export default class ScheduleRideScreen extends React.Component {
             <TextInput 
               style={pageStyle.textinput} 
               placeholder='Your first name' 
-              value={this.state.firstName}
-              onChangeText={(firstName) => this.setState({ firstName })}
+              value={this.state.id}
+              editable='false'
             />
 
-            <Text style={pageStyle.header}>Last Name</Text>
-            <TextInput 
-              style={pageStyle.textinput} 
-              placeholder='Your last name'
-              value={this.state.lastName} 
-              onChangeText={(lastName) => this.setState({ lastName })}
+            <Text style={pageStyle.header}>Date & Time</Text>
+            <Datetime 
+              isValidDate={this.valid} 
+              locale="en-sg" 
+              id='datepicker' 
+              onChange={this.onChange} 
+              value={this.state.date} 
+              required 
             />
 
-            <Text style={pageStyle.header}>E-mail</Text>
-            <TextInput 
-              style={pageStyle.textinput} 
-              placeholder='Your e-mail'
-              value={this.state.email}
-              onChangeText={(email) => this.setState({ email })}
-            />
+            <Text style={pageStyle.header}>Area</Text>
+            <Picker onValueChange={(selectArea) => this.setState({ selectArea })}>
+              {this.state.ddArea}
+            </Picker>
 
-            <Text style={pageStyle.header}>Phone Number</Text>
-            <TextInput 
-              style={pageStyle.textinput} 
-              placeholder='Your phone number'
-              value={this.state.phone}
-              onChangeText={(phone) => this.setState({ phone })} 
-            />
+            <Text style={pageStyle.header}>Where are you going?</Text>
+            <Picker onValueChange={(selectTowards) => this.setState({ selectTowards })}>
+              <Picker.Item label="Home" value="Home" />
+              <Picker.Item label="School" value="School" />
+            </Picker>
 
-            <Text style={pageStyle.header}>Username</Text>
-            <TextInput 
-              style={pageStyle.textinput} 
-              placeholder='Your preferred username'
-              value={this.state.username}
-              onChangeText={(username) => this.setState({ username })}  
-            />
+            <Text style={pageStyle.header}>No. of Passengers</Text>
+            <Picker onValueChange={(selectPassengers) => this.setState({ selectPassengers })}>
+              <Picker.Item label="1" value="1" />
+              <Picker.Item label="2" value="2" />
+              <Picker.Item label="3" value="3" />
+              <Picker.Item label="4" value="4" />
+              <Picker.Item label="5" value="5" />
+              <Picker.Item label="6" value="6" />
+              <Picker.Item label="7" value="7" />
+            </Picker>
 
-            <Text style={pageStyle.header}>Password</Text>
-            <TextInput 
-              style={pageStyle.textinput}
-              placeholder='Your password' 
-              value={this.state.password}
-              onChangeText={(password) => this.setState({ password })}
-              secureTextEntry
-            />
-
-            <Text style={pageStyle.header}>Re-enter Password</Text>
-            <TextInput 
-              style={pageStyle.textinput} 
-              placeholder='Please re-enter your password'
-              value={this.state.repassword}
-              onChangeText={(repassword) => this.setState({ repassword })}
-              secureTextEntry 
-            />
+            <Text style={pageStyle.header}>Recurring? (No. of weeks)</Text>
+            <Picker onValueChange={(selectRecurring) => this.setState({ selectRecurring })}>
+              <Picker.Item label="1" value="1" />
+              <Picker.Item label="2" value="2" />
+              <Picker.Item label="3" value="3" />
+              <Picker.Item label="4" value="4" />
+              <Picker.Item label="5" value="5" />
+              <Picker.Item label="6" value="6" />
+              <Picker.Item label="7" value="7" />
+              <Picker.Item label="8" value="8" />
+            </Picker>
           
             <View style={pageStyle.equalspace}>
-              <SubmitButton title='Submit' />
-              <SubmitButton title='Cancel' onPress={() => {{this.props.navigation.navigate('Bookings')}}} />
+              <SubmitButton title='Submit' onPress={() => { this.submitBookingCreated }} />
+              <SubmitButton title='Cancel' onPress={() => {this.props.navigation.navigate('Bookings')}} />
             </View>
           </View>
         </ScrollView>

@@ -47,6 +47,7 @@ const textinput = {
   alignSelf: 'stretch',
   backgroundColor: COLORS.WHITE,
   marginBottom:15,
+  borderRadius: 3,
 };
 
 const equalspace = {

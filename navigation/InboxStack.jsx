@@ -10,7 +10,7 @@ import { InboxMainScreen, InboxPersonalChat } from '../screens/Inbox';
 
 const Stack = createStackNavigator();
 
-export default function MessagesStack() {
+export default function InboxStack() {
   return (
     <Stack.Navigator
       initialRouteName = 'Inbox'

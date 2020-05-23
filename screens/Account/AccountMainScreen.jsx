@@ -19,6 +19,9 @@ import { pageStyle, screenStyle } from './styles';
 
 // images
 import profilepicture from '../../assets/images/picture.jpg';
+import { COLORS } from '../../constants/colors';
+
+var badgebutton = [];
 
 export default class AccountMainScreen extends React.Component {
   constructor (props) {
@@ -47,7 +50,8 @@ export default class AccountMainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
-      driverStatus: false,
+      driverStatus: null,
+      adminStatus: null
     };
   }
 
@@ -56,6 +60,8 @@ export default class AccountMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.checkAdminStatus();
+    this.checkDriverStatus();
   }
 
   // handles image change
@@ -112,6 +118,9 @@ export default class AccountMainScreen extends React.Component {
 
               const avg = parseInt(this.state.rating) / c;
               this.setState({ avgRating: avg })
+
+              this.adminStatus()
+              this.driverStatus();
             });
         });
       })
@@ -119,11 +128,19 @@ export default class AccountMainScreen extends React.Component {
     this.setState({ binded: true });
   }
 
-  driverStatus = () => {
-    if (this.state.isDriver.toLowerCase() === 'yes') {
-      this.setState({ driverStatus: true });
+  adminStatus = () => {
+    if (this.state.isAdmin === 'yes') {
+      this.setState({ adminStatus: <Badge label='Admin' /> });
     } else {
-      this.setState({ driverStatus: false });
+      this.setState({ adminStatus: null });
+    }
+  }
+
+  driverStatus = () => {
+    if (this.state.isDriver === 'yes') {
+      this.setState({ driverStatus: <Badge label='Driver' /> });
+    } else {
+      this.setState({ driverStatus: null });
     }
   }
 
@@ -145,18 +162,33 @@ export default class AccountMainScreen extends React.Component {
     fire.auth().signOut();
   }
 
+  checkDriverStatus = () => {
+    badgebutton.push(<Badge label='driver' />)
+    this.setState({
+      checkDriverStatus: badgebutton,
+    })
+  }
+
+  checkAdminStatus = () => {
+    badgebutton.push(<Badge label='admin' />)
+    this.setState({
+      checkAdminStatus: badgebutton,
+    })
+  }
+
   render () {
     if (this.state.binded) {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <Badge label='Driver' />
+            {this.state.adminStatus}
+            {this.state.driverStatus}
             <Image style={pageStyle.image} source={profilepicture} />
             <Text style={pageStyle.title}>{this.state.firstName} {this.state.lastName}</Text>
             <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>
             <Text style={pageStyle.subtitle}>Phone Number: +65 {this.state.phone}</Text>
             <Text style={pageStyle.subtitle}>Rating: {this.state.avgRating}</Text>
-
+            
             <View style={pageStyle.equalspace}>
               <SubmitButton 
                 title='Edit Profile' 
@@ -172,4 +204,3 @@ export default class AccountMainScreen extends React.Component {
     }
   }
 }
-

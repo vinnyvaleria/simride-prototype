@@ -4,6 +4,7 @@ import {
   View,
   Text,
   Image,
+  Alert,
 } from 'react-native';
 import * as moment from 'moment';
 
@@ -23,7 +24,7 @@ var prevBooking = [];
 var userDetails = [];
 var schedulebutton =[]
 
-export default class BookingMainScreen extends React.Component {
+export default class MyBookingsScreen extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -56,8 +57,8 @@ export default class BookingMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-    this.checkDriverStatus();
     this.loadAllBookings();
+    this.checkDriverStatus();
   }
 
   // handles image change
@@ -122,7 +123,6 @@ export default class BookingMainScreen extends React.Component {
         const database = fire.database().ref('bookings').orderByChild('date').startAt(Date.now());
         database.on('value', (snapshot) => {
           if (snapshot.exists()) {
-            let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
               if (data.val().date > moment.now()) {
@@ -137,9 +137,10 @@ export default class BookingMainScreen extends React.Component {
                 let passengers = ppl.length + "/" + data.val().maxPassengers;
                 let id = data.val().driverID;
                 let driver = '';
+                let key = [];
 
                 for (let i = 0; i < userDetails.length; i++) {
-                  let key = [];
+                  console.log(key);
                   key = userDetails[i].split(':');
                   if (key[0] === id) {
                     driver = key[1];
@@ -147,7 +148,7 @@ export default class BookingMainScreen extends React.Component {
                 }
 
                 area.replace('$ ', '');
-                this.displayPrevBooking(driver, area, date, passengers);
+                this.displayPrevBooking(driver, area, date, passengers, key[0]);
                 rowCount++;
               }
             });
@@ -160,7 +161,7 @@ export default class BookingMainScreen extends React.Component {
   checkDriverStatus = () => {
     schedulebutton.push(
       <SubmitButton 
-        title='Schedule ride' 
+        title='Schedule a new ride' 
         onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
       />
     )
@@ -170,11 +171,128 @@ export default class BookingMainScreen extends React.Component {
     })
   }
 
-  displayPrevBooking = (label, area, date, passenger) => {
-    prevBooking.push(<BookingBox label={label} area={area} date={date} passenger={passenger} icon={icon} />)
+  displayPrevBooking = (label, area, date, passenger, key) => {
+    prevBooking.push(<BookingBox 
+      label={label} 
+      area={area} 
+      date={date} 
+      passenger={passenger} 
+      icon={icon} 
+      key={key} 
+      onPress={this.alertConfirmBooking}
+    />)
     this.setState({
       displayPrevBooking: prevBooking
     })
+  }
+
+  alertConfirmBooking = () => {
+    Alert.alert (
+      'Are you sure you want to book this ride?',
+      [
+        {
+          text: 'Yes, I am sure',
+          onPress: this.joinBooking,
+        },
+        {
+          text: 'No, cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel'
+        },
+        { cancelable: false }
+      ]
+    )
+  }
+
+  joinBooking = () => {
+    const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
+    let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
+    let bookingDate = document.getElementById('td_viewSelectedBooking_date').innerHTML;
+    let PostalCode;
+    let payMethod;
+
+    const database = fire.database().ref('bookings');
+    database.once('value', (snapshot) => {
+        if (snapshot.exists()) {
+            snapshot.forEach((data) => {
+                if (data.key === bookingID) {
+                    payMethod = data.val().payMethod;
+                    PostalCode = data.val().postal;
+                
+                    if (payMethod === "") {
+                        payMethod += document.getElementById('ddPayBy').value;
+                    } else {
+                        payMethod += (", " + document.getElementById('ddPayBy').value);
+                    }
+
+                    if (currPassengers === "") {
+                        currPassengers += user[2];
+                    } else {
+                        currPassengers += (", " + user[2]);
+                    }
+                    if (PostalCode === "") {
+                        PostalCode += postal;
+                    } else {
+                        PostalCode += (", " + postal);
+                    }
+                }
+            })
+        }
+    })
+
+    // checks for duplicate booking
+    let dates = [];
+    let check = false;
+
+    const join = fire.database().ref('bookings').orderByChild('date').startAt(Date.now());
+    join.once('value', (snapshot) => {
+        if (snapshot.exists()) {
+            snapshot.forEach((data) => {
+                if (data.val().currPassengers.includes(user[2])) {
+                    dates.push(data.val().date);
+                }
+            });
+        }
+    }).then(() => {
+        var i = 0;
+
+        if (dates.length === 0) {
+            check = true;
+        } else {
+            while (i < dates.length) {
+                if (Date.parse(bookingDate) < moment.unix(dates[i] / 1000).add(2, 'hours') && Date.parse(bookingDate) > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
+                    alert("You have another booking set 2 hours before/after this time");
+                    check = false;
+                    break;
+                } else {
+                    check = true;
+                }
+                i++;
+            }
+        }
+
+        if (check) {
+            if (user[8] < 5.00 && document.getElementById('ddPayBy').value === "wallet") {
+                alert("You do not have sufficient funds in your e-wallet");
+            } else {
+                const accountsRef = fire.database().ref('bookings/' + bookingID);
+                const bookingDetails = {
+                    currPassengers: currPassengers,
+                    payMethod: payMethod,
+                    postal: PostalCode
+                }
+                accountsRef.update(bookingDetails);
+
+                payMethod = '';
+                currPassengers = '';
+                document.getElementById('btnSubmitJoinBooking').style.display = "none";
+                document.getElementById('tbl_viewSelectedBooking_ExtendBooking').style.display = "none";
+                viewMyBookings();
+            }
+        }
+    });
+
+    PostalCode = '';
   }
 
   render () {
@@ -182,16 +300,14 @@ export default class BookingMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <View style={pageStyle.equalspace}>
-              <SubmitButton 
-                title='my bookings' 
-                onPress={() => {this.props.navigation.navigate('View My Bookings')}} 
-              />
-              {(this.state.isDriver === 'yes') ? this.state.checkDriverStatus : null}
-              </View>
-            </View>
+            <SubmitButton 
+              title='Schedule a new ride' 
+              onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
+            />
+            {(user[5] === 'yes') ? this.checkDriverStatus : null}
+          </View>
           <View style={pageStyle.wrapper}>
-            <Text style={pageStyle.header}>All Rides</Text>
+            <Text style={pageStyle.header}>Available Rides</Text>
             {this.state.displayPrevBooking}
           </View>
         </ScrollView>

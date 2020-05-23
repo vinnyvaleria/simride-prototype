@@ -11,8 +11,11 @@ import fire from '../../config';
 import 'firebase/firestore';
 import 'firebase/storage';
 
+import * as Datetime from 'react-datetime';
+import DatePicker from 'react-native-datepicker';
+
 // components
-import { SubmitButton } from '../../components';
+import { SubmitButton, ImagePickerComponent } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
@@ -21,6 +24,8 @@ import { COLORS } from '../../constants/colors';
 
 // images
 import profilepicture from '../../assets/images/picture.jpg';
+
+let value;
 
 export default class DriverApplicationScreen extends React.Component {
   constructor (user) {
@@ -49,6 +54,9 @@ export default class DriverApplicationScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
+      issuedDate: '',
+      licenseSide: '',
+      response: '',
     };
   }
 
@@ -57,6 +65,13 @@ export default class DriverApplicationScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+  }
+
+  // handles textbox change
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   // handles image change
@@ -88,55 +103,214 @@ export default class DriverApplicationScreen extends React.Component {
           user[9] = child.key;
           user[10] = child.val().rating;
           user[11] = child.val().ratedBy;
+
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          });
       });
     })
     this.setState({ binded: true });
   }
 
-  // logout
-  logout = () => {
-    user[0] = '';
-    user[1] = '';
-    user[2] = '';
-    user[3] = '';
-    user[4] = '';
-    user[5] = '';
-    user[6] = '';
-    user[7] = '';
-    user[8] = '';
-    user[9] = '';
-    user[10] = '';
-    user[11] = '';
+  // submits driver details into realtime db
+  submitDriverDetails = () => {
+    const rg = new RegExp('^((S|T)[0-9]{7}[A-Z]{1}$)');
 
-    fire.auth().signOut();
+    var date = new Date;
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var y = date.getFullYear() - 2;
+    var yy = date.getFullYear();
+    var issuedDate = new Date(this.state.date);
+    var today = new Date(y, m, d);
+    var now = new Date(yy, m, d)
+    
+
+    if (this.state.license !== '' && this.state.carplate !== '' && rg.test(this.state.license.toUpperCase()) && today > issuedDate) {
+      const accountsRef = fire.database().ref('driverDetails/' + this.state.id);
+      const driverDetails = {
+        driverUname: this.state.username,
+        carplate: this.state.carplate,
+        license: this.state.license,
+        issueDate: this.state.date,
+        completed: 'no',
+        status: 'pending',
+        dateApplied: now
+      }
+
+      accountsRef.update(driverDetails);
+      this.state = {
+        carplate: '',
+        license: '',
+        status: '',
+        dateApplied: ''
+      };
+
+    } else {
+      if (this.state.license === '' || this.state.carplate === '') {
+        alert('One or more fields are empty');
+      } else if (!rg.test(this.state.license.toUpperCase())) {
+        alert('Please enter a valid license number');
+      } else if (issuedDate > today) {
+        alert('You must be a driver for at least 2 years');
+      }
+    }
+  }
+
+  handleFrontUpload() {
+    const {image} = this.state;
+    if (image !== null) {
+      const uploadTask = fire.storage().ref().child(`license/${user[9]}/front`).put(image);
+      uploadTask.on(
+        'state_changed',
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          alert('Error: ' + error);
+          console.log(error);
+        }, () => {
+          // complete function ...
+          alert('Image is uploaded!');
+          fire.storage()
+            .ref('license/' + user[9])
+            .child('front')
+            .getDownloadURL()
+            .then(frontURL => {
+              this.setState({
+                frontURL
+            });
+          });
+        });
+    } else {
+      alert('Error: No file selected');
+    }
+  }
+
+  // uploads back license pic
+  handleBackUpload() {
+    var date = new Date;
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var y = date.getFullYear();
+    var today = new Date(y, m, d);
+
+    const {image} = this.state;
+    if (image !== null) {
+      const uploadTask = fire.storage().ref().child(`license/${user[9]}/back`).put(image);
+      uploadTask.on(
+        'state_changed',
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          console.log(error);
+        }, () => {
+          // complete function ...
+          alert('Image is uploaded!')
+          fire.storage()
+            .ref('license/' + user[9])
+            .child('back')
+            .getDownloadURL()
+            .then(backURL => {
+              this.setState({
+                backURL
+            });
+          });
+          console.log(backURL);
+          const driverDetails = {
+            completed: 'yes',
+            dateApplied: today
+          }
+
+          accountsRef.update(driverDetails);
+        });
+    } else {
+      alert('Error: No file selected');
+    }
   }
 
   render () {
-    return (
-      <ScrollView style={screenStyle}>
-        <View style={pageStyle.wrapper}>
-          <Image style={pageStyle.image} source={profilepicture} />
+    if (this.state.binded) {
+      return (
+        <ScrollView style={screenStyle}>
+          <View style={pageStyle.wrapper}>
+            <Image style={pageStyle.image} source={profilepicture} />
 
-          <Text style={pageStyle.header}>First Name</Text>
-          <TextInput style={pageStyle.textinput} placeholder={this.state.firstName} />
+            <Text style={pageStyle.header}>License Number</Text>
+            <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={this.handleChange} />
 
-          <Text style={pageStyle.header}>Last Name</Text>
-          <TextInput style={pageStyle.textinput} placeholder={this.state.lastName} />
+            <Text style={pageStyle.header}>Issue Date</Text>
+            <DatePicker
+              style={pageStyle.textinput}
+              date={this.state.date}
+              mode='date'
+              placeholder='Please select the date'
+              format='YYYY-MM-DD'
+              confirmBtnText='Confirm'
+              cancelBtnText='Cancel'
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  justifyContent: 'center',
+                  borderColor: 'transparent',
+                }
+              }}
+              onDateChange={(date) => {this.setState({date: date})}}
+            />
 
-          <Text style={pageStyle.header}>Phone Number</Text>
-          <TextInput style={pageStyle.textinput} placeholder={this.state.phone.toString()} />
+            <Text style={pageStyle.header}>Front View License</Text>
+            <ImagePickerComponent onBlur={this.handleFrontUpload}/>
 
-          <Text
-            style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
-          />
+            <Text style={pageStyle.header}>Back View License</Text>
+            <ImagePickerComponent onBlur={this.handleBackUpload}/>
 
-          <View style={pageStyle.equalspace}>
-            <SubmitButton title='Submit' />
+            <Text style={pageStyle.header}>Car Plate Number</Text>
+            <TextInput style={pageStyle.textinput} value={this.state.carplate} name='carplate' onChange={this.handleChange} />
+
+            <View style={pageStyle.equalspace}>
+              <SubmitButton title='Submit' value={value} onPress={this.submitDriverDetails} />
+            </View>
           </View>
-        </View>
-        
-      </ScrollView>
-    );
+          
+        </ScrollView>
+      )
+    } else {
+      return null && console.log('There is a problem with binding user data');
+    }
   }
-}
 
+}
+/*<Datetime 
+              locale='en-sg' 
+              value={this.state.date} 
+              required
+              timeFormat={false}
+            />*/

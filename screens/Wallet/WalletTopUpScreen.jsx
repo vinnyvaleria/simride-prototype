@@ -3,6 +3,7 @@ import {
   ScrollView,
   View,
   Text,
+  TextInput,
   Image,
 } from 'react-native';
 
@@ -196,19 +197,30 @@ export default class WalletTopUpScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-          {/* <SubmitTopUp
-            value={this.state.amount}
-            onChange={(amount) => this.setState({ amount })}
-           /> */}
-           <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' style={{ width: '9em' }} /><br /><br />
-           <StripeCheckout
-            stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
-            token={this.handleToken}
-            amount={parseInt(this.state.amount * 100)}
-            name="E-Wallet Top-Up"
-            currency="SGD"
-            email={this.state.email}
+            {/* <SubmitTopUp
+              value={this.state.amount}
+              onChange={(amount) => this.setState({ amount })}
+            /> */}
+            <TextInput
+              //step='0.01' 
+              //min='0.01' 
+              value={this.state.amount} 
+              onBlur={this.setTwoNumberDecimal} 
+              onChange={this.handleChange}
+              placeholder='amount' 
+              style={pageStyle.textinput}
+              name='amount'
             />
+            <View>
+              <StripeCheckout
+                stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
+                token={this.handleToken}
+                amount={parseInt(this.state.amount * 100)}
+                name="E-Wallet Top-Up"
+                currency="SGD"
+                email={this.state.email}
+              />
+            </View>
           </View>
         </ScrollView>
       );

@@ -18,6 +18,7 @@ export default class BookingBox extends React.Component {
       <TouchableOpacity 
         style={styles.wrapperstyle}
         onPress={this.props.onPress}
+        key={this.props.key}
       >
         <Image source={this.props.icon} style={styles.icon} />
         <View>
