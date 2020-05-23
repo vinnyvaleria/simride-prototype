@@ -113,12 +113,12 @@ class Wallet extends React.Component {
 
     render() {
         return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
         <div id='homePage'>
+          <h1>E-Wallet Page</h1>
             <div>
-            <h1>E-Wallet Page</h1>
-            <button id='btnWalletHome' onClick={ walletHomePage }>Wallet</button>
-            <button id='btnTransactionPage' onClick={ transactionsPage }>Transactions</button>
+              <button id='btnWalletHome' onClick={ walletHomePage }>Wallet</button>
+              <button id='btnTransactionPage' onClick={ transactionsPage }>Transactions</button>
             </div>
             <br/>
             <div id='div_WalletHome'>

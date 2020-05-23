@@ -1,5 +1,5 @@
+/* General */
 #root {
-  padding: 10px !important;
   background: #4b9ea1 !important;
 }
 
@@ -21,6 +21,7 @@ h1 {
   font-family: Arial, Helvetica, sans-serif !important;
   padding: 0.5em 0 !important;
   margin: unset !important;
+  text-align: center;
 }
 
 h2 {
@@ -73,9 +74,45 @@ button:hover {
   background-color: #4b87a1 !important;
   color: white !important;
 }
+
+/* Landing */
 @media only screen and (max-width: 767px) {
   #signin-input-wrapper {
       flex-direction: column;
       width: 100px !important;
   }
+}
+
+/* Dashboard styling */
+#dashboardWrapper {
+  width: 100vw;
+  height: 4em;
+  padding: 0.5em;
+  background-color: white;
+  position: sticky;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: auto 1em;
+  color: grey;
+}
+
+.menuItem:hover, #dashboardWrapper > a:active {
+  color: #4b87a1;
+}
+
+/* Booking Page */
+#bookPage {
+
+}
+
+#acctPage {
+
 }

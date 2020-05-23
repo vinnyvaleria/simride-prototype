@@ -252,10 +252,10 @@ class Account extends React.Component {
 
 render() {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+    <View style={{ width: '100%',  justifyContent: "center", alignItems: "center" }}>
       <div id='acctPage'>
+      <h1>{this.state.username + "'s Account"}</h1>
         <div>
-          <h1>{this.state.username + "'s Account"}</h1>
           <table id='tblProfile'>
             <tbody>
               <tr>

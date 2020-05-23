@@ -47,7 +47,7 @@ class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: '100%',
     backgroundColor: '#4b9ea1',
     alignItems: 'center',
     justifyContent: 'space-evenly',

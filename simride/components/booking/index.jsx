@@ -297,8 +297,9 @@ class Booking extends React.Component {
 
 render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={{ width: '100%', flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div id='bookPage'>
+          <h1> Bookings </h1>
           <div>
             <button id='btnViewAllBookings' onClick={ viewAllBookings }>View All Rides</button>
             <button id='btnViewMyBookings' onClick={ viewMyBookings }>View My Rides</button>

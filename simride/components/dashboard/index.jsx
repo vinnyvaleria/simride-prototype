@@ -122,7 +122,7 @@ class Dashboard extends React.Component {
 
 render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
         <div id='homePage'>
           <div>
             <h1>{"Ready for a ride, " + this.state.username + "?"}</h1>
