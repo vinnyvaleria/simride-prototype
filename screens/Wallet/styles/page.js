@@ -48,6 +48,7 @@ const textinput = {
   backgroundColor: COLORS.WHITE,
   marginBottom:15,
   textTransform: 'capitalize',
+  borderRadius: 3,
 };
 
 const equalspace = {

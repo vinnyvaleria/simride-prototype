@@ -44,8 +44,9 @@ const styles=StyleSheet.create({
 
   label: {
     color: COLORS.WHITE,
-    fontSize: 16,
+    fontSize: 20,
     marginBottom: 5,
+    fontFamily: 'notoSansMedium',
     textAlign: 'center',
     paddingHorizontal: 10,
   },
