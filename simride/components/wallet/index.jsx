@@ -7,6 +7,7 @@ import {cashOut} from './cashOut';
 import {submitCashOut} from './submitCashOut';
 import {transactionsPage} from './transactionsPage';
 import StripeCheckout from 'react-stripe-checkout'
+import '../../constants/custom.css';
 
 import React from 'react';
 import { View } from 'react-native';
@@ -112,12 +113,12 @@ class Wallet extends React.Component {
 
     render() {
         return (
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
         <div id='homePage'>
+          <h1>E-Wallet Page</h1>
             <div>
-            <h1>E-Wallet Page</h1>
-            <button id='btnWalletHome' onClick={ walletHomePage }>Wallet</button>
-            <button id='btnTransactionPage' onClick={ transactionsPage }>Transactions</button>
+              <button id='btnWalletHome' onClick={ walletHomePage }>Wallet</button>
+              <button id='btnTransactionPage' onClick={ transactionsPage }>Transactions</button>
             </div>
             <br/>
             <div id='div_WalletHome'>

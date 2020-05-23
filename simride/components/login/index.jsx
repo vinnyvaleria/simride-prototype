@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+import "firebase/firestore";
+import firebase from "../../../base";
+import React from "react";
+import logo from "../../assets/images/logo.png";
+import { Text, View, Image } from "react-native";
+import { validate } from "email-validator";
+import { forgotPass } from "./forgotPass";
+import { cancel } from "./cancel";
+import { checkEmailLogin, user } from "./checkEmailLogin";
+import { extendSignUp } from "./extendSignUp";
+import { submitForgotPassword } from "./submitForgotPass";
+import "../../constants/custom.css";
+=======
 import 'firebase/firestore';
 import firebase from '../../../base';
 import React from 'react';
@@ -12,6 +26,7 @@ import { extendSignUp } from './extendSignUp';
 import { submitForgotPassword } from './submitForgotPass';
 
 import '../../constants/custom.css';
+>>>>>>> 5b02911fb76beae758566d58a87e5a2d5b6e96d9
 
 var countArr = new Array(1); // account
 var unameArr = [];
@@ -25,16 +40,16 @@ class Login extends React.Component {
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
-      phone: '',
-      email: '',
-      password: '',
-      repassword: '',
-      wallet: '',
-      rating: '',
-      ratedBy: ''
+      firstName: "",
+      lastName: "",
+      username: "",
+      phone: "",
+      email: "",
+      password: "",
+      repassword: "",
+      wallet: "",
+      rating: "",
+      ratedBy: ""
     };
   }
 
@@ -49,9 +64,9 @@ class Login extends React.Component {
 
     // counts current total account registered
     firebase.database()
-      .ref('admin')
-      .orderByChild('acct')
-      .once('value')
+      .ref("admin")
+      .orderByChild("acct")
+      .once("value")
       .then((snapshot) => {
         snapshot.forEach((child) => {
           countArr[0] = child.val().acct;
@@ -59,9 +74,9 @@ class Login extends React.Component {
       });
 
     // loads accounts
-    firebase.database().ref('accounts')
-      .orderByChild('email')
-      .once('value')
+    firebase.database().ref("accounts")
+      .orderByChild("email")
+      .once("value")
       .then((snapshot) => {
         var i = 0;
         snapshot.forEach((child) => {
@@ -73,8 +88,8 @@ class Login extends React.Component {
       });
     
     if (user[6] === "no") {
-      if (document.getElementById('checkOutTab') !== null) {
-        document.getElementById('checkOutTab').style.display = 'none';
+      if (document.getElementById("checkOutTab") !== null) {
+        document.getElementById("checkOutTab").style.display = "none";
       }
     }
   }
@@ -107,7 +122,7 @@ class Login extends React.Component {
     if (rg.test(this.state.phone)) {
       phoneCheck = true;
     } else {
-      alert('Phone number is invalid')
+      alert("Phone number is invalid")
       phoneCheck = false;
     }
 
@@ -117,10 +132,10 @@ class Login extends React.Component {
     } else {
       if (unameCheck && phoneCheck) {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
-          alert(error.code + ': ' + error.message);
+          alert(error.code + ": " + error.message);
         }).then(() => {
 
-          const accountsRef = firebase.database().ref('accounts');
+          const accountsRef = firebase.database().ref("accounts");
           const account = {
             fname: this.state.firstName,
             lname: this.state.lastName,
@@ -152,23 +167,23 @@ class Login extends React.Component {
 
           accountsRef.push(account);
           this.state = {
-            firstName: '',
-            lastName: '',
-            username: '',
-            email: '',
-            phone: '',
-            password: '',
-            repassword: '',
-            isDriver: '',
-            isAdmin: '',
-            isBanned: '',
-            wallet: '',
-            rating: '',
-            ratedBy: ''
+            firstName: "",
+            lastName: "",
+            username: "",
+            email: "",
+            phone: "",
+            password: "",
+            repassword: "",
+            isDriver: "",
+            isAdmin: "",
+            isBanned: "",
+            wallet: "",
+            rating: "",
+            ratedBy: ""
           };
           // writing
-          firebase.database().ref('admin/counter')
-            .once('value')
+          firebase.database().ref("admin/counter")
+            .once("value")
             .then((snapshot) => {
               countArr[0] = emailArr.length + 1;
               snapshot.ref.update({
@@ -191,7 +206,7 @@ class Login extends React.Component {
   login(e) {
     e.preventDefault();
 
-    if (typeof user[9] !== 'undefined') {
+    if (typeof user[9] !== "undefined") {
       var i = 0;
       var email = this.state.email.toLowerCase();
 
@@ -222,10 +237,15 @@ class Login extends React.Component {
   
   render() {
     return (
+<<<<<<< HEAD
+      <View style={{ width: "100%", height: "50vw", justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+        <h1>Welcome to SIMRide</h1>
+=======
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <img src={logo} alt="SIMRide Logo" />
         <br/>
         <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
+>>>>>>> 5b02911fb76beae758566d58a87e5a2d5b6e96d9
         <Image source={logo} />
         <div>
           <form>
@@ -235,31 +255,35 @@ class Login extends React.Component {
               <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
                 placeholder="email" />
               <input value={this.state.password} onChange={this.handleChange} type="password"
+<<<<<<< HEAD
+                name="password" placeholder="Password (shafiq)" style={{ marginLeft: "15px" }} />
+=======
                 name="password" placeholder="password" style={{ marginLeft: '15px' }} />
+>>>>>>> 5b02911fb76beae758566d58a87e5a2d5b6e96d9
               <br/>
               <a onClick={forgotPass}>&nbsp;Forgot password?</a>
               <br/>
               <br/>
-              <div id="div_SubmitSignIn" style={{ textAlign: 'center' }}>
-                <button id='btnSignIn' type="submit" onClick={this.login}>Sign In</button>
-                <button onClick={extendSignUp} style={{ marginLeft: '25px' }}>Sign Up</button>
+              <div id="div_SubmitSignIn" style={{ textAlign: "center" }}>
+                <button id="btnSignIn" type="submit" onClick={this.login}>Sign In</button>
+                <button onClick={extendSignUp} style={{ marginLeft: "25px" }}>Sign Up</button>
               </div>
             </div>
 
-            <div id="forgotpasswordblock" style={{ display: 'none' }}>
+            <div id="forgotpasswordblock" style={{ display: "none" }}>
               <br/>
               <br/>
               <input id="forgotemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
                 placeholder="E-Mail (test@this.com)" />
               <br/>
               <br/>
-              <div style={{ textAlign: 'center' }}>
+              <div style={{ textAlign: "center" }}>
                 <button type="submit" onClick={this.submitForgotPassword_click}>Reset Password</button>
                 <button type="submit" onClick={cancel}>Back</button>
               </div>
             </div>
 
-            <div id="signupblock" style={{ display: 'none' }}>
+            <div id="signupblock" style={{ display: "none" }}>
               <table>
                 <tbody>
                   <tr>
@@ -295,9 +319,9 @@ class Login extends React.Component {
                 </tbody>
               </table>
               <br/>
-              <div style={{ textAlign: 'center' }}>
+              <div style={{ textAlign: "center" }}>
                 <button onClick={this.signup}>Submit</button>
-                <button onClick={cancel} style={{ marginLeft: '25px' }}>Cancel</button>
+                <button onClick={cancel} style={{ marginLeft: "25px" }}>Cancel</button>
               </div>
             </div>
           </form>

@@ -30,9 +30,9 @@ class Cashout extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
                 <div id='checkoutPage'>
-                    <h4>Checkout Requests</h4>
+                    <h1>Checkout Requests</h1>
                     <table>
                         <thead>
                             <tr>

@@ -439,11 +439,11 @@ class Inbox extends React.Component {
 
     render() {
         return (
-            <View>
+          <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
                 <div id='msgsPage'>
                     <div>
                         <div>
-                            <h1>SIMWorld Chat</h1>
+                            <h1>Messages</h1>
                         </div>
                         <div id='msgOption'>
                             <button id='inboxMsgButton' title="Inbox" onClick={this.inboxMsgButton}>Inbox</button>
