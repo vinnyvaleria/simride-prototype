@@ -59,8 +59,7 @@ export default class InboxMainScreen extends React.Component {
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
-      .once('value')
-      .then((snapshot) => {
+      .once('value', snapshot => {
         snapshot.forEach((child) => {
           user[0] = child.val().fname;
           user[1] = child.val().lname;
@@ -84,8 +83,7 @@ export default class InboxMainScreen extends React.Component {
             fire.database()
               .ref('accounts')
               .orderByChild('uname')
-              .once('value')
-              .then((snapshot) => {
+              .once('value', snapshot => {
                 var i = 0;
                 snapshot.forEach((child) => {
                   unameArr[i] = child.val().uname;

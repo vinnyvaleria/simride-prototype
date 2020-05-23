@@ -157,29 +157,29 @@ export default class MainScreen extends React.Component {
             
             <View style={pageStyle.equalspace}>
               <DashboardBox 
-                source={scheduleride} 
-                label='Schedule a Ride'
-                onPress={() => this.props.navigation.navigate('Schedule a Ride')} 
-                />
-
-              <DashboardBox 
-                source={viewmessages} 
-                label='Send Messages' 
-                onPress={() => this.props.navigation.navigate('Inbox Menu')}
-                />
-            </View>
-
-            <View style={pageStyle.equalspace}>
-              <DashboardBox 
                 source={viewbookings} 
                 label='Bookings' 
                 onPress={() => this.props.navigation.navigate('Bookings')}
                 />
 
               <DashboardBox 
+                source={viewmessages} 
+                label='Inbox' 
+                onPress={() => this.props.navigation.navigate('Inbox Menu')}
+                />
+            </View>
+
+            <View style={pageStyle.equalspace}>
+              <DashboardBox 
                 source={viewWallet} 
-                label='View Wallet' 
+                label='Wallet' 
                 onPress={() => this.props.navigation.navigate('Wallet Menu')}
+                />
+
+              <DashboardBox 
+                source={viewaccount} 
+                label='Settings'
+                onPress={() => this.props.navigation.navigate('Account Settings')} 
                 />
             </View>
           </View>

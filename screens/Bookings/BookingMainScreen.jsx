@@ -56,8 +56,8 @@ export default class BookingMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-    this.loadAllBookings();
     this.checkDriverStatus();
+    this.loadAllBookings();
   }
 
   // handles image change
@@ -160,7 +160,7 @@ export default class BookingMainScreen extends React.Component {
   checkDriverStatus = () => {
     schedulebutton.push(
       <SubmitButton 
-        title='Schedule a new ride' 
+        title='Schedule ride' 
         onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
       />
     )
@@ -182,8 +182,14 @@ export default class BookingMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            {(user[5] === 'yes') ? this.state.checkDriverStatus : null}
-          </View>
+            <View style={pageStyle.equalspace}>
+              <SubmitButton 
+                title='my bookings' 
+                onPress={() => {this.props.navigation.navigate('View My Bookings')}} 
+              />
+              {(user[5] === 'yes') ? this.state.checkDriverStatus : null}
+              </View>
+            </View>
           <View style={pageStyle.wrapper}>
             <Text style={pageStyle.header}>Available Rides</Text>
             {this.state.displayPrevBooking}

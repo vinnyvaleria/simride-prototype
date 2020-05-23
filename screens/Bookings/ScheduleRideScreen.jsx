@@ -43,7 +43,6 @@ export default class ScheduleRideScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
-    this.loadAllAccounts();
   }
 
   // handles image change
@@ -58,7 +57,7 @@ export default class ScheduleRideScreen extends React.Component {
 
   // bind user data
   bindUserData = () => {
-    var accountsRef = fire.database().ref('accounts');
+    const accountsRef = fire.database().ref('accounts');
     accountsRef
       .orderByChild('email')
       .equalTo(user[3])
@@ -95,7 +94,7 @@ export default class ScheduleRideScreen extends React.Component {
   }
 
   loadAllAccounts = () => {
-    var accountsRef = fire.database.ref('accounts');
+    const accountsRef = fire.database.ref('accounts');
     accountsRef
       .orderByChild('email')
       .once('value')
@@ -154,7 +153,7 @@ export default class ScheduleRideScreen extends React.Component {
 
               //document.getElementById('tb_CreatedBookings').innerHTML += content;
 
-              for (let v = 0; v < rowCount; v++) {
+              /*for (let v = 0; v < rowCount; v++) {
                 let view = document.createElement('input');
                 view.setAttribute('type', 'button')
                 view.setAttribute('value', 'View');
@@ -166,7 +165,7 @@ export default class ScheduleRideScreen extends React.Component {
                 start.setAttribute('value', 'Start');
                 start.onclick = this.startBooking;
                 document.getElementById('btnStartCreatedBooking' + v).appendChild(start);
-              }
+              }*/
             }
           });
       });
