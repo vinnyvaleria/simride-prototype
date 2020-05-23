@@ -118,7 +118,7 @@ export default class WalletTopUpScreen extends React.Component {
   }
 
     gotoWalletPage = () => {
-        const transaction = firebase.database().ref('transaction');
+        const transaction = fire.database().ref('transaction');
         const transactionForm = {
             user: this.state.username,
             email: this.state.email,
@@ -132,7 +132,7 @@ export default class WalletTopUpScreen extends React.Component {
         const balance = parseFloat(this.state.wallet) + parseFloat(this.state.amount);
         this.state.wallet = balance;
 
-        const accountsRef = firebase.database().ref('accounts/' + this.state.id);
+        const accountsRef = fire.database().ref('accounts/' + this.state.id);
         accountsRef.orderByChild('email')
             .equalTo(this.state.email)
             .once('value')
@@ -147,6 +147,7 @@ export default class WalletTopUpScreen extends React.Component {
     }
 
     handleToken = (token) => {
+        console.log(token)
         this.setState({ token: token.id });
         fetch(checkoutUrl, {
             method: "POST",
@@ -156,7 +157,7 @@ export default class WalletTopUpScreen extends React.Component {
             body: JSON.stringify({
                 token,
                 charge: {
-                    amount: parseInt(10 * 100),
+                    amount: parseInt(this.state.amount * 100),
                     currency: 'SGD'
                 }
             }),
@@ -167,11 +168,12 @@ export default class WalletTopUpScreen extends React.Component {
             })
             .then(result => {
                 if (result.statusCode === 200) {
-                    this.gotoWalletPage()
+                    this.gotoWalletPage();
                 }
             })
             .catch(error => {
                 console.error(error);
+                alert('Wallet failed to top-up, card was not charged.')
             });
     }
 
@@ -202,7 +204,7 @@ export default class WalletTopUpScreen extends React.Component {
            <StripeCheckout
             stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
             token={this.handleToken}
-            amount={parseInt(10 * 100)}
+            amount={parseInt(this.state.amount * 100)}
             name="E-Wallet Top-Up"
             currency="SGD"
             email={this.state.email}

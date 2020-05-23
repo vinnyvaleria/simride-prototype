@@ -102,11 +102,10 @@ export default class WalletMainScreen extends React.Component {
     database.on('value', (snapshot) => {
       if (snapshot.exists()) {
         snapshot.forEach((data) => {
-          if (data.val().email === fire.auth().currentUser.email) {
+          if (data.val().email === this.state.email) {
             let amount = data.val().amount;
             let date = moment.unix((data.val().date * -1) / 1000).format("DD MMM YYYY hh:mm a");
             let action = data.val().action;
-
             this.displayTransactions(action, amount, date);
           }
         });
