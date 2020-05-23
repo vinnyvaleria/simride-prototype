@@ -16,6 +16,7 @@ import { submitPassword } from './submitPassword';
 import { cancelPassword } from './cancelPassword';
 import { checkDriverApplicationStatus } from './checkDriverApplicationStatus';
 const util = require('./util')
+import '../../constants/custom.css';
 
 class Account extends React.Component {
   constructor(props) {

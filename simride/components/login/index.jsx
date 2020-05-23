@@ -16,8 +16,6 @@ var unameArr = [];
 var emailArr = [];
 var phoneArr = [];
 
-import '../../style.scss';
-
 // login
 class Login extends React.Component {
   constructor(props) {
@@ -225,7 +223,7 @@ class Login extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ color: '#fff', fontSize: 30, fontFamily: 'Roboto', fontWeight: '600' }}>Welcome to SIMRide</Text>
+        <h1 style={{ color: '#fff', fontSize: 30, fontFamily: 'Roboto', fontWeight: '600' }}>Welcome to SIMRide</h1>
         <Image source={logo} />
         <div>
           <form>

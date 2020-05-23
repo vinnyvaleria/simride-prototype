@@ -14,7 +14,7 @@ p, input, button {
 
 h1 {
   font-size: 2em !important;
-  font-weight: 800 !important;
+  font-weight: 600 !important;
   line-height: 2.5em !important;
   margin-bottom: 0.5em !important;
   color: #ffffff !important;
@@ -25,7 +25,7 @@ h1 {
 
 h2 {
   font-size: 1.5em !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   line-height: 2em !important;
   color: #ffffff !important;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -61,8 +61,15 @@ input {
   margin-bottom: 15px !important;
 }
 
+input [tyoe=button] {
+  border-radius: 5px !important;
+  border-style: unset !important;
+  width: 70px;
+  margin-bottom: 15px !important;
+}
+
 button {
-  border-radius: 50px !important;
+  border-radius: 20px !important;
   padding: 0.25em 1.5em !important;
   margin-top: 1em !important;
   border: 0 !important;
@@ -72,6 +79,10 @@ button {
 button:hover {
   background-color: #4b87a1 !important;
   color: white !important;
+}
+
+table {
+
 }
 
 
