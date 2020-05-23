@@ -260,7 +260,7 @@ export default class DriverApplicationScreen extends React.Component {
             <Image style={pageStyle.image} source={profilepicture} />
 
             <Text style={pageStyle.header}>License Number</Text>
-            <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={this.handleChange} />
+            <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={(license) => this.setState({ license })} />
 
             <Text style={pageStyle.header}>Issue Date</Text>
             <DatePicker

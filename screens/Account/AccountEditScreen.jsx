@@ -71,8 +71,6 @@ export default class AccountEditScreen extends React.Component {
           i++;
         })
       });
-
-    this.checkDriverStatus();
   }
 
   // handles image change

@@ -6,4 +6,5 @@ export const COLORS = {
     WHITE: '#FFFFFF',
     PALE_WHITE: '#EEEEEE',
     YELLOW: '#F9C70C',
+    RED: '#8B0000',
 };

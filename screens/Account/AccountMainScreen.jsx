@@ -11,7 +11,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SubmitButton, Badge } from '../../components';
+import { SubmitButton, Badge, BadgeAdmin } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 // styling
@@ -21,7 +21,8 @@ import { pageStyle, screenStyle } from './styles';
 import profilepicture from '../../assets/images/picture.jpg';
 import { COLORS } from '../../constants/colors';
 
-var badgebutton = [];
+var badgedriver = [];
+var badgeadmin = []
 
 export default class AccountMainScreen extends React.Component {
   constructor (props) {
@@ -61,7 +62,6 @@ export default class AccountMainScreen extends React.Component {
     this.state.email = user[3];
     this.bindUserData();
     this.checkAdminStatus();
-    this.checkDriverStatus();
   }
 
   // handles image change
@@ -163,16 +163,16 @@ export default class AccountMainScreen extends React.Component {
   }
 
   checkDriverStatus = () => {
-    badgebutton.push(<Badge label='driver' />)
+    badgedriver.push(<Badge label='driver' />)
     this.setState({
-      checkDriverStatus: badgebutton,
+      checkDriverStatus: badgedriver,
     })
   }
 
   checkAdminStatus = () => {
-    badgebutton.push(<Badge label='admin' />)
+    badgeadmin.push(<BadgeAdmin label='admin' />)
     this.setState({
-      checkAdminStatus: badgebutton,
+      checkAdminStatus: badgeadmin,
     })
   }
 
@@ -181,8 +181,10 @@ export default class AccountMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            {this.state.adminStatus}
-            {this.state.driverStatus}
+            <View style={pageStyle.equalspace}>
+              {(user[5] === 'yes') ? this.state.driverStatus : null }
+              {(user[6] === 'yes') ? this.state.admminStatus : null }
+            </View>
             <Image style={pageStyle.image} source={profilepicture} />
             <Text style={pageStyle.title}>{this.state.firstName} {this.state.lastName}</Text>
             <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>
