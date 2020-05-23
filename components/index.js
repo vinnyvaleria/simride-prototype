@@ -10,6 +10,8 @@ import TransactionBox from './TransactionBox';
 import PrevMsgsBox from './PrevMsgsBox';
 import Badge from './Badge';
 import BookingBox from './BookingBox';
+import SubmitCashout from './SubmitCashout';
+import SubmitTopUp from './SubmitTopUp';
 
 export {
   SearchButton,
@@ -23,5 +25,7 @@ export {
   TransactionBox,
   PrevMsgsBox,
   Badge,
-  BookingBox
+  BookingBox,
+  SubmitCashout,
+  SubmitTopUp,
 }

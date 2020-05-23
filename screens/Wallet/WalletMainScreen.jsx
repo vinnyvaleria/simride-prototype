@@ -51,6 +51,8 @@ export default class WalletMainScreen extends React.Component {
   }
 
   componentDidMount = () => {
+    this.setState({ displayTransactions: [] });
+    transactions = [];
     const emailTemp = fire.auth().currentUser.email;
     user[3] = emailTemp;
     this.state.email = user[3];
@@ -99,14 +101,13 @@ export default class WalletMainScreen extends React.Component {
   getTransactions = () => {
     let i = 0;
     const database = fire.database().ref('transaction').orderByChild('date');
-    database.once('value', (snapshot) => {
+    database.on('value', (snapshot) => {
       if (snapshot.exists()) {
         snapshot.forEach((data) => {
-          if (data.val().email === fire.auth().currentUser.email) {
+          if (data.val().email === this.state.email) {
             let amount = data.val().amount;
             let date = moment.unix((data.val().date * -1) / 1000).format("DD MMM YYYY hh:mm a");
             let action = data.val().action;
-
             this.displayTransactions(action, amount, date);
             i++;
           }
@@ -134,12 +135,12 @@ export default class WalletMainScreen extends React.Component {
             <View style={pageStyle.equalspace}>
               <SubmitButton 
                 title='Top Up' 
-                onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
+                onPress={() => {{this.props.navigation.navigate('Top-Up')}}} 
               />
 
               <SubmitButton 
                 title='Withdraw' 
-                onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
+                onPress={() => {{this.props.navigation.navigate('Withdraw')}}} 
               />  
             </View>
 

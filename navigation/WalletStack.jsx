@@ -7,7 +7,9 @@ import { COLORS } from '../constants/colors';
 
 // screens 
 import { 
-  WalletMainScreen
+  WalletMainScreen,
+  WalletTopUpScreen,
+  WalletWithdrawScreen
  } from '../screens/Wallet';
 
 const Stack = createStackNavigator();
@@ -26,6 +28,8 @@ export default function WalletStack() {
       }}  
     >
       <Stack.Screen name='Wallet' component={WalletMainScreen} />
+      <Stack.Screen name='Top-Up' component={WalletTopUpScreen} />
+      <Stack.Screen name='Withdraw' component={WalletWithdrawScreen} />
     </Stack.Navigator> 
   );
 }
