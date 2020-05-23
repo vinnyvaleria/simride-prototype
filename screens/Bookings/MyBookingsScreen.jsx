@@ -126,20 +126,20 @@ export default class MyBookingsScreen extends React.Component {
             let rowCount = 0;
             snapshot.forEach((data) => {
               if (data.val().date > moment.now()) {
-                const area = data.val().area;
-                const date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
-                const ppl = [];
+                let area = data.val().area;
+                let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+                let ppl = [];
 
                 if (data.val().currPassengers !== "") {
                   ppl = data.val().currPassengers.split(',')
                 }
 
-                const passengers = ppl.length + "/" + data.val().maxPassengers;
-                const id = data.val().driverID;
-                const driver = '';
+                let passengers = ppl.length + "/" + data.val().maxPassengers;
+                let id = data.val().driverID;
+                let driver = '';
+                let key = [];
 
                 for (let i = 0; i < userDetails.length; i++) {
-                  const key = [];
                   console.log(key);
                   key = userDetails[i].split(':');
                   if (key[0] === id) {
@@ -148,7 +148,7 @@ export default class MyBookingsScreen extends React.Component {
                 }
 
                 area.replace('$ ', '');
-                this.displayPrevBooking(driver, area, date, passengers, key);
+                this.displayPrevBooking(driver, area, date, passengers, key[0]);
                 rowCount++;
               }
             });
@@ -189,7 +189,6 @@ export default class MyBookingsScreen extends React.Component {
   alertConfirmBooking = () => {
     Alert.alert (
       'Are you sure you want to book this ride?',
-      'You may not cancel once joined',
       [
         {
           text: 'Yes, I am sure',
