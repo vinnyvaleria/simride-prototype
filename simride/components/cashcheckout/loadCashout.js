@@ -13,9 +13,7 @@ export const loadCashout = () => {
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
-                console.log(data.val().requester);
                 if (data.val().disbursed === "no") {
-                    console.log('fuck money');
                     let user = data.val().requester;
                     let userID = data.val().requesterID;
                     let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");

@@ -4,7 +4,6 @@ import {user} from "./checkEmailWallet";
 export const submitCashOut = () => {
     const notificationRef = firebase.database().ref('notification');
     const balance = parseFloat(user[8] - this.state.cashoutamount).toFixed(2);
-    console.log(balance);
     const notification = {
         uname: 'admin',
         date: Date.now(),

@@ -16,6 +16,7 @@ import { submitPassword } from './submitPassword';
 import { cancelPassword } from './cancelPassword';
 import { checkDriverApplicationStatus } from './checkDriverApplicationStatus';
 const util = require('./util')
+import '../../constants/custom.css';
 
 class Account extends React.Component {
   constructor(props) {
@@ -256,48 +257,52 @@ render() {
       <div id='acctPage'>
       <h1>{this.state.username + "'s Account"}</h1>
         <div>
+<<<<<<< HEAD
+=======
+          <h1>{this.state.username}</h1>
+>>>>>>> 5b02911fb76beae758566d58a87e5a2d5b6e96d9
           <table id='tblProfile'>
             <tbody>
               <tr>
-                <td>First Name:</td>
+                <td width='100'><p>First Name:</p></td>
                 <td>
-                  <label id='lblfName' style={{display:'inline'}}>{this.state.firstName}</label>
+                  <p id='lblfName' style={{display:'inline'}}>{this.state.firstName}</p>
                   <input id='editfName' style={{display:'none'}} placeholder={this.state.firstName} value={this.state.firstName}
                     onChange={this.handleChange} type="text" name="firstName" />
                 </td>
               </tr>
               <tr>
-                <td>Last Name:</td>
+                <td><p>Last Name:</p></td>
                 <td>
-                  <label id='lbllName' style={{display:'inline'}}>{this.state.lastName}</label>
+                  <p id='lbllName' style={{display:'inline'}}>{this.state.lastName}</p>
                   <input id='editlName' style={{display:'none'}} placeholder={this.state.lastName} value={this.state.lastName}
                     onChange={this.handleChange} type="text" name="lastName" />
                 </td>
               </tr>
               <tr>
-                <td>Email:</td>
+                <td><p>Email:</p></td>
                 <td>
-                  <label id='lblEmail' style={{display:'inline'}} name='email'>{this.state.email}</label>
+                  <p id='lblEmail' style={{display:'inline'}} name='email'>{this.state.email}</p>
                 </td>
               </tr>
               <tr>
-                <td>Phone:</td>
+                <td><p>Phone:</p></td>
                 <td>
-                  <label id='lblPhone' style={{display:'inline'}}>{user[4]}</label>
+                  <p id='lblPhone' style={{display:'inline'}}>+65 {user[4]}</p>
                   <input id='editPhone' style={{display:'none'}} placeholder={this.state.phone} value={this.state.phone}
                    onChange={this.handleChange} type="phone" name="phone" />
                 </td>
               </tr>
               <tr>
-                <td>Driver :</td>
+                <td><p>Driver:</p></td>
                 <td>
-                  <label id='lblDriver' name='isDriver'>{this.state.isDriver}</label>
+                  <p id='lblDriver' name='isDriver'>{this.state.isDriver}</p>
                 </td>
               </tr>
               <tr>
-                <td>Rating:</td>
+                <td><p>Rating:</p></td>
                 <td>
-                  <label id='lblRating' name='rating'>{parseFloat(this.state.avgRating).toFixed(2)}</label>
+                  <p id='lblRating' name='rating'>{parseFloat(this.state.avgRating).toFixed(2)}</p>
                 </td>
               </tr>
             </tbody>
@@ -305,12 +310,12 @@ render() {
           <table id='tblPassword' style={{display: 'none'}}>
             <tbody>
               <tr>
-                <td>New Password:</td>
+                <td><p>New Password:</p></td>
                 <td><input id='editNewPassword' value={this.state.newPassword} onChange={this.handleChange}
                     type="password" name="newPassword" /></td>
               </tr>
               <tr>
-                <td>Confirm Password:</td>
+                <td><p>Confirm Password:</p></td>
                 <td><input id='editConfirmPassword' value={this.state.confirmPassword} onChange={this.handleChange}
                     type="password" name="confirmPassword" /></td>
               </tr>
@@ -384,7 +389,7 @@ render() {
             <button id='btnApplyDriver' onClick={util.applyDriver} style={{display:'none'}}>Apply to be a driver</button>
           </div>
           <br />
-          <button onClick={this.logout}>Logout</button>
+          <button id='btnLogout' onClick={this.logout}>Logout</button>
         </div>
       </div>
     </View>
