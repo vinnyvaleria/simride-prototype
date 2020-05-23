@@ -191,7 +191,7 @@ export default class BookingMainScreen extends React.Component {
               </View>
             </View>
           <View style={pageStyle.wrapper}>
-            <Text style={pageStyle.header}>Available Rides</Text>
+            <Text style={pageStyle.header}>All Rides</Text>
             {this.state.displayPrevBooking}
           </View>
         </ScrollView>
