@@ -11,6 +11,8 @@ import fire from '../../config';
 import 'firebase/firestore';
 import 'firebase/storage';
 
+import DateTimePicker from 'react-datetime-picker'
+
 // components
 import { SubmitButton } from '../../components';
 import { user } from '../Landing/StartScreen';
@@ -21,6 +23,8 @@ import { COLORS } from '../../constants/colors';
 
 // images
 import profilepicture from '../../assets/images/picture.jpg';
+
+let value;
 
 export default class DriverApplicationScreen extends React.Component {
   constructor (user) {
@@ -49,6 +53,7 @@ export default class DriverApplicationScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
+      issuedDate: ''
     };
   }
 
@@ -88,6 +93,20 @@ export default class DriverApplicationScreen extends React.Component {
           user[9] = child.key;
           user[10] = child.val().rating;
           user[11] = child.val().ratedBy;
+
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          });
       });
     })
     this.setState({ binded: true });
@@ -111,27 +130,78 @@ export default class DriverApplicationScreen extends React.Component {
     fire.auth().signOut();
   }
 
+  // handles textbox change
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+
+  // submits driver details into realtime db
+  submitDriverDetails() {
+    const rg = new RegExp("^((S|T)[0-9]{7}[A-Z]{1}$)");
+
+    var date = new Date;
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var y = date.getFullYear() - 2;
+    var yy = date.getFullYear();
+    var issuedDate = new Date(document.getElementById('txtIssueDate').value);
+    var today = new Date(y, m, d);
+    var now = new Date(yy, m, d)
+
+    if (this.state.license !== "" && this.state.carplate !== "" && rg.test(this.state.license.toUpperCase()) && today > issuedDate) {
+      const accountsRef = fire.database().ref('driverDetails/' + this.state.id);
+      const driverDetails = {
+        driverUname: this.state.username,
+        carplate: this.state.carplate,
+        license: this.state.license,
+        issueDate: document.getElementById('txtIssueDate').value,
+        completed: "no",
+        status: "pending",
+        dateApplied: now
+      }
+
+      accountsRef.update(driverDetails);
+      this.state = {
+        carplate: '',
+        license: '',
+        status: '',
+        dateApplied: ''
+      };
+
+    } else {
+      if (this.state.license === "" || this.state.carplate === "") {
+        alert('One or more fields are empty');
+      } else if (!rg.test(this.state.license.toUpperCase())) {
+        alert('Please enter a valid license number');
+      } else if (issuedDate > today) {
+        alert('You must be a driver for at least 2 years');
+      }
+    }
+  }
+
   render () {
     return (
       <ScrollView style={screenStyle}>
         <View style={pageStyle.wrapper}>
           <Image style={pageStyle.image} source={profilepicture} />
 
-          <Text style={pageStyle.header}>First Name</Text>
-          <TextInput style={pageStyle.textinput} placeholder={this.state.firstName} />
+          <Text style={pageStyle.header}>License Number</Text>
+          <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={this.handleChange} />
 
-          <Text style={pageStyle.header}>Last Name</Text>
-          <TextInput style={pageStyle.textinput} placeholder={this.state.lastName} />
+          <Text style={pageStyle.header}>Issue Date</Text>
+          <DateTimePicker disableClock ='true' />
 
-          <Text style={pageStyle.header}>Phone Number</Text>
-          <TextInput style={pageStyle.textinput} placeholder={this.state.phone.toString()} />
+          <Text style={pageStyle.header}>Car Plate Number</Text>
+          <TextInput style={pageStyle.textinput} value={this.state.carplate} name='carplate' onChange={this.handleChange} />
 
           <Text
             style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
           />
 
           <View style={pageStyle.equalspace}>
-            <SubmitButton title='Submit' />
+            <SubmitButton title='Submit' value={value} onPress={this.submitDriverDetails} />
           </View>
         </View>
         

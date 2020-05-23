@@ -209,6 +209,7 @@ export default class WalletTopUpScreen extends React.Component {
               onChange={this.handleChange}
               placeholder='amount' 
               style={pageStyle.textinput}
+              name='amount'
             />
             <View>
               <StripeCheckout

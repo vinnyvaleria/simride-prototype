@@ -18,7 +18,7 @@ export default class SubmitCashout extends React.Component {
       <Container style={styles.wrapper}>
         <TextInput 
           style={styles.textinput} 
-          name='send'
+          name='cashoutamount'
           placeholder='Enter amount' 
           value={this.props.value} 
           onChangeText={this.props.onChangeText}

@@ -144,7 +144,7 @@ export default class MainScreen extends React.Component {
           <View style={pageStyle.formwrap}>
             <View style={pageStyle.equalspace}>
               <View>
-                <Text style={pageStyle.opening}>Welcome back, {this.state.username}</Text>
+                <Text style={pageStyle.opening}>Welcome back, {this.state.firstName}</Text>
                 <Text style={pageStyle.balance}>Current Balance: $ {this.state.wallet}</Text>
               </View>
               

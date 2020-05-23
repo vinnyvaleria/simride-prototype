@@ -45,19 +45,18 @@ export default class WalletMainScreen extends React.Component {
       status: '',
       dateApplied: '',
       binded: false,
-      displayTransactions: [],
+      displayTrans: [],
       
     };
   }
 
   componentDidMount = () => {
-    this.setState({ displayTransactions: [] });
-    transactions = [];
-    const emailTemp = fire.auth().currentUser.email;
-    user[3] = emailTemp;
-    this.state.email = user[3];
+    const that = this;
+    user[3] = fire.auth().currentUser.email;
     this.bindUserData();
-    this.getTransactions();
+    setTimeout(function () {
+      that.getTransactions();
+    }, 1500);
   }
 
   // bind user data
@@ -99,7 +98,6 @@ export default class WalletMainScreen extends React.Component {
   }
 
   getTransactions = () => {
-    let i = 0;
     const database = fire.database().ref('transaction').orderByChild('date');
     database.on('value', (snapshot) => {
       if (snapshot.exists()) {
@@ -108,19 +106,18 @@ export default class WalletMainScreen extends React.Component {
             let amount = data.val().amount;
             let date = moment.unix((data.val().date * -1) / 1000).format("DD MMM YYYY hh:mm a");
             let action = data.val().action;
-            this.displayTransactions(action, amount, date);
-            i++;
+            let key = data.key;
+            this.displayTransactions(action, amount, date, key);
           }
         });
       }
     });
 }
 
-  displayTransactions = (label, amount, date, i) => {
-    transactions.push(<TransactionBox label={label} amount={amount} date={date} />)
-    //transactions.push(label, amount, user, i);
+  displayTransactions = (label, amount, date, key) => {
+    transactions.push(<TransactionBox key={key} label={label} amount={amount} date={date} />);
     this.setState({
-      displayTransactions: transactions,
+      displayTrans: transactions
     });
   }
 
@@ -145,9 +142,7 @@ export default class WalletMainScreen extends React.Component {
             </View>
 
             <Text style={pageStyle.header}>Past Transactions</Text>
-            {this.state.displayTransactions}
-
-
+            {this.state.displayTrans}
           </View>
         </ScrollView>
       );

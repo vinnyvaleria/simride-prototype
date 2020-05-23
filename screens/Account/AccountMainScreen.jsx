@@ -19,6 +19,7 @@ import { pageStyle, screenStyle } from './styles';
 
 // images
 import profilepicture from '../../assets/images/picture.jpg';
+import { COLORS } from '../../constants/colors';
 
 export default class AccountMainScreen extends React.Component {
   constructor (props) {
@@ -47,7 +48,7 @@ export default class AccountMainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
-      driverStatus: false,
+      driverStatus: null,
     };
   }
 
@@ -112,6 +113,8 @@ export default class AccountMainScreen extends React.Component {
 
               const avg = parseInt(this.state.rating) / c;
               this.setState({ avgRating: avg })
+
+              this.driverStatus();
             });
         });
       })
@@ -120,10 +123,10 @@ export default class AccountMainScreen extends React.Component {
   }
 
   driverStatus = () => {
-    if (this.state.isDriver.toLowerCase() === 'yes') {
-      this.setState({ driverStatus: true });
+    if (this.state.isDriver === 'yes') {
+      this.setState({ driverStatus: <Badge label='Driver' /> });
     } else {
-      this.setState({ driverStatus: false });
+      this.setState({ driverStatus: null });
     }
   }
 
@@ -150,13 +153,13 @@ export default class AccountMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <Badge label='Driver' />
+            {this.state.driverStatus}
             <Image style={pageStyle.image} source={profilepicture} />
             <Text style={pageStyle.title}>{this.state.firstName} {this.state.lastName}</Text>
             <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>
             <Text style={pageStyle.subtitle}>Phone Number: +65 {this.state.phone}</Text>
             <Text style={pageStyle.subtitle}>Rating: {this.state.avgRating}</Text>
-
+            <Text style={{ fontSize: 12, fontFamily: 'notoSansMedium', color: COLORS.WHITE, marginTop: 10, }} onPress={() => { this.props.navigation.navigate('Driver Application') }} >Apply as a driver</Text>
             <View style={pageStyle.equalspace}>
               <SubmitButton 
                 title='Edit Profile' 

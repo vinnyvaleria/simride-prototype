@@ -120,7 +120,7 @@ export default class AccountEditScreen extends React.Component {
       }
       i++;
     };
-
+    
     if (rg.test(this.state.phone)) {
       phoneCheck = true;
     } else {
