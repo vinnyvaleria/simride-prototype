@@ -9,6 +9,7 @@ import NotifBox from './NotifBox';
 import TransactionBox from './TransactionBox';
 import PrevMsgsBox from './PrevMsgsBox';
 import Badge from './Badge';
+import BookingBox from './BookingBox';
 
 export {
   SearchButton,
@@ -21,5 +22,6 @@ export {
   ChatboxDisplayRight,
   TransactionBox,
   PrevMsgsBox,
-  Badge
+  Badge,
+  BookingBox
 }

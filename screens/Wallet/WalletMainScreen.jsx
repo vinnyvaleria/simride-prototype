@@ -45,7 +45,8 @@ export default class WalletMainScreen extends React.Component {
       status: '',
       dateApplied: '',
       binded: false,
-      displayTransactions: []
+      displayTransactions: [],
+      
     };
   }
 
@@ -96,6 +97,7 @@ export default class WalletMainScreen extends React.Component {
   }
 
   getTransactions = () => {
+    let i = 0;
     const database = fire.database().ref('transaction').orderByChild('date');
     database.once('value', (snapshot) => {
       if (snapshot.exists()) {
@@ -106,14 +108,16 @@ export default class WalletMainScreen extends React.Component {
             let action = data.val().action;
 
             this.displayTransactions(action, amount, date);
+            i++;
           }
         });
       }
     });
 }
 
-  displayTransactions = (label, amount, date) => {
+  displayTransactions = (label, amount, date, i) => {
     transactions.push(<TransactionBox label={label} amount={amount} date={date} />)
+    //transactions.push(label, amount, user, i);
     this.setState({
       displayTransactions: transactions,
     });
@@ -141,11 +145,13 @@ export default class WalletMainScreen extends React.Component {
 
             <Text style={pageStyle.header}>Past Transactions</Text>
             {this.state.displayTransactions}
+
+
           </View>
         </ScrollView>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }
