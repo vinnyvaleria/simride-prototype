@@ -20,7 +20,7 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
-import StripeCheckout from 'react-stripe-checkout'
+import StripeCheckout from 'react-stripe-checkout';
 
 const checkoutUrl = "https://us-central1-carpool-world-5uck5.cloudfunctions.net/charge";
 
