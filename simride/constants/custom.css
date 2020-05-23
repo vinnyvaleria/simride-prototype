@@ -98,6 +98,21 @@ a:hover {
   cursor: pointer;
 }
 
+table {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 20px !important;
+  color: #222222 !important;
+  font-family: Arial,
+  Helvetica,
+  sans-serif !important;
+  padding: 0.25em 0.5em !important;
+}
+
+thead {
+  border-bottom: #222222;
+}
+
 @media only screen and (max-width: 767px) {
   #signin-input-wrapper {
       flex-direction: column;

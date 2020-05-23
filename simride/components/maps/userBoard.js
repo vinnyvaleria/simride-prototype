@@ -6,8 +6,6 @@ export const userBoard = (username, payMethod) => {
     let currBalance = '';
     let email = '';
 
-    alert(username)
-
     if (payMethod === "wallet") {
         const accountsRef = firebase.database().ref('accounts');
         accountsRef.orderByChild('uname')
