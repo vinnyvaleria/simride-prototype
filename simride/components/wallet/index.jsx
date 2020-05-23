@@ -7,6 +7,7 @@ import {cashOut} from './cashOut';
 import {submitCashOut} from './submitCashOut';
 import {transactionsPage} from './transactionsPage';
 import StripeCheckout from 'react-stripe-checkout'
+import '../../constants/custom.css';
 
 import React from 'react';
 import { View } from 'react-native';
