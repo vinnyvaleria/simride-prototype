@@ -135,12 +135,12 @@ export default class WalletMainScreen extends React.Component {
             <View style={pageStyle.equalspace}>
               <SubmitButton 
                 title='Top Up' 
-                onPress={() => {{this.props.navigation.navigate('Top-Up')}}} 
+                onPress={() => {this.props.navigation.navigate('Top-Up')}} 
               />
 
               <SubmitButton 
                 title='Withdraw' 
-                onPress={() => {{this.props.navigation.navigate('Withdraw')}}} 
+                onPress={() => {this.props.navigation.navigate('Withdraw')}} 
               />  
             </View>
 

@@ -1,3 +1,5 @@
+import React from 'react';
+
 import firebase from '../../../base';
 import {checkEmailWallet, user} from './checkEmailWallet';
 import {maxAmtCalc} from './maxAmtCalc';
@@ -6,9 +8,8 @@ import {walletHomePage} from './walletHomePage';
 import {cashOut} from './cashOut';
 import {submitCashOut} from './submitCashOut';
 import {transactionsPage} from './transactionsPage';
-import StripeCheckout from 'react-stripe-checkout'
+import StripeCheckout from 'react-stripe-checkout';
 
-import React from 'react';
 import { View } from 'react-native';
 import 'firebase/firestore';
 
