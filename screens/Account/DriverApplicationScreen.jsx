@@ -11,10 +11,11 @@ import fire from '../../config';
 import 'firebase/firestore';
 import 'firebase/storage';
 
-import * as Datetime from "react-datetime";
+import * as Datetime from 'react-datetime';
+import DatePicker from 'react-native-datepicker';
 
 // components
-import { SubmitButton } from '../../components';
+import { SubmitButton, ImagePickerComponent } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 //styling
@@ -53,7 +54,9 @@ export default class DriverApplicationScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
-      issuedDate: ''
+      issuedDate: '',
+      licenseSide: '',
+      response: '',
     };
   }
 
@@ -62,6 +65,13 @@ export default class DriverApplicationScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+  }
+
+  // handles textbox change
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   // handles image change
@@ -112,53 +122,29 @@ export default class DriverApplicationScreen extends React.Component {
     this.setState({ binded: true });
   }
 
-  // logout
-  logout = () => {
-    user[0] = '';
-    user[1] = '';
-    user[2] = '';
-    user[3] = '';
-    user[4] = '';
-    user[5] = '';
-    user[6] = '';
-    user[7] = '';
-    user[8] = '';
-    user[9] = '';
-    user[10] = '';
-    user[11] = '';
-
-    fire.auth().signOut();
-  }
-
-  // handles textbox change
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }
-
   // submits driver details into realtime db
-  submitDriverDetails() {
-    const rg = new RegExp("^((S|T)[0-9]{7}[A-Z]{1}$)");
+  submitDriverDetails = () => {
+    const rg = new RegExp('^((S|T)[0-9]{7}[A-Z]{1}$)');
 
     var date = new Date;
     var m = date.getMonth() + 1;
     var d = date.getDate();
     var y = date.getFullYear() - 2;
     var yy = date.getFullYear();
-    var issuedDate = new Date(document.getElementById('txtIssueDate').value);
+    var issuedDate = new Date(this.state.date);
     var today = new Date(y, m, d);
     var now = new Date(yy, m, d)
+    
 
-    if (this.state.license !== "" && this.state.carplate !== "" && rg.test(this.state.license.toUpperCase()) && today > issuedDate) {
+    if (this.state.license !== '' && this.state.carplate !== '' && rg.test(this.state.license.toUpperCase()) && today > issuedDate) {
       const accountsRef = fire.database().ref('driverDetails/' + this.state.id);
       const driverDetails = {
         driverUname: this.state.username,
         carplate: this.state.carplate,
         license: this.state.license,
-        issueDate: document.getElementById('txtIssueDate').value,
-        completed: "no",
-        status: "pending",
+        issueDate: this.state.date,
+        completed: 'no',
+        status: 'pending',
         dateApplied: now
       }
 
@@ -171,7 +157,7 @@ export default class DriverApplicationScreen extends React.Component {
       };
 
     } else {
-      if (this.state.license === "" || this.state.carplate === "") {
+      if (this.state.license === '' || this.state.carplate === '') {
         alert('One or more fields are empty');
       } else if (!rg.test(this.state.license.toUpperCase())) {
         alert('Please enter a valid license number');
@@ -181,32 +167,150 @@ export default class DriverApplicationScreen extends React.Component {
     }
   }
 
-  render () {
-    return (
-      <ScrollView style={screenStyle}>
-        <View style={pageStyle.wrapper}>
-          <Image style={pageStyle.image} source={profilepicture} />
-
-          <Text style={pageStyle.header}>License Number</Text>
-          <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={this.handleChange} />
-
-          <Text style={pageStyle.header}>Issue Date</Text>
-          <Datetime locale="en-sg" id='datepicker' onChange={this.onChange} value={this.state.date} required />
-
-          <Text style={pageStyle.header}>Car Plate Number</Text>
-          <TextInput style={pageStyle.textinput} value={this.state.carplate} name='carplate' onChange={this.handleChange} />
-
-          <Text
-            style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
-          />
-
-          <View style={pageStyle.equalspace}>
-            <SubmitButton title='Submit' value={value} onPress={this.submitDriverDetails} />
-          </View>
-        </View>
-        
-      </ScrollView>
-    );
+  handleFrontUpload() {
+    const {image} = this.state;
+    if (image !== null) {
+      const uploadTask = fire.storage().ref().child(`license/${user[9]}/front`).put(image);
+      uploadTask.on(
+        'state_changed',
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          alert('Error: ' + error);
+          console.log(error);
+        }, () => {
+          // complete function ...
+          alert('Image is uploaded!');
+          fire.storage()
+            .ref('license/' + user[9])
+            .child('front')
+            .getDownloadURL()
+            .then(frontURL => {
+              this.setState({
+                frontURL
+            });
+          });
+        });
+    } else {
+      alert('Error: No file selected');
+    }
   }
-}
 
+  // uploads back license pic
+  handleBackUpload() {
+    var date = new Date;
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+    var y = date.getFullYear();
+    var today = new Date(y, m, d);
+
+    const {image} = this.state;
+    if (image !== null) {
+      const uploadTask = fire.storage().ref().child(`license/${user[9]}/back`).put(image);
+      uploadTask.on(
+        'state_changed',
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          console.log(error);
+        }, () => {
+          // complete function ...
+          alert('Image is uploaded!')
+          fire.storage()
+            .ref('license/' + user[9])
+            .child('back')
+            .getDownloadURL()
+            .then(backURL => {
+              this.setState({
+                backURL
+            });
+          });
+          console.log(backURL);
+          const driverDetails = {
+            completed: 'yes',
+            dateApplied: today
+          }
+
+          accountsRef.update(driverDetails);
+        });
+    } else {
+      alert('Error: No file selected');
+    }
+  }
+
+  render () {
+    if (this.state.binded) {
+      return (
+        <ScrollView style={screenStyle}>
+          <View style={pageStyle.wrapper}>
+            <Image style={pageStyle.image} source={profilepicture} />
+
+            <Text style={pageStyle.header}>License Number</Text>
+            <TextInput style={pageStyle.textinput} value={this.state.license} name='license' onChange={this.handleChange} />
+
+            <Text style={pageStyle.header}>Issue Date</Text>
+            <DatePicker
+              style={pageStyle.textinput}
+              date={this.state.date}
+              mode='date'
+              placeholder='Please select the date'
+              format='YYYY-MM-DD'
+              confirmBtnText='Confirm'
+              cancelBtnText='Cancel'
+              customStyles={{
+                dateIcon: {
+                  position: 'absolute',
+                  left: 0,
+                  top: 4,
+                  marginLeft: 0
+                },
+                dateInput: {
+                  justifyContent: 'center',
+                  borderColor: 'transparent',
+                }
+              }}
+              onDateChange={(date) => {this.setState({date: date})}}
+            />
+
+            <Text style={pageStyle.header}>Front View License</Text>
+            <ImagePickerComponent onBlur={this.handleFrontUpload}/>
+
+            <Text style={pageStyle.header}>Back View License</Text>
+            <ImagePickerComponent onBlur={this.handleBackUpload}/>
+
+            <Text style={pageStyle.header}>Car Plate Number</Text>
+            <TextInput style={pageStyle.textinput} value={this.state.carplate} name='carplate' onChange={this.handleChange} />
+
+            <View style={pageStyle.equalspace}>
+              <SubmitButton title='Submit' value={value} onPress={this.submitDriverDetails} />
+            </View>
+          </View>
+          
+        </ScrollView>
+      )
+    } else {
+      return null && console.log('There is a problem with binding user data');
+    }
+  }
+
+}
+/*<Datetime 
+              locale='en-sg' 
+              value={this.state.date} 
+              required
+              timeFormat={false}
+            />*/

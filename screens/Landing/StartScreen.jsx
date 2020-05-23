@@ -112,7 +112,6 @@ class StartScreen extends React.Component {
         alert('Invalid e-mail!');
       } else {
         while (i < emailArr.length) {
-          console.log(emailArr[i], email, i);
           if (emailArr[i].toString() === email) {
             if (user[7].toString() === 'yes') {
               alert('Account is banned. Please contact administrator.')

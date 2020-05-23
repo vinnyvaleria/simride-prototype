@@ -50,7 +50,8 @@ export default class AccountMainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
-      driverStatus: null
+      driverStatus: null,
+      adminStatus: null
     };
   }
 
@@ -59,6 +60,7 @@ export default class AccountMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.checkAdminStatus();
     this.checkDriverStatus();
   }
 
@@ -117,12 +119,21 @@ export default class AccountMainScreen extends React.Component {
               const avg = parseInt(this.state.rating) / c;
               this.setState({ avgRating: avg })
 
+              this.adminStatus()
               this.driverStatus();
             });
         });
       })
 
     this.setState({ binded: true });
+  }
+
+  adminStatus = () => {
+    if (this.state.isAdmin === 'yes') {
+      this.setState({ adminStatus: <Badge label='Admin' /> });
+    } else {
+      this.setState({ adminStatus: null });
+    }
   }
 
   driverStatus = () => {
@@ -153,9 +164,15 @@ export default class AccountMainScreen extends React.Component {
 
   checkDriverStatus = () => {
     badgebutton.push(<Badge label='driver' />)
-
     this.setState({
       checkDriverStatus: badgebutton,
+    })
+  }
+
+  checkAdminStatus = () => {
+    badgebutton.push(<Badge label='admin' />)
+    this.setState({
+      checkAdminStatus: badgebutton,
     })
   }
 
@@ -164,13 +181,14 @@ export default class AccountMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
+            {this.state.adminStatus}
             {this.state.driverStatus}
             <Image style={pageStyle.image} source={profilepicture} />
             <Text style={pageStyle.title}>{this.state.firstName} {this.state.lastName}</Text>
             <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>
             <Text style={pageStyle.subtitle}>Phone Number: +65 {this.state.phone}</Text>
             <Text style={pageStyle.subtitle}>Rating: {this.state.avgRating}</Text>
-            <Text style={{ fontSize: 12, fontFamily: 'notoSansMedium', color: COLORS.WHITE, marginTop: 10, }} onPress={() => { this.props.navigation.navigate('Driver Application') }} >Apply as a driver</Text>
+            
             <View style={pageStyle.equalspace}>
               <SubmitButton 
                 title='Edit Profile' 
@@ -186,4 +204,3 @@ export default class AccountMainScreen extends React.Component {
     }
   }
 }
-
