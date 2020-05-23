@@ -13,7 +13,7 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SendMessageButton, ChatboxDisplayRight, CheckProfile } from '../../components';
+import { SendMessageButton, ChatboxDisplayLeft, ChatboxDisplayRight, CheckProfile } from '../../components';
 import { user } from '../Landing/StartScreen';
 import { chatName } from './InboxMainScreen';
 import { search } from './InboxMainScreen';
@@ -106,17 +106,25 @@ export default class InboxPersonalChat extends React.Component {
     fire.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
       querySnapshot.docChanges().forEach((doc) => {
         var message = doc.doc.data();
-        this.displayChatBox(message.text);
+        this.displayChatBox(message.text, message.from, message.to);
       });
     });
   }
 
   // open chat with searched user 
-  displayChatBox = (text) => {
-    msgsComponent.push(<ChatboxDisplayRight label={text} />)
-    this.setState({
-      displayMsgs: msgsComponent,
-    })
+  displayChatBox = (text, from, to) => {
+    if (from === user[2] && to !== user[2]) {
+      msgsComponent.push(<ChatboxDisplayRight label={text} />)
+      this.setState({
+        displayMsgs: msgsComponent,
+      })
+    }
+    else if (to === user[2] && from !== user[2]) {
+      msgsComponent.push(<ChatboxDisplayLeft label={text} />)
+      this.setState({
+        displayMsgs: msgsComponent,
+      })
+    }
   }
 
   newChat = () => {
