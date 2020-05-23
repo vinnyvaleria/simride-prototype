@@ -15,6 +15,8 @@ var unameArr = [];
 var emailArr = [];
 var phoneArr = [];
 
+import '../../style.scss';
+
 // login
 class Login extends React.Component {
   constructor(props) {
