@@ -14,6 +14,7 @@ import '../../constants/custom.css';
 var countArr = new Array(1); // account
 var unameArr = [];
 var emailArr = [];
+var phoneArr = [];
 
 // login
 class Login extends React.Component {
@@ -64,6 +65,7 @@ class Login extends React.Component {
         snapshot.forEach((child) => {
           unameArr[i] = child.val().uname;
           emailArr[i] = child.val().email;
+          phoneArr[i] = child.val().phone;
           i++;
         })
       });
@@ -80,6 +82,8 @@ class Login extends React.Component {
     // checks for duplicate username
     var i = 0;
     var unameCheck = false;
+    var phoneCheck = false;
+    const rg = new RegExp("^((8|9)[0-9]{7}$)");
     while (i < unameArr.length) {
       if (this.state.username === unameArr[i]) {
         alert("Username has already been registered");
@@ -88,14 +92,28 @@ class Login extends React.Component {
       } else {
         unameCheck = true;
       }
+      if (this.state.phone === phoneArr[i]) {
+        alert("Phone number has already been registered");
+        phoneCheck = false;
+        break;
+      } else {
+        phoneCheck = true;
+      }
       i++;
+    }
+
+    if (rg.test(this.state.phone)) {
+      phoneCheck = true;
+    } else {
+      alert('Phone number is invalid')
+      phoneCheck = false;
     }
 
     // checks confirm password
     if (this.state.password !== this.state.repassword) {
       alert("Passwords do not match");
     } else {
-      if (unameCheck) {
+      if (unameCheck && phoneCheck) {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
           alert(error.code + ': ' + error.message);
         }).then(() => {

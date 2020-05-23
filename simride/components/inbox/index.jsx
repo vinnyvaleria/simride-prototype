@@ -260,9 +260,16 @@ class Inbox extends React.Component {
                 var message = doc.doc.data();
                 var html = "";
                 // give each message a unique ID
-                html += "<li id='message-" + message.timestamp + "'>";
-                html += message.from + ": " + message.text;
-                html += "</li>";
+                if (doc.doc.data().to === user[2]) {
+                    html += "<p style={{text-align:'right'}} id='message-" + message.timestamp + "'>";
+                    html += message.from + ": " + message.text;
+                    html += "</p>";
+                }
+                else if (doc.doc.data().from === user[2]) {
+                    html += "<p style={{text-align:'left'}} id='message-" + message.timestamp + "'>";
+                    html += message.from + ": " + message.text;
+                    html += "</p>";
+                }
 
                 console.log(html);
 
