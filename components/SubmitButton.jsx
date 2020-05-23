@@ -40,7 +40,7 @@ const styles=StyleSheet.create({
     display: 'flex',
     flexWrap: 'nowrap',
     flex: 0,
-    maxHeight: 100,
+    maxHeight: 80,
   },
 
   buttonstyle: {

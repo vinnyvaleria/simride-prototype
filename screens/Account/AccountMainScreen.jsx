@@ -21,6 +21,8 @@ import { pageStyle, screenStyle } from './styles';
 import profilepicture from '../../assets/images/picture.jpg';
 import { COLORS } from '../../constants/colors';
 
+var badgebutton = [];
+
 export default class AccountMainScreen extends React.Component {
   constructor (props) {
     super(props);
@@ -48,7 +50,7 @@ export default class AccountMainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
-      driverStatus: null,
+      driverStatus: null
     };
   }
 
@@ -57,6 +59,7 @@ export default class AccountMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.checkDriverStatus();
   }
 
   // handles image change
@@ -146,6 +149,14 @@ export default class AccountMainScreen extends React.Component {
     user[11] = '';
 
     fire.auth().signOut();
+  }
+
+  checkDriverStatus = () => {
+    badgebutton.push(<Badge label='driver' />)
+
+    this.setState({
+      checkDriverStatus: badgebutton,
+    })
   }
 
   render () {

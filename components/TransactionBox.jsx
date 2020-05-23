@@ -56,6 +56,7 @@ const styles=StyleSheet.create({
     fontSize: 16,
     fontFamily: 'notoSansBold',
     textAlign: 'right',
+    textTransform: 'capitalize',
   },
 
   date: {

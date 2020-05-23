@@ -47,10 +47,6 @@ export default class BookingMainScreen extends React.Component {
       dateApplied: '',
       binded: false,
       displayPrevBooking: [],
-      driver: '',
-      area: '',
-      date: '',
-      passengers: '',
       checkDriverStatus: []
     };
   }
@@ -61,6 +57,7 @@ export default class BookingMainScreen extends React.Component {
     this.state.email = user[3];
     this.bindUserData();
     this.loadAllBookings();
+    this.checkDriverStatus();
   }
 
   // handles image change
@@ -129,28 +126,28 @@ export default class BookingMainScreen extends React.Component {
             let rowCount = 0;
             snapshot.forEach((data) => {
               if (data.val().date > moment.now()) {
-                this.state.area = data.val().area;
-                this.state.date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+                let area = data.val().area;
+                let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                 let ppl = [];
 
                 if (data.val().currPassengers !== "") {
                   ppl = data.val().currPassengers.split(',')
                 }
 
-                this.state.passengers = ppl.length + "/" + data.val().maxPassengers;
+                let passengers = ppl.length + "/" + data.val().maxPassengers;
                 let id = data.val().driverID;
-                this.state.driver = '';
+                let driver = '';
 
                 for (let i = 0; i < userDetails.length; i++) {
                   let key = [];
                   key = userDetails[i].split(':');
                   if (key[0] === id) {
-                    this.state.driver = key[1];
+                    driver = key[1];
                   }
                 }
 
-                this.state.area.replace('$ ', '');
-                this.displayPrevBooking(this.state.driver, this.state.area, this.state.date, this.state.passengers);
+                area.replace('$ ', '');
+                this.displayPrevBooking(driver, area, date, passengers);
                 rowCount++;
               }
             });
@@ -161,14 +158,12 @@ export default class BookingMainScreen extends React.Component {
   }
 
   checkDriverStatus = () => {
-    if (this.state.isDriver === 'yes') {
-      schedulebutton.push(
-        <SubmitButton 
-          title='Schedule a new ride' 
-          onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
-        />
-      )
-    }
+    schedulebutton.push(
+      <SubmitButton 
+        title='Schedule a new ride' 
+        onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
+      />
+    )
 
     this.setState({
       checkDriverStatus: schedulebutton
@@ -187,10 +182,10 @@ export default class BookingMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            {console.log(user[5])}
-            {this.state.checkDriverStatus}
+            {(user[5] === 'yes') ? this.state.checkDriverStatus : null}
           </View>
           <View style={pageStyle.wrapper}>
+            <Text style={pageStyle.header}>Available Rides</Text>
             {this.state.displayPrevBooking}
           </View>
         </ScrollView>

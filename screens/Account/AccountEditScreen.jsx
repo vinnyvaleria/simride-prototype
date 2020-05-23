@@ -22,7 +22,8 @@ import { COLORS } from '../../constants/colors';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
-var phoneArr = []
+var phoneArr = [];
+var badgebutton = [];
 
 export default class AccountEditScreen extends React.Component {
   constructor (props) {
@@ -51,6 +52,7 @@ export default class AccountEditScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
+      checkDriverStatus: []
     };
   }
 
@@ -69,7 +71,9 @@ export default class AccountEditScreen extends React.Component {
           i++;
         })
       });
-    }
+
+    this.checkDriverStatus();
+  }
 
   // handles image change
   handleImgChange  = () => {
@@ -155,6 +159,18 @@ export default class AccountEditScreen extends React.Component {
     }
   }
 
+  checkDriverStatus = () => {
+    badgebutton.push(
+      <Text
+        style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
+        onPress={() => this.props.navigation.navigate('Driver Application')}
+      >Applying to be a driver?</Text>)
+
+    this.setState({
+      checkDriverStatus: badgebutton,
+    })
+  }
+
   render () {
     if (this.state.binded) {
       return (
@@ -186,10 +202,7 @@ export default class AccountEditScreen extends React.Component {
               onChangeText={(phone) => this.setState({ phone })}
             />
 
-            <Text
-              style={{color: COLORS.GREY, marginBottom: 15, fontSize: 12}}
-              onPress={() => this.props.navigation.navigate('Driver Application')}
-            >Applying to be a driver?</Text>
+            {(this.state.isDriver === 'yes') ? this.state.checkDriverStatus : null}
 
             <View style={pageStyle.equalspace}>
               <SubmitButton title='Update Profile' onPress={this.submitEditProfile} />
