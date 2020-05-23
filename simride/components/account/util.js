@@ -42,6 +42,7 @@ module.exports = {
         document.getElementById('cancelEditButton').style.display = 'inline';
         document.getElementById('submitPasswordButton').style.display = 'none';
         document.getElementById('cancelPasswordButton').style.display = 'none';
+        document.getElementById('btnLogout').style.display = 'none';
     },
 
     changePassword: function () {
@@ -70,6 +71,7 @@ module.exports = {
         document.getElementById('btnImgFrontUpload').style.display = 'none';
         document.getElementById('btnImgBackUpload').style.display = 'none';
         document.getElementById('submitDriverDetails').style.display = 'none';
+        document.getElementById('btnLogout').style.display = 'none';
 
         document.getElementById('editfName').value = "";
         document.getElementById('editlName').value = "";

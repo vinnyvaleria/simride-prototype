@@ -20,7 +20,6 @@ class rating extends Component {
         this.setState({
             starCount: rating
         });
-        console.log("Rating is: " + rating)
     }
 
     componentDidUpdate(prevProps) {

@@ -154,10 +154,8 @@ class Inbox extends React.Component {
         let i = 0;
         // creates chat based on usernames
         while (i <= unameArr.length) {
-            console.log(unameArr[i]);
             // checks if there is a valid account in the database
             if (this.state.to === unameArr[i]) {
-                console.log(this.state.to, unameArr[i]);
                 document.getElementById('searchUser').style.display = "none";
                 document.getElementById('sendNewMessage').style.display = "block";
                 const search = this.state.to;
@@ -178,8 +176,6 @@ class Inbox extends React.Component {
                         chatName = (search + "-" + user[2])
                     }
                 }
-
-                console.log(chatName);
 
                 clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
                 chattingTo.innerHTML = clickedUser;
@@ -254,7 +250,6 @@ class Inbox extends React.Component {
         document.getElementById("messages").innerHTML = "";
 
         chatName = chats[e.target.id];
-        console.log(chatName);
         firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
             querySnapshot.docChanges().forEach((doc) => {
                 var message = doc.doc.data();
@@ -270,8 +265,6 @@ class Inbox extends React.Component {
                     html += message.from + ": " + message.text;
                     html += "</p>";
                 }
-
-                console.log(html);
 
                 document.getElementById('submitInboxMessage').style.display = "block";
                 document.getElementById("messages").innerHTML += html;

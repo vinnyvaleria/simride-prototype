@@ -43,7 +43,6 @@ class map extends React.Component {
     componentDidMount() {
         const self = this;
         if ("geolocation" in navigator) {
-            console.log("Available");
             if (this.state.action === 'meet') {
                 navigator.geolocation.watchPosition(function (position) {
                     let d = distance(position.coords.longitude, position.coords.latitude, self.state.to.lng, self.state.to.lat);
@@ -88,7 +87,6 @@ class map extends React.Component {
     }
 
     geoSuccess = (position) => {
-        console.log(position);
         this.setState({
             ready: true,
             from: { lat: position.coords.latitude, lng: position.coords.longitude }

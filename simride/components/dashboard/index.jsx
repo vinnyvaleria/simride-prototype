@@ -111,7 +111,6 @@ class Dashboard extends React.Component {
         alert('Back image could not be loaded')
       });
 
-    console.log(this.state.isMounted);
     //this.getAndLoadHttpUrl(driverID);
 
     document.getElementById('div_ViewApplicant').style.display = "block";

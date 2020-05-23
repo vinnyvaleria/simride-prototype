@@ -5,7 +5,6 @@ import {user} from './checkEmailDashboard';
 
 export const acknowledgeNotif = (e) => {
     const notifID = e.target.parentElement.parentElement.id;
-    console.log(notifID);
     const notifRef = firebase.database().ref('notification/' + notifID);
     notifRef.remove();
 

@@ -98,7 +98,6 @@ class Wallet extends React.Component {
             }),
         })
             .then(res => {
-                console.log(res);
                 return res.json();
             })
             .then(result => {

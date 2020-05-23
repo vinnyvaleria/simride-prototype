@@ -22,7 +22,6 @@ export const viewReportedUser = (e) => {
                     let inappropriate = data.val().inappropriate;
                     let vulgar = data.val().vulgar;
                     let noshow = data.val().noshow;
-                    console.log(username, lastReportDate);
 
                     document.getElementById('td_ViewReportedUser_userID').innerHTML = data.key;
                     document.getElementById('td_ViewReportedUser_username').innerHTML = username;
