@@ -49,6 +49,20 @@ h3 {
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
+h4 {
+  font-size: 1em !important;
+  font-weight: 600 !important;
+  line-height: 1.5em !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+h5 {
+  font-size: 0.75em !important;
+  font-weight: 400 !important;
+  line-height: 1em !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
 input {
   border-radius: 5px !important;
   border-style: unset !important;
@@ -69,6 +83,8 @@ button:hover {
   color: white !important;
 }
 
+
+// media query
 @media only screen and (max-width: 767px) {
   #signin-input-wrapper {
       flex-direction: column;
