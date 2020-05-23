@@ -202,7 +202,7 @@ export default class AccountEditScreen extends React.Component {
               onChangeText={(phone) => this.setState({ phone })}
             />
 
-            {(this.state.isDriver === 'yes') ? this.state.checkDriverStatus : null}
+            {(user[5] === 'no') ? this.state.checkDriverStatus : null}
 
             <View style={pageStyle.equalspace}>
               <SubmitButton title='Update Profile' onPress={this.submitEditProfile} />

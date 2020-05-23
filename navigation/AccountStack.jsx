@@ -30,8 +30,8 @@ export default function AccountStack() {
     >
       <Stack.Screen name='Account Settings' component={AccountMainScreen} />
       <Stack.Screen name='Edit Profile' component={AccountEditScreen} />
-      <Stack.Screen name='Update Password' component={UpdatePasswordScreen} />
       <Stack.Screen name='Driver Application' component={DriverApplicationScreen} />
+      <Stack.Screen name='Update Password' component={UpdatePasswordScreen} />
     </Stack.Navigator> 
   );
 }

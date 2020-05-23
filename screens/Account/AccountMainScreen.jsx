@@ -170,7 +170,7 @@ export default class AccountMainScreen extends React.Component {
             <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>
             <Text style={pageStyle.subtitle}>Phone Number: +65 {this.state.phone}</Text>
             <Text style={pageStyle.subtitle}>Rating: {this.state.avgRating}</Text>
-            <Text style={{ fontSize: 12, fontFamily: 'notoSansMedium', color: COLORS.WHITE, marginTop: 10, }} onPress={() => { this.props.navigation.navigate('Driver Application') }} >Apply as a driver</Text>
+            
             <View style={pageStyle.equalspace}>
               <SubmitButton 
                 title='Edit Profile' 
@@ -186,4 +186,4 @@ export default class AccountMainScreen extends React.Component {
     }
   }
 }
-
+//<Text style={{ fontSize: 12, fontFamily: 'notoSansMedium', color: COLORS.WHITE, marginTop: 10, }} onPress={() => { this.props.navigation.navigate('Driver Application') }} >Apply as a driver</Text>
