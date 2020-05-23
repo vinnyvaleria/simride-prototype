@@ -3,6 +3,8 @@ import { COLORS } from '../../../constants/colors';
 const wrapper = {
   alignSelf: 'center',
   paddingTop: 10,
+  height: '100%',
+  flex: 1,
 };
 
 const image = {

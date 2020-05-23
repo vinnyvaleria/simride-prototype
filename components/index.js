@@ -9,6 +9,7 @@ import NotifBox from './NotifBox';
 import TransactionBox from './TransactionBox';
 import PrevMsgsBox from './PrevMsgsBox';
 import Badge from './Badge';
+import BookingBox from './BookingBox';
 import SubmitCashout from './SubmitCashout';
 import SubmitTopUp from './SubmitTopUp';
 
@@ -24,6 +25,7 @@ export {
   TransactionBox,
   PrevMsgsBox,
   Badge,
+  BookingBox,
   SubmitCashout,
-  SubmitTopUp
+  SubmitTopUp,
 }

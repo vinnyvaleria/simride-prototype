@@ -186,7 +186,7 @@ export default class MainScreen extends React.Component {
         </ScrollView>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }

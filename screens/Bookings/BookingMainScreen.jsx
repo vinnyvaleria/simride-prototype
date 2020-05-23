@@ -5,20 +5,23 @@ import {
   Text,
   Image,
 } from 'react-native';
+import * as moment from 'moment';
 
 import fire from '../../config';
 import 'firebase/firestore';
 import 'firebase/storage';
 
 // components
-import { SubmitButton } from '../../components';
+import { SubmitButton, BookingBox } from '../../components';
 import { user } from '../Landing/StartScreen';
 
 // styling
 import { pageStyle, screenStyle } from './styles';
+import icon from '../../assets/images/all-bookings.png';
 
-// images
-import profilepicture from '../../assets/images/picture.jpg';
+var prevBooking = [];
+var userDetails = [];
+var schedulebutton =[]
 
 export default class BookingMainScreen extends React.Component {
   constructor (props) {
@@ -43,6 +46,12 @@ export default class BookingMainScreen extends React.Component {
       status: '',
       dateApplied: '',
       binded: false,
+      displayPrevBooking: [],
+      driver: '',
+      area: '',
+      date: '',
+      passengers: '',
+      checkDriverStatus: []
     };
   }
 
@@ -51,6 +60,7 @@ export default class BookingMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.loadAllBookings();
   }
 
   // handles image change
@@ -82,25 +92,94 @@ export default class BookingMainScreen extends React.Component {
           user[9] = child.key;
           user[10] = child.val().rating;
           user[11] = child.val().ratedBy;
+
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          })
       });
     })
     this.setState({ binded: true });
   }
 
-  // logout
-  logout = () => {
-    user[0] = '';
-    user[1] = '';
-    user[2] = '';
-    user[3] = '';
-    user[4] = '';
-    user[5] = '';
-    user[6] = '';
-    user[7] = '';
-    user[8] = '';
-    user[9] = '';
+  loadAllBookings = () => {
+    fire.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then((snapshot) => {
+        var i = 0;
+        snapshot.forEach((child) => {
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          i++;
+        })
+      }).then(() => {
+        const database = fire.database().ref('bookings').orderByChild('date').startAt(Date.now());
+        database.on('value', (snapshot) => {
+          if (snapshot.exists()) {
+            let content = '';
+            let rowCount = 0;
+            snapshot.forEach((data) => {
+              if (data.val().date > moment.now()) {
+                this.state.area = data.val().area;
+                this.state.date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+                let ppl = [];
 
-    fire.auth().signOut();
+                if (data.val().currPassengers !== "") {
+                  ppl = data.val().currPassengers.split(',')
+                }
+
+                this.state.passengers = ppl.length + "/" + data.val().maxPassengers;
+                let id = data.val().driverID;
+                this.state.driver = '';
+
+                for (let i = 0; i < userDetails.length; i++) {
+                  let key = [];
+                  key = userDetails[i].split(':');
+                  if (key[0] === id) {
+                    this.state.driver = key[1];
+                  }
+                }
+
+                this.state.area.replace('$ ', '');
+                this.displayPrevBooking(this.state.driver, this.state.area, this.state.date, this.state.passengers);
+                rowCount++;
+              }
+            });
+          }
+        }
+      );
+    });
+  }
+
+  checkDriverStatus = () => {
+    if (this.state.isDriver === 'yes') {
+      schedulebutton.push(
+        <SubmitButton 
+          title='Schedule a new ride' 
+          onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
+        />
+      )
+    }
+
+    this.setState({
+      checkDriverStatus: schedulebutton
+    })
+  }
+
+  displayPrevBooking = (label, area, date, passenger) => {
+    prevBooking.push(<BookingBox label={label} area={area} date={date} passenger={passenger} icon={icon} />)
+    this.setState({
+      displayPrevBooking: prevBooking
+    })
   }
 
   render () {
@@ -108,15 +187,16 @@ export default class BookingMainScreen extends React.Component {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <SubmitButton 
-              title='Schedule a new ride' 
-              onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
-            />
+            {console.log(user[5])}
+            {this.state.checkDriverStatus}
+          </View>
+          <View style={pageStyle.wrapper}>
+            {this.state.displayPrevBooking}
           </View>
         </ScrollView>
       );
     } else {
-      return null && console.log('There is a problem with binging user data');
+      return null && console.log('There is a problem with binding user data');
     }
   }
 }
