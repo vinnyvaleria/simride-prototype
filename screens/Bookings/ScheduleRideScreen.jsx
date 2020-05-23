@@ -242,7 +242,7 @@ export default class ScheduleRideScreen extends React.Component {
             </Picker>
           
             <View style={pageStyle.equalspace}>
-              <SubmitButton title='Submit' onPress={() => { this.submitBookingCreated }} />
+              <SubmitButton title='Submit' onPress={this.submitCreateBooking} />
               <SubmitButton title='Cancel' onPress={() => {this.props.navigation.navigate('Bookings')}} />
             </View>
           </View>

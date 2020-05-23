@@ -9,7 +9,9 @@ import { COLORS } from '../constants/colors';
 import { 
   BookingMainScreen,
   ScheduleRideScreen,
-  MyBookingsScreen
+  MyBookingsScreen,
+  ViewBookingScreen,
+  JoinBookingScreen
  } from '../screens/Bookings';
 
 const Stack = createStackNavigator();
@@ -30,6 +32,8 @@ export default function BookingStack() {
       <Stack.Screen name='Bookings' component={BookingMainScreen} />
       <Stack.Screen name='View My Bookings' component={MyBookingsScreen} />
       <Stack.Screen name='Schedule a Ride' component={ScheduleRideScreen} />
+      <Stack.Screen name='View Selected Booking' component={ViewBookingScreen} />
+      <Stack.Screen name='Join Booking' component={JoinBookingScreen} />
     </Stack.Navigator> 
   );
 }

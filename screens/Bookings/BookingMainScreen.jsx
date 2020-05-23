@@ -22,6 +22,7 @@ import icon from '../../assets/images/all-bookings.png';
 var prevBooking = [];
 var userDetails = [];
 var schedulebutton =[]
+var bookingID;
 
 export default class BookingMainScreen extends React.Component {
   constructor (props) {
@@ -122,8 +123,6 @@ export default class BookingMainScreen extends React.Component {
         const database = fire.database().ref('bookings').orderByChild('date').startAt(Date.now());
         database.on('value', (snapshot) => {
           if (snapshot.exists()) {
-            let content = '';
-            let rowCount = 0;
             snapshot.forEach((data) => {
               if (data.val().date > moment.now()) {
                 let area = data.val().area;
@@ -147,8 +146,7 @@ export default class BookingMainScreen extends React.Component {
                 }
 
                 area.replace('$ ', '');
-                this.displayPrevBooking(driver, area, date, passengers);
-                rowCount++;
+                this.displayPrevBooking(driver, area, date, passengers, data.key);
               }
             });
           }
@@ -164,14 +162,19 @@ export default class BookingMainScreen extends React.Component {
         onPress={() => {{this.props.navigation.navigate('Schedule a Ride')}}} 
       />
     )
-
+    
     this.setState({
       checkDriverStatus: schedulebutton
     })
   }
 
-  displayPrevBooking = (label, area, date, passenger) => {
-    prevBooking.push(<BookingBox label={label} area={area} date={date} passenger={passenger} icon={icon} />)
+  displayBooking = (id) => {
+    bookingID = id;
+    this.props.navigation.navigate('View Selected Booking');
+  }
+
+  displayPrevBooking = (label, area, date, passenger, id) => {
+    prevBooking.push(<BookingBox label={label} area={area} date={date} passenger={passenger} icon={icon} onPress={() => this.displayBooking(id) }/>)
     this.setState({
       displayPrevBooking: prevBooking
     })
@@ -202,3 +205,4 @@ export default class BookingMainScreen extends React.Component {
   }
 }
 
+export {bookingID}

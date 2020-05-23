@@ -3,7 +3,7 @@ import {
   ScrollView,
   View,
   Text,
-  Image,
+  TextInput,
   Alert,
 } from 'react-native';
 import * as moment from 'moment';
