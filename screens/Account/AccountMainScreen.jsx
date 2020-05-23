@@ -20,6 +20,8 @@ import { pageStyle, screenStyle } from './styles';
 // images
 import profilepicture from '../../assets/images/picture.jpg';
 
+var badgebutton = [];
+
 export default class AccountMainScreen extends React.Component {
   constructor (props) {
     super(props);
@@ -47,7 +49,7 @@ export default class AccountMainScreen extends React.Component {
       dateApplied: '',
       balance: '',
       binded: false,
-      driverStatus: false,
+      checkDriverStatus: []
     };
   }
 
@@ -56,6 +58,7 @@ export default class AccountMainScreen extends React.Component {
     user[3] = emailTemp;
     this.state.email = user[3];
     this.bindUserData();
+    this.checkDriverStatus();
   }
 
   // handles image change
@@ -119,14 +122,6 @@ export default class AccountMainScreen extends React.Component {
     this.setState({ binded: true });
   }
 
-  driverStatus = () => {
-    if (this.state.isDriver.toLowerCase() === 'yes') {
-      this.setState({ driverStatus: true });
-    } else {
-      this.setState({ driverStatus: false });
-    }
-  }
-
   // logout
   logout = () => {
     user[0] = '';
@@ -145,12 +140,20 @@ export default class AccountMainScreen extends React.Component {
     fire.auth().signOut();
   }
 
+  checkDriverStatus = () => {
+    badgebutton.push(<Badge label='driver' />)
+
+    this.setState({
+      checkDriverStatus: badgebutton,
+    })
+  }
+
   render () {
     if (this.state.binded) {
       return (
         <ScrollView style={screenStyle}>
           <View style={pageStyle.wrapper}>
-            <Badge label='Driver' />
+            {(this.state.isDriver === 'yes') ? this.state.checkDriverStatus : null}
             <Image style={pageStyle.image} source={profilepicture} />
             <Text style={pageStyle.title}>{this.state.firstName} {this.state.lastName}</Text>
             <Text style={pageStyle.subtitle}>Email: {this.state.email}</Text>

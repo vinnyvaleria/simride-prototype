@@ -147,7 +147,6 @@ export default class WalletMainScreen extends React.Component {
             <Text style={pageStyle.header}>Past Transactions</Text>
             {this.state.displayTransactions}
 
-
           </View>
         </ScrollView>
       );
