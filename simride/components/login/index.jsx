@@ -225,6 +225,8 @@ class Login extends React.Component {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <img src={logo} alt="SIMRide Logo" />
         <br/>
+        <br/>
+        <br/>
         <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
         <Image source={logo} />
         <div>
