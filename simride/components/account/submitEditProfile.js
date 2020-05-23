@@ -7,7 +7,8 @@ const util = require('./util')
 
 // submits the edited profile and updates the realtime db
 export const submitEditProfile = (fname, lname, phone) => {
-    if (fname !== "" && lname !== "" && phone !== "") {
+    const rg = new RegExp("^((8|9)[0-9]{7}$)");
+    if (fname !== "" && lname !== "" && phone !== "" && rg.test(phone)) {
         user[0] = fname;
         user[1] = lname;
         user[4] = phone;
