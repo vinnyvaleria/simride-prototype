@@ -2,14 +2,17 @@
   padding: 10px !important;
   background: #4b9ea1 !important;
 }
-
-p, input, button {
+input, button {
   font-size: 16px !important;
   font-weight: 400 !important;
-  line-height: 24px !important;
+  line-height: 20px !important;
   color: #222222 !important;
   font-family: Arial, Helvetica, sans-serif !important;
   padding: 0.25em 0.5em !important;
+}
+
+p {
+  line-height: 10px !important;
 }
 
 h1 {
@@ -61,7 +64,7 @@ input {
   margin-bottom: 15px !important;
 }
 
-input [tyoe=button] {
+input [type=button] {
   border-radius: 5px !important;
   border-style: unset !important;
   width: 70px;
@@ -73,7 +76,7 @@ button {
   padding: 0.25em 1.5em !important;
   margin: 0.5em !important;
   border: 0 !important;
-  cursor: pointer;
+  
 }
 
 button:hover {
@@ -81,8 +84,20 @@ button:hover {
   color: white !important;
 }
 
+a {
+  margin-bottom: 0.5em !important;
+  color: #ffffff !important;
+  font-family: Arial,
+  Helvetica,
+  sans-serif !important;
+  padding: 0.1em 0 !important;
+  margin: unset !important;
+}
 
-// media query
+a:hover {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 767px) {
   #signin-input-wrapper {
       flex-direction: column;

@@ -2,6 +2,7 @@ import 'firebase/firestore';
 import firebase from '../../../base';
 import React from 'react';
 import logo from '../../assets/images/logo.png';
+
 import { Text, View, Image } from 'react-native';
 import { validate } from 'email-validator';
 import { forgotPass } from './forgotPass';
@@ -9,6 +10,7 @@ import { cancel } from './cancel';
 import { checkEmailLogin, user } from './checkEmailLogin';
 import { extendSignUp } from './extendSignUp';
 import { submitForgotPassword } from './submitForgotPass';
+
 import '../../constants/custom.css';
 
 var countArr = new Array(1); // account
@@ -169,7 +171,6 @@ class Login extends React.Component {
             .once('value')
             .then((snapshot) => {
               countArr[0] = emailArr.length + 1;
-              console.log("rewrite: ", countArr[0]);
               snapshot.ref.update({
                 acct: countArr[0]
               });
@@ -198,7 +199,6 @@ class Login extends React.Component {
         alert("Email not valid bro");
       } else {
         while (i < emailArr.length) {
-          console.log(emailArr[i], email, i);
           if (emailArr[i].toString() === email) {
             if (user[7].toString() === "yes") {
               alert("Account is banned. Please contact administrator.")
@@ -223,7 +223,9 @@ class Login extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <h1 style={{ color: '#fff', fontSize: 30, fontFamily: 'Roboto', fontWeight: '600' }}>Welcome to SIMRide</h1>
+        <img src={logo} alt="SIMRide Logo" />
+        <br/>
+        <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
         <Image source={logo} />
         <div>
           <form>
@@ -231,11 +233,11 @@ class Login extends React.Component {
               <br/>
               <br/>
               <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
-                placeholder="E-Mail (test@this.com)" />
+                placeholder="email" />
               <input value={this.state.password} onChange={this.handleChange} type="password"
-                name="password" placeholder="Password (shafiq)" style={{ marginLeft: '15px' }} />
+                name="password" placeholder="password" style={{ marginLeft: '15px' }} />
               <br/>
-              <a onClick={forgotPass}>Forgot password?</a>
+              <a onClick={forgotPass}>&nbsp;Forgot password?</a>
               <br/>
               <br/>
               <div id="div_SubmitSignIn" style={{ textAlign: 'center' }}>
@@ -261,7 +263,7 @@ class Login extends React.Component {
               <table>
                 <tbody>
                   <tr>
-                    <td>First Name</td>
+                    <td width='100'>First Name</td>
                     <td><input value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
                     </td>
                   </tr>
@@ -287,7 +289,7 @@ class Login extends React.Component {
                     <td><input value={this.state.password} onChange={this.handleChange} type="password" name="password" /></td>
                   </tr>
                   <tr>
-                    <td>Re-Enter Password</td>
+                    <td>Re-Enter<br/>Password</td>
                     <td><input value={this.state.repassword} onChange={this.handleChange} type="password" name="repassword" /></td>
                   </tr>
                 </tbody>

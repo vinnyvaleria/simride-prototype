@@ -9,7 +9,6 @@ export const loadCashoutHistory = () => {
         if (snapshot.exists()) {
             let content = '';
             snapshot.forEach((data) => {
-                console.log('fuck money');
                 let user = data.val().requester;
                 let userID = data.val().requesterID;
                 let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
