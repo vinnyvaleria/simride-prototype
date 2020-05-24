@@ -19,46 +19,45 @@ export const submitCreateBooking = (createDate, createArea, createMaxPassengers,
             });
         }
     }).then(() => {
-        var i = 0;
         if (dates.length === 0) {
             check = true;
-        } else {
-            while (i < dates.length) {
+        } 
+        else {
+            for (let i = 0; i < dates.length; i++) {
                 if (createDate < moment.unix(dates[i] / 1000).add(2, 'hours') && createDate > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
                     alert("You have another booking set 2 hours before/after this time");
                     check = false;
                     break;
-                } else {
+                } 
+                else {
                     check = true;
                 }
-                i++;
             }
+        }
 
-            if (check) {
-                const date = new Date(createDate);
-                const weeks = recurringWeeks;
-                let x = 0;
-                const bookingsRef = firebase.database().ref('bookings');
-                while (x < weeks) {
-                    const booking = {
-                        driverID: user[9],
-                        date: date.setDate(date.getDate() + (7 * x)),
-                        area: createArea,
-                        maxPassengers: createMaxPassengers,
-                        currPassengers: '',
-                        payMethod: '',
-                        postal: '',
-                        towards: createTowards,
-                        completed: 'no',
-                        ratedBy: ''
-                    }
-                    bookingsRef.push(booking);
-                    x++;
+        if (check) {
+            const date = new Date(createDate);
+            const weeks = recurringWeeks;
+            let x = 0;
+            const bookingsRef = firebase.database().ref('bookings');
+            while (x < weeks) {
+                const booking = {
+                    driverID: user[9],
+                    date: date.setDate(date.getDate() + (7 * x)),
+                    area: createArea,
+                    maxPassengers: createMaxPassengers,
+                    currPassengers: '',
+                    payMethod: '',
+                    postal: '',
+                    towards: createTowards,
+                    completed: 'no',
+                    ratedBy: ''
                 }
-                document.getElementById('tr_showRecurring').style.display = 'none';
-                document.getElementById('cbRecurring').checked = false;
-                
+                bookingsRef.push(booking);
+                x++;
             }
+            document.getElementById('tr_showRecurring').style.display = 'none';
+            document.getElementById('cbRecurring').checked = false;
         }
     });
 
