@@ -73,24 +73,30 @@ export const joinBooking = (postal) => {
             }
         }
 
-        if (check) {
-            if (user[8] < 5.00 && document.getElementById('ddPayBy').value === "wallet") {
-                alert("You do not have sufficient funds in your e-wallet");
-            } else {
-                const accountsRef = firebase.database().ref('bookings/' + bookingID);
-                const bookingDetails = {
-                    currPassengers: currPassengers,
-                    payMethod: payMethod,
-                    postal: PostalCode
-                }
-                accountsRef.update(bookingDetails);
+        if (PostalCode !== '') {
+            if (check) {
+                console.log(PostalCode)
+                if (user[8] < 5.00 && document.getElementById('ddPayBy').value === "wallet") {
+                    alert("You do not have sufficient funds in your e-wallet");
+                } else {
+                    const accountsRef = firebase.database().ref('bookings/' + bookingID);
+                    const bookingDetails = {
+                        currPassengers: currPassengers,
+                        payMethod: payMethod,
+                        postal: PostalCode
+                    }
+                    accountsRef.update(bookingDetails);
 
-                payMethod = '';
-                currPassengers = '';
-                document.getElementById('btnSubmitJoinBooking').style.display = "none";
-                document.getElementById('tbl_viewSelectedBooking_ExtendBooking').style.display = "none";
-                viewMyBookings();
+                    payMethod = '';
+                    currPassengers = '';
+                    document.getElementById('btnSubmitJoinBooking').style.display = "none";
+                    document.getElementById('tbl_viewSelectedBooking_ExtendBooking').style.display = "none";
+                    viewMyBookings();
+                }
             }
+        }
+        else {
+            alert('Please enter a meeting/drop-off point!')
         }
     });
 
