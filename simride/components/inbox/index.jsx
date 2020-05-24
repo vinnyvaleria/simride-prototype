@@ -69,6 +69,20 @@ class Inbox extends React.Component {
                     user[9] = child.key;
                     user[10] = child.val().rating;
                     user[11] = child.val().ratedBy;
+
+                    this.setState({
+                        firstName: child.val().fname,
+                        lastName: child.val().lname,
+                        username: child.val().uname,
+                        email: child.val().email,
+                        phone: child.val().phone,
+                        isDriver: child.val().isDriver,
+                        isAdmin: child.val().isAdmin,
+                        wallet: child.val().wallet,
+                        id: child.key,
+                        rating: child.val().rating,
+                        ratedBy: child.val().ratedBy
+                    })
                 });
             }).then(() => {
                 if (typeof user[3] === 'undefined') {

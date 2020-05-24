@@ -79,25 +79,33 @@ class Account extends React.Component {
   componentDidMount() {
     checkEmail();
 
-    this.setState({
-      firstName: user[0],
-      lastName: user[1],
-      username: user[2],
-      email: user[3],
-      phone: user[4],
-      isDriver: user[5],
-      isAdmin: user[6],
-      isBanned: user[7],
-      wallet: user[8],
-      id: user[9],
-      rating: user[10],
-      ratedBy: user[11]
-    }, (() => {
-        if (this.state.ratedBy > 0) {
-          const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
-          this.setState({ avgRating: avg });
-        }
-    }));
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(firebase.auth().currentUser.email)
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          }, (() => {
+            if (this.state.ratedBy > 0) {
+              const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
+              this.setState({ avgRating: avg });
+            }
+          })
+        );
+      })
+    });
   }
 
   editProfile = () => {
