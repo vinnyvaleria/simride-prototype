@@ -8,7 +8,7 @@ var PostalCode;
 
 export const viewBooking = (e) => {
     let userDetails = [];
-
+    document.getElementById('ddFilterArea').selectedIndex = 0;
     document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = null;
     document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = null;
     document.getElementById('td_viewSelectedBooking_driverName').innerHTML = null;

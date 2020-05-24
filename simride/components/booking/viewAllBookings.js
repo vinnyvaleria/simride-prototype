@@ -4,6 +4,7 @@ import {viewBooking} from './viewBooking';
 
 export const viewAllBookings = () => {
     let userDetails = [];
+    document.getElementById('ddFilterArea').selectedIndex = 0;
     document.getElementById('div_availBookings').style.display = "block";
     document.getElementById('div_createBooking').style.display = "none";
     document.getElementById('div_myBookings').style.display = "none";
