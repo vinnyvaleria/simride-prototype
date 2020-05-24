@@ -334,7 +334,7 @@ render() {
                   <tr>
                     <td>Carplate No:</td>
                     <td>
-                      <input id='txtCarplate' value={this.state.carplate} onChange={this.handleChange} type="text"
+                      <input id='txtCarplate' value={this.state.carplate} placeholder="eg. SFG1234B" onChange={this.handleChange} type="text"
                         name="carplate" />
                     </td>
                   </tr>
@@ -347,7 +347,7 @@ render() {
                   <tr>
                     <td>License Number:</td>
                     <td>
-                      <input id='txtLicenseNo' value={this.state.license} onChange={this.handleChange} type="text"
+                      <input id='txtLicenseNo' value={this.state.license} placeholder="eg.S1234567A" onChange={this.handleChange} type="text"
                         name="license" />
                     </td>
                   </tr>
