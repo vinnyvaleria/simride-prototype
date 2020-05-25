@@ -8,6 +8,7 @@ import * as moment from 'moment';
 // view my bookings
 export const viewMyBookings = () => {
     let userDetails = [];
+    document.getElementById('ddFilterArea').selectedIndex = 0;
     document.getElementById('tbl_MyBookings').style.display = 'block';
     document.getElementById('showRating').style.display = 'none';
 

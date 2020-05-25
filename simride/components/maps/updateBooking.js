@@ -1,4 +1,6 @@
 import firebase from '../../../base';
+import {viewAllBookings} from '../booking/viewAllBookings'
+
 
 export const updateBooking = (bookingID) => {
     const reportRef = firebase.database().ref('bookings/' + bookingID);
@@ -9,4 +11,7 @@ export const updateBooking = (bookingID) => {
             });
         }
     });
+
+    alert('We hope you enjoyed your ride!')
+    viewAllBookings();
 }

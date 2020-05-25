@@ -83,39 +83,35 @@ class Login extends React.Component {
     e.preventDefault();
     // checks for duplicate username
     var i = 0;
-    var unameCheck = false;
-    var phoneCheck = false;
+    var check = false;
     const rg = new RegExp("^((8|9)[0-9]{7}$)");
     while (i < unameArr.length) {
       if (this.state.username === unameArr[i]) {
         alert("Username has already been registered");
-        unameCheck = false;
+        check = false;
         break;
       } else {
-        unameCheck = true;
-      }
-      if (this.state.phone === phoneArr[i]) {
-        alert("Phone number has already been registered");
-        phoneCheck = false;
-        break;
-      } else {
-        phoneCheck = true;
+        if (this.state.phone === phoneArr[i]) {
+          alert("Phone number has already been registered");
+          check = false;
+          break;
+        } else {
+          if (rg.test(this.state.phone)) {
+            check = true;
+          } else {
+            alert("Phone number is invalid")
+            check = false;
+          }
+        }
       }
       i++;
-    }
-
-    if (rg.test(this.state.phone)) {
-      phoneCheck = true;
-    } else {
-      alert("Phone number is invalid")
-      phoneCheck = false;
     }
 
     // checks confirm password
     if (this.state.password !== this.state.repassword) {
       alert("Passwords do not match");
     } else {
-      if (unameCheck && phoneCheck) {
+      if (check) {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
           alert(error.code + ": " + error.message);
         }).then(() => {
@@ -222,8 +218,17 @@ class Login extends React.Component {
   
   render() {
     return (
+<<<<<<< HEAD
       <View style={{ width: "100%", height: "50vw", justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
         <h1>Welcome to SIMRide</h1>
+=======
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <img src={logo} alt="SIMRide Logo" />
+        <br/>
+        <br/>
+        <br/>
+        <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
+>>>>>>> 97c8ee33d12affb0924b889d1294d11df1d1e8c8
         <Image source={logo} />
         <div>
           <form>

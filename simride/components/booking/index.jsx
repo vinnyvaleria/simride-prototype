@@ -45,13 +45,46 @@ class Booking extends React.Component {
           createArea: 'Admiralty',
           createTowards: 'School',
           createMaxPassengers: '1',
-          bookingID: ''
+          bookingID: '',
+          firstName: '',
+          lastName: '',
+          username: '',
+          email: '',
+          phone: '',
+          isDriver: '',
+          isAdmin: '',
+          wallet: '',
+          id: '',
+          rating: '',
+          ratedBy: '',
       }
   }
 
   // goes back to login page if stumble upon another page by accident without logging in
   componentDidMount() {
     checkEmail();
+
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(firebase.auth().currentUser.email)
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          })
+        });
+      })
   }
 
   onChange(date) {

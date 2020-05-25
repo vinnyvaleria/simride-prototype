@@ -4,6 +4,7 @@ import {viewBooking} from './viewBooking';
 
 export const viewAllBookings = () => {
     let userDetails = [];
+    document.getElementById('ddFilterArea').selectedIndex = 0;
     document.getElementById('div_availBookings').style.display = "block";
     document.getElementById('div_createBooking').style.display = "none";
     document.getElementById('div_myBookings').style.display = "none";
@@ -32,7 +33,7 @@ export const viewAllBookings = () => {
                         document.getElementById('tb_AllBookings').innerHTML = '';
                     }
                     snapshot.forEach((data) => {
-                        if (data.val().date > moment.now()) {
+                        if (data.val().date > moment.now() && data.val().completed === 'no') {
                             let area = data.val().area;
                             let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                             let ppl = [];

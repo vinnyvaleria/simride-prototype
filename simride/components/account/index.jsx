@@ -79,25 +79,33 @@ class Account extends React.Component {
   componentDidMount() {
     checkEmail();
 
-    this.setState({
-      firstName: user[0],
-      lastName: user[1],
-      username: user[2],
-      email: user[3],
-      phone: user[4],
-      isDriver: user[5],
-      isAdmin: user[6],
-      isBanned: user[7],
-      wallet: user[8],
-      id: user[9],
-      rating: user[10],
-      ratedBy: user[11]
-    }, (() => {
-        if (this.state.ratedBy > 0) {
-          const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
-          this.setState({ avgRating: avg });
-        }
-    }));
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(firebase.auth().currentUser.email)
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          }, (() => {
+            if (this.state.ratedBy > 0) {
+              const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
+              this.setState({ avgRating: avg });
+            }
+          })
+        );
+      })
+    });
   }
 
   editProfile = () => {
@@ -257,6 +265,10 @@ render() {
       <div id='acctPage'>
       <h1>{this.state.username + "'s Account"}</h1>
         <div>
+<<<<<<< HEAD
+=======
+          <h1>{this.state.username}</h1>
+>>>>>>> 97c8ee33d12affb0924b889d1294d11df1d1e8c8
           <table id='tblProfile'>
             <tbody>
               <tr>
@@ -325,7 +337,7 @@ render() {
                   <tr>
                     <td>Carplate No:</td>
                     <td>
-                      <input id='txtCarplate' value={this.state.carplate} onChange={this.handleChange} type="text"
+                      <input id='txtCarplate' value={this.state.carplate} placeholder="eg. SFG1234B" onChange={this.handleChange} type="text"
                         name="carplate" />
                     </td>
                   </tr>
@@ -338,7 +350,7 @@ render() {
                   <tr>
                     <td>License Number:</td>
                     <td>
-                      <input id='txtLicenseNo' value={this.state.license} onChange={this.handleChange} type="text"
+                      <input id='txtLicenseNo' value={this.state.license} placeholder="eg.S1234567A" onChange={this.handleChange} type="text"
                         name="license" />
                     </td>
                   </tr>

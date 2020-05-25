@@ -101,6 +101,7 @@ module.exports = {
         document.getElementById('btnImgFrontUpload').style.display = 'none';
         document.getElementById('btnImgBackUpload').style.display = 'none';
         document.getElementById('submitDriverDetails').style.display = 'inline-block';
+        document.getElementById('btnLogout').style.display = 'none';
     },
 
     cancelApplyDriver: function () {
@@ -129,5 +130,6 @@ module.exports = {
         document.getElementById('btnImgFrontUpload').style.display = 'none';
         document.getElementById('btnImgBackUpload').style.display = 'none';
         document.getElementById('submitDriverDetails').style.display = 'none';
+        document.getElementById('btnLogout').style.display = 'inline-block';
     }
 };
