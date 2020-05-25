@@ -13,27 +13,27 @@ export default function Start() {
   return (
     <Router style={{ width: '100vw' }}>
       <footer>
-        <NavLink to='/'>
+        <NavLink exact to='/' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-home' />
         </NavLink>
 
-        <NavLink to='/Booking'>
+        <NavLink exact to='/Booking' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-calendar' />
         </NavLink>
 
-        <NavLink to='/Messages'>
+        <NavLink exact to='/Messages' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-mail' />
         </NavLink>
         
-        <NavLink to='/Wallet'>
+        <NavLink exact to='/Wallet' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-wallet' />
         </NavLink>
         
-        <NavLink to='/Checkout'>
+        <NavLink exact to='/Checkout' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-list-box' />
         </NavLink>
         
-        <NavLink to='/Account'>
+        <NavLink exact to='/Account' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-cog' />
         </NavLink>
       </footer>
