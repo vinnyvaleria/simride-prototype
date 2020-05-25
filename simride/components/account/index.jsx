@@ -265,10 +265,7 @@ render() {
       <div id='acctPage'>
       <h1>{this.state.username + "'s Account"}</h1>
         <div>
-<<<<<<< HEAD
           <h1>{this.state.username}</h1>
-=======
->>>>>>> bcfdf1ad6d986fad8878f81e6ff71388b2f4036f
           <table id='tblProfile'>
             <tbody>
               <tr>

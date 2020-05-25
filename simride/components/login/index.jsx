@@ -218,23 +218,9 @@ class Login extends React.Component {
   
   render() {
     return (
-<<<<<<< HEAD
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <img src={logo} alt="SIMRide Logo" />
-        <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
-=======
       <View>
         <img src={logo} alt='SIMRide Logo' style={{ maxWidth: '7em' }} />
         <h1>Welcome to SIMRide</h1>
->>>>>>> bcfdf1ad6d986fad8878f81e6ff71388b2f4036f
         <Image source={logo} />
         <div>
           <form>
