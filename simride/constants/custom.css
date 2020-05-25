@@ -2,7 +2,7 @@
 #root {
   background: #4b9ea1 !important;
 }
-input, button {
+input, button, select {
   font-size: 16px !important;
   font-weight: 400 !important;
   line-height: 20px !important;

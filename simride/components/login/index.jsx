@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-import "firebase/firestore";
-import firebase from "../../../base";
-import React from "react";
-import logo from "../../assets/images/logo.png";
-import { Text, View, Image } from "react-native";
-import { validate } from "email-validator";
-import { forgotPass } from "./forgotPass";
-import { cancel } from "./cancel";
-import { checkEmailLogin, user } from "./checkEmailLogin";
-import { extendSignUp } from "./extendSignUp";
-import { submitForgotPassword } from "./submitForgotPass";
-import "../../constants/custom.css";
-=======
 import 'firebase/firestore';
 import firebase from '../../../base';
 import React from 'react';
@@ -26,7 +12,6 @@ import { extendSignUp } from './extendSignUp';
 import { submitForgotPassword } from './submitForgotPass';
 
 import '../../constants/custom.css';
->>>>>>> 5b02911fb76beae758566d58a87e5a2d5b6e96d9
 
 var countArr = new Array(1); // account
 var unameArr = [];
@@ -237,15 +222,8 @@ class Login extends React.Component {
   
   render() {
     return (
-<<<<<<< HEAD
       <View style={{ width: "100%", height: "50vw", justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
         <h1>Welcome to SIMRide</h1>
-=======
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <img src={logo} alt="SIMRide Logo" />
-        <br/>
-        <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
->>>>>>> 5b02911fb76beae758566d58a87e5a2d5b6e96d9
         <Image source={logo} />
         <div>
           <form>
@@ -255,11 +233,7 @@ class Login extends React.Component {
               <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
                 placeholder="email" />
               <input value={this.state.password} onChange={this.handleChange} type="password"
-<<<<<<< HEAD
-                name="password" placeholder="Password (shafiq)" style={{ marginLeft: "15px" }} />
-=======
                 name="password" placeholder="password" style={{ marginLeft: '15px' }} />
->>>>>>> 5b02911fb76beae758566d58a87e5a2d5b6e96d9
               <br/>
               <a onClick={forgotPass}>&nbsp;Forgot password?</a>
               <br/>
