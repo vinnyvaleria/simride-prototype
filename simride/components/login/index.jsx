@@ -10,6 +10,7 @@ import { cancel } from './cancel';
 import { checkEmailLogin, user } from './checkEmailLogin';
 import { extendSignUp } from './extendSignUp';
 import { submitForgotPassword } from './submitForgotPass';
+import {WebView} from 'react-native-webview'; 
 
 import '../../constants/custom.css';
 
@@ -219,25 +220,30 @@ class Login extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <img src={logo} alt="SIMRide Logo" />
-        <br/>
-        <br/>
-        <br/>
         <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
         <Image source={logo} />
         <div>
           <form>
             <div id="signinblock">
-              <br/>
-              <br/>
+              <br />
+              <br />
               <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
                 placeholder="email" />
               <input value={this.state.password} onChange={this.handleChange} type="password"
                 name="password" placeholder="password" style={{ marginLeft: '15px' }} />
-              <br/>
+              <br />
               <a onClick={forgotPass}>&nbsp;Forgot password?</a>
-              <br/>
-              <br/>
+              <br />
+              <br />
               <div id="div_SubmitSignIn" style={{ textAlign: "center" }}>
                 <button id="btnSignIn" type="submit" onClick={this.login}>Sign In</button>
                 <button onClick={extendSignUp} style={{ marginLeft: "25px" }}>Sign Up</button>
@@ -245,12 +251,12 @@ class Login extends React.Component {
             </div>
 
             <div id="forgotpasswordblock" style={{ display: "none" }}>
-              <br/>
-              <br/>
+              <br />
+              <br />
               <input id="forgotemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
                 placeholder="E-Mail (test@this.com)" />
-              <br/>
-              <br/>
+              <br />
+              <br />
               <div style={{ textAlign: "center" }}>
                 <button type="submit" onClick={this.submitForgotPassword_click}>Reset Password</button>
                 <button type="submit" onClick={cancel}>Back</button>
@@ -287,12 +293,12 @@ class Login extends React.Component {
                     <td><input value={this.state.password} onChange={this.handleChange} type="password" name="password" /></td>
                   </tr>
                   <tr>
-                    <td>Re-Enter<br/>Password</td>
+                    <td>Re-Enter<br />Password</td>
                     <td><input value={this.state.repassword} onChange={this.handleChange} type="password" name="repassword" /></td>
                   </tr>
                 </tbody>
               </table>
-              <br/>
+              <br />
               <div style={{ textAlign: "center" }}>
                 <button onClick={this.signup}>Submit</button>
                 <button onClick={cancel} style={{ marginLeft: "25px" }}>Cancel</button>
