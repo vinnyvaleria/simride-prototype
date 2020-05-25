@@ -162,7 +162,7 @@ footer {
   font-size: 2em !important;
 }
 
-.menuItem:hover, footer > .active > .menuItem {
+.menuItem:hover, footer > .menuactive > .menuItem {
   color: #4b87a1;
   opacity: 1;
 }
