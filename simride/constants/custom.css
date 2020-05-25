@@ -83,6 +83,7 @@ button {
   margin: 2em 1em !important;
   background-color: #ffffff !important;
   text-transform: uppercase;
+  border-color: unset;
 }
 
 button:hover {

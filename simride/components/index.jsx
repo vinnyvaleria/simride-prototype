@@ -13,7 +13,7 @@ export default function Start() {
   return (
     <Router style={{ width: '100vw' }}>
       <footer>
-        <NavLink to='/Home'>
+        <NavLink to='/'>
           <Ionicons className='menuItem' name='ios-home' />
         </NavLink>
 
@@ -55,7 +55,7 @@ export default function Start() {
         <Route path='/Checkout'>
             <Cashout />
         </Route>
-        <Route path='/Home'>
+        <Route path='/'>
           <Home />
         </Route>
       </Switch>
