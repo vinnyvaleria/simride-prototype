@@ -28,6 +28,7 @@ import Rating from '../rating';
 import * as moment from 'moment';
 import Map from '../maps/map';
 import 'react-google-places-autocomplete/dist/index.min.css';
+import { color } from 'react-native-reanimated';
 
 class Booking extends React.Component {
   constructor(props) {
@@ -375,14 +376,16 @@ render() {
           </div>
 
           <div id='div_availBookings'>
-            <select id="ddFilterArea" onChange={filterChange} style={{width: '5em'}} required>
-              <option>All</option>
-              <option>North</option>
-              <option>South</option>
-              <option>East</option>
-              <option>West</option>
-              <option>Central</option>
-            </select>  
+            <h3 style={{color: 'white'}}>Filter:
+              <select id="ddFilterArea" onChange={filterChange} style={{width: '5em', marginLeft: '2em'}} required>
+                <option>All</option>
+                <option>North</option>
+                <option>South</option>
+                <option>East</option>
+                <option>West</option>
+                <option>Central</option>
+              </select>
+            </h3>  
             <br/>
             <br/>
             <table id="tbl_AllBookings">
