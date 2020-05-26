@@ -26,11 +26,44 @@ class Wallet extends React.Component {
             maxAmt: maxAmtCalc(),
             cashoutamount: '',
             token: null,
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: '',
+            phone: '',
+            isDriver: '',
+            isAdmin: '',
+            wallet: '',
+            id: '',
+            rating: '',
+            ratedBy: '',
         }
     }
 
     componentDidMount() {
         checkEmailWallet();
+
+        const accountsRef = firebase.database().ref('accounts');
+        accountsRef.orderByChild('email')
+            .equalTo(firebase.auth().currentUser.email)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.forEach((child) => {
+                    this.setState({
+                        firstName: child.val().fname,
+                        lastName: child.val().lname,
+                        username: child.val().uname,
+                        email: child.val().email,
+                        phone: child.val().phone,
+                        isDriver: child.val().isDriver,
+                        isAdmin: child.val().isAdmin,
+                        wallet: child.val().wallet,
+                        id: child.key,
+                        rating: child.val().rating,
+                        ratedBy: child.val().ratedBy
+                    })
+                })
+            })
     }
 
     handleChange(e) {
@@ -115,7 +148,7 @@ class Wallet extends React.Component {
         return (
         <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
         <div id='homePage'>
-          <h1>E-Wallet Page</h1>
+        <h1>$ {parseFloat(this.state.wallet).toFixed(2)}</h1>
             <div>
               <button id='btnWalletHome' onClick={ walletHomePage }>Wallet</button>
               <button id='btnTransactionPage' onClick={ transactionsPage }>Transactions</button>
@@ -123,14 +156,6 @@ class Wallet extends React.Component {
             <br/>
             <div id='div_WalletHome'>
                 <div>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>E-Wallet Amount:</td>
-                                <td id='td_WalletAmount'></td>
-                            </tr>
-                        </tbody>
-                    </table>
                     <br/>
                     <br/>
                     <div id="tbl_last5">

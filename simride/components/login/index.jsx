@@ -268,7 +268,7 @@ class Login extends React.Component {
               <h4>Password</h4>
               <input value={this.state.password} onChange={this.handleChange} type='password' name='password'  placeholder='Please enter your password' />
               
-              <h4>Re-EnterPassword</h4>
+              <h4>Confirm Password</h4>
               <input value={this.state.repassword} onChange={this.handleChange} type='password' name='repassword' placeholder='Please re-enter your password' />
   
               <div style={{ textAlign: 'center' }}>
