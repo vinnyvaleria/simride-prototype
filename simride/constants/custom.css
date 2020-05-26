@@ -81,6 +81,22 @@ h5 {
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
+h6 {
+  font-size: 0.75em !important;
+  font-weight: 400 !important;
+  line-height: 0em !important;
+  color: palegoldenrod !important;
+  margin: unset !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.chatBtn {
+  display: block;
+  text-align:center;
+  margin:auto;
+  width: 80%;
+}
+
 input {
   border-radius: 5px !important;
   border-style: unset !important;
@@ -94,11 +110,10 @@ button {
   margin: 2em 1em !important;
   background-color: #ffffff !important;
   text-transform: uppercase;
-  border-color: unset;
 }
 
 button:hover {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 a {

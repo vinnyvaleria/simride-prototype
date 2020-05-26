@@ -102,6 +102,10 @@ class Account extends React.Component {
               const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
               this.setState({ avgRating: avg });
             }
+
+            if (this.state.isDriver === 'yes') {
+              document.getElementById('driverBadge').style.display = 'block';
+            }
           })
         );
       })
@@ -265,17 +269,10 @@ render() {
       <div id='acctPage'>
         <div>
           <div id='tblProfile'>
-            <h1>{this.state.username}</h1>
+            <h1>{this.state.firstName} {this.state.lastName}</h1>
+            <h6 id='driverBadge' style={{ display: 'none' }}>&nbsp;&nbsp;SIMRide Driver</h6>
             <br/>
             <table>
-              <tr>
-                <td><p class='profile'>First Name:</p></td>
-                <td><p class='profile'>&emsp;&emsp;{this.state.firstName}</p></td>
-              </tr>
-              <tr>
-                <td><p class='profile'>Last Name:</p></td>
-                <td><p class='profile'>&emsp;&emsp;{this.state.lastName}</p></td>
-              </tr>
               <tr>
                 <td><p class='profile'>Email:</p></td>
                 <td><p class='profile'>&emsp;&emsp;{this.state.email}</p></td>
@@ -283,10 +280,6 @@ render() {
               <tr>
                 <td><p class='profile'>Phone:</p></td>
                 <td><p class='profile'>&emsp;&emsp;+65 {this.state.phone}</p></td>
-              </tr>
-              <tr>
-                <td><p class='profile'>Driver:</p></td>
-                <td><p class='profile'>&emsp;&emsp;{this.state.isDriver}</p></td>
               </tr>
               <tr>
                 <td><p class='profile'>Rating:</p></td>

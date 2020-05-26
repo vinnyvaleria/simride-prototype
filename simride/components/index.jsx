@@ -1,3 +1,4 @@
+import firebase from '../../base';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, NavLink } from 'react-router-dom';
 import Messages from './inbox/index.jsx';
@@ -10,6 +11,30 @@ import { Ionicons } from '@expo/vector-icons';
 import { COLORS } from '../constants/colors';
 
 export default function Start() {
+  let isAdmin;
+  const accountsRef = firebase.database().ref('accounts');
+  accountsRef.orderByChild('email')
+    .equalTo(firebase.auth().currentUser.email)
+    .once('value')
+    .then((snapshot) => {
+      snapshot.forEach((child) => {
+        isAdmin = child.val().isAdmin;
+      })
+    }).then(() => {
+      if (isAdmin === 'yes') {
+        if (document.getElementById('wallet') !== null) {
+          document.getElementById('wallet').style.display = 'none';
+          document.getElementById('checkout').style.display = 'block';
+        }
+      }
+      else {
+        if (document.getElementById('wallet') !== null) {
+          document.getElementById('wallet').style.display = 'block';
+          document.getElementById('checkout').style.display = 'none';
+        }
+      }
+    })
+    
   return (
     <Router style={{ width: '100vw' }}>
       <footer>
@@ -25,11 +50,11 @@ export default function Start() {
           <Ionicons className='menuItem' name='ios-mail' />
         </NavLink>
         
-        <NavLink exact to='/Wallet' activeClassName='menuactive'>
+        <NavLink id='wallet' exact to='/Wallet' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-wallet' />
         </NavLink>
         
-        <NavLink exact to='/Checkout' activeClassName='menuactive'>
+        <NavLink id='checkout' exact to='/Checkout' activeClassName='menuactive'>
           <Ionicons className='menuItem' name='ios-list-box' />
         </NavLink>
         

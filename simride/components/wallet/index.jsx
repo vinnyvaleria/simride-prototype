@@ -49,21 +49,21 @@ class Wallet extends React.Component {
             .once('value')
             .then((snapshot) => {
                 snapshot.forEach((child) => {
-                    this.setState({
-                        firstName: child.val().fname,
-                        lastName: child.val().lname,
-                        username: child.val().uname,
-                        email: child.val().email,
-                        phone: child.val().phone,
-                        isDriver: child.val().isDriver,
-                        isAdmin: child.val().isAdmin,
-                        wallet: child.val().wallet,
-                        id: child.key,
-                        rating: child.val().rating,
-                        ratedBy: child.val().ratedBy
-                    })
+                this.setState({
+                    firstName: child.val().fname,
+                    lastName: child.val().lname,
+                    username: child.val().uname,
+                    email: child.val().email,
+                    phone: child.val().phone,
+                    isDriver: child.val().isDriver,
+                    isAdmin: child.val().isAdmin,
+                    wallet: child.val().wallet,
+                    id: child.key,
+                    rating: child.val().rating,
+                    ratedBy: child.val().ratedBy
                 })
             })
+        })
     }
 
     handleChange(e) {
@@ -172,7 +172,7 @@ class Wallet extends React.Component {
                 </div>
             </div>
             <div id='div_WalletTopUp' style={{display: 'none'}}>
-                <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' style={{width: '9em'}} /><br/><br/>
+                <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' /><br/><br/>
                 <StripeCheckout
                     stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
                     token={this.handleToken}
@@ -183,7 +183,7 @@ class Wallet extends React.Component {
                 />
             </div>
             <div id='div_CashOut' style={{display: 'none'}}>
-                <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} style={{width: '9em'}} name='cashoutamount' />
+                <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='cashoutamount' />
                 <br/><br/>
                 <button id='btnSubmitCashOut' onClick={ this.submitCashOut_Click }>Cash-Out</button>
             </div>
