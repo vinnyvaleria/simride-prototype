@@ -101,7 +101,9 @@ class Wallet extends React.Component {
 
         transaction.push(transactionForm);
         const balance = parseFloat(user[8]) + parseFloat(this.state.amount);
-        user[8] = balance;
+        this.setState({
+            wallet: balance
+        })
 
         const accountsRef = firebase.database().ref('accounts/' + user[9]);
         accountsRef.orderByChild('email')
