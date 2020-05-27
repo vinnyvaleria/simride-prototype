@@ -28,6 +28,7 @@ export const viewAllBookings = () => {
             database.on('value', (snapshot) => {
                 if (snapshot.exists()) {
                     let content = '';
+                    let test='';
                     let rowCount = 0;
                     if (document.getElementById('tb_AllBookings') !== null) {
                         document.getElementById('tb_AllBookings').innerHTML = '';
@@ -54,20 +55,25 @@ export const viewAllBookings = () => {
                                 }
                             }
 
+                            test += 
+                              '<div className=booking-wrapper>test</div>';
+
+                            /*
                             content += '<tr id=\'' + data.key + '\'>';
                             content += '<td>' + area + '</td>'; //column1
                             content += '<td>' + date + '</td>'; //column2
                             content += '<td>' + driver + '</td>';
                             content += '<td>' + passengers + '</td>';
                             content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
-                            content += '</tr>';
+                            content += '</tr>';*/
 
                             rowCount++;
                         }
                     });
 
                     if (document.getElementById('tb_AllBookings') !== null) {
-                        document.getElementById('tb_AllBookings').innerHTML += content;
+                      document.getElementById('tb_AllBookings').innerHTML += test;
+                      //document.getElementById('tb_AllBookings').innerHTML += content;
                     }
 
                     for (let v = 0; v < rowCount; v++) {

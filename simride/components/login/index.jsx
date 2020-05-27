@@ -218,17 +218,15 @@ class Login extends React.Component {
   
   render() {
     return (
-      <View>
+      <View style={{ justifyContent: 'center', height: '100vh'}}>
         <img src={logo} alt='SIMRide Logo' style={{ maxWidth: '7em' }} />
-        <h1>Welcome to SIMRide</h1>
-        <Image source={logo} />
         <div>
           <form>
             <div id='signinblock'>
+              <h1>Welcome to SIMRide</h1>
               <h4>Email</h4>
               <input id='signinemail' value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type='email' name='email'
                 placeholder='Enter your email address' />
-
               <h4>Password</h4>
               <input value={this.state.password} onChange={this.handleChange} type='password'
                 name='password' placeholder='Enter your password' />
@@ -240,6 +238,7 @@ class Login extends React.Component {
             </div>
 
             <div id='forgotpasswordblock' style={{ display: 'none' }}>
+              <h1>Reset Password</h1>
               <h4>Email</h4>
               <input id='forgotemail' value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type='email' name='email'
                 placeholder='Enter your email address' />
@@ -250,13 +249,14 @@ class Login extends React.Component {
             </div>
 
             <div id='signupblock' style={{ display: 'none' }}>
+              <h1>Registration</h1>
               <h4>First Name</h4>
               <input value={this.state.firstName} onChange={this.handleChange} type='text' name='firstName' placeholder='Please enter your first name' />
             
               <h4>Last Name</h4>
               <input value={this.state.lastName} onChange={this.handleChange} type='text' name='lastName' placeholder='Please enter your last name' />
             
-              <h4>E-Mail</h4>
+              <h4>Email</h4>
               <input value={this.state.email} onChange={this.handleChange} type='email' name='email' placeholder='Please enter your email address' />
               
               <h4>Phone</h4>
@@ -268,7 +268,7 @@ class Login extends React.Component {
               <h4>Password</h4>
               <input value={this.state.password} onChange={this.handleChange} type='password' name='password'  placeholder='Please enter your password' />
               
-              <h4>Re-EnterPassword</h4>
+              <h4>Re-enter Password</h4>
               <input value={this.state.repassword} onChange={this.handleChange} type='password' name='repassword' placeholder='Please re-enter your password' />
   
               <div style={{ textAlign: 'center' }}>
