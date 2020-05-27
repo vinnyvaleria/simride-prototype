@@ -260,13 +260,15 @@ class Inbox extends React.Component {
 
     // inbox, buttons dynamically created from the chats that you have
     inboxMsgButton() {
-        document.getElementById("chatsStarted").innerHTML = "";
-        document.getElementById('searchUser').style.display = "none";
-        document.getElementById('inbox').style.display = "block";
-        document.getElementById('sendNewMessage').style.display = "none";
-        document.getElementById('msgBox').style.display = "none";
-        document.getElementById('chatsStarted').style.display = "block";
-
+        if (document.getElementById("chatsStarted") !== null) {
+            document.getElementById("chatsStarted").innerHTML = "";
+            document.getElementById('searchUser').style.display = "none";
+            document.getElementById('inbox').style.display = "block";
+            document.getElementById('sendNewMessage').style.display = "none";
+            document.getElementById('msgBox').style.display = "none";
+            document.getElementById('chatsStarted').style.display = "block";
+        }
+        
         for (var c = 0; c < chats.length; c++) {
             if (chats[c].includes(user[2])) {
                 var btn = document.createElement('input');

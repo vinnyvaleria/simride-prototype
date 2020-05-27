@@ -101,11 +101,13 @@ class Booking extends React.Component {
   }
 
   joinBooking_click = () => {
+    alert(this.state.postal)
     joinBooking(this.state.postal);
 
     this.state = {
       currPassengers: '',
-      payMethod: ''
+      payMethod: '',
+      postal: ''
     };
   }
 
@@ -441,7 +443,7 @@ render() {
                   <td>
                     <GooglePlacesAutocomplete 
                       id='postal'
-                      placeholder='Search address' 
+                      placeholder='Enter postal code' 
                       onSelect={({ description }) => (
                         geocodeByAddress(description)
                           .then(results => getLatLng(results[0]))
