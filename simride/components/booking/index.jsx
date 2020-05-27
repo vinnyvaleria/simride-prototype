@@ -101,7 +101,6 @@ class Booking extends React.Component {
   }
 
   joinBooking_click = () => {
-    alert(this.state.postal)
     joinBooking(this.state.postal);
 
     this.state = {
