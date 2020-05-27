@@ -26,11 +26,44 @@ class Wallet extends React.Component {
             maxAmt: maxAmtCalc(),
             cashoutamount: '',
             token: null,
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: '',
+            phone: '',
+            isDriver: '',
+            isAdmin: '',
+            wallet: '',
+            id: '',
+            rating: '',
+            ratedBy: '',
         }
     }
 
     componentDidMount() {
         checkEmailWallet();
+
+        const accountsRef = firebase.database().ref('accounts');
+        accountsRef.orderByChild('email')
+            .equalTo(firebase.auth().currentUser.email)
+            .once('value')
+            .then((snapshot) => {
+                snapshot.forEach((child) => {
+                this.setState({
+                    firstName: child.val().fname,
+                    lastName: child.val().lname,
+                    username: child.val().uname,
+                    email: child.val().email,
+                    phone: child.val().phone,
+                    isDriver: child.val().isDriver,
+                    isAdmin: child.val().isAdmin,
+                    wallet: child.val().wallet,
+                    id: child.key,
+                    rating: child.val().rating,
+                    ratedBy: child.val().ratedBy
+                })
+            })
+        })
     }
 
     handleChange(e) {
@@ -68,7 +101,9 @@ class Wallet extends React.Component {
 
         transaction.push(transactionForm);
         const balance = parseFloat(user[8]) + parseFloat(this.state.amount);
-        user[8] = balance;
+        this.setState({
+            wallet: balance
+        })
 
         const accountsRef = firebase.database().ref('accounts/' + user[9]);
         accountsRef.orderByChild('email')
@@ -115,7 +150,7 @@ class Wallet extends React.Component {
         return (
         <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
         <div id='homePage'>
-          <h1>E-Wallet Page</h1>
+        <h1>$ {parseFloat(this.state.wallet).toFixed(2)}</h1>
             <div>
               <button id='btnWalletHome' onClick={ walletHomePage }>Wallet</button>
               <button id='btnTransactionPage' onClick={ transactionsPage }>Transactions</button>
@@ -123,14 +158,6 @@ class Wallet extends React.Component {
             <br/>
             <div id='div_WalletHome'>
                 <div>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>E-Wallet Amount:</td>
-                                <td id='td_WalletAmount'></td>
-                            </tr>
-                        </tbody>
-                    </table>
                     <br/>
                     <br/>
                     <div id="tbl_last5">
@@ -147,7 +174,7 @@ class Wallet extends React.Component {
                 </div>
             </div>
             <div id='div_WalletTopUp' style={{display: 'none'}}>
-                <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' style={{width: '9em'}} /><br/><br/>
+                <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' /><br/><br/>
                 <StripeCheckout
                     stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
                     token={this.handleToken}
@@ -158,7 +185,7 @@ class Wallet extends React.Component {
                 />
             </div>
             <div id='div_CashOut' style={{display: 'none'}}>
-                <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} style={{width: '9em'}} name='cashoutamount' />
+                <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='cashoutamount' />
                 <br/><br/>
                 <button id='btnSubmitCashOut' onClick={ this.submitCashOut_Click }>Cash-Out</button>
             </div>

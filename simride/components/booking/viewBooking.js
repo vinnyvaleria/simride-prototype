@@ -54,7 +54,7 @@ export const viewBooking = (e) => {
                             if (data.val().currPassengers !== "") {
                                 ppl = passengers.split(', ');
                                 pay = payMethod.split(', ');
-                                meet = PostalCode.split(', ');
+                                meet = PostalCode.split('|');
                             }
 
                             let slotsleft = data.val().maxPassengers - ppl.length;

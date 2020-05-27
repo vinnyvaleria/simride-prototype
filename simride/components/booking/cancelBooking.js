@@ -25,7 +25,7 @@ export const cancelBooking = () => {
                     if (currPassengers !== "") {
                         passengers = currPassengers.split(', ');
                         payby = payMethod.split(', ');
-                        meet = PostalCode.split(', ');
+                        meet = PostalCode.split('|');
                     }
 
                     let pos = passengers.indexOf(user[2]);
@@ -62,7 +62,7 @@ export const cancelBooking = () => {
                             if (p !== temppay.length - 1) {
                                 payToPush += temppay[p] + ", ";
                                 passengerToPush += temppassengers[p] + ", ";
-                                meetToPush += tempmeet[p] + ", ";
+                                meetToPush += tempmeet[p] + "|";
                             } else {
                                 payToPush += temppay[p];
                                 passengerToPush += temppassengers[p];

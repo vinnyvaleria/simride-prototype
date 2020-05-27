@@ -23,7 +23,7 @@ export const confirmRemovePassenger = (removeReason) => {
                     if (currPassengers !== "") {
                         passengers = currPassengers.split(', ');
                         payby = payMethod.split(', ');
-                        meet = PostalCode.split(', ');
+                        meet = PostalCode.split('|');
                     }
 
                     let pos = passengers.indexOf(document.getElementById('ddRemovePassenger').value);
@@ -60,7 +60,7 @@ export const confirmRemovePassenger = (removeReason) => {
                             if (p !== temppay.length - 1) {
                                 payToPush += temppay[p] + ", ";
                                 passengerToPush += temppassengers[p] + ", ";
-                                meetToPush += tempmeet[p] + ", ";
+                                meetToPush += tempmeet[p] + "|";
                             } else {
                                 payToPush += temppay[p];
                                 passengerToPush += temppassengers[p];

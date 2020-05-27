@@ -106,7 +106,8 @@ class Booking extends React.Component {
 
     this.state = {
       currPassengers: '',
-      payMethod: ''
+      payMethod: '',
+      postal: ''
     };
   }
 
@@ -232,7 +233,7 @@ class Booking extends React.Component {
             let rowCount = 0;
             snapshot.forEach((data) => {
               if (typeof data.val().currPassengers !== "undefined") {
-                if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && data.val().date < moment.now()) {
+                if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && (data.val().date < moment.now() || data.val().completed === 'yes')) {
                   let area = data.val().area;
                   let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                   let ppl = [];
@@ -432,7 +433,7 @@ render() {
                   <td>
                     <GooglePlacesAutocomplete 
                       id='postal'
-                      placeholder='Search address' 
+                      placeholder='Enter postal code' 
                       onSelect={({ description }) => (
                         geocodeByAddress(description)
                           .then(results => getLatLng(results[0]))

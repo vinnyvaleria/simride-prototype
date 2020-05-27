@@ -125,7 +125,7 @@ class map extends React.Component {
 
                         if (data.val().currPassengers !== "") {
                             ppl = data.val().currPassengers.split(', ');
-                            postal = data.val().postal.split(', ');
+                            postal = data.val().postal.split('|');
                             payMethod = data.val().payMethod.split(', ');
                         }
 

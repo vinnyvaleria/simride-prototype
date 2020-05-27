@@ -10,8 +10,8 @@ export const joinBooking = (postal) => {
     const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
     let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
     let bookingDate = document.getElementById('td_viewSelectedBooking_date').innerHTML;
-    let PostalCode;
-    let payMethod;
+    let PostalCode = "";
+    let payMethod = "";
 
     const database = firebase.database().ref('bookings');
     database.once('value', (snapshot) => {
@@ -35,7 +35,7 @@ export const joinBooking = (postal) => {
                     if (PostalCode === "") {
                         PostalCode += postal;
                     } else {
-                        PostalCode += (", " + postal);
+                        PostalCode += ("|" + postal);
                     }
                 }
             })
@@ -73,9 +73,8 @@ export const joinBooking = (postal) => {
             }
         }
 
-        if (PostalCode !== '') {
+        if (postal !== '') {
             if (check) {
-                console.log(PostalCode)
                 if (user[8] < 5.00 && document.getElementById('ddPayBy').value === "wallet") {
                     alert("You do not have sufficient funds in your e-wallet");
                 } else {
@@ -86,7 +85,7 @@ export const joinBooking = (postal) => {
                         postal: PostalCode
                     }
                     accountsRef.update(bookingDetails);
-
+                    console.log(bookingDetails)
                     payMethod = '';
                     currPassengers = '';
                     document.getElementById('btnSubmitJoinBooking').style.display = "none";
@@ -99,6 +98,4 @@ export const joinBooking = (postal) => {
             alert('Please enter a meeting/drop-off point!')
         }
     });
-
-    PostalCode = '';
 }

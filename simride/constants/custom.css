@@ -18,7 +18,18 @@ input, button, select {
 }
 
 p {
-  line-height: 1.25em !important;
+  line-height: 0.8em !important;
+}
+
+.profile {
+  font-size: 1em !important;
+  font-weight: 600 !important;
+  line-height: 2.25em !important;
+  color: #ffffff !important;
+  margin: 0.25em 0 !important;
+  font-family: Arial,
+  Helvetica,
+  sans-serif !important;
 }
 
 h1 {
@@ -69,6 +80,22 @@ h5 {
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
+h6 {
+  font-size: 0.75em !important;
+  font-weight: 400 !important;
+  line-height: 0em !important;
+  color: palegoldenrod !important;
+  margin: unset !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.chatBtn {
+  display: block;
+  text-align:center;
+  margin:auto;
+  width: 80%;
+}
+
 input {
   border-radius: 5px !important;
   border-style: unset !important;
@@ -82,11 +109,10 @@ button {
   margin: 2em 1em !important;
   background-color: #ffffff !important;
   text-transform: uppercase;
-  border-color: unset;
 }
 
 button:hover {
-  opacity: 0.5;
+  opacity: 0.7;
 }
 
 a {
@@ -114,7 +140,7 @@ table {
   font-family: Arial,
   Helvetica,
   sans-serif !important;
-  padding: 0.25em 0.5em !important;
+  padding: 0.0em 0.25em !important;
 }
 
 thead {

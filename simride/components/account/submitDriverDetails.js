@@ -13,8 +13,9 @@ export const submitDriverDetails = (license, carplate) => {
     var issuedDate = new Date(document.getElementById('txtIssueDate').value);
     var today = new Date(y, m, d);
     var now = new Date(yy, m, d)
+    const rg = new RegExp('^((S|T)[0-9]{7}[A-Z]{1}$)');
 
-    if (license !== "" && carplate !== "" && license.length === 9 && (license.charAt(0) === 'S' || license.charAt(0) === 'T') && today > issuedDate) {
+    if (license !== "" && carplate !== "" && rg.test(license.toUpperCase()) && today > issuedDate) {
         const accountsRef = firebase.database().ref('driverDetails/' + user[9]);
         const driverDetails = {
             driverUname: user[2],
@@ -36,7 +37,7 @@ export const submitDriverDetails = (license, carplate) => {
     } else {
         if (license === "" || carplate === "") {
             alert('One or more fields are empty');
-        } else if (license.length !== 9 || (license.charAt(0) !== 'S' && license.charAt(0) !== 'T')) {
+        } else if (!rg.test(license.toUpperCase())) {
             alert('Please enter a valid license number');
         } else if (issuedDate > today) {
             alert('You must be a driver for at least 2 years');
