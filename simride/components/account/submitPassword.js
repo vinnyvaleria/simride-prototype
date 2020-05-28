@@ -9,13 +9,13 @@ export const submitPassword = (newpass, conpass) => {
     if (newpass === conpass) {
         var user = firebase.auth().currentUser;
 
-        user.updatePassword(conpass).then(() => {
-            alert("Password updated successfully!");
+        user.updatePassword(conpass).then(() => {            
+            alert("Password updated successfully!");  
+            util.profilePageReset();
         }).catch((error) => {
             alert(error);
         });
-
-        util.profilePageReset();
+        //util.profilePageReset();
     } else {
         alert("Passwords do not match!");
     }
