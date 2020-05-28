@@ -15,7 +15,7 @@ import { submitEditProfile } from './submitEditProfile';
 import { submitPassword } from './submitPassword';
 import { cancelPassword } from './cancelPassword';
 import { checkDriverApplicationStatus } from './checkDriverApplicationStatus';
-const util = require('./util')
+const util = require('./util');
 import '../../constants/custom.css';
 
 class Account extends React.Component {
@@ -79,25 +79,37 @@ class Account extends React.Component {
   componentDidMount() {
     checkEmail();
 
-    this.setState({
-      firstName: user[0],
-      lastName: user[1],
-      username: user[2],
-      email: user[3],
-      phone: user[4],
-      isDriver: user[5],
-      isAdmin: user[6],
-      isBanned: user[7],
-      wallet: user[8],
-      id: user[9],
-      rating: user[10],
-      ratedBy: user[11]
-    }, (() => {
-        if (this.state.ratedBy > 0) {
-          const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
-          this.setState({ avgRating: avg });
-        }
-    }));
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(firebase.auth().currentUser.email)
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          }, (() => {
+            if (this.state.ratedBy > 0) {
+              const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
+              this.setState({ avgRating: avg });
+            }
+
+            if (this.state.isDriver === 'yes') {
+              document.getElementById('driverBadge').style.display = 'block';
+            }
+          })
+        );
+      })
+    });
   }
 
   editProfile = () => {
@@ -255,119 +267,79 @@ render() {
   return (
     <View style={{ width: '100%',  justifyContent: "center", alignItems: "center" }}>
       <div id='acctPage'>
-      <h1>{this.state.username + "'s Account"}</h1>
         <div>
-          <h1>{this.state.username}</h1>
-          <table id='tblProfile'>
-            <tbody>
+          <div id='tblProfile'>
+            <h1>{this.state.firstName} {this.state.lastName}</h1>
+            <h6 id='driverBadge' style={{ display: 'none' }}>&nbsp;&nbsp;SIMRide Driver</h6>
+            <br/>
+            <table>
               <tr>
-                <td width='100'><p>First Name:</p></td>
-                <td>
-                  <p id='lblfName' style={{display:'inline'}}>{this.state.firstName}</p>
-                  <input id='editfName' style={{display:'none'}} placeholder={this.state.firstName} value={this.state.firstName}
-                    onChange={this.handleChange} type="text" name="firstName" />
-                </td>
+                <td><p class='profile'>Email:</p></td>
+                <td><p class='profile'>&emsp;&emsp;{this.state.email}</p></td>
               </tr>
               <tr>
-                <td><p>Last Name:</p></td>
-                <td>
-                  <p id='lbllName' style={{display:'inline'}}>{this.state.lastName}</p>
-                  <input id='editlName' style={{display:'none'}} placeholder={this.state.lastName} value={this.state.lastName}
-                    onChange={this.handleChange} type="text" name="lastName" />
-                </td>
+                <td><p class='profile'>Phone:</p></td>
+                <td><p class='profile'>&emsp;&emsp;+65 {this.state.phone}</p></td>
               </tr>
               <tr>
-                <td><p>Email:</p></td>
-                <td>
-                  <p id='lblEmail' style={{display:'inline'}} name='email'>{this.state.email}</p>
-                </td>
+                <td><p class='profile'>Rating:</p></td>
+                <td><p class='profile'>&emsp;&emsp;{this.state.avgRating}</p></td>
               </tr>
-              <tr>
-                <td><p>Phone:</p></td>
-                <td>
-                  <p id='lblPhone' style={{display:'inline'}}>+65 {user[4]}</p>
-                  <input id='editPhone' style={{display:'none'}} placeholder={this.state.phone} value={this.state.phone}
-                   onChange={this.handleChange} type="phone" name="phone" />
-                </td>
-              </tr>
-              <tr>
-                <td><p>Driver:</p></td>
-                <td>
-                  <p id='lblDriver' name='isDriver'>{this.state.isDriver}</p>
-                </td>
-              </tr>
-              <tr>
-                <td><p>Rating:</p></td>
-                <td>
-                  <p id='lblRating' name='rating'>{parseFloat(this.state.avgRating).toFixed(2)}</p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <table id='tblPassword' style={{display: 'none'}}>
-            <tbody>
-              <tr>
-                <td><p>New Password:</p></td>
-                <td><input id='editNewPassword' value={this.state.newPassword} onChange={this.handleChange}
-                    type="password" name="newPassword" /></td>
-              </tr>
-              <tr>
-                <td><p>Confirm Password:</p></td>
-                <td><input id='editConfirmPassword' value={this.state.confirmPassword} onChange={this.handleChange}
-                    type="password" name="confirmPassword" /></td>
-              </tr>
-            </tbody>
-          </table>
+            </table>
+          </div>
+
+          <div id='divEditProfile' style={{ display: 'none' }}>
+            <h4>First Name</h4>
+            <input id='editfName' placeholder={this.state.firstName} value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
+
+            <h4>Last Name</h4>
+            <input id='editlName' placeholder={this.state.lastName} value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName" />
+
+            <h4>Phone</h4>
+            <input id='editPhone' placeholder={this.state.phone} value={this.state.phone} onChange={this.handleChange} type="phone" name="phone" />
+          </div>
+          
+          <div id='tblPassword' style={{display: 'none'}}>
+            <h4>New Password</h4>
+            <input id='editNewPassword' value={this.state.newPassword} onChange={this.handleChange} type="password" name="newPassword" placeholder='New password' />
+
+            <h4>Confirm Password</h4>
+            <input id='editConfirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} type="password" name="confirmPassword" placeholder='Confirm password' />
+          </div>
 
           <div id="tblApplyDriver" style={{display: 'none'}}>
-            <div>
-              <table id='tblDriverDetails'>
+            <div id='tblDriverDetails'>
+              <h4>Carplate No.</h4>
+              <input id='txtCarplate' value={this.state.carplate} placeholder="eg. SFG1234B" onChange={this.handleChange} type="text" name="carplate" placeholder='Carplate number' />
+
+              <h4>Issue Date</h4>
+              <input id='txtIssueDate' type="date" name="date"  />
+
+              <h4>License No.</h4>
+              <input id='txtLicenseNo' value={this.state.license} placeholder="eg. S1234567A" onChange={this.handleChange} type="text" name="license" placeholder='License number' />
+            </div>
+
+            <div id='tblDriverImage' style={{display: 'none'}}>
+              <table>
                 <tbody>
-                  <tr>
-                    <td>Carplate No:</td>
+                  <tr id='uploadedFront'>
                     <td>
-                      <input id='txtCarplate' value={this.state.carplate} onChange={this.handleChange} type="text"
-                        name="carplate" />
+                      {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
                     </td>
-                  </tr>
-                  <tr>
-                    <td>Issue Date:</td>
                     <td>
-                      <input id='txtIssueDate' type="date" name="date" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>License Number:</td>
-                    <td>
-                      <input id='txtLicenseNo' value={this.state.license} onChange={this.handleChange} type="text"
-                        name="license" />
+                      {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}
                     </td>
                   </tr>
                 </tbody>
               </table>
-
-              <div id='tblDriverImage' style={{display: 'none'}}>
-                <table>
-                  <tbody>
-                    <tr id='uploadedFront'>
-                      <td>
-                        {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
-                      </td>
-                      <td>
-                        {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table>
-                  <tbody>
-                    <tr>
-                      <td id='td_license'>License Front:</td>
-                      <td><input type="file" id='file' accept="image/*" onChange={this.handleImgChange} /></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td id='td_license'>License Front:</td>
+                    <td><input type="file" id='file' accept="image/*" onChange={this.handleImgChange} /></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           <br />

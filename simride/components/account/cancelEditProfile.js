@@ -4,13 +4,8 @@ import { user } from './checkEmail';
 
 export const cancelEditProfile = () => {
     util.profilePageReset();
-
-    if (user[6] !== "") {
-        document.getElementById('btnApplyDriver').style.display = "none";
-    } else {
-        if (user[5] === "no") {
-            checkDriverApplicationStatus();
-        }
+    if (user[5] === 'no') {
+        checkDriverApplicationStatus();
     }
 
     document.getElementById('tblApplyDriver').style.display = 'none';

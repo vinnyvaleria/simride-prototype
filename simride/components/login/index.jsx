@@ -25,16 +25,16 @@ class Login extends React.Component {
     this.login = this.login.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.state = {
-      firstName: "",
-      lastName: "",
-      username: "",
-      phone: "",
-      email: "",
-      password: "",
-      repassword: "",
-      wallet: "",
-      rating: "",
-      ratedBy: ""
+      firstName: '',
+      lastName: '',
+      username: '',
+      phone: '',
+      email: '',
+      password: '',
+      repassword: '',
+      wallet: '',
+      rating: '',
+      ratedBy: ''
     };
   }
 
@@ -45,13 +45,13 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-    document.getElementById("signinemail").focus();
+    document.getElementById('signinemail').focus();
 
     // counts current total account registered
     firebase.database()
-      .ref("admin")
-      .orderByChild("acct")
-      .once("value")
+      .ref('admin')
+      .orderByChild('acct')
+      .once('value')
       .then((snapshot) => {
         snapshot.forEach((child) => {
           countArr[0] = child.val().acct;
@@ -59,9 +59,9 @@ class Login extends React.Component {
       });
 
     // loads accounts
-    firebase.database().ref("accounts")
-      .orderByChild("email")
-      .once("value")
+    firebase.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
       .then((snapshot) => {
         var i = 0;
         snapshot.forEach((child) => {
@@ -72,9 +72,9 @@ class Login extends React.Component {
         })
       });
     
-    if (user[6] === "no") {
-      if (document.getElementById("checkOutTab") !== null) {
-        document.getElementById("checkOutTab").style.display = "none";
+    if (user[6] === 'no') {
+      if (document.getElementById('checkOutTab') !== null) {
+        document.getElementById('checkOutTab').style.display = 'none';
       }
     }
   }
@@ -83,53 +83,49 @@ class Login extends React.Component {
     e.preventDefault();
     // checks for duplicate username
     var i = 0;
-    var unameCheck = false;
-    var phoneCheck = false;
-    const rg = new RegExp("^((8|9)[0-9]{7}$)");
+    var check = false;
+    const rg = new RegExp('^((8|9)[0-9]{7}$)');
     while (i < unameArr.length) {
       if (this.state.username === unameArr[i]) {
-        alert("Username has already been registered");
-        unameCheck = false;
+        alert('Username has already been registered');
+        check = false;
         break;
       } else {
-        unameCheck = true;
-      }
-      if (this.state.phone === phoneArr[i]) {
-        alert("Phone number has already been registered");
-        phoneCheck = false;
-        break;
-      } else {
-        phoneCheck = true;
+        if (this.state.phone === phoneArr[i]) {
+          alert('Phone number has already been registered');
+          check = false;
+          break;
+        } else {
+          if (rg.test(this.state.phone)) {
+            check = true;
+          } else {
+            alert('Phone number is invalid')
+            check = false;
+          }
+        }
       }
       i++;
     }
 
-    if (rg.test(this.state.phone)) {
-      phoneCheck = true;
-    } else {
-      alert("Phone number is invalid")
-      phoneCheck = false;
-    }
-
     // checks confirm password
     if (this.state.password !== this.state.repassword) {
-      alert("Passwords do not match");
+      alert('Passwords do not match');
     } else {
-      if (unameCheck && phoneCheck) {
+      if (check) {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function (error) {
-          alert(error.code + ": " + error.message);
+          alert(error.code + ': ' + error.message);
         }).then(() => {
 
-          const accountsRef = firebase.database().ref("accounts");
+          const accountsRef = firebase.database().ref('accounts');
           const account = {
             fname: this.state.firstName,
             lname: this.state.lastName,
             uname: this.state.username,
             phone: this.state.phone,
             email: this.state.email.toLowerCase(),
-            isDriver: "no",
-            isAdmin: "no",
-            isBanned: "no",
+            isDriver: 'no',
+            isAdmin: 'no',
+            isBanned: 'no',
             wallet: 0,
             rating: 0,
             ratedBy: 0
@@ -152,23 +148,23 @@ class Login extends React.Component {
 
           accountsRef.push(account);
           this.state = {
-            firstName: "",
-            lastName: "",
-            username: "",
-            email: "",
-            phone: "",
-            password: "",
-            repassword: "",
-            isDriver: "",
-            isAdmin: "",
-            isBanned: "",
-            wallet: "",
-            rating: "",
-            ratedBy: ""
+            firstName: '',
+            lastName: '',
+            username: '',
+            email: '',
+            phone: '',
+            password: '',
+            repassword: '',
+            isDriver: '',
+            isAdmin: '',
+            isBanned: '',
+            wallet: '',
+            rating: '',
+            ratedBy: ''
           };
           // writing
-          firebase.database().ref("admin/counter")
-            .once("value")
+          firebase.database().ref('admin/counter')
+            .once('value')
             .then((snapshot) => {
               countArr[0] = emailArr.length + 1;
               snapshot.ref.update({
@@ -191,17 +187,17 @@ class Login extends React.Component {
   login(e) {
     e.preventDefault();
 
-    if (typeof user[9] !== "undefined") {
+    if (typeof user[9] !== 'undefined') {
       var i = 0;
       var email = this.state.email.toLowerCase();
 
       if (!validate(email)) {
-        alert("Email not valid bro");
+        alert('Email not valid bro');
       } else {
         while (i < emailArr.length) {
           if (emailArr[i].toString() === email) {
-            if (user[7].toString() === "yes") {
-              alert("Account is banned. Please contact administrator.")
+            if (user[7].toString() === 'yes') {
+              alert('Account is banned. Please contact administrator.')
               break;
             } else {
               firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => { }).catch((error) => {
@@ -210,7 +206,7 @@ class Login extends React.Component {
               break;
             }
           } else if (i === emailArr.length - 1) {
-            alert("Email not found yo");
+            alert('Email not found yo');
             i++;
           } else {
             i++;
@@ -222,82 +218,62 @@ class Login extends React.Component {
   
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <img src={logo} alt="SIMRide Logo" />
-        <br/>
-        <h1 style={{ color: '#fff', fontSize: 50, fontFamily: 'Roboto', fontWeight: '600' }}>SIMRide</h1>
-        <Image source={logo} />
+      <View style={{ justifyContent: 'center', height: '100vh'}}>
+        <img src={logo} alt='SIMRide Logo' style={{ maxWidth: '7em' }} />
         <div>
           <form>
-            <div id="signinblock">
-              <br/>
-              <br/>
-              <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
-                placeholder="email" />
-              <input value={this.state.password} onChange={this.handleChange} type="password"
-                name="password" placeholder="password" style={{ marginLeft: '15px' }} />
-              <br/>
-              <a onClick={forgotPass}>&nbsp;Forgot password?</a>
-              <br/>
-              <br/>
-              <div id="div_SubmitSignIn" style={{ textAlign: "center" }}>
-                <button id="btnSignIn" type="submit" onClick={this.login}>Sign In</button>
-                <button onClick={extendSignUp} style={{ marginLeft: "25px" }}>Sign Up</button>
+            <div id='signinblock'>
+              <h1>Welcome to SIMRide</h1>
+              <h4>Email</h4>
+              <input id='signinemail' value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type='email' name='email'
+                placeholder='Enter your email address' />
+              <h4>Password</h4>
+              <input value={this.state.password} onChange={this.handleChange} type='password'
+                name='password' placeholder='Enter your password' />
+              <h5><a onClick={forgotPass}>Forgot password?</a></h5>
+              <div id='div_SubmitSignIn' style={{ textAlign: 'center' }}>
+                <button id='btnSignIn' type='submit' onClick={this.login}>Sign In</button>
+                <button onClick={extendSignUp} style={{ marginLeft: '25px' }}>Sign Up</button>
               </div>
             </div>
 
-            <div id="forgotpasswordblock" style={{ display: "none" }}>
-              <br/>
-              <br/>
-              <input id="forgotemail" value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type="email" name="email"
-                placeholder="E-Mail (test@this.com)" />
-              <br/>
-              <br/>
-              <div style={{ textAlign: "center" }}>
-                <button type="submit" onClick={this.submitForgotPassword_click}>Reset Password</button>
-                <button type="submit" onClick={cancel}>Back</button>
+            <div id='forgotpasswordblock' style={{ display: 'none' }}>
+              <h1>Reset Password</h1>
+              <h4>Email</h4>
+              <input id='forgotemail' value={this.state.email} onChange={this.handleChange} onBlur={checkEmailLogin} type='email' name='email'
+                placeholder='Enter your email address' />
+              <div style={{ textAlign: 'center' }}>
+                <button type='submit' onClick={this.submitForgotPassword_click}>Reset Password</button>
+                <button type='submit' onClick={cancel}>Back</button>
               </div>
             </div>
 
-            <div id="signupblock" style={{ display: "none" }}>
-              <table>
-                <tbody>
-                  <tr>
-                    <td width='100'>First Name</td>
-                    <td><input value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Last Name</td>
-                    <td><input value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>E-Mail</td>
-                    <td><input value={this.state.email} onChange={this.handleChange} type="email" name="email" /></td>
-                  </tr>
-                  <tr>
-                    <td>Phone</td>
-                    <td><input value={this.state.phone} onChange={this.handleChange} type="phone" name="phone" /></td>
-                  </tr>
-                  <tr>
-                    <td>Username</td>
-                    <td><input value={this.state.username} onChange={this.handleChange} type="text" name="username" /></td>
-                  </tr>
-                  <tr>
-                    <td>Password</td>
-                    <td><input value={this.state.password} onChange={this.handleChange} type="password" name="password" /></td>
-                  </tr>
-                  <tr>
-                    <td>Re-Enter<br/>Password</td>
-                    <td><input value={this.state.repassword} onChange={this.handleChange} type="password" name="repassword" /></td>
-                  </tr>
-                </tbody>
-              </table>
-              <br/>
-              <div style={{ textAlign: "center" }}>
+            <div id='signupblock' style={{ display: 'none' }}>
+              <h1>Registration</h1>
+              <h4>First Name</h4>
+              <input value={this.state.firstName} onChange={this.handleChange} type='text' name='firstName' placeholder='Please enter your first name' />
+            
+              <h4>Last Name</h4>
+              <input value={this.state.lastName} onChange={this.handleChange} type='text' name='lastName' placeholder='Please enter your last name' />
+            
+              <h4>Email</h4>
+              <input value={this.state.email} onChange={this.handleChange} type='email' name='email' placeholder='Please enter your email address' />
+              
+              <h4>Phone</h4>
+              <input value={this.state.phone} onChange={this.handleChange} type='phone' name='phone' placeholder='Please enter your phone number' />
+              
+              <h4>Username</h4>
+              <input value={this.state.username} onChange={this.handleChange} type='text' name='username' placeholder='Please enter your preferred username' />
+              
+              <h4>Password</h4>
+              <input value={this.state.password} onChange={this.handleChange} type='password' name='password'  placeholder='Please enter your password' />
+              
+              <h4>Re-enter Password</h4>
+              <input value={this.state.repassword} onChange={this.handleChange} type='password' name='repassword' placeholder='Please re-enter your password' />
+  
+              <div style={{ textAlign: 'center' }}>
                 <button onClick={this.signup}>Submit</button>
-                <button onClick={cancel} style={{ marginLeft: "25px" }}>Cancel</button>
+                <button onClick={cancel} style={{ marginLeft: '25px' }}>Cancel</button>
               </div>
             </div>
           </form>

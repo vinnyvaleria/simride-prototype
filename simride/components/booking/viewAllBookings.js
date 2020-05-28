@@ -4,6 +4,7 @@ import {viewBooking} from './viewBooking';
 
 export const viewAllBookings = () => {
     let userDetails = [];
+    document.getElementById('ddFilterArea').selectedIndex = 0;
     document.getElementById('div_availBookings').style.display = "block";
     document.getElementById('div_createBooking').style.display = "none";
     document.getElementById('div_myBookings').style.display = "none";
@@ -27,12 +28,13 @@ export const viewAllBookings = () => {
             database.on('value', (snapshot) => {
                 if (snapshot.exists()) {
                     let content = '';
+                    let test='';
                     let rowCount = 0;
                     if (document.getElementById('tb_AllBookings') !== null) {
                         document.getElementById('tb_AllBookings').innerHTML = '';
                     }
                     snapshot.forEach((data) => {
-                        if (data.val().date > moment.now()) {
+                        if (data.val().date > moment.now() && data.val().completed === 'no') {
                             let area = data.val().area;
                             let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                             let ppl = [];
@@ -53,20 +55,25 @@ export const viewAllBookings = () => {
                                 }
                             }
 
+                            test += 
+                              '<div className=booking-wrapper>test</div>';
+
+                            /*
                             content += '<tr id=\'' + data.key + '\'>';
                             content += '<td>' + area + '</td>'; //column1
                             content += '<td>' + date + '</td>'; //column2
                             content += '<td>' + driver + '</td>';
                             content += '<td>' + passengers + '</td>';
                             content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
-                            content += '</tr>';
+                            content += '</tr>';*/
 
                             rowCount++;
                         }
                     });
 
                     if (document.getElementById('tb_AllBookings') !== null) {
-                        document.getElementById('tb_AllBookings').innerHTML += content;
+                      document.getElementById('tb_AllBookings').innerHTML += test;
+                      //document.getElementById('tb_AllBookings').innerHTML += content;
                     }
 
                     for (let v = 0; v < rowCount; v++) {

@@ -13,5 +13,7 @@ export const updateBooking = (bookingID) => {
     });
 
     alert('We hope you enjoyed your ride!')
+    document.getElementById('bookPage').style.display = 'block';
+    document.getElementById('maps').style.display = 'none';
     viewAllBookings();
 }

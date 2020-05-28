@@ -8,6 +8,7 @@ import * as moment from 'moment';
 // view my bookings
 export const viewMyBookings = () => {
     let userDetails = [];
+    document.getElementById('ddFilterArea').selectedIndex = 0;
     document.getElementById('tbl_MyBookings').style.display = 'block';
     document.getElementById('showRating').style.display = 'none';
 
@@ -40,7 +41,7 @@ export const viewMyBookings = () => {
                     let rowCount = 0;
                     snapshot.forEach((data) => {
                         if (data.val().currPassengers !== "") {
-                            if (data.val().currPassengers.includes(user[2]) && data.val().date > moment.now()) {
+                            if (data.val().currPassengers.includes(user[2]) && data.val().date > moment.now() && data.val().completed === 'no') {
                                 let area = data.val().area;
                                 let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                                 let ppl = [];

@@ -28,6 +28,8 @@ import Rating from '../rating';
 import * as moment from 'moment';
 import Map from '../maps/map';
 import 'react-google-places-autocomplete/dist/index.min.css';
+import { color } from 'react-native-reanimated';
+import '../../constants/custom.css';
 
 class Booking extends React.Component {
   constructor(props) {
@@ -44,13 +46,46 @@ class Booking extends React.Component {
           createArea: 'Admiralty',
           createTowards: 'School',
           createMaxPassengers: '1',
-          bookingID: ''
+          bookingID: '',
+          firstName: '',
+          lastName: '',
+          username: '',
+          email: '',
+          phone: '',
+          isDriver: '',
+          isAdmin: '',
+          wallet: '',
+          id: '',
+          rating: '',
+          ratedBy: '',
       }
   }
 
   // goes back to login page if stumble upon another page by accident without logging in
   componentDidMount() {
     checkEmail();
+
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(firebase.auth().currentUser.email)
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          })
+        });
+      })
   }
 
   onChange(date) {
@@ -71,7 +106,8 @@ class Booking extends React.Component {
 
     this.state = {
       currPassengers: '',
-      payMethod: ''
+      payMethod: '',
+      postal: ''
     };
   }
 
@@ -197,7 +233,7 @@ class Booking extends React.Component {
             let rowCount = 0;
             snapshot.forEach((data) => {
               if (typeof data.val().currPassengers !== "undefined") {
-                if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && data.val().date < moment.now()) {
+                if ((data.val().currPassengers.includes(user[2]) || data.val().driverID === user[9]) && (data.val().date < moment.now() || data.val().completed === 'yes')) {
                   let area = data.val().area;
                   let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                   let ppl = [];
@@ -299,7 +335,6 @@ render() {
     return (
       <View style={{ width: '100%', flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div id='bookPage'>
-          <h1> Bookings </h1>
           <div>
             <button id='btnViewAllBookings' onClick={ viewAllBookings }>View All Rides</button>
             <button id='btnViewMyBookings' onClick={ viewMyBookings }>View My Rides</button>
@@ -342,27 +377,20 @@ render() {
           </div>
 
           <div id='div_availBookings'>
-            <select id="ddFilterArea" onChange={filterChange} style={{width: '5em'}} required>
-              <option>All</option>
-              <option>North</option>
-              <option>South</option>
-              <option>East</option>
-              <option>West</option>
-              <option>Central</option>
-            </select>  
-            <br/>
-            <br/>
-            <table id="tbl_AllBookings">
-              <thead>
-                <tr>
-                  <th>Area</th>
-                  <th>Date & Time</th>
-                  <th>Driver</th>
-                  <th>No. of Passengers</th>
-                </tr>
-              </thead>
-              <tbody id="tb_AllBookings"></tbody>
-            </table>
+          <h1>All Available Rides </h1>
+            <h4>Filter:
+              <select id="ddFilterArea" onChange={filterChange} style={{width: '5em', marginLeft: '1em'}} required>
+                <option>All</option>
+                <option>North</option>
+                <option>South</option>
+                <option>East</option>
+                <option>West</option>
+                <option>Central</option>
+              </select>
+            </h4>
+            <div id="tbl_AllBookings">
+              <div id="tb_AllBookings"></div>
+            </div>
           </div>
 
           <div id='div_viewSelectedBooking' style={{display: 'none'}}>
@@ -405,7 +433,7 @@ render() {
                   <td>
                     <GooglePlacesAutocomplete 
                       id='postal'
-                      placeholder='Search address' 
+                      placeholder='Enter postal code' 
                       onSelect={({ description }) => (
                         geocodeByAddress(description)
                           .then(results => getLatLng(results[0]))

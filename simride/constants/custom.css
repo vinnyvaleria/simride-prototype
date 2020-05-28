@@ -1,24 +1,41 @@
 /* General */
 #root {
   background: #4b9ea1 !important;
+  padding-bottom: 5em;
 }
-input, button {
-  font-size: 16px !important;
+
+input, button, select {
+  font-size: 0.75em;
   font-weight: 400 !important;
-  line-height: 20px !important;
-  color: #222222 !important;
+  line-height: 1.5em !important;
+  color: #4b9ea1 !important;
   font-family: Arial, Helvetica, sans-serif !important;
-  padding: 0.25em 0.5em !important;
+  padding: 0.75em 1em !important;
+}
+
+::placeholder {
+  font-size: 1em !important;
 }
 
 p {
-  line-height: 10px !important;
+  line-height: 0.8em !important;
+}
+
+.profile {
+  font-size: 1em !important;
+  font-weight: 600 !important;
+  line-height: 2.25em !important;
+  color: #ffffff !important;
+  margin: 0.25em 0 !important;
+  font-family: Arial,
+  Helvetica,
+  sans-serif !important;
 }
 
 h1 {
-  font-size: 2em !important;
+  font-size: 1.75em !important;
   font-weight: 600 !important;
-  line-height: 2.5em !important;
+  line-height: 2em !important;
   margin-bottom: 0.5em !important;
   color: #ffffff !important;
   font-family: Arial, Helvetica, sans-serif !important;
@@ -41,13 +58,16 @@ h3 {
   font-weight: 400 !important;
   line-height: 2em !important;
   color: #ffffff !important;
+  margin: unset !important;
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
 h4 {
   font-size: 1em !important;
   font-weight: 600 !important;
-  line-height: 1.5em !important;
+  line-height: 1.25em !important;
+  color: #ffffff !important;
+  margin: 0.25em 0 !important;
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
@@ -55,44 +75,57 @@ h5 {
   font-size: 0.75em !important;
   font-weight: 400 !important;
   line-height: 1em !important;
+  color: #000000 !important;
+  margin: unset !important;
   font-family: Arial, Helvetica, sans-serif !important;
+}
+
+h6 {
+  font-size: 0.75em !important;
+  font-weight: 400 !important;
+  line-height: 0em !important;
+  color: palegoldenrod !important;
+  margin: unset !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.chatBtn {
+  display: block;
+  text-align:center;
+  margin:auto;
+  width: 80%;
 }
 
 input {
   border-radius: 5px !important;
   border-style: unset !important;
-  width: 300px;
-  margin-bottom: 15px !important;
-}
-
-input [type=button] {
-  border-radius: 5px !important;
-  border-style: unset !important;
-  width: 70px;
+  width: 22em;
   margin-bottom: 15px !important;
 }
 
 button {
   border-radius: 20px !important;
-  padding: 0.25em 1.5em !important;
-  margin: 0.5em !important;
-  border: 0 !important;
-  
+  padding: 0.5em 1.5em !important;
+  margin: 2em 1em !important;
+  background-color: #ffffff !important;
+  text-transform: uppercase;
 }
 
 button:hover {
-  background-color: #4b87a1 !important;
-  color: white !important;
+  opacity: 0.7;
 }
 
 a {
   margin-bottom: 0.5em !important;
-  color: #ffffff !important;
-  font-family: Arial,
-  Helvetica,
-  sans-serif !important;
+  font-family: Arial, Helvetica, sans-serif !important;
   padding: 0.1em 0 !important;
   margin: unset !important;
+  text-decoration: none;
+}
+
+img {
+  align-self: center;
+  margin-top: 4em;
 }
 
 a:hover {
@@ -100,21 +133,30 @@ a:hover {
 }
 
 table {
-  font-size: 16px !important;
+  font-size: 1em !important;
   font-weight: 400 !important;
-  line-height: 20px !important;
+  line-height: 1.5em !important;
   color: #222222 !important;
   font-family: Arial,
   Helvetica,
   sans-serif !important;
-  padding: 0.25em 0.5em !important;
+  padding: 0.0em 0.25em !important;
 }
 
 thead {
   border-bottom: #222222;
 }
 
+@media only screen and (max-width: 767px) {
+  input {
+    max-width: 250px;
+  }
+}
 /* Landing */
+#signinblock {
+  flex-direction: column !important;
+}
+
 @media only screen and (max-width: 767px) {
   #signin-input-wrapper {
       flex-direction: column;
@@ -123,35 +165,41 @@ thead {
 }
 
 /* Dashboard styling */
-#dashboardWrapper {
-  width: 100vw;
-  height: 4em;
-  padding: 0.5em;
-  background-color: white;
-  position: sticky;
+footer {
+  position: fixed;
+  bottom: 0;
   display: flex;
   align-items: center;
+  padding: 0.5em;
+  align-self: center;
+  background-color: white;
   justify-content: space-evenly;
-
+  width: 100vw;
+  z-index: 1;
 }
 
 .menuItem {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin: auto 1em;
   color: grey;
+  opacity: 0.5;
+  font-size: 2em !important;
 }
 
-.menuItem:hover, #dashboardWrapper > a:active {
+.menuItem:hover, footer > .menuactive > .menuItem {
   color: #4b87a1;
+  opacity: 1;
+}
+
+@media only screen and (max-width: 767px) {
+  .menuItem {
+    font-size: 1.75em !important;
+  }
 }
 
 /* Booking Page */
-#bookPage {
-
-}
-
-#acctPage {
-
+.booking-wrapper {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
 }

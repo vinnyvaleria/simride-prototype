@@ -5,6 +5,7 @@ import {user} from './checkEmail';
 
  // display create booking information, binds area from db
  export const createBooking = () => {
+     document.getElementById('ddFilterArea').selectedIndex = 0;
      document.getElementById('div_availBookings').style.display = "none";
      document.getElementById('div_createBooking').style.display = "block";
      document.getElementById('div_myBookings').style.display = "none";

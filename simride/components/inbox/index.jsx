@@ -37,7 +37,12 @@ class Inbox extends React.Component {
             id: '',
             rating: '',
             ratedBy: '',
-            avgRating: 0.00
+            avgRating: 0.00,
+            otheremail: '',
+            otherdriver: '',
+            otherrating: 0.00,
+            otherfirstname: '',
+            otherlastname: ''
         };
     }
 
@@ -69,6 +74,20 @@ class Inbox extends React.Component {
                     user[9] = child.key;
                     user[10] = child.val().rating;
                     user[11] = child.val().ratedBy;
+
+                    this.setState({
+                        firstName: child.val().fname,
+                        lastName: child.val().lname,
+                        username: child.val().uname,
+                        email: child.val().email,
+                        phone: child.val().phone,
+                        isDriver: child.val().isDriver,
+                        isAdmin: child.val().isAdmin,
+                        wallet: child.val().wallet,
+                        id: child.key,
+                        rating: child.val().rating,
+                        ratedBy: child.val().ratedBy
+                    })
                 });
             }).then(() => {
                 if (typeof user[3] === 'undefined') {
@@ -93,6 +112,8 @@ class Inbox extends React.Component {
                                 allchats.push(doc.id);
                                 chats = Array.from(new Set(allchats))
                             });
+                        }).then (() => {
+                            this.inboxMsgButton();
                         });
                     }
                 }
@@ -146,7 +167,14 @@ class Inbox extends React.Component {
             })
 
         if (e.target.id === "submitMsgButtonNew") {
-            this.inboxMsgButton();
+            firebase.firestore().collection("chat").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    allchats.push(doc.id);
+                    chats = Array.from(new Set(allchats))
+                }); 
+            }).then(() => {
+                this.inboxMsgButton();
+            });
         }
     }
 
@@ -179,7 +207,6 @@ class Inbox extends React.Component {
 
                 clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
                 chattingTo.innerHTML = clickedUser;
-                viewOtherAcctPageUser.innerHTML = clickedUser;
                 break;
             } else if (i === unameArr.length) {
                 alert("User not found");
@@ -190,7 +217,7 @@ class Inbox extends React.Component {
     }
 
     // view another user's profile
-    viewUserProfile() {
+    viewUserProfile = () => {
         document.getElementById('otherAcctPage').style.display = "block";
         document.getElementById('msgsPage').style.display = "none";
 
@@ -200,19 +227,24 @@ class Inbox extends React.Component {
             .once('value')
             .then((snapshot) => {
                 snapshot.forEach((child) => {
-                    lblotherfName.innerHTML = child.val().fname;
-                    lblotherlName.innerHTML = child.val().lname;
-                    lblotherEmail.innerHTML = child.val().email;
-                    lblotherDriver.innerHTML = child.val().isDriver;
-                    let rating = child.val().rating;
-                    let count = child.val().ratedBy;
-                    if (count > 0) {
-                        lblotherRating.innerHTML = parseFloat(parseFloat(rating)/parseInt(count)).toFixed(2);
-                    }
-                    else {
-                        lblotherRating.innerHTML = '0.00'
-                    }
-                    clickedUserID = child.key;
+                    this.setState({
+                        otheremail: child.val().email,
+                        otherdriver: child.val().isDriver,
+                        otherfirstname: child.val().fname,
+                        otherlastname: child.val().lname
+                    }, () => {
+                        let rating = child.val().rating;
+                        let count = child.val().ratedBy;
+                        if (count > 0) {
+                            this.setState({
+                                otherrating: parseFloat(parseFloat(rating) / parseInt(count)).toFixed(2)
+                            })
+                        }
+                        if (this.state.otherdriver === 'yes') {
+                            document.getElementById('driverBadge').style.display = 'block';
+                        }
+                        clickedUserID = child.key;
+                    })
                 });
             })
     }
@@ -228,11 +260,15 @@ class Inbox extends React.Component {
 
     // inbox, buttons dynamically created from the chats that you have
     inboxMsgButton() {
-        document.getElementById("chatsStarted").innerHTML = "";
-        document.getElementById('searchUser').style.display = "none";
-        document.getElementById('inbox').style.display = "block";
-        document.getElementById('sendNewMessage').style.display = "none";
-
+        if (document.getElementById("chatsStarted") !== null) {
+            document.getElementById("chatsStarted").innerHTML = "";
+            document.getElementById('searchUser').style.display = "none";
+            document.getElementById('inbox').style.display = "block";
+            document.getElementById('sendNewMessage').style.display = "none";
+            document.getElementById('msgBox').style.display = "none";
+            document.getElementById('chatsStarted').style.display = "block";
+        }
+        
         for (var c = 0; c < chats.length; c++) {
             if (chats[c].includes(user[2])) {
                 var btn = document.createElement('input');
@@ -240,6 +276,7 @@ class Inbox extends React.Component {
                 btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
                 btn.setAttribute('id', c);
                 btn.onclick = this.openChat;
+                btn.classList.add('chatBtn');
                 document.getElementById('chatsStarted').appendChild(btn);
             }
         }
@@ -247,6 +284,8 @@ class Inbox extends React.Component {
 
     // opens the chat from inbox
     openChat(e) {
+        document.getElementById('msgBox').style.display = "block";
+        document.getElementById('chatsStarted').style.display = "none";
         document.getElementById("messages").innerHTML = "";
 
         chatName = chats[e.target.id];
@@ -450,15 +489,17 @@ class Inbox extends React.Component {
                             <button id='newMsgButton' title="newMessage" onClick={this.newMsgButton}>Search User</button>
                         </div>
                         <br />
-                        <div id='inbox' style={{ display: 'none' }}>
+                        <div id='inbox'>
                             <div id='chatsStarted'></div>
-                            <div>
-                                <ul id="messages"></ul>
-                            </div>
-                            <div id="submitInboxMessage" style={{ display: 'none' }}>
-                                <input id="message" placeholder="Enter message" value={this.state.message}
-                                    onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
-                                <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+                            <div id='msgBox' style={{ display: 'none' }}>
+                                <div>
+                                    <ul id="messages"></ul>
+                                </div>
+                                <div id="submitInboxMessage" style={{ display: 'none' }}>
+                                    <input id="message" placeholder="Enter message" value={this.state.message}
+                                        onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
+                                    <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+                                </div>
                             </div>
                         </div>
 
@@ -486,41 +527,18 @@ class Inbox extends React.Component {
 
                 <div id='otherAcctPage' style={{ display: 'none' }}>
                     <div>
-                        <h1 id="viewOtherAcctPageUser"></h1>
+                        <h1>{this.state.otherfirstname} {this.state.otherlastname}</h1>
+                        <h6 id='driverBadge' style={{ display: 'none' }}>&nbsp;&nbsp;SIMRide Driver</h6>
                         <br />
                         <table>
-                            <tbody>
-                                <tr>
-                                    <td>First Name:</td>
-                                    <td>
-                                        <label id='lblotherfName' style={{ display: 'inline' }}></label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Last Name:</td>
-                                    <td>
-                                        <label id='lblotherlName' style={{ display: 'inline' }}></label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Email:</td>
-                                    <td>
-                                        <label id='lblotherEmail' style={{ display: 'inline' }} name='email'></label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Driver:</td>
-                                    <td>
-                                        <label id='lblotherDriver' name='isDriver'></label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Rating:</td>
-                                    <td>
-                                        <label id='lblotherRating' name='rating'></label>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tr>
+                                <td><p class='profile'>Email:</p></td>
+                                <td><p class='profile'>&emsp;&emsp;{this.state.otheremail}</p></td>
+                            </tr>
+                            <tr>
+                                <td><p class='profile'>Rating:</p></td>
+                                <td><p class='profile'>&emsp;&emsp;{this.state.otherrating}</p></td>
+                            </tr>
                         </table>
                         <br />
                         <br />

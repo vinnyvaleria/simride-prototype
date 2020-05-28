@@ -42,13 +42,13 @@ export const filterChange = () => {
     });
 
     const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
-    database.once('value', (snapshot) => {
+    database.on('value', (snapshot) => {
         if (snapshot.exists()) {
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
                 for (var v = 0; v < areaNames.length; v++) {
-                    if (areaNames[v] === data.val().area) {
+                    if (areaNames[v] === data.val().area && data.val().completed === 'no' && data.val().date > moment.now()) {
                         let area = data.val().area;
                         let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                         let ppl = [];
