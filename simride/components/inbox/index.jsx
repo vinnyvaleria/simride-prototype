@@ -277,7 +277,10 @@ class Inbox extends React.Component {
                 btn.setAttribute('id', c);
                 btn.onclick = this.openChat;
                 btn.classList.add('chatBtn');
-                document.getElementById('chatsStarted').appendChild(btn);
+
+                if (document.getElementById('chatsStarted') !== null) {
+                    document.getElementById('chatsStarted').appendChild(btn);
+                }
             }
         }
     }
