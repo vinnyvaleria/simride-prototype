@@ -32,9 +32,6 @@ export const submitEditProfile = (fname, lname, phone) => {
     } else {
         alert("Account was not updated.")
     }
-    document.getElementById('lblfName').innerHTML = user[0];
-    document.getElementById('lbllName').innerHTML = user[1];
-    document.getElementById('lblPhone').innerHTML = user[4];
 
     util.profilePageReset();
 
