@@ -1,7 +1,6 @@
 /* General */
 #root {
   background: #4b9ea1 !important;
-  align-items: center;
   padding-bottom: 5em;
 }
 
@@ -200,10 +199,7 @@ footer {
 }
 
 /* Booking Page */
-#bookPage {
-
-}
-
-#acctPage {
-
+.booking-wrapper {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
 }

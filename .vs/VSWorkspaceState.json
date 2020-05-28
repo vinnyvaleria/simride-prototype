@@ -5,10 +5,10 @@
     "\\simride\\assets",
     "\\simride\\assets\\images",
     "\\simride\\components",
-    "\\simride\\components\\dashboard",
     "\\simride\\components\\login",
+    "\\simride\\components\\rating",
     "\\simride\\constants"
   ],
-  "SelectedNode": "\\simride\\assets\\images\\view-bookings.png",
+  "SelectedNode": "\\simride\\components\\login\\cancel.js",
   "PreviewInSolutionExplorer": false
 }

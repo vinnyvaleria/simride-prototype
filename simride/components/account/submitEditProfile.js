@@ -28,6 +28,7 @@ export const submitEditProfile = (fname, lname, phone) => {
                     phone: user[4]
                 })
             });
+        alert("Account is updated.")
     } else {
         alert("Account was not updated.")
     }

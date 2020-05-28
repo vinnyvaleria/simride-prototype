@@ -15,7 +15,7 @@ import { submitEditProfile } from './submitEditProfile';
 import { submitPassword } from './submitPassword';
 import { cancelPassword } from './cancelPassword';
 import { checkDriverApplicationStatus } from './checkDriverApplicationStatus';
-const util = require('./util')
+const util = require('./util');
 import '../../constants/custom.css';
 
 class Account extends React.Component {
@@ -353,9 +353,9 @@ render() {
           <button id='submitEditButton' onClick={this.submitEditProfile_Click} style={{display:'none'}}>Update</button>
           <button id='cancelEditButton' onClick={cancelEditProfile} style={{display:'none'}}>Cancel</button>
           <button id='submitPasswordButton' onClick={this.submitPassword_Click} style={{display:'none'}}>Update</button>
-          <button id='cancelPasswordButton' onClick={cancelPassword} style={{display:'none'}}>Cancel</button>
+          <button id='cancelPasswordButton' onClick={cancelPassword} style={{ display: 'none' }}>Cancel</button>
           <div>
-            <button id='btnApplyDriver' onClick={util.applyDriver} style={{display:'none'}}>Apply to be a driver</button>
+          <button id='btnApplyDriver' onClick={util.applyDriver} style={{ display: 'none' }}>Apply to be a driver</button>            
           </div>
           <br />
           <button id='btnLogout' onClick={this.logout}>Logout</button>
