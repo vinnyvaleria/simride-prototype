@@ -29,7 +29,6 @@ import * as moment from 'moment';
 import Map from '../maps/map';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import { color } from 'react-native-reanimated';
-import '../../constants/custom.css';
 
 class Booking extends React.Component {
   constructor(props) {
@@ -335,6 +334,7 @@ render() {
     return (
       <View style={{ width: '100%', flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div id='bookPage'>
+          <h1> Bookings </h1>
           <div>
             <button id='btnViewAllBookings' onClick={ viewAllBookings }>View All Rides</button>
             <button id='btnViewMyBookings' onClick={ viewMyBookings }>View My Rides</button>
@@ -377,9 +377,8 @@ render() {
           </div>
 
           <div id='div_availBookings'>
-          <h1>All Available Rides </h1>
-            <h4>Filter:
-              <select id="ddFilterArea" onChange={filterChange} style={{width: '5em', marginLeft: '1em'}} required>
+            <h3 style={{color: 'white'}}>Filter:
+              <select id="ddFilterArea" onChange={filterChange} style={{width: '5em', marginLeft: '2em'}} required>
                 <option>All</option>
                 <option>North</option>
                 <option>South</option>
@@ -387,10 +386,20 @@ render() {
                 <option>West</option>
                 <option>Central</option>
               </select>
-            </h4>
-            <div id="tbl_AllBookings">
-              <div id="tb_AllBookings"></div>
-            </div>
+            </h3>  
+            <br/>
+            <br/>
+            <table id="tbl_AllBookings">
+              <thead>
+                <tr>
+                  <th>Area</th>
+                  <th>Date & Time</th>
+                  <th>Driver</th>
+                  <th>No. of Passengers</th>
+                </tr>
+              </thead>
+              <tbody id="tb_AllBookings"></tbody>
+            </table>
           </div>
 
           <div id='div_viewSelectedBooking' style={{display: 'none'}}>
