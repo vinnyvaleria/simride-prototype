@@ -11,6 +11,7 @@ module.exports = {
         document.getElementById('cancelEditButton').style.display = 'none';
         document.getElementById('submitPasswordButton').style.display = 'none';
         document.getElementById('cancelPasswordButton').style.display = 'none';
+        document.getElementById('btnLogout').style.display = 'inline-block';
     },
 
     editProfile: function () {

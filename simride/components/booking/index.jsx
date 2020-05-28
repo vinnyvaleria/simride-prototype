@@ -57,6 +57,7 @@ class Booking extends React.Component {
           id: '',
           rating: '',
           ratedBy: '',
+          ratingID: '',
       }
   }
 
@@ -146,7 +147,7 @@ class Booking extends React.Component {
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
-              if (data.val().driverID === user[9] && data.val().date > moment.now()) {
+              if (data.val().driverID === user[9] && data.val().date > moment.now() && data.val().completed === 'no') {
                 let area = data.val().area;
                 let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                 let ppl = [];
@@ -305,7 +306,7 @@ class Booking extends React.Component {
   }
 
   rateUsers = (e) => {
-    this.setState({ bookingID: e.target.parentElement.parentElement.id });
+    this.setState({ ratingID: e.target.parentElement.parentElement.id });
     
     document.getElementById('tbl_MyBookings').style.display = 'none';
     document.getElementById('showRating').style.display = 'block';
@@ -358,7 +359,7 @@ render() {
               <tbody id="tb_myBookings"></tbody>
             </table>
             <div id='showRating' style={{ display: 'none' }}>
-              <Rating bookingID={this.state.bookingID} />
+              <Rating bookingID={this.state.ratingID} />
             </div>
           </div>
 

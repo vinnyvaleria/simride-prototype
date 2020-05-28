@@ -74,9 +74,10 @@ class rating extends Component {
                                     content += "\">" + uname + ' (Driver)';
                                     content += "</option>";
                                 }
-                                document.getElementById('ddUsers').innerHTML += content;
                             });
                         }
+
+                        document.getElementById('ddUsers').innerHTML += content;
                     }
                 });
             }
