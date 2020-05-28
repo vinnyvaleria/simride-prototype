@@ -192,7 +192,7 @@ class Login extends React.Component {
       var email = this.state.email.toLowerCase();
 
       if (!validate(email)) {
-        alert('Email not valid bro');
+        alert('Email not valid');
       } else {
         while (i < emailArr.length) {
           if (emailArr[i].toString() === email) {
@@ -206,7 +206,7 @@ class Login extends React.Component {
               break;
             }
           } else if (i === emailArr.length - 1) {
-            alert('Email not found yo');
+            alert('Email not found');
             i++;
           } else {
             i++;
