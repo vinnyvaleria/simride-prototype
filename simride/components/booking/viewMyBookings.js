@@ -41,7 +41,7 @@ export const viewMyBookings = () => {
                     let content = '';
                     let rowCount = 0;
                     snapshot.forEach((data) => {
-                        if (data.val().currPassengers !== "") {
+                        if (typeof data.val().currPassengers !== 'undefined') {
                             if (data.val().currPassengers.includes(user[2]) && data.val().date > moment.now() && data.val().completed === 'no') {
                                 let area = data.val().area;
                                 let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");

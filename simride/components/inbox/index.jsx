@@ -140,7 +140,7 @@ class Inbox extends React.Component {
     // stores message in firestore
     sendMessage(e) {
         e.preventDefault();
-
+        
         firebase.firestore().collection('messages').doc(chatName)
             .get()
             .then((docSnapshot) => {
@@ -216,9 +216,38 @@ class Inbox extends React.Component {
                         chatName = (search + "-" + user[2])
                     }
                 }
+                firebase.firestore().collection('messages').doc(chatName)
+                .get()
+                .then((docSnapshot) => {
+                    if (!docSnapshot.exists) { 
+                        let data = { field: 'field' }
+                        firebase.firestore().collection('chat').doc(chatName).set(data);
+                    }
+                }).then(() => {
+                    document.getElementById("messages").innerHTML = '';
+                    stop = firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+                        querySnapshot.docChanges().forEach((doc) => {
+                            var message = doc.doc.data();
+                            let html = '';
+                            // give each message a unique ID
+                            if (doc.doc.data().to === user[2]) {
+                                html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
+                                html += message.text;
+                                html += "</div>";
+                            }
+                            else if (doc.doc.data().from === user[2]) {
+                                html += "<div class='chat-right' id='message-" + message.timestamp + "'>";
+                                html += message.text;
+                                html += "</div>";
+                            }
+
+                            document.getElementById('submitInboxMessage').style.display = "block";
+                            document.getElementById("messages").innerHTML += html;
+                        });
+                    });
+                });
 
                 clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
-                chattingTo.innerHTML = clickedUser;
                 break;
             } else if (i === unameArr.length) {
                 alert("User not found");
@@ -235,34 +264,34 @@ class Inbox extends React.Component {
 
         const accountsRef = firebase.database().ref('accounts');
         accountsRef.orderByChild('uname')
-            .equalTo(this.state.to)
-            .once('value')
-            .then((snapshot) => {
-                snapshot.forEach((child) => {
-                    this.setState({
-                        otheremail: child.val().email,
-                        otherdriver: child.val().isDriver,
-                        otheradmin: child.val().isAdmin,
-                        otherfirstname: child.val().fname,
-                        otherlastname: child.val().lname
-                    }, () => {
-                        let rating = child.val().rating;
-                        let count = child.val().ratedBy;
-                        if (count > 0) {
-                            this.setState({
-                                otherrating: parseFloat(parseFloat(rating) / parseInt(count)).toFixed(2)
-                            })
-                        }
-                        if (this.state.otherdriver === 'yes') {
-                            document.getElementById('driverBadge').style.display = 'block';
-                        }
-                        if (this.state.otheradmin === 'yes') {
-                          document.getElementById('adminBadge').style.display = 'block';
-                      }
-                        clickedUserID = child.key;
-                    })
-                });
-            })
+        .equalTo(this.state.to)
+        .once('value')
+        .then((snapshot) => {
+            snapshot.forEach((child) => {
+                this.setState({
+                    otheremail: child.val().email,
+                    otherdriver: child.val().isDriver,
+                    otheradmin: child.val().isAdmin,
+                    otherfirstname: child.val().fname,
+                    otherlastname: child.val().lname
+                }, () => {
+                    let rating = child.val().rating;
+                    let count = child.val().ratedBy;
+                    if (count > 0) {
+                        this.setState({
+                            otherrating: parseFloat(parseFloat(rating) / parseInt(count)).toFixed(2)
+                        })
+                    }
+                    if (this.state.otherdriver === 'yes') {
+                        document.getElementById('driverBadge').style.display = 'block';
+                    }
+                    if (this.state.otheradmin === 'yes') {
+                        document.getElementById('adminBadge').style.display = 'block';
+                    }
+                    clickedUserID = child.key;
+                })
+            });
+        })
     }
 
     // new msg button
@@ -332,7 +361,6 @@ class Inbox extends React.Component {
                         html += "<div class='chat-right' id='message-" + message.timestamp + "'>";
                         html += message.text;
                         html += "</div>";
-                        console.log(html)
                     }
 
                     document.getElementById('submitInboxMessage').style.display = "block";
