@@ -335,6 +335,7 @@ class Booking extends React.Component {
   }
 
   startBooking = (e) => {
+    console.log(e.target.parentElement.parentElement.id)
     this.setState({ bookingID: e.target.parentElement.parentElement.id});
 
     document.getElementById('bookPage').style.display = 'none';
