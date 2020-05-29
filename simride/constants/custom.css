@@ -450,3 +450,72 @@ footer {
   top: 1%;
   right: 1%;
 }
+
+/* Admin Page */
+.admin-box {
+  margin: 10px auto;
+  padding: 5px 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  height: max-content;
+  width: fit-content;
+  min-width: 300px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+}
+
+.admin-icon {
+  height: 50px;
+  width: 50px;
+  align-items: flex-start;
+  margin: 0;
+}
+
+.admin-label, .admin-amount, .admin-footer {
+  text-align: right;
+  margin: 10px 0;
+}
+
+.admin-label, .admin-footer {
+  font-size: 13px;
+}
+
+.admin-label {
+  font-weight: 700;
+  color: #4b87a1;
+}
+
+.admin-footer {
+  color: #000000;
+}
+
+.admin-amount {
+  color: #4b9ea1;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.admin-box > div > div > input {
+  margin-bottom: 0 !important;
+  margin-left: 10px;
+  width: unset !important;
+  float: right;
+  padding: unset !important;
+}
+
+.admin-box > div > div > input:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+#uploadedFront > div, #tbl_ViewReportedUser > div {
+  display: inline-flex;
+  align-items: center;
+}
+
+#uploadedFront > div > h4, #tbl_ViewReportedUser > div > h4 {
+  margin-right: 15px !important;
+}

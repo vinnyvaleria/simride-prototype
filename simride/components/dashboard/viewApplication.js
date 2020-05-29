@@ -1,6 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
-import index from './index'
+import index from './index';
+import bear from '../../assets/images/bear.png';
 
 // view list of applicants
 export const viewApplication = () => {
@@ -15,11 +16,21 @@ export const viewApplication = () => {
                 if (data.val().status === "pending" && data.val().completed === "yes") {
                     let driverUname = data.val().driverUname;
                     let dateApplied = data.val().dateApplied;
+                    
+                    content += '<div class=admin-box id=' + data.key + '>';
+                    content += '<img src=' + bear + ' class=admin-icon />';
+                    content += '<div><p class=admin-label>' + dateApplied + '</p>';
+                    content += '<p class=admin-amount>' + driverUname + '</p>';
+                    content += '<div id=\'btnViewApplicant' + rowCount + '\'></div>';
+                    content += '</div></div>';
+
+                    /*
                     content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + driverUname + '</td>'; //column1
                     content += '<td>' + dateApplied + '</td>'; //column2
                     content += '<td id=\'btnViewApplicant' + rowCount + '\'></td>';
                     content += '</tr>';
+                    */
 
                     rowCount++;
                 }

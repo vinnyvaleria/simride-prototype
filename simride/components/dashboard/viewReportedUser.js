@@ -3,7 +3,7 @@ import 'firebase/firestore';
 
 // view the reported user
 export const viewReportedUser = (e) => {
-    var userID = e.target.parentElement.parentElement.id;
+    var userID = e.target.parentElement.parentElement.parentElement.id;
     document.getElementById('div_ViewApplicant').style.display = "none";
     document.getElementById('div_ViewReportedUser').style.display = "block";
     document.getElementById('div_driverApplication').style.display = "none";

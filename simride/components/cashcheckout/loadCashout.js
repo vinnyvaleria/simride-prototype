@@ -2,6 +2,7 @@ import 'firebase/firestore';
 import firebase from '../../../base';
 import * as moment from 'moment';
 import { changeCheckoutStatus } from './changeCheckoutStatus';
+import postal from '../../assets/images/postal.png';
 
 export const loadCashout = () => {
     document.getElementById('tb_NotDisbursedCashout').innerHTML = '';
@@ -18,13 +19,22 @@ export const loadCashout = () => {
                     let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                     let amount = data.val().amount;
 
+                    content += '<div class=admin-box id=' + data.key + '>';
+                    content += '<img src=' + postal + ' class=admin-icon />';
+                    content += '<div><p class=admin-label>' + userID + ' : ' + user + '</p>';
+                    content += '<p class=admin-amount>$ ' + amount + '</p>';
+                    content += '<p class=admin-footer>' + date + '</p>';
+                    content += '<div id=\'btnUpdateRequest' + rowCount + '\'></div>';
+                    content += '</div></div>';
+
+                    /*
                     content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + userID + '</td>'; //column1
                     content += '<td>' + user + '</td>'; //column2
                     content += '<td>' + amount + '</td>';
                     content += '<td>' + date + '</td>';
                     content += '<td id=\'btnUpdateRequest' + rowCount + '\'></td>';
-                    content += '</tr>';
+                    content += '</tr>';*/
 
                     rowCount++;
                 }

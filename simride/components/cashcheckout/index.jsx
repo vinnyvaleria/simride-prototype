@@ -70,31 +70,11 @@ class Cashout extends React.Component {
         return (
             <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
                 <div id='checkoutPage'>
-                    <h1>Checkout Requests</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Requester ID</th>
-                                <th>Requester</th>
-                                <th>Amount</th>
-                                <th>Date Applied</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tb_NotDisbursedCashout"></tbody>
-                    </table>
-                    <h4>Checkout History</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Requester ID</th>
-                                <th>Requester</th>
-                                <th>Amount</th>
-                                <th>Date Applied</th>
-                                <th>Disbursed</th>
-                            </tr>
-                        </thead>
-                        <tbody id="tb_AllCashout"></tbody>
-                    </table>
+                  <h1>Checkout Requests</h1>
+                  <div id="tb_NotDisbursedCashout"></div>
+                  <br />
+                  <h4>Checkout History</h4>
+                  <div id="tb_AllCashout"></div>
                 </div>
             </View>
         );
