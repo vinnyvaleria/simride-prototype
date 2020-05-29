@@ -520,7 +520,7 @@ class Inbox extends React.Component {
                         <div id='inbox'>
                             <div id='chatsStarted'></div>
                             <div id='msgBox' style={{ display: 'none' }}>
-                                <h1>{this.state.to}</h1>
+                                <h1 onClick={this.viewUserProfile} className='other-user-profile'>{this.state.to}</h1>
                                 <div id="messages"></div>
                                 <div id="submitInboxMessage" style={{ display: 'none' }}>
                                   <input id="message" placeholder="Enter message" value={this.state.message}

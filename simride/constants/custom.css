@@ -314,6 +314,11 @@ footer {
   cursor: pointer;
 }
 
+.other-user-profile:hover {
+  cursor: pointer;
+  opacity: 0.7;
+}
+
 /* Wallet Page */
 .transaction-box {
   margin: 10px auto;
