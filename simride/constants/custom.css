@@ -11,6 +11,7 @@ input, button, select {
   color: #4b9ea1 !important;
   font-family: Arial, Helvetica, sans-serif !important;
   padding: 0.75em 1em !important;
+  background: #ffffff;
 }
 
 ::placeholder {
@@ -147,7 +148,12 @@ thead {
   input {
     max-width: 250px;
   }
+
+  button, select, input {
+    transform: scale(0.9);
+  }
 }
+
 /* Landing */
 #signinblock {
   flex-direction: column !important;
@@ -196,7 +202,7 @@ footer {
 
 /* Booking Page */
 .booking-box {
-  margin: 10px auto;
+  margin: 10px;
   padding: 5px 10px;
   background-color: #ffffff;
   border-radius: 5px;
@@ -240,6 +246,7 @@ footer {
 
 .booking-box > div > div > input {
   margin-bottom: 0 !important;
+  margin-left: 10px;
   width: unset !important;
   float: right;
   padding: unset !important;
@@ -252,6 +259,38 @@ footer {
 
 #div_viewSelectedBooking {
   text-align: center;
+}
+
+.flex-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-row > h4 {
+  margin-right: 15px !important;
+}
+
+.flex-row > input {
+  width: unset !important;
+  margin: 0 !important;
+}
+
+.rdtDays {
+  background: #ffffe0;
+  width: max-content;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+#tb_AllBookings, #tb_myBookings, #tb_CreatedBookings {
+  text-align: -webkit-center;
+}
+
+@media only screen and (max-width: 767px) {
+  .booking-box {
+    transform: scale(0.9);
+  }
 }
 
 /* Inbox Page */
@@ -354,4 +393,10 @@ footer {
 .transaction-amount {
   font-size: 24px;
   font-weight: 700;
+}
+
+@media only screen and (max-width: 767px) {
+  .transaction-box {
+    transform: scale(0.9);
+  }
 }

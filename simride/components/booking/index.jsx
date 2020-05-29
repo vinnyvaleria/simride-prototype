@@ -29,6 +29,8 @@ import * as moment from 'moment';
 import Map from '../maps/map';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import { color } from 'react-native-reanimated';
+import past from '../../assets/images/past.png';
+import scheduled from '../../assets/images/confirm-bookings.png';
 
 class Booking extends React.Component {
   constructor(props) {
@@ -173,6 +175,17 @@ class Booking extends React.Component {
                   }
                 }
 
+                content += '<div class=booking-box id=' + data.key + '>';
+                content += '<img src=' + scheduled + ' class=booking-icon />';
+                content += '<div><p class=booking-label>' + driver + '</p>';
+                content += '<p class=booking-area>' + area + '</p>';
+                content += '<p class=booking-footer>' + date + '</p>';
+                content += '<p class=booking-footer>Passengers : ' + passengers + '</p>';
+                content += '<div id=\'btnViewCreatedBooking' + rowCount + '\'></div>';
+                content += '<div id=\'btnStartCreatedBooking' + rowCount + '\'></div>';
+                content += '</div></div>';
+                
+                /*
                 content += '<tr id=\'' + data.key + '\'>';
                 content += '<td>' + area + '</td>'; //column1
                 content += '<td>' + date + '</td>'; //column2
@@ -181,6 +194,7 @@ class Booking extends React.Component {
                 content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
                 content += '<td id=\'btnStartCreatedBooking' + rowCount + '\'></td>';
                 content += '</tr>';
+                */
 
                 rowCount++;
               }
@@ -259,6 +273,22 @@ class Booking extends React.Component {
                     }
                   }
 
+
+                  content += '<div class=booking-box id=' + data.key + '>';
+                  content += '<img src=' + past + ' class=booking-icon />';
+                  content += '<div><p class=booking-label>' + driver + '</p>';
+                  content += '<p class=booking-area>' + area + '</p>';
+                  content += '<p class=booking-footer>' + date + '</p>';
+                  content += '<p class=booking-footer>Passengers : ' + passengers + '</p>';
+                  content += '<div id=\'btnViewMyBooking' + rowCount + '\'></div>';
+
+                  if (!(data.val().ratedBy.includes(user[2]))) {
+                    content += '<div id=\'btnRate' + rowCount + '\'></div>';
+                  }
+
+                  content += '</div></div>';
+
+                  /*
                   content += '<tr id=\'' + data.key + '\'>';
                   content += '<td>' + area + '</td>'; //column1
                   content += '<td>' + date + '</td>'; //column2
@@ -269,6 +299,7 @@ class Booking extends React.Component {
                     content += '<td id=\'btnRate' + rowCount + '\'></td>';
                   }
                   content += '</tr>';
+                  */
 
                   rowCount++;
                 }
@@ -311,7 +342,7 @@ class Booking extends React.Component {
   }
 
   rateUsers = (e) => {
-    this.setState({ ratingID: e.target.parentElement.parentElement.id });
+    this.setState({ ratingID: e.target.parentElement.parentElement.parentElement.id });
     
     document.getElementById('tbl_MyBookings').style.display = 'none';
     document.getElementById('showRating').style.display = 'block';
@@ -361,17 +392,9 @@ render() {
           </div>
 
           <div id='div_viewCreatedBooking' style={{display: 'none'}}>
-            <table id="tbl_CreatedBookings">
-              <thead>
-                <tr>
-                  <th>Area</th>
-                  <th>Date & Time</th>
-                  <th>Driver</th>
-                  <th>No. of Passengers</th>
-                </tr>
-              </thead>
-              <tbody id="tb_CreatedBookings"></tbody>
-            </table>
+            <div id="tbl_CreatedBookings">
+              <div id="tb_CreatedBookings"></div>
+            </div>
           </div>
 
           <div id='div_availBookings'>
@@ -460,7 +483,7 @@ render() {
                   <td><select id="ddRemovePassenger"></select></td>
                 </tr>
                 <tr>
-                  <td>Reason for removing: </td>
+                  <td>Reason for removing:</td>
                   <td><input id='txtRemoveReason' value={this.state.removeReason} onChange={this.handleChange} type="text" name="removeReason" required /></td>
                 </tr>
               </tbody>
@@ -470,63 +493,52 @@ render() {
           </div>
 
           <div id='div_createBooking' style={{display: 'none'}}>
-            <table>
-              <tbody>
-                <tr>
-                  <td>Driver ID</td>
-                  <td><label id="driverID" /></td>
-                </tr>
-                <tr>
-                  <td>Date & Time</td>
-                  <Datetime isValidDate={valid} locale="en-sg" id='datepicker' onChange={this.onChange} value={this.state.date} required />
-                </tr>
-                <tr>
-                  <td>Area</td>
-                  <td>
-                    <select id="ddArea" style={{width: '13em'}} name='createArea' onChange={this.handleChange} required ></select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Where are you going?</td>
-                  <td>
-                    <select id="ddTowards" name='createTowards' onChange={this.handleChange} required >
-                      <option value="School">School</option>
-                      <option value="Home">Home</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>No. of Passengers</td>
-                  <td>
-                    <select id="ddPassengers" name='createMaxPassengers' onChange={this.handleChange} required >
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
-                      <option value="6">6</option>
-                      <option value="7">7</option>
-                    </select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Recurring?</td>
-                  <td>
-                    <input type='checkbox' id='cbRecurring' onChange={showRecurring} />
-                  </td>
-                </tr>
-                </tbody>
-            </table>
-            <table id='tr_showRecurring' style={{display:'none'}}>
-              <tbody>
-                <tr>
-                  <td>No. of weeks&emsp;&emsp;&emsp;&nbsp;&nbsp;</td>
-                  <td>
-                    <input type='number' id='txtRecurringWeeks' name='recurringWeeks' value={this.state.recurringWeeks} onChange={this.handleChange} required />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div style={{ textAlign: '-webkit-center'}}>
+              <h4>Driver ID :</h4>
+              <p><label id="driverID" /></p>
+              <br />
+              <h4>Date & Time :</h4>
+              <Datetime isValidDate={valid} locale="en-sg" id='datepicker' onChange={this.onChange} value={this.state.date} required />
+              <br />
+              <div className="flex-row">
+                <h4>Area</h4>
+                <select id="ddArea" name='createArea' onChange={this.handleChange} required />
+              </div>
+              <br />
+              <div className="flex-row">
+                <h4>Where are you going?</h4>
+                <select id="ddTowards" name='createTowards' onChange={this.handleChange} required >
+                  <option value="School">School</option>
+                  <option value="Home">Home</option>
+                </select>
+              </div>
+              <br />
+              <div className="flex-row">
+                <h4>No. of Passengers :</h4>
+                <select id="ddPassengers" name='createMaxPassengers' onChange={this.handleChange} required >
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                </select>
+              </div>
+              <br />
+              <div className="flex-row">        
+                <h4>Recurring?</h4>
+                <input type='checkbox' id='cbRecurring' onChange={showRecurring} />
+              </div>  
+              <br />
+              <div id='tr_showRecurring' style={{display:'none'}}>
+                <div className="flex-row">
+                  <h4>No. of weeks :</h4>
+                  <input type='number' id='txtRecurringWeeks' name='recurringWeeks' value={this.state.recurringWeeks} onChange={this.handleChange} required />
+                </div>
+              </div>
+            </div>
+            
             <br />
             <div style={{textAlign: 'center'}}>
               <button onClick={this.submitCreateBooking_click}>Submit</button>
