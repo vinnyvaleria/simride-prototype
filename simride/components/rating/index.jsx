@@ -94,7 +94,7 @@ class rating extends Component {
                     <table>
                         <tr>
                             <td>Rating for</td>
-                            <td><select id="ddUsers" name='username' style={{ width: '5em' }} required></select></td>
+                            <td><select id="ddUsers" name='username' style={{ width: 'max-content', padding: '0.5em', marginLeft: '2em' }} required></select></td>
                         </tr>
                         <tr><br/></tr>
                         <tr>
