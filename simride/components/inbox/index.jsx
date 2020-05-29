@@ -13,6 +13,7 @@ var chats = [];
 var chatName;
 var clickedUser;
 var clickedUserID;
+var stop;
 class Inbox extends React.Component {
     constructor(props) {
 
@@ -270,6 +271,9 @@ class Inbox extends React.Component {
 
     // inbox, buttons dynamically created from the chats that you have
     inboxMsgButton() {
+        if (typeof stop != 'undefined') {
+            stop();
+        }
         if (document.getElementById("chatsStarted") !== null) {
             document.getElementById("chatsStarted").innerHTML = "";
             document.getElementById('inbox').style.display = "block";
@@ -309,10 +313,10 @@ class Inbox extends React.Component {
         let clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
 
         this.setState({to: clickedUser}, () => {
-            firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+            stop = firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
                 querySnapshot.docChanges().forEach((doc) => {
                     var message = doc.doc.data();
-                    var html = "";
+                    let html = '';
                     // give each message a unique ID
                     if (doc.doc.data().to === user[2]) {
                         html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
@@ -323,6 +327,7 @@ class Inbox extends React.Component {
                         html += "<div class='chat-right' id='message-" + message.timestamp + "'>";
                         html += message.text;
                         html += "</div>";
+                        console.log(html)
                     }
 
                     document.getElementById('submitInboxMessage').style.display = "block";
