@@ -273,7 +273,6 @@ class Inbox extends React.Component {
         
         if (document.getElementById("chatsStarted") !== null) {
             document.getElementById("chatsStarted").innerHTML = "";
-            document.getElementById('searchUser').style.display = "none";
             document.getElementById('inbox').style.display = "block";
             document.getElementById('sendNewMessage').style.display = "none";
             document.getElementById('msgBox').style.display = "none";
@@ -300,6 +299,7 @@ class Inbox extends React.Component {
     openChat(e) {
         document.getElementById('msgBox').style.display = "block";
         document.getElementById('chatsStarted').style.display = "none";
+        document.getElementById('searchUser').style.display = "none";
         document.getElementById("messages").innerHTML = "";
 
         chatName = chats[e.target.id];
@@ -501,34 +501,28 @@ class Inbox extends React.Component {
           <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
                 <div id='msgsPage'>
                     <div>
-                        <div>
-                            <h1>Messages</h1>
-                        </div>
-                        <div id='msgOption'>
-                            <button id='inboxMsgButton' title="Inbox" onClick={this.inboxMsgButton}>Inbox</button>
-                            <button id='newMsgButton' title="newMessage" onClick={this.newMsgButton}>Search User</button>
-                        </div>
-                        <br />
-                        <div id='inbox'>
-                            <div id='chatsStarted'></div>
-                            <div id='msgBox' style={{ display: 'none' }}>
-                                <h2>{this.state.to}</h2>
-                                <div id="messages"></div>
-                            </div>
-                            <div id="submitInboxMessage" style={{ display: 'none' }}>
-                                <input id="message" placeholder="Enter message" value={this.state.message}
-                                    onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
-                                <button style={{ margin: '0 0 0 15px' }} id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
-                            </div>
-                        </div>
-
-                        <br />
-                        <div id='searchUser' style={{ display: 'none' }}>
+                        <div id='searchUser'>
+                            <h1>Inbox</h1>
                             <input id="selectUser" placeholder="Search user" value={this.state.to} onChange={this.handleChange}
                                 type="text" name="to" style={{ width: '350px' }} />
                             <button id='submitSearchUserButton' onClick={this.searchUsername}>Submit</button>
                         </div>
-
+                        <div id='msgOption' style={{ display: 'none' }}>
+                            <button id='inboxMsgButton' title="Inbox" onClick={this.inboxMsgButton}>Inbox</button>
+                            <button id='newMsgButton' title="newMessage" onClick={this.newMsgButton}>Search User</button>
+                        </div>
+                        <div id='inbox'>
+                            <div id='chatsStarted'></div>
+                            <div id='msgBox' style={{ display: 'none' }}>
+                                <h1>{this.state.to}</h1>
+                                <div id="messages"></div>
+                                <div id="submitInboxMessage" style={{ display: 'none' }}>
+                                  <input id="message" placeholder="Enter message" value={this.state.message}
+                                      onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
+                                  <button style={{ margin: '0 0 0 15px' }} id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+                                </div>
+                            </div>
+                        </div>
                         <div id="sendNewMessage" style={{ display: 'none' }}>
                             <button id='chattingTo' onClick={this.viewUserProfile}></button>
                             <div>
