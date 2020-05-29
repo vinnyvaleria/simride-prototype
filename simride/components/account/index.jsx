@@ -133,6 +133,47 @@ class Account extends React.Component {
 
   submitEditProfile_Click = () => {
     submitEditProfile(this.state.firstName, this.state.lastName, this.state.phone);
+
+    const accountsRef = firebase.database().ref('accounts');
+    accountsRef.orderByChild('email')
+      .equalTo(firebase.auth().currentUser.email)
+      .once('value')
+      .then((snapshot) => {
+        snapshot.forEach((child) => {
+          this.setState({
+            firstName: child.val().fname,
+            lastName: child.val().lname,
+            username: child.val().uname,
+            email: child.val().email,
+            phone: child.val().phone,
+            isDriver: child.val().isDriver,
+            isAdmin: child.val().isAdmin,
+            wallet: child.val().wallet,
+            id: child.key,
+            rating: child.val().rating,
+            ratedBy: child.val().ratedBy
+          }, (() => {
+            if (this.state.ratedBy > 0) {
+              const avg = (parseFloat(this.state.rating) / parseInt(this.state.ratedBy)).toFixed(2);
+              this.setState({ avgRating: avg });
+            }
+
+            if (this.state.isDriver === 'yes') {
+              document.getElementById('driverBadge').style.display = 'block';
+            }
+
+            if (this.state.isAdmin === 'yes') {
+              document.getElementById('adminBadge').style.display = 'block';
+            }
+
+            if (this.state.isBanned === 'yes') {
+              alert('Your account has been banned');
+              firebase.auth().signOut();
+            }
+          })
+          );
+        })
+      });
   }
 
   submitPassword_Click = () => {
