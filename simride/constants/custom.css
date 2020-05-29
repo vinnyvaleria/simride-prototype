@@ -283,7 +283,10 @@ footer {
   border-radius: 5px;
 }
 
-#tb_AllBookings, #tb_myBookings, #tb_CreatedBookings {
+#tb_AllBookings, 
+#tb_myBookings, 
+#tb_CreatedBookings, 
+#div_createBooking {
   text-align: -webkit-center;
   text-align: -moz-center;
 }
