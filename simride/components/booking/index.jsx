@@ -493,7 +493,7 @@ render() {
           </div>
 
           <div id='div_createBooking' style={{display: 'none'}}>
-            <div style={{ textAlign: '-webkit-center'}}>
+            <div style={{ textAlign: '-webkit-center', textAlign: '-moz-center' }}>
               <h4>Driver ID :</h4>
               <p><label id="driverID" /></p>
               <br />

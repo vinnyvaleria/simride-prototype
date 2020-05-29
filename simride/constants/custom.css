@@ -285,6 +285,7 @@ footer {
 
 #tb_AllBookings, #tb_myBookings, #tb_CreatedBookings {
   text-align: -webkit-center;
+  text-align: -moz-center;
 }
 
 @media only screen and (max-width: 767px) {

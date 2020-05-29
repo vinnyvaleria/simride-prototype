@@ -280,18 +280,18 @@ class map extends React.Component {
                     <Text>{this.state.error}</Text>
                 )}
                 {this.state.ready && (
-                    <Text>Latitude:{this.state.to.lat}, Longitude:{this.state.to.lng}
+                    <Text><h4>Latitude :{this.state.to.lat}, Longitude :{this.state.to.lng}</h4>
                         <div>
-                            <table>
-                                <tbody id='directions'></tbody>
-                                <tbody id='school'>
+                            <div>
+                                <div id='directions'></div>
+                                <div id='school'>
                                     <tr>
                                         <td>School</td>
                                         <td>SIM Global Education</td>
                                         <td><input type="button" value="Set Directions" onClick={this.plotPts} id="SIM Global Education:1.329297:103.776518:School:cash" /></td>
                                     </tr>
-                                </tbody>
-                            </table>
+                                </div>
+                            </div>
                             <div id='div_meet'>
                                 <button id='btnHere' onClick={() => notifyHere(this.state.user)} style={{ display: 'none' }}>I'm here</button>
                                 <br/>
