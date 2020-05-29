@@ -8,8 +8,6 @@ export const transactionsPage = () => {
     document.getElementById('div_WalletTopUp').style.display = "none";
     document.getElementById('div_WalletHistory').style.display = "block";
     document.getElementById('div_CashOut').style.display = "none";
-    document.getElementById('btnTransactionPage').style.display = "none";
-    document.getElementById('btnWalletHome').innerHTML = "< Go back to wallet";
 
     document.getElementById('tb_AllTransactions').innerHTML = '';
 
