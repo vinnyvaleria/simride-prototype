@@ -13,6 +13,7 @@ var chats = [];
 var chatName;
 var clickedUser;
 var clickedUserID;
+var clickCount;
 class Inbox extends React.Component {
     constructor(props) {
 
@@ -267,6 +268,9 @@ class Inbox extends React.Component {
 
     // inbox, buttons dynamically created from the chats that you have
     inboxMsgButton() {
+        let unsub = firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot(() => {});
+        unsub();
+        
         if (document.getElementById("chatsStarted") !== null) {
             document.getElementById("chatsStarted").innerHTML = "";
             document.getElementById('searchUser').style.display = "none";
@@ -300,11 +304,13 @@ class Inbox extends React.Component {
 
         chatName = chats[e.target.id];
         let clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
+        clickCount += clickedUser + " ";
 
         this.setState({to: clickedUser}, () => {
             firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
                 querySnapshot.docChanges().forEach((doc) => {
                     var message = doc.doc.data();
+                    let html = '';
                     // give each message a unique ID
                     if (doc.doc.data().to === user[2]) {
                         html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
