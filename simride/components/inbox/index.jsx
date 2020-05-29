@@ -192,7 +192,10 @@ class Inbox extends React.Component {
             // checks if there is a valid account in the database
             if (this.state.to === unameArr[i]) {
                 document.getElementById('searchUser').style.display = "none";
-                document.getElementById('sendNewMessage').style.display = "block";
+                document.getElementById('chatsStarted').style.display = "none";
+                document.getElementById('msgBox').style.display = "block";
+                document.getElementById('inboxMsgButton').style.display = "block";
+                document.getElementById('inboxMsgButton').innerHTML = "< Go back to inbox";
                 const search = this.state.to;
 
                 //creates chat based on username length
@@ -272,7 +275,10 @@ class Inbox extends React.Component {
             document.getElementById('inbox').style.display = "block";
             document.getElementById('sendNewMessage').style.display = "none";
             document.getElementById('msgBox').style.display = "none";
+            document.getElementById('inboxMsgButton').style.display = "none";
+            document.getElementById('inboxMsgButton').innerHTML = "< Go back to inbox";
             document.getElementById('chatsStarted').style.display = "block";
+            document.getElementById('searchUser').style.display = "block";
         }
         
         for (var c = 0; c < chats.length; c++) {
@@ -297,6 +303,7 @@ class Inbox extends React.Component {
         document.getElementById('chatsStarted').style.display = "none";
         document.getElementById('searchUser').style.display = "none";
         document.getElementById("messages").innerHTML = "";
+        document.getElementById("inboxMsgButton").style.display = "block";
 
         chatName = chats[e.target.id];
         let clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
@@ -501,9 +508,9 @@ class Inbox extends React.Component {
                                 type="text" name="to" style={{ width: '350px' }} />
                             <button id='submitSearchUserButton' onClick={this.searchUsername}>Submit</button>
                         </div>
-                        <div id='msgOption' style={{ display: 'none' }}>
-                            <button id='inboxMsgButton' title="Inbox" onClick={this.inboxMsgButton}>Inbox</button>
-                            <button id='newMsgButton' title="newMessage" onClick={this.newMsgButton}>Search User</button>
+                        <div id='msgOption'>
+                            <button id='inboxMsgButton'  style={{ display: 'none' }} title="Inbox" onClick={this.inboxMsgButton}>Inbox</button>
+                            <button id='newMsgButton'  style={{ display: 'none' }} title="newMessage" onClick={this.newMsgButton}>Search User</button>
                         </div>
                         <div id='inbox'>
                             <div id='chatsStarted'></div>
