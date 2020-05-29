@@ -13,7 +13,7 @@ var chats = [];
 var chatName;
 var clickedUser;
 var clickedUserID;
-var clickCount;
+var stop;
 class Inbox extends React.Component {
     constructor(props) {
 
@@ -268,9 +268,9 @@ class Inbox extends React.Component {
 
     // inbox, buttons dynamically created from the chats that you have
     inboxMsgButton() {
-        let unsub = firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot(() => {});
-        unsub();
-        
+        if (typeof stop != 'undefined') {
+            stop();
+        }
         if (document.getElementById("chatsStarted") !== null) {
             document.getElementById("chatsStarted").innerHTML = "";
             document.getElementById('inbox').style.display = "block";
@@ -304,10 +304,9 @@ class Inbox extends React.Component {
 
         chatName = chats[e.target.id];
         let clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
-        clickCount += clickedUser + " ";
 
         this.setState({to: clickedUser}, () => {
-            firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+            stop = firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
                 querySnapshot.docChanges().forEach((doc) => {
                     var message = doc.doc.data();
                     let html = '';
@@ -507,9 +506,9 @@ class Inbox extends React.Component {
                                 type="text" name="to" style={{ width: '350px' }} />
                             <button id='submitSearchUserButton' onClick={this.searchUsername}>Submit</button>
                         </div>
-                        <div id='msgOption' style={{ display: 'none' }}>
+                        <div id='msgOption' style={{ display: 'block' }}>
                             <button id='inboxMsgButton' title="Inbox" onClick={this.inboxMsgButton}>Inbox</button>
-                            <button id='newMsgButton' title="newMessage" onClick={this.newMsgButton}>Search User</button>
+                            {/* <button id='newMsgButton' title="newMessage" onClick={this.newMsgButton}>Search User</button> */}
                         </div>
                         <div id='inbox'>
                             <div id='chatsStarted'></div>
