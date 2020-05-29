@@ -1,14 +1,14 @@
 import firebase from '../../../base';
 import {user} from "./checkEmailWallet";
 
-export const submitCashOut = () => {
+export const submitCashOut = (cashamount) => {
     const notificationRef = firebase.database().ref('notification');
-    const balance = parseFloat(user[8] - this.state.cashoutamount).toFixed(2);
+    const balance = parseFloat(user[8] - cashamount).toFixed(2);
     const notification = {
         uname: 'admin',
         date: Date.now(),
         notification: 'Cash-out',
-        reason: user[2] + ' has requested to cash-out $' + this.state.cashoutamount
+        reason: user[2] + ' has requested to cash-out $' + cashamount
     }
 
     const requestCheckOutRef = firebase.database().ref('cashcheckout');
@@ -16,7 +16,7 @@ export const submitCashOut = () => {
         requester: user[2],
         requesterID: user[9],
         date: Date.now(),
-        amount: this.state.cashoutamount,
+        amount: cashamount,
         disbursed: 'no'
     }
 
