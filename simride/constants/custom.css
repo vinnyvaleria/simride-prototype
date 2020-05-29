@@ -104,7 +104,7 @@ input {
 }
 
 button {
-  border-radius: 20px !important;
+  border-radius: 20px;
   padding: 0.5em 1.5em !important;
   margin: 2em 1em;
   height: fit-content;
@@ -215,7 +215,7 @@ footer {
   width: fit-content;
   max-width: 300px;
   display: block;
-  color: #4b9ea1 !important;
+  color: #4b87a1 !important;
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
@@ -227,7 +227,7 @@ footer {
   width: fit-content;
   max-width: 300px;
   display: block;
-  color: #4b9ea1 !important;
+  color: #4b87a1 !important;
   font-family: Arial, Helvetica, sans-serif !important;
   text-align: right;
   align-self: flex-end;
@@ -237,6 +237,11 @@ footer {
   display: inline-flex;
   height: max-content;
   margin: 5em auto 2em;
+}
+
+#submitInboxMessage > button {
+  border-radius: 5px;
+  height: 36px;
 }
 
 #messages {

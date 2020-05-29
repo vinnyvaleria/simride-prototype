@@ -508,12 +508,13 @@ class Inbox extends React.Component {
                             <div id='msgBox' style={{ display: 'none' }}>
                                 <h2>{this.state.to}</h2>
                                 <div id="messages"></div>
+                                <div id="submitInboxMessage" style={{ display: 'none' }}>
+                                  <input id="message" placeholder="Enter message" value={this.state.message}
+                                      onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
+                                  <button style={{ margin: '0 0 0 15px' }} id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+                                </div>
                             </div>
-                            <div id="submitInboxMessage" style={{ display: 'none' }}>
-                                <input id="message" placeholder="Enter message" value={this.state.message}
-                                    onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
-                                <button style={{ margin: '0 0 0 15px' }} id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
-                            </div>
+                            
                         </div>
 
                         <br />
