@@ -173,9 +173,7 @@ class Wallet extends React.Component {
                     <br/>
                     <div id="tbl_last5">
                         <h4>Last 5 Bookings</h4>
-                        <table>
-                            <tbody id="tb_LastFiveTransactions"></tbody>
-                        </table>
+                        <div id="tb_LastFiveTransactions"></div>
                     </div>
                 </div>
                 <br/>

@@ -1,6 +1,7 @@
 import firebase from '../../../base';
 import * as moment from 'moment';
 import {user} from "./checkEmailWallet";
+import car from '../../assets/images/car.png';
 
 export const getLastFiveBookings = () => {
     let userDetails = [];
@@ -38,11 +39,18 @@ export const getLastFiveBookings = () => {
                         }
                     }
 
-                    content += '<tr id=\'' + data.key + '\'>';
+                    content += '<div class=transaction-box id=' + data.key + '>';
+                    content += '<img src=' + car + ' class=transaction-icon />';
+                    content += '<div><p class=transaction-label>' + driver + '</p>';
+                    content += '<p class=transaction-amount>' + area + '</p>';
+                    content += '<p class=transaction-label>' + date + '</p>';
+                    content += '</div></div>';
+                    
+                    /*content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + area + '</td>'; //column1
                     content += '<td>' + date + '</td>'; //column2
                     content += '<td>' + driver + '</td>';
-                    content += '</tr>';
+                    content += '</tr>';*/
                 }
             });
             document.getElementById('tb_LastFiveTransactions').innerHTML += content;
