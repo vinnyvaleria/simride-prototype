@@ -1,6 +1,7 @@
 import firebase from '../../../base';
 import 'firebase/firestore';
-import { viewReportedUser } from './viewReportedUser'
+import { viewReportedUser } from './viewReportedUser';
+import close from '../../assets/images/close.png';
 
 // view reported users
 export const viewReportedList = () => {
@@ -15,12 +16,21 @@ export const viewReportedList = () => {
                 let username = data.val().username;
                 let lastDate = new Date(data.val().lastReportDate * -1);
                 let status = data.val().status;
+
+                content += '<div class=admin-box id=' + data.key + '>';
+                content += '<img src=' + close + ' class=admin-icon />';
+                content += '<div><p class=admin-label>' + lastDate.toDateString() + ' : ' + status + '</p>';
+                content += '<p class=admin-amount>' + username + '</p>';
+                content += '<div id=\'btnViewReportedUser' + rowCount + '\'></div>';
+                content += '</div></div>';
+
+                /*
                 content += '<tr id=\'' + data.key + '\'>';
                 content += '<td>' + username + '</td>'; //column1
                 content += '<td>' + lastDate.toDateString() + '</td>'; //column2
                 content += '<td>' + status + '</td>';
                 content += '<td id=\'btnViewReportedUser' + rowCount + '\'></td>';
-                content += '</tr>';
+                content += '</tr>';*/
 
                 rowCount++;
             });

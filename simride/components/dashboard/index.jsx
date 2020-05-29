@@ -98,7 +98,7 @@ class Dashboard extends React.Component {
   }
 
   viewApplicant = (e) => {
-    var driverID = e.target.parentElement.parentElement.id;
+    var driverID = e.target.parentElement.parentElement.parentElement.id;
     
     const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
     database.once('value', (snapshot) => {
@@ -162,116 +162,112 @@ render() {
           <div id="adminDB" style={{display: 'none'}}>
             <div id="div_driverApplication">
               <h4>Notifications</h4>
-              <table>
-                <tbody id="tb_AdminNotifications"></tbody>
-              </table>
+              <div id="tb_AdminNotifications"></div>
+              <br />
               <h4>Driver Applicants List</h4>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date Applied</th>
-                  </tr>
-                </thead>
-                <tbody id="tb_driverApplication">
-                </tbody>
-              </table>
+              <div id="tb_driverApplication">
+              <br />
             </div>
-
+            </div>
+            <br />
             <div id='div_ReportedUsers'>
               <h4>Reported User List</h4>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Latest Reported Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody id="tb_ReportedUsers">
-                </tbody>
-              </table>
+              <div id="tb_ReportedUsers">
+              </div>
             </div>
 
             <div id='div_ViewApplicant' style={{display: 'none'}}>
-              <table id="tbl_ViewApplicant">
-                <tbody>
-                  <tr id='uploadedFront'>
-                    <td>
+              <div id="tbl_ViewApplicant">
+                  <div id='uploadedFront'>
+                    <div>
                       {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
-                    </td>
-                    <td>
+                    </div>
+                    <div>
                       {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Driver ID:</td>
-                    <td id='td_ViewApplicant_driverID'></td>
-                  </tr>
-                  <tr>
-                    <td>Username:</td>
-                    <td id='td_ViewApplicant_username'></td>
-                  </tr>
-                  <tr>
-                    <td>Date Applied:</td>
-                    <td id='td_ViewApplicant_dateApplied'></td>
-                  </tr>
-                  <tr>
-                    <td>License no:</td>
-                    <td id='td_ViewApplicant_license'></td>
-                  </tr>
-                  <tr>
-                    <td>License Issued:</td>
-                    <td id='td_ViewApplicant_issuedDate'></td>
-                  </tr>
-                </tbody>
-              </table>
+                    </div>
+                    <br />
+                    <div>
+                      <h4>Driver ID:</h4>
+                      <div id='td_ViewApplicant_driverID'></div>
+                    </div>
+                    <br />
+
+                    <div>
+                      <h4>Username:</h4>
+                      <div id='td_ViewApplicant_username'></div>
+                    </div>
+                    <br />
+
+                    <div>
+                      <h4>Date Applied:</h4>
+                      <div id='td_ViewApplicant_dateApplied'></div>
+                    </div>
+                    <br />
+
+                    <div>
+                      <h4>License no:</h4>
+                      <div id='td_ViewApplicant_license'></div>
+                    </div>
+                    <br />
+
+                    <div>
+                      <h4>License Issued:</h4>
+                      <div id='td_ViewApplicant_issuedDate'></div>
+                    </div>
+                  </div>
+              </div>
               <br />
               <button onClick={ approveApplicant }>Approve Applicant</button>
               <button onClick={ back }>Back</button>
             </div>
 
             <div id='div_ViewReportedUser' style={{display: 'none'}}>
-              <table id="tbl_ViewReportedUser">
-                <tbody>
-                  <tr>
-                    <td>User ID:</td>
-                    <td id='td_ViewReportedUser_userID'></td>
-                  </tr>
-                  <tr>
-                    <td>Username:</td>
-                    <td id='td_ViewReportedUser_username'></td>
-                  </tr>
-                  <tr>
-                    <td>Status:</td>
-                    <td id='td_ViewReportedUser_status'></td>
-                  </tr>
-                  <tr>
-                    <td>Last Reported Date:</td>
-                    <td id='td_ViewReportedUser_lastreport'></td>
-                  </tr>
-                  <tr>
-                    <td>No Show:</td>
-                    <td id='td_ViewReportedUser_noshow'></td>
-                  </tr>
-                  <tr>
-                    <td>Fake Profile:</td>
-                    <td id='td_ViewReportedUser_fakeprofile'></td>
-                  </tr>
-                  <tr>
-                    <td>Threatened Safety:</td>
-                    <td id='td_ViewReportedUser_safety'></td>
-                  </tr>
-                  <tr>
-                    <td>Inappropriate Behaviour:</td>
-                    <td id='td_ViewReportedUser_inappropriate'></td>
-                  </tr>
-                  <tr>
-                    <td>Uncivil, Rude or Vulgar:</td>
-                    <td id='td_ViewReportedUser_vulgar'></td>
-                  </tr>
-                </tbody>
-              </table>
+              <div id="tbl_ViewReportedUser">
+                <div>
+                  <h4>User ID:</h4>
+                  <div id='td_ViewReportedUser_userID'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>Username:</h4>
+                  <div id='td_ViewReportedUser_username'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>Status:</h4>
+                  <div id='td_ViewReportedUser_status'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>Last Reported Date:</h4>
+                  <div id='td_ViewReportedUser_lastreport'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>No Show:</h4>
+                  <div id='td_ViewReportedUser_noshow'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>Fake Profile:</h4>
+                  <div id='td_ViewReportedUser_fakeprofile'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>Threatened Safety:</h4>
+                  <div id='td_ViewReportedUser_safety'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>Inappropriate Behaviour:</h4>
+                  <div id='td_ViewReportedUser_inappropriate'></div>
+                </div>
+                <br />
+                <div>
+                  <h4>Uncivil, Rude or Vulgar:</h4>
+                  <div id='td_ViewReportedUser_vulgar'></div>
+                </div>
+              </div>
               <br />
               <button id="btnBanUser" onClick={ banUser }>Ban User</button>
               <button id="btnUnBanUser" onClick={ unBanUser }>Un-Ban User</button>
@@ -282,13 +278,13 @@ render() {
           <div id="driverDB" style={{display: 'none'}}>
             <div id='div_DriverNotifications'>
               <h4>Notifications</h4>
-              <table>
+              <div>
                 <tbody id="tb_DriverNotifications"></tbody>
-              </table>
+              </div>
             </div>
             <div id='div_DriverUpcomingRides'>
               <h4>Upcoming Rides</h4>
-              <table>
+              <div>
                 <thead>
                   <tr>
                     <th>Area</th>
@@ -298,11 +294,11 @@ render() {
                   </tr>
                 </thead>
                 <tbody id="tb_DriverUpcomingRides"></tbody>
-              </table>
+              </div>
             </div>
             <div id='div_DriverUpcomingDrives'>
               <h4>Upcoming Drives</h4>
-              <table>
+              <div>
                 <thead>
                   <tr>
                     <th>Area</th>
@@ -312,20 +308,20 @@ render() {
                   </tr>
                 </thead>
                 <tbody id="tb_DriverUpcomingDrives"></tbody>
-              </table>
+              </div>
             </div>
           </div>
 
           <div id="riderDB" style={{display: 'none'}}>
             <div id='div_RiderNotifications'>
               <h4>Notifications</h4>
-              <table>
+              <div>
                 <tbody id="tb_RiderNotifications"></tbody>
-              </table>
+              </div>
             </div>
             <h4>Upcoming Rides</h4>
             <div id='div_RiderUpcomingRides'>
-              <table>
+              <div>
                 <thead>
                   <tr>
                     <th>Area</th>
@@ -335,7 +331,7 @@ render() {
                   </tr>
                 </thead>
                 <tbody id="tb_RiderUpcomingRides"></tbody>
-              </table>
+              </div>
             </div>
           </div>
         </div>
