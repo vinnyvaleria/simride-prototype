@@ -58,6 +58,11 @@ class Dashboard extends React.Component {
             id: child.key,
             rating: child.val().rating,
             ratedBy: child.val().ratedBy
+          }, () => {
+              if (this.state.isBanned === 'yes') {
+                alert('Your account has been banned');
+                firebase.auth().signOut();
+              }
           })
         });
       })

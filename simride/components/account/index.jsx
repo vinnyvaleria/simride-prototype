@@ -99,12 +99,17 @@ class Account extends React.Component {
             ratedBy: child.val().ratedBy
           }, (() => {
             if (this.state.ratedBy > 0) {
-              const avg = parseFloat(this.state.rating) / parseInt(this.state.ratedBy).toFixed(2);
+              const avg = (parseFloat(this.state.rating) / parseInt(this.state.ratedBy)).toFixed(2);
               this.setState({ avgRating: avg });
             }
 
             if (this.state.isDriver === 'yes') {
               document.getElementById('driverBadge').style.display = 'block';
+            }
+
+            if (this.state.isBanned === 'yes') {
+              alert('Your account has been banned');
+              firebase.auth().signOut();
             }
           })
         );

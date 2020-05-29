@@ -101,6 +101,7 @@ class Login extends React.Component {
           } else {
             alert('Phone number is invalid')
             check = false;
+            break;
           }
         }
       }
