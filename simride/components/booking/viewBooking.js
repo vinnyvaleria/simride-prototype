@@ -17,7 +17,7 @@ export const viewBooking = (e) => {
     document.getElementById('td_viewSelectedBooking_towards').innerHTML = null;
     document.getElementById('td_viewSelectedBooking_slotsLeft').innerHTML = null;
 
-    var bookingID = e.target.parentElement.parentElement.id;
+    var bookingID = e.target.parentElement.parentElement.parentElement.id;
 
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "none";

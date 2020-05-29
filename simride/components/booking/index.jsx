@@ -393,54 +393,34 @@ render() {
                 <option>Central</option>
               </select>
             </h3>  
-            <br/>
-            <br/>
-            <table id="tbl_AllBookings">
-              <thead>
-                <tr>
-                  <th>Area</th>
-                  <th>Date & Time</th>
-                  <th>Driver</th>
-                  <th>No. of Passengers</th>
-                </tr>
-              </thead>
-              <tbody id="tb_AllBookings"></tbody>
-            </table>
+            <div id="tb_AllBookings"></div>
           </div>
 
           <div id='div_viewSelectedBooking' style={{display: 'none'}}>
-            <table id="tbl_AllBookings">
-              <tbody>
-                <tr>
-                  <td>Booking ID:</td>
-                  <td id='td_viewSelectedBooking_bookingID'></td>
-                </tr>
-                <tr>
-                  <td>Driver Username:</td>
-                  <td id='td_viewSelectedBooking_driverName'></td>
-                </tr>
-                <tr>
-                  <td>Date & Time:</td>
-                  <td id='td_viewSelectedBooking_date'></td>
-                </tr>
-                <tr>
-                  <td>Area:</td>
-                  <td id='td_viewSelectedBooking_area'></td>
-                </tr>
-                <tr>
-                  <td>Going:</td>
-                  <td id='td_viewSelectedBooking_towards'></td>
-                </tr>
-                <tr>
-                  <td>Slots left:</td>
-                  <td id='td_viewSelectedBooking_slotsLeft'></td>
-                </tr>
-                <tr id='tr_viewSelectedBooking_currPassengers'>
-                  <td>Passengers:</td>
-                  <td id='td_viewSelectedBooking_currPassengers'></td>
-                </tr>
-              </tbody>
-            </table>
+            <div id="tbl_AllBookings">
+              <h4>Booking ID:</h4>
+              <p id='td_viewSelectedBooking_bookingID'></p>
+              <br />
+              <h4>Driver Username:</h4>
+              <p id='td_viewSelectedBooking_driverName'></p>
+              <br />
+              <h4>Date & Time:</h4>
+              <p id='td_viewSelectedBooking_date'></p>
+              <br />
+              <h4>Area:</h4>
+              <p id='td_viewSelectedBooking_area'></p>
+              <br />
+              <h4>Going:</h4>
+              <p id='td_viewSelectedBooking_towards'></p>
+              <br />
+              <h4>Slots left:</h4>
+              <p id='td_viewSelectedBooking_slotsLeft'></p>
+              <br />
+              <div id='tr_viewSelectedBooking_currPassengers'>
+                <h4>Passengers:</h4>
+                <p id='td_viewSelectedBooking_currPassengers'></p>
+              </div>
+            </div>
             <table id='tbl_viewSelectedBooking_ExtendBooking' style={{display: 'none'}}>
               <tbody>
                 <tr>
