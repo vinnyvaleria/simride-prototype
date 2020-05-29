@@ -305,17 +305,20 @@ class Inbox extends React.Component {
             firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
                 querySnapshot.docChanges().forEach((doc) => {
                     var message = doc.doc.data();
-                    var html = "";
                     // give each message a unique ID
                     if (doc.doc.data().to === user[2]) {
+                        var html = "";
                         html += "<p class='chat-right' id='message-" + message.timestamp + "'>";
                         html += message.text;
                         html += "</p>";
+                        console.log(html)
                     }
                     else if (doc.doc.data().from === user[2]) {
+                        var html = "";
                         html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
                         html += message.text;
                         html += "</div>";
+                        console.log(html)
                     }
 
                     document.getElementById('submitInboxMessage').style.display = "block";
