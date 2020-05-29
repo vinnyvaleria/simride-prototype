@@ -43,6 +43,7 @@ class Inbox extends React.Component {
             avgRating: 0.00,
             otheremail: '',
             otherdriver: '',
+            otheradmin: '',
             otherrating: 0.00,
             otherfirstname: '',
             otherlastname: ''
@@ -241,6 +242,7 @@ class Inbox extends React.Component {
                     this.setState({
                         otheremail: child.val().email,
                         otherdriver: child.val().isDriver,
+                        otheradmin: child.val().isAdmin,
                         otherfirstname: child.val().fname,
                         otherlastname: child.val().lname
                     }, () => {
@@ -254,6 +256,9 @@ class Inbox extends React.Component {
                         if (this.state.otherdriver === 'yes') {
                             document.getElementById('driverBadge').style.display = 'block';
                         }
+                        if (this.state.otheradmin === 'yes') {
+                          document.getElementById('adminBadge').style.display = 'block';
+                      }
                         clickedUserID = child.key;
                     })
                 });
@@ -548,6 +553,7 @@ class Inbox extends React.Component {
                     <div>
                         <h1>{this.state.otherfirstname} {this.state.otherlastname}</h1>
                         <div id='driverBadge' style={{ display: 'none' }}>SIMRide Driver</div>
+                        <div id='adminBadge' style={{ display: 'none' }}>SIMRide Admin</div>
                         <br />
                         <table>
                             <tr>

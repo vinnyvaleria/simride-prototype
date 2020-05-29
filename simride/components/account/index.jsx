@@ -107,6 +107,10 @@ class Account extends React.Component {
               document.getElementById('driverBadge').style.display = 'block';
             }
 
+            if (this.state.isAdmin === 'yes') {
+              document.getElementById('adminBadge').style.display = 'block';
+            }
+
             if (this.state.isBanned === 'yes') {
               alert('Your account has been banned');
               firebase.auth().signOut();
@@ -272,10 +276,11 @@ render() {
   return (
     <View style={{ width: '100%',  justifyContent: "center", alignItems: "center" }}>
       <div id='acctPage'>
-        <div style={{ textAlign: '-webkit-center', textAlign: '-moz-center' }}>
+        <div id='accountPageCenter'>
           <div id='tblProfile' style={{ textAlign: 'center' }}>
             <h1>{this.state.firstName} {this.state.lastName}</h1>
             <div id='driverBadge' style={{ display: 'none' }}>SIMRide Driver</div>
+            <div id='adminBadge' style={{ display: 'none' }}>SIMRide Admin</div>
             <br/>
             <table>
               <tr>

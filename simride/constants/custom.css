@@ -106,6 +106,7 @@ button {
   width: max-content;
   background-color: #ffffff !important;
   text-transform: uppercase;
+  border-style: none;
 }
 
 button:hover {
@@ -286,7 +287,8 @@ footer {
 #tb_AllBookings, 
 #tb_myBookings, 
 #tb_CreatedBookings, 
-#div_createBooking {
+#div_createBooking,
+#accountPageCenter {
   text-align: -webkit-center;
   text-align: -moz-center;
 }
@@ -424,7 +426,22 @@ footer {
   border-radius: 20px;
   height: fit-content;
   width: max-content;
-  color: #4b9ea1;
+  color: #ffffff;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif !important;
+  padding: 0.5em 1em;
+  font-size: 10px;
+  position: fixed;
+  top: 1%;
+  right: 1%;
+}
+
+#adminBadge {
+  background-color: red;
+  border-radius: 20px;
+  height: fit-content;
+  width: max-content;
+  color: #ffffe0;
   font-weight: 700;
   font-family: Arial, Helvetica, sans-serif !important;
   padding: 0.5em 1em;
