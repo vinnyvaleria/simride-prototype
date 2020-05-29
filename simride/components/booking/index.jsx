@@ -383,7 +383,7 @@ render() {
           </div>
 
           <div id='div_availBookings'>
-            <h3 style={{color: 'white'}}>Filter:
+            <h3 style={{color: 'white', textAlign: 'center'}}>Filter:
               <select id="ddFilterArea" onChange={filterChange} style={{width: '5em', marginLeft: '2em'}} required>
                 <option>All</option>
                 <option>North</option>
