@@ -98,7 +98,6 @@ class map extends React.Component {
     }
 
     getPostal = () => {
-        alert('bookingID')
         const database = firebase.database().ref('bookings');
         database.once('value', (snapshot) => {
             if (snapshot.exists()) {

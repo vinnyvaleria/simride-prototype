@@ -335,18 +335,17 @@ class Booking extends React.Component {
   }
 
   startBooking = (e) => {
-    console.log(e.target.parentElement.parentElement.id)
-    this.setState({ bookingID: e.target.parentElement.parentElement.id});
-
-    document.getElementById('bookPage').style.display = 'none';
-    document.getElementById('maps').style.display = 'block';
+    this.setState({ bookingID: e.target.parentElement.parentElement.parentElement.id}, () => {
+      document.getElementById('bookPage').style.display = 'none';
+      document.getElementById('maps').style.display = 'block';
+    });
   }
 
   rateUsers = (e) => {
-    this.setState({ ratingID: e.target.parentElement.parentElement.parentElement.id });
-    
-    document.getElementById('tbl_MyBookings').style.display = 'none';
-    document.getElementById('showRating').style.display = 'block';
+    this.setState({ ratingID: e.target.parentElement.parentElement.parentElement.id }, () => {
+      document.getElementById('tbl_MyBookings').style.display = 'none';
+      document.getElementById('showRating').style.display = 'block';
+    });
   }
 
   confirmRemovePassenger_click = () => {

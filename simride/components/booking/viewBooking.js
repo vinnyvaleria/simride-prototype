@@ -132,6 +132,7 @@ export const viewBooking = (e) => {
                                 document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = "";
                                 if (driver === user[2]) {
                                     for (let ct = 0; ct < ppl.length; ct++) {
+                                        console.log(meet)
                                         const p = meet[ct].split(':');
                                         document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML += ppl[ct] + " (Pick-Up Point: " + p[0] + ", Paying By: " + pay[ct] + ") <br/>";
                                     }
