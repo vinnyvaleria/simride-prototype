@@ -25,7 +25,7 @@ export const transactionsPage = () => {
                     content += '<img src=' + card + ' class=transaction-icon />';
                     content += '<div><p class=transaction-label>' + action + '</p>';
                     content += '<p class=transaction-amount>' + '$' + parseFloat(amount).toFixed(2) + '</p>';
-                    content += '<p class=transaction-label>' + date + '</p>';
+                    content += '<p class=transaction-footer>' + date + '</p>';
                     content += '</div></div>';
                     
                     /*content += '<tr id=\'' + data.key + '\'>';

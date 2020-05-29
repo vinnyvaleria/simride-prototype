@@ -272,10 +272,10 @@ render() {
   return (
     <View style={{ width: '100%',  justifyContent: "center", alignItems: "center" }}>
       <div id='acctPage'>
-        <div>
-          <div id='tblProfile'>
+        <div style={{ textAlign: '-webkit-center' }}>
+          <div id='tblProfile' style={{ textAlign: 'center' }}>
             <h1>{this.state.firstName} {this.state.lastName}</h1>
-            <h6 id='driverBadge' style={{ display: 'none' }}>&nbsp;&nbsp;SIMRide Driver</h6>
+            <div id='driverBadge' style={{ display: 'none' }}>SIMRide Driver</div>
             <br/>
             <table>
               <tr>

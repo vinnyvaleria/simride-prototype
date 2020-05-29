@@ -547,7 +547,7 @@ class Inbox extends React.Component {
                 <div id='otherAcctPage' style={{ display: 'none' }}>
                     <div>
                         <h1>{this.state.otherfirstname} {this.state.otherlastname}</h1>
-                        <h6 id='driverBadge' style={{ display: 'none' }}>&nbsp;&nbsp;SIMRide Driver</h6>
+                        <div id='driverBadge' style={{ display: 'none' }}>SIMRide Driver</div>
                         <br />
                         <table>
                             <tr>

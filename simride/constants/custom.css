@@ -1,7 +1,7 @@
 /* General */
 #root {
   background: #4b9ea1 !important;
-  padding-bottom: 5em;
+  padding: 5em 20px;
 }
 
 input, button, select {
@@ -10,7 +10,7 @@ input, button, select {
   line-height: 1.5em !important;
   color: #4b9ea1 !important;
   font-family: Arial, Helvetica, sans-serif !important;
-  padding: 0.75em 1em !important;
+  padding: 0.75em 1em;
   background: #ffffff;
 }
 
@@ -224,7 +224,7 @@ footer {
 
 .booking-label, .booking-area, .booking-footer {
   text-align: right;
-  margin: 0.5em 0;
+  margin: 10px 0;
 }
 
 .booking-label {
@@ -380,23 +380,52 @@ footer {
   margin: 0;
 }
 
-.transaction-label, .transaction-amount {
-  color: #4b87a1;
+.transaction-label, .transaction-amount, .transaction-footer {
   text-align: right;
-  margin: 0.5em 0;
+  margin: 10px 0;
 }
 
-.transaction-label {
+.transaction-label, .transaction-footer {
   font-size: 13px;
 }
 
+.transaction-label {
+  font-weight: 700;
+  color: #4b87a1;
+}
+
+.transaction-footer {
+  color: #000000;
+}
+
 .transaction-amount {
+  color: #4b9ea1;
   font-size: 24px;
   font-weight: 700;
+}
+
+#homePage > h2 {
+  color: yellow !important;
 }
 
 @media only screen and (max-width: 767px) {
   .transaction-box {
     transform: scale(0.9);
   }
+}
+
+/* Account Page */
+#driverBadge {
+  background-color: yellow;
+  border-radius: 20px;
+  height: fit-content;
+  width: max-content;
+  color: #4b9ea1;
+  font-weight: 700;
+  font-family: Arial, Helvetica, sans-serif !important;
+  padding: 0.5em 1em;
+  font-size: 10px;
+  position: fixed;
+  top: 1%;
+  right: 1%;
 }

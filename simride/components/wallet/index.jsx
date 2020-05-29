@@ -160,8 +160,9 @@ class Wallet extends React.Component {
     render() {
         return (
         <View style={{ width: '100%', justifyContent: "center", alignItems: "center" }}>
-        <div id='homePage'>
-        <h1>$ {parseFloat(this.state.wallet).toFixed(2)}</h1>
+        <div id='homePage' style={{ textAlign: 'center' }}>
+        <h1>Wallet</h1>
+        <h2>Balance : $ {parseFloat(this.state.wallet).toFixed(2)}</h2>
             <div>
               <button id='btnWalletHome' onClick={ walletHomePage }>Wallet</button>
               <button id='btnTransactionPage' onClick={ transactionsPage }>Transactions</button>

@@ -372,7 +372,7 @@ render() {
       <View style={{ width: '100%', flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div id='bookPage'>
           <h1> Bookings </h1>
-          <div>
+          <div style={{ textAlign: 'center' }}>
             <button id='btnViewAllBookings' onClick={ viewAllBookings }>View All Rides</button>
             <button id='btnViewMyBookings' onClick={ viewMyBookings }>View My Rides</button>
             <button id='btnCreateBooking' onClick={ createBooking }>Create A Ride</button>
@@ -399,7 +399,7 @@ render() {
 
           <div id='div_availBookings'>
             <h3 style={{color: 'white', textAlign: 'center'}}>Filter:
-              <select id="ddFilterArea" onChange={filterChange} style={{width: '5em', marginLeft: '2em'}} required>
+              <select id="ddFilterArea" onChange={filterChange} style={{width: 'max-content', padding: '0.5em', marginLeft: '2em'}} required>
                 <option>All</option>
                 <option>North</option>
                 <option>South</option>

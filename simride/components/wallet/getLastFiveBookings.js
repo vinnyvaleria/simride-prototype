@@ -43,7 +43,7 @@ export const getLastFiveBookings = () => {
                     content += '<img src=' + car + ' class=transaction-icon />';
                     content += '<div><p class=transaction-label>' + driver + '</p>';
                     content += '<p class=transaction-amount>' + area + '</p>';
-                    content += '<p class=transaction-label>' + date + '</p>';
+                    content += '<p class=transaction-footer>' + date + '</p>';
                     content += '</div></div>';
                     
                     /*content += '<tr id=\'' + data.key + '\'>';
