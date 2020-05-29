@@ -299,26 +299,30 @@ class Inbox extends React.Component {
         document.getElementById("messages").innerHTML = "";
 
         chatName = chats[e.target.id];
-        firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
-            querySnapshot.docChanges().forEach((doc) => {
-                var message = doc.doc.data();
-                var html = "";
-                // give each message a unique ID
-                if (doc.doc.data().to === user[2]) {
-                    html += "<p class='chat-right' id='message-" + message.timestamp + "'>";
-                    html += message.text;
-                    html += "</p>";
-                }
-                else if (doc.doc.data().from === user[2]) {
-                    html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
-                    html += message.text;
-                    html += "</div>";
-                }
+        let clickedUser = (chatName.replace(user[2].toString(), '')).replace('-', '');
 
-                document.getElementById('submitInboxMessage').style.display = "block";
-                document.getElementById("messages").innerHTML += html;
+        this.setState({to: clickedUser}, () => {
+            firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+                querySnapshot.docChanges().forEach((doc) => {
+                    var message = doc.doc.data();
+                    var html = "";
+                    // give each message a unique ID
+                    if (doc.doc.data().to === user[2]) {
+                        html += "<p class='chat-right' id='message-" + message.timestamp + "'>";
+                        html += message.text;
+                        html += "</p>";
+                    }
+                    else if (doc.doc.data().from === user[2]) {
+                        html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
+                        html += message.text;
+                        html += "</div>";
+                    }
+
+                    document.getElementById('submitInboxMessage').style.display = "block";
+                    document.getElementById("messages").innerHTML += html;
+                });
             });
-        });
+        })
     }
 
     report() {
@@ -502,6 +506,7 @@ class Inbox extends React.Component {
                         <div id='inbox'>
                             <div id='chatsStarted'></div>
                             <div id='msgBox' style={{ display: 'none' }}>
+                                <h2>{this.state.to}</h2>
                                 <div id="messages"></div>
                                 <div id="submitInboxMessage" style={{ display: 'none' }}>
                                     <input id="message" placeholder="Enter message" value={this.state.message}
