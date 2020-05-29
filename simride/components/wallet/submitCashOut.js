@@ -11,6 +11,16 @@ export const submitCashOut = (cashamount) => {
         reason: user[2] + ' has requested to cash-out $' + cashamount
     }
 
+    const transaction = firebase.database().ref('transaction');
+    const transactionForm = {
+        user: user[2],
+        email: user[3],
+        token: null,
+        amount: cashamount,
+        date: Date.now() * -1,
+        action: 'cash-out'
+    }
+
     const requestCheckOutRef = firebase.database().ref('cashcheckout');
     const requestForm = {
         requester: user[2],
@@ -30,6 +40,7 @@ export const submitCashOut = (cashamount) => {
             })
         });
 
+    transaction.push(transactionForm);
     notificationRef.push(notification);
     requestCheckOutRef.push(requestForm);
     
