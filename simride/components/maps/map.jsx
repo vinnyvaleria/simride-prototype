@@ -11,6 +11,8 @@ import { notifyHere } from './notifyHere';
 import { userBoard } from './userBoard';
 import { userNoShow } from './userNoShow';
 import { updateBooking } from './updateBooking';
+import pin from '../../assets/images/pin.png';
+import { ScrollView } from 'react-native-gesture-handler';
 
 Geocode.enableDebug();
 
@@ -130,12 +132,22 @@ class map extends React.Component {
                         }
 
                         for(let i=0; i<ppl.length; i++) {
+                          content += '<div class=booking-box id=\'' + i + '_' + data.key + '\'>';
+                          content += '<img src=' + pin + ' class=booking-icon />';
+                          content += '<div><p class=booking-label>' + ppl[i] + '</p>';
+                          content += '<p class=booking-area>' + postal[i].split(':')[0] + '</p>';
+                          content += '<p class=booking-footer>' + payMethod[i] + '</p>';
+                          content += '<div id=\'btnPlotPts' + i + '\'></div>';
+                          content += '</div></div>';
+                          
+                          /*
                             content += '<tr id=\'' + i + '_' + data.key + '\'>';
                             content += '<td>' + ppl[i] + '</td>'; //column1
                             content += '<td>' + postal[i].split(':')[0] + '</td>';
                             content += '<td>' + payMethod[i] + '</td>'
                             content += '<td id=\'btnPlotPts' + i + '\'></td>';
                             content += '</tr>';
+                          */
                         }
                     }
                 });
@@ -272,7 +284,7 @@ class map extends React.Component {
 
     render() {
         return (
-            <View style={style.container}>
+            <ScrollView style={style.container}>
                 {!this.state.ready && (
                     <Text>Please turn on your GPS and allow GPS location</Text>
                 )}
@@ -280,16 +292,14 @@ class map extends React.Component {
                     <Text>{this.state.error}</Text>
                 )}
                 {this.state.ready && (
-                    <Text><h4>Latitude :{this.state.to.lat}, Longitude :{this.state.to.lng}</h4>
+                    <Text><h4>Latitude : {this.state.to.lat}, Longitude : {this.state.to.lng}</h4>
                         <div>
                             <div>
                                 <div id='directions'></div>
                                 <div id='school'>
-                                    <tr>
-                                        <td>School</td>
-                                        <td>SIM Global Education</td>
-                                        <td><input type="button" value="Set Directions" onClick={this.plotPts} id="SIM Global Education:1.329297:103.776518:School:cash" /></td>
-                                    </tr>
+                                  <h4>School : SIM Global Education</h4>
+                                  <br />
+                                  <input type="button" value="Set Directions" onClick={this.plotPts} id="SIM Global Education:1.329297:103.776518:School:cash" />
                                 </div>
                             </div>
                             <div id='div_meet'>
@@ -306,27 +316,26 @@ class map extends React.Component {
                         </div>
                         <div>
                             <Button onPress={this.handleGetDirections} title="Get Directions" />
-
                             <Map google={this.props.google} zoom={17} initialCenter={{ lat: this.state.from.lat, lng: this.state.from.lng }}>
-                                <Marker onClick={this.onMarkerClick}
-                                    name={'Current location'} />
-                                <Marker
-                                    name={'Destination'}
-                                    position={{ lat: this.state.to.lat, lng: this.state.to.lat }} />
+                              <Marker onClick={this.onMarkerClick}
+                                name={'Current location'} />
+                              <Marker
+                                name={'Destination'}
+                                position={{ lat: this.state.to.lat, lng: this.state.to.lat }} />
                             </Map>
+                            
                         </div>
                     </Text>
                 )}
-            </View>
+            </ScrollView>
         );
     }
 }
 
 const style = StyleSheet.create({
     container: {
-        flex: 1,
-        width: '600px',
-        height: '500px'
+        maxWidth: '600px',
+        height: '800px'
     },
     welcome: {
         fontSize: 20,
