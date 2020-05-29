@@ -325,7 +325,7 @@ footer {
   padding: 5px 10px;
   background-color: #ffffff;
   border-radius: 5px;
-  min-height: 80px;
+  height: max-content;
   min-width: 300px;
   justify-content: space-between;
   align-items: center;

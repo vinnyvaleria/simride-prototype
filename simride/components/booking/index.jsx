@@ -352,17 +352,9 @@ render() {
           </div>
 
           <div id='div_myBookings' style={{display: 'none'}}>
-            <table id="tbl_MyBookings">
-              <thead>
-                <tr>
-                  <th>Area</th>
-                  <th>Date & Time</th>
-                  <th>Driver</th>
-                  <th>No. of Passengers</th>
-                </tr>
-              </thead>
-              <tbody id="tb_myBookings"></tbody>
-            </table>
+            <div id="tbl_MyBookings">
+              <div id="tb_myBookings"></div>
+            </div>
             <div id='showRating' style={{ display: 'none' }}>
               <Rating bookingID={this.state.ratingID} />
             </div>

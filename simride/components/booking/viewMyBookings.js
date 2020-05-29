@@ -4,6 +4,7 @@ import firebase from '../../../base';
 import {user} from './checkEmail';
 import {viewBooking} from './viewBooking';
 import * as moment from 'moment';
+import mine from '../../assets/images/confirm-bookings.png';
 
 // view my bookings
 export const viewMyBookings = () => {
@@ -62,6 +63,16 @@ export const viewMyBookings = () => {
                                     }
                                 }
 
+                                content += '<div class=booking-box id=' + data.key + '>';
+                                content += '<img src=' + mine + ' class=booking-icon />';
+                                content += '<div><p class=booking-label>' + driver + '</p>';
+                                content += '<p class=booking-area>' + area + '</p>';
+                                content += '<p class=booking-footer>' + date + '</p>';
+                                content += '<p class=booking-footer>Passengers : ' + passengers + '</p>';
+                                content += '<div id=\'btnViewMyBooking' + rowCount + '\'></div>';
+                                content += '</div></div>';
+                                
+                                /*
                                 content += '<tr id=\'' + data.key + '\'>';
                                 content += '<td>' + area + '</td>'; //column1
                                 content += '<td>' + date + '</td>'; //column2
@@ -69,6 +80,7 @@ export const viewMyBookings = () => {
                                 content += '<td>' + passengers + '</td>';
                                 content += '<td id=\'btnViewMyBooking' + rowCount + '\'></td>';
                                 content += '</tr>';
+                                */
 
                                 rowCount++;
                             }
