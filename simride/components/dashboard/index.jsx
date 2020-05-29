@@ -278,60 +278,31 @@ render() {
           <div id="driverDB" style={{display: 'none'}}>
             <div id='div_DriverNotifications'>
               <h4>Notifications</h4>
-              <div>
-                <tbody id="tb_DriverNotifications"></tbody>
-              </div>
+              <div id="tb_DriverNotifications"></div>
+              <br />
             </div>
             <div id='div_DriverUpcomingRides'>
               <h4>Upcoming Rides</h4>
-              <div>
-                <thead>
-                  <tr>
-                    <th>Area</th>
-                    <th>Date & Time</th>
-                    <th>Driver</th>
-                    <th>No. of Passengers</th>
-                  </tr>
-                </thead>
-                <tbody id="tb_DriverUpcomingRides"></tbody>
-              </div>
+              <div id="tb_DriverUpcomingRides"></div>
+              <br />
             </div>
             <div id='div_DriverUpcomingDrives'>
               <h4>Upcoming Drives</h4>
-              <div>
-                <thead>
-                  <tr>
-                    <th>Area</th>
-                    <th>Date & Time</th>
-                    <th>Driver</th>
-                    <th>No. of Passengers</th>
-                  </tr>
-                </thead>
-                <tbody id="tb_DriverUpcomingDrives"></tbody>
-              </div>
+              <div id="tb_DriverUpcomingDrives"></div>
+              <br />
             </div>
           </div>
 
           <div id="riderDB" style={{display: 'none'}}>
             <div id='div_RiderNotifications'>
               <h4>Notifications</h4>
-              <div>
-                <tbody id="tb_RiderNotifications"></tbody>
-              </div>
+              <div id="tb_RiderNotifications"></div>
+              <br />
             </div>
             <h4>Upcoming Rides</h4>
             <div id='div_RiderUpcomingRides'>
-              <div>
-                <thead>
-                  <tr>
-                    <th>Area</th>
-                    <th>Date & Time</th>
-                    <th>Driver</th>
-                    <th>No. of Passengers</th>
-                  </tr>
-                </thead>
-                <tbody id="tb_RiderUpcomingRides"></tbody>
-              </div>
+              <div id="tb_RiderUpcomingRides"></div>
+              <br />
             </div>
           </div>
         </div>

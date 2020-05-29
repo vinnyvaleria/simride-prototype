@@ -3,6 +3,7 @@ import 'firebase/firestore';
 import {user} from './checkEmailDashboard';
 import * as moment from 'moment';
 var userDetails = [];
+import scheduled from '../../assets/images/confirm-bookings.png';
 
 // view created bookings by driver
 export const viewCreatedBooking = () => {
@@ -51,12 +52,21 @@ export const viewCreatedBooking = () => {
                         }
                     }
 
+                    content += '<div class=booking-box id=' + data.key + '>';
+                    content += '<img src=' + scheduled + ' class=booking-icon />';
+                    content += '<div><p class=booking-label>' + driver + '</p>';
+                    content += '<p class=booking-area>' + area + '</p>';
+                    content += '<p class=booking-footer>' + date + '</p>';
+                    content += '<p class=booking-footer>Passengers : ' + passengers + '</p>';
+                    content += '</div></div>';
+
+                    /*
                     content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + area + '</td>'; //column1
                     content += '<td>' + date + '</td>'; //column2
                     content += '<td>' + driver + '</td>';
                     content += '<td>' + passengers + '</td>';
-                    content += '</tr>';
+                    content += '</tr>';*/
                 }
             });
             if (document.getElementById('tb_DriverUpcomingDrives') !== null) {

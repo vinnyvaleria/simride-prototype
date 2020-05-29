@@ -91,6 +91,7 @@ export const viewBooking = (e) => {
                                     document.getElementById('btnRemovePassenger').style.display = "none";
                                     document.getElementById('btnConfirmRemovePassenger').style.display = "none";
                                     document.getElementById('tbl_removePassengerExtend').style.display = "none";
+                                    document.getElementById('btnViewPastBooking').style.display = "none";
                                 } else {
                                     if (driver === user[2]) { // owner of booking and not admin
                                         document.getElementById('btnJoinBooking').style.display = "none";
