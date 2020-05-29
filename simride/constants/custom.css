@@ -19,6 +19,7 @@ input, button, select {
 
 p {
   line-height: 0.8em !important;
+  font-family: Arial, Helvetica, sans-serif !important;
 }
 
 .profile {
@@ -257,4 +258,42 @@ footer {
 .chatBtn:hover {
   opacity: 0.7;
   cursor: pointer;
+}
+
+/* Wallet Page */
+.transaction-box {
+  margin: 10px auto;
+  padding: 5px 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  min-height: 80px;
+  min-width: 300px;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+}
+
+.transaction-icon {
+  height: 50px;
+  width: 50px;
+  align-items: flex-start;
+  margin: 0;
+}
+
+.transaction-label, .transaction-amount {
+  color: #4b87a1;
+  text-align: right;
+  text-transform: capitalize;
+  margin: 8px 0;
+}
+
+.transaction-label {
+  font-size: 13px;
+}
+
+.transaction-amount {
+  font-size: 24px;
+  font-weight: 700;
 }

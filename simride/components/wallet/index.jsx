@@ -202,16 +202,7 @@ class Wallet extends React.Component {
             </div>
             <div id='div_WalletHistory' style={{display: 'none'}}>
                 <h4>Transaction History</h4>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date & Time</th>
-                            <th>Type</th>
-                            <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tb_AllTransactions"></tbody>
-                </table>
+                <div id="tb_AllTransactions"></div>
             </div>
         </div>
         </View>
