@@ -7,15 +7,19 @@ export const cancelEditProfile = () => {
     if (user[5] === 'no') {
         checkDriverApplicationStatus();
     }
+    try {
+        document.getElementById('tblApplyDriver').style.display = 'none';
+        document.getElementById('cancelApplyDriverButton').style.display = 'none';
+        document.getElementById('btnImgFrontUpload').style.display = 'none';
+        document.getElementById('btnImgBackUpload').style.display = 'none';
+        document.getElementById('submitDriverDetails').style.display = 'none';
+        document.getElementById('btnLogout').style.display = 'inline-block';
 
-    document.getElementById('tblApplyDriver').style.display = 'none';
-    document.getElementById('cancelApplyDriverButton').style.display = 'none';
-    document.getElementById('btnImgFrontUpload').style.display = 'none';
-    document.getElementById('btnImgBackUpload').style.display = 'none';
-    document.getElementById('submitDriverDetails').style.display = 'none';
-    document.getElementById('btnLogout').style.display = 'inline-block';
-
-    document.getElementById('editfName').value = "";
-    document.getElementById('editlName').value = "";
-    document.getElementById('editPhone').value = "";
+        document.getElementById('editfName').value = "";
+        document.getElementById('editlName').value = "";
+        document.getElementById('editPhone').value = "";
+    }
+    catch (error) {
+        
+    }
 }

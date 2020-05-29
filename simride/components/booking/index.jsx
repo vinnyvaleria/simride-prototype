@@ -150,7 +150,9 @@ class Booking extends React.Component {
         const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
         database.on('value', (snapshot) => {
           if (snapshot.exists()) {
-            document.getElementById('tb_CreatedBookings').innerHTML = '';
+            if (document.getElementById('tb_CreatedBookings') != null) {
+              document.getElementById('tb_CreatedBookings').innerHTML = '';
+            }
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {
@@ -247,7 +249,9 @@ class Booking extends React.Component {
         const database = firebase.database().ref('bookings').orderByChild('date');
         database.on('value', (snapshot) => {
           if (snapshot.exists()) {
-            document.getElementById('tb_myBookings').innerHTML = '';
+            if (document.getElementById('tb_myBookings') != null) {
+              document.getElementById('tb_myBookings').innerHTML = '';
+            }
             let content = '';
             let rowCount = 0;
             snapshot.forEach((data) => {

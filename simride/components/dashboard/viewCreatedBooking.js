@@ -6,8 +6,10 @@ var userDetails = [];
 
 // view created bookings by driver
 export const viewCreatedBooking = () => {
-    document.getElementById('tb_DriverUpcomingDrives').innerHTML = '';
-
+    if (document.getElementById('tb_DriverUpcomingDrives') != null) {
+        document.getElementById('tb_DriverUpcomingDrives').innerHTML = '';
+    }
+    
     // get all accounts
     firebase.database().ref('accounts')
         .orderByChild('email')
