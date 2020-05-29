@@ -219,7 +219,7 @@ class Login extends React.Component {
   
   render() {
     return (
-      <View style={{ justifyContent: 'center', height: '100vh'}}>
+      <View style={{ justifyContent: 'center', height: '100vh', marginTop: '-5em'}}>
         <img src={logo} alt='SIMRide Logo' style={{ maxWidth: '7em' }} />
         <div>
           <form>

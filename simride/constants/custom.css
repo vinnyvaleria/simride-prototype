@@ -364,6 +364,12 @@ footer {
   opacity: 0.7;
 }
 
+@media only screen and (max-width: 767px) {
+  #inbox, #searchUser {
+    transform: scale(0.9);
+  }
+}
+
 /* Wallet Page */
 .transaction-box {
   margin: 10px auto;
@@ -498,7 +504,6 @@ footer {
   color: #4b9ea1;
   font-size: 24px;
   font-weight: 700;
-  max-width: ;
 }
 
 .admin-box > div > div > input {
