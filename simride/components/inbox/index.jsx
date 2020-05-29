@@ -5,6 +5,8 @@ import 'firebase/firestore';
 import { user } from '../login/index';
 import firebase from '../../../base';
 
+import '../../constants/custom.css';
+
 var unameArr = [];
 var allchats = [];
 var chats = [];
@@ -298,14 +300,14 @@ class Inbox extends React.Component {
                 var html = "";
                 // give each message a unique ID
                 if (doc.doc.data().to === user[2]) {
-                    html += "<p style={{text-align:'right'}} id='message-" + message.timestamp + "'>";
-                    html += message.from + ": " + message.text;
+                    html += "<p class='chat-right' id='message-" + message.timestamp + "'>";
+                    html += message.text;
                     html += "</p>";
                 }
                 else if (doc.doc.data().from === user[2]) {
-                    html += "<p style={{text-align:'left'}} id='message-" + message.timestamp + "'>";
-                    html += message.from + ": " + message.text;
-                    html += "</p>";
+                    html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
+                    html += message.text;
+                    html += "</div>";
                 }
 
                 document.getElementById('submitInboxMessage').style.display = "block";
@@ -495,9 +497,7 @@ class Inbox extends React.Component {
                         <div id='inbox'>
                             <div id='chatsStarted'></div>
                             <div id='msgBox' style={{ display: 'none' }}>
-                                <div>
-                                    <ul id="messages"></ul>
-                                </div>
+                                <div id="messages"></div>
                                 <div id="submitInboxMessage" style={{ display: 'none' }}>
                                     <input id="message" placeholder="Enter message" value={this.state.message}
                                         onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
