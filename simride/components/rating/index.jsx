@@ -67,12 +67,15 @@ class rating extends Component {
                             const account = firebase.database().ref().child('accounts/' + driverID);
                             account.once('value', snapshot => {
                                 if (snapshot.exists()) {
+                                    let drcontent = '';
                                     let uname = snapshot.val().uname;
 
-                                    content += "<option value=\"";
-                                    content += uname;
-                                    content += "\">" + uname + ' (Driver)';
-                                    content += "</option>";
+                                    drcontent += "<option value=\"";
+                                    drcontent += uname;
+                                    drcontent += "\">" + uname + ' (Driver)';
+                                    drcontent += "</option>";
+
+                                    document.getElementById('ddUsers').innerHTML += drcontent;
                                 }
                             });
                         }

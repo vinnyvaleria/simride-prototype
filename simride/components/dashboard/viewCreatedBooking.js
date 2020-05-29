@@ -28,7 +28,7 @@ export const viewCreatedBooking = () => {
         if (snapshot.exists()) {
             let content = '';
             snapshot.forEach((data) => {
-                if (data.val().driverID === user[9]) {
+                if (data.val().driverID === user[9] && data.val().completed === 'no') {
                     let area = data.val().area;
                     let date = moment(data.val().date).format("DD MMM YYYY hh:mm a");
                     let ppl = [];
