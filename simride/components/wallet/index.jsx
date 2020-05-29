@@ -86,7 +86,13 @@ class Wallet extends React.Component {
     }
 
     submitCashOut_Click = () => {
-        submitCashOut();
+        const balance = parseFloat(this.state.wallet - this.state.cashoutamount).toFixed(2);
+
+        this.setState({
+            wallet: balance
+        }, () => {
+            submitCashOut(this.state.cashoutamount);
+        });
 
         this.state = {
             cashoutamount: ''
