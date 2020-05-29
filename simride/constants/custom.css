@@ -89,13 +89,6 @@ h6 {
   font-family: Arial, Helvetica, sans-serif !important;
 }
 
-.chatBtn {
-  display: block;
-  text-align:center;
-  margin:auto;
-  width: 80%;
-}
-
 input {
   border-radius: 5px !important;
   border-style: unset !important;
@@ -222,7 +215,7 @@ footer {
 .chat-right {
   padding: 8px 10px;
   margin: 10px 0 0 0;
-  background-color: #ffffff;
+  background-color: #ffffe0;
   border-radius: 8px 8px 0 8px;
   width: fit-content;
   max-width: 300px;
@@ -234,14 +227,15 @@ footer {
 }
 
 #submitInboxMessage {
-  display: inline-flex;
+  display: inline-flex !important;
   height: max-content;
   margin: 5em auto 2em;
 }
 
-#submitInboxMessage > button {
+#submitInboxMessage > button, #searchUser > button {
   border-radius: 5px;
   height: 36px;
+  margin-right: unset !important;
 }
 
 #messages {
@@ -249,4 +243,18 @@ footer {
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
+}
+
+.chatBtn {
+  width: 50%;
+  color: #ffffff !important;
+  background-color: #222222;
+  display: block;
+  text-align:center;
+  margin: auto;
+}
+
+.chatBtn:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }
