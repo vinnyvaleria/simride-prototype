@@ -234,7 +234,7 @@ class Inbox extends React.Component {
 
         const accountsRef = firebase.database().ref('accounts');
         accountsRef.orderByChild('uname')
-            .equalTo(clickedUser)
+            .equalTo(this.state.to)
             .once('value')
             .then((snapshot) => {
                 snapshot.forEach((child) => {
