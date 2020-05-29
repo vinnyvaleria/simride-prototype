@@ -364,6 +364,12 @@ footer {
   opacity: 0.7;
 }
 
+@media only screen and (max-width: 767px) {
+  #inbox, #searchUser {
+    transform: scale(0.9);
+  }
+}
+
 /* Wallet Page */
 .transaction-box {
   margin: 10px auto;
