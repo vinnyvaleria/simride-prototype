@@ -307,15 +307,12 @@ class Inbox extends React.Component {
                     var message = doc.doc.data();
                     // give each message a unique ID
                     if (doc.doc.data().to === user[2]) {
-                        var html = "";
-                        html += "<p class='chat-right' id='message-" + message.timestamp + "'>";
+                        html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
                         html += message.text;
-                        html += "</p>";
-                        console.log(html)
+                        html += "</div>";
                     }
                     else if (doc.doc.data().from === user[2]) {
-                        var html = "";
-                        html += "<div class='chat-left' id='message-" + message.timestamp + "'>";
+                        html += "<div class='chat-right' id='message-" + message.timestamp + "'>";
                         html += message.text;
                         html += "</div>";
                         console.log(html)
@@ -511,11 +508,11 @@ class Inbox extends React.Component {
                             <div id='msgBox' style={{ display: 'none' }}>
                                 <h2>{this.state.to}</h2>
                                 <div id="messages"></div>
-                                <div id="submitInboxMessage" style={{ display: 'none' }}>
-                                    <input id="message" placeholder="Enter message" value={this.state.message}
-                                        onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
-                                    <button style={{ margin: '0 0 0 15px' }} id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
-                                </div>
+                            </div>
+                            <div id="submitInboxMessage" style={{ display: 'none' }}>
+                                <input id="message" placeholder="Enter message" value={this.state.message}
+                                    onChange={this.handleChange} type="text" name="message" style={{ width: '350px' }} />
+                                <button style={{ margin: '0 0 0 15px' }} id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
                             </div>
                         </div>
 
