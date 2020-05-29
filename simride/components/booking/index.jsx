@@ -202,8 +202,10 @@ class Booking extends React.Component {
               }
             });
 
-            document.getElementById('tb_CreatedBookings').innerHTML += content;
-
+            if (document.getElementById('tb_CreatedBookings') !== null) {
+              document.getElementById('tb_CreatedBookings').innerHTML += content;
+            }
+            
             for (let v = 0; v < rowCount; v++) {
               let view = document.createElement('input');
               view.setAttribute('type', 'button')
