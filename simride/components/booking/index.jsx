@@ -30,6 +30,7 @@ import Map from '../maps/map';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import { color } from 'react-native-reanimated';
 import past from '../../assets/images/past.png';
+import scheduled from '../../assets/images/confirm-bookings.png';
 
 class Booking extends React.Component {
   constructor(props) {
@@ -174,6 +175,17 @@ class Booking extends React.Component {
                   }
                 }
 
+                content += '<div class=booking-box id=' + data.key + '>';
+                content += '<img src=' + scheduled + ' class=booking-icon />';
+                content += '<div><p class=booking-label>' + driver + '</p>';
+                content += '<p class=booking-area>' + area + '</p>';
+                content += '<p class=booking-footer>' + date + '</p>';
+                content += '<p class=booking-footer>Passengers : ' + passengers + '</p>';
+                content += '<div id=\'btnViewCreatedBooking' + rowCount + '\'></div>';
+                content += '<div id=\'btnStartCreatedBooking' + rowCount + '\'></div>';
+                content += '</div></div>';
+                
+                /*
                 content += '<tr id=\'' + data.key + '\'>';
                 content += '<td>' + area + '</td>'; //column1
                 content += '<td>' + date + '</td>'; //column2
@@ -182,6 +194,7 @@ class Booking extends React.Component {
                 content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
                 content += '<td id=\'btnStartCreatedBooking' + rowCount + '\'></td>';
                 content += '</tr>';
+                */
 
                 rowCount++;
               }
@@ -379,17 +392,9 @@ render() {
           </div>
 
           <div id='div_viewCreatedBooking' style={{display: 'none'}}>
-            <table id="tbl_CreatedBookings">
-              <thead>
-                <tr>
-                  <th>Area</th>
-                  <th>Date & Time</th>
-                  <th>Driver</th>
-                  <th>No. of Passengers</th>
-                </tr>
-              </thead>
-              <tbody id="tb_CreatedBookings"></tbody>
-            </table>
+            <div id="tbl_CreatedBookings">
+              <div id="tb_CreatedBookings"></div>
+            </div>
           </div>
 
           <div id='div_availBookings'>
