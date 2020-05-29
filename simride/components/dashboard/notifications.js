@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import {user} from './checkEmailDashboard';
 import {acknowledgeNotif} from './acknowledgeNotif';
 var userDetails = [];
+import notif from '../../assets/images/notification.png';
 
 export const notifications = (tb) => {
     // get all accounts
@@ -32,12 +33,22 @@ export const notifications = (tb) => {
                     let reason = data.val().reason;
                     let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY");
 
+
+                    content += '<div class=admin-box id=' + data.key + '>';
+                    content += '<img src=' + notif + ' class=admin-icon />';
+                    content += '<div><p class=admin-label>' + notification + '</p>';
+                    content += '<p class=admin-footer>' + reason + '</p>';
+                    content += '<p class=admin-footer>' + date + '</p>';
+                    content += '<div id=\'btnNotification' + rowCount + '\'></div>';
+                    content += '</div></div>';
+
+                    /*
                     content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + notification + '</td>'; //column1
                     content += '<td>' + reason + '</td>'; //column2
                     content += '<td>' + date + '</td>';
                     content += '<td id=\'btnNotification' + rowCount + '\'></td>';
-                    content += '</tr>';
+                    content += '</tr>';*/
 
                     rowCount++;
                 }

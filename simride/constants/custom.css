@@ -426,7 +426,7 @@ footer {
   border-radius: 20px;
   height: fit-content;
   width: max-content;
-  color: #ffffff;
+  color: #4b9ea1;
   font-weight: 700;
   font-family: Arial, Helvetica, sans-serif !important;
   padding: 0.5em 1em;
@@ -471,6 +471,7 @@ footer {
   height: 50px;
   width: 50px;
   align-items: flex-start;
+  padding-right: 1em;
   margin: 0;
 }
 
@@ -481,6 +482,7 @@ footer {
 
 .admin-label, .admin-footer {
   font-size: 13px;
+  line-height: normal !important;
 }
 
 .admin-label {
@@ -496,6 +498,7 @@ footer {
   color: #4b9ea1;
   font-size: 24px;
   font-weight: 700;
+  max-width: ;
 }
 
 .admin-box > div > div > input {
