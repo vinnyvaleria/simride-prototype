@@ -1,6 +1,7 @@
 import firebase from '../../../base';
 import * as moment from 'moment';
 import {viewBooking} from './viewBooking';
+import all from '../../assets/images/all-bookings.png';
 
 export const viewAllBookings = () => {
     let userDetails = [];
@@ -54,6 +55,16 @@ export const viewAllBookings = () => {
                                 }
                             }
 
+                            content += '<div class=booking-box id=' + data.key + '>';
+                            content += '<img src=' + all + ' class=booking-icon />';
+                            content += '<div><p class=booking-label>' + driver + '</p>';
+                            content += '<p class=booking-area>' + area + '</p>';
+                            content += '<p class=booking-footer>' + date + '</p>';
+                            content += '<p class=booking-footer>Passengers : ' + passengers + '</p>';
+                            content += '<div id=\'btnViewBooking' + rowCount + '\'></div>';
+                            content += '</div></div>';
+                            
+                            /*
                             content += '<tr id=\'' + data.key + '\'>';
                             content += '<td>' + area + '</td>'; //column1
                             content += '<td>' + date + '</td>'; //column2
@@ -61,6 +72,7 @@ export const viewAllBookings = () => {
                             content += '<td>' + passengers + '</td>';
                             content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
                             content += '</tr>';
+                            */
 
                             rowCount++;
                         }
