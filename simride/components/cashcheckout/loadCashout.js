@@ -4,7 +4,6 @@ import * as moment from 'moment';
 import { changeCheckoutStatus } from './changeCheckoutStatus';
 
 export const loadCashout = () => {
-    const self = this;
     document.getElementById('tb_NotDisbursedCashout').innerHTML = '';
 
     const database = firebase.database().ref('cashcheckout').orderByChild('date');
